@@ -108,7 +108,7 @@ var editassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Edit'
 // 获取工单主键
 var getMain=ajaxURl+'/api/PSIBase/BatchNo/GetNewId'
 // 删除工单工序
-var removeassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Remove'
+var removeassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Remove' 
 
 // -------------------生产管理----------------------
 
