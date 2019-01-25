@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="../../assets/css/mypublic.css">
+    <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/fontlist/iconfont.css">
+    <link rel="stylesheet" href="../../assets/css/table.css">
+    <link rel="stylesheet" href="../../assets/css/proreprots.css">
+    <title>工序汇报单</title>
+</head>
+
+<body class="layui-view-body produwork craftwork">
+    <div class="layui-content">
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="btnlist">
+                            <span class="layui-btn add">新增</span>
+                            <span class="layui-btn sub">保存</span>
+                            <span class="layui-btn audit">审核</span>
+                            <!-- <span class="layui-btn changeStatus">变更</span> -->
+                        </div>
+                        <div class="layui-form layui-form-item " style="padding-top:25px">
+
+                            <div class="form-box">
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">生产任务单号：</label>
+                                        <div class="layui-input-block  checknum" data-type="daten">
+                                            <select name="Report_Name" class="" id="Report_Name" lay-search=""
+                                                lay-filter="num">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label">客户：</label>
+                                        <div class="layui-input-block checkpro" data-type="daten">
+                                            <select name="checkprobegin" class="" id="checkprobegin" lay-search=""
+                                                lay-filter="selecstyle">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
+                                    <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label">单据日期：</label>
+                                        <div class="layui-input-block ">
+                                            <input type="text" name="date" id="date" lay-verify="date" autocomplete="off"
+                                                class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">单据编号：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="WORK000100" id="FBillNo" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl ">
+                                            <div class="hignckick" data-type="daten">更多</div>
+                                        </div>
+                                </div>
+
+
+                                <div class="more hidden">
+
+                                    <div class="clearfix">
+                                        <div class="layui-form-lsit fl">
+                                            <label class="layui-form-label">产品代码：</label>
+                                            <div class="layui-input-block disinput">
+                                                <input type="text" value="" id="matername" autocomplete="off" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-lsit fl">
+                                            <label class="layui-form-label">产品名称：</label>
+                                            <div class="layui-input-block checkpro disinput" data-type="daten">
+                                                <input type="text" name="" id="maternick" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-form-lsit fl ">
+                                            <label class="layui-form-label">规格型号：</label>
+                                            <div class="layui-input-block disinput">
+                                                <input type="text" value="" id="" readonly name="">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-lsit fl">
+                                            <label class="layui-form-label">交货日期：</label>
+                                            <div class="layui-input-block ">
+                                                <input type="text" name="" id="" lay-verify="" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="clearfix">
+                                        <div class="layui-form-lsit fl ">
+                                            <label class="layui-form-label">单位：</label>
+                                            <div class="layui-input-block disinput">
+                                                <input type="text" value="" id="" name="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-lsit fl ">
+                                            <label class="layui-form-label">BOM编号：</label>
+                                            <div class="layui-input-block disinput">
+                                                <input type="text" value="" id="" name="" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-lsit fl ">
+                                            <label class="layui-form-label">工艺路线：</label>
+                                            <div class="layui-input-block disinput">
+                                                <input type="text" value="" id="" name="" readonly>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="layui-form-lsit fl ">
+                                        <input type="checkbox" checked id="checkl" name="checkl">
+                                        <label for="checkl" class="labelg">自动生成BOM和工艺</label>
+                                    </div> -->
+
+                                    </div>
+
+                                    <div class="clearfix" style="border-bottom:1px solid #ccc">
+                                        <div class="layui-form-lsit fl ">
+                                            <label class="layui-form-label">工艺名称：</label>
+                                            <div class="layui-input-block disinput">
+                                                <input type="text" value="" id="" readonly name="">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-lsit fl ">
+                                            <label class="layui-form-label">计划生产数量：</label>
+                                            <div class="layui-input-block disinput">
+                                                <input type="text" value="" id="" name="">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-lsit fl">
+                                            <label class="layui-form-label">计划开工日期：</label>
+                                            <div class="layui-input-block ">
+                                                <input type="text" name="" id="" lay-verify="" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-lsit fl">
+                                            <label class="layui-form-label">计划完工日期：</label>
+                                            <div class="layui-input-block ">
+                                                <input type="text" name="" id="" lay-verify="" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="takealong">
+                                        <div class="clearfix" style="margin-top:15px">
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">管身颜色：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">印刷工艺：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">注头型号：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">盖子型号：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="clearfix">
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">盖子颜色：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">管径：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">管高：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">洞口直径：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="clearfix">
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">管子表面：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">拉管长度：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-lsit fl">
+                                                <label class="layui-form-label">无肩：</label>
+                                                <div class="layui-input-block checkpro" data-type="daten">
+                                                    <select name="checkprobegin" class="" id="checkprobegin" lay-search=""
+                                                        lay-filter="selecstyle">
+                                                        <option value="">请选择</option>
+                                                        <option value="1">√</option>
+                                                        <option value="2">×</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">拉管数量：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="clearfix">
+                                            <div class="layui-form-lsit fl ">
+                                                <label class="layui-form-label">印刷要求：</label>
+                                                <div class="layui-input-block disinput">
+                                                    <input type="text" value="" id="FBillNo">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+
+
+                                        <div class="clearfix">
+                                            <div class="layui-form-lsit fl textarlist">
+                                                <label class="layui-form-label">生产要求：</label>
+                                                <div class="layui-input-block checkpro" data-type="daten" style="width:400px">
+                                                    <textarea name="" id="" rows='3'></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-lsit fl textarlist">
+                                                <label class="layui-form-label">备注：</label>
+                                                <div class="layui-input-block checkpro" data-type="daten" style="width:400px">
+                                                    <textarea name="" id="" rows='3'></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </form>
+                    <!-- <div class="taplist" data-staut="2">
+                        <span class="checkone checkorder active" data-status='2'>物料</span>
+                        <span class="checkone  checkgy" data-status='1'>工艺</span>
+
+                    </div> -->
+
+                    <div id="tablelist1" style="clear:left" class="">
+                        <section class="cpmtable">
+                            <div class="layui-card">
+                                <!-- <i class="iconfont icon-guanbi iconclose"></i> -->
+                                <div class="layui-card-body layui-text">
+                                    <div id="tablecpm" class="table-overlay">
+                                        <table id="tableCpm" lay-filter="tableCpm" class="layui-hide"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <!-- <div id="tablelist" style="clear:left" class="">
+                        <section class="productworktable">
+                            <div class="layui-card">
+                                <i class="iconfont icon-guanbi iconclose"></i>
+                                <div class="layui-card-body layui-text">
+                                    <div id="tableRes" class="table-overlay">
+                                        <table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div> -->
+                </div>
+                <div class="clearfix formfoot">
+                    <div class="layui-form-lsit fl ">
+                        <label class="layui-form-label">制单人：</label>
+                        <div class="layui-input-block disinput">
+                            <input type="text" value="001" disabled id="zd">
+                        </div>
+                    </div>
+                    <div class="layui-form-lsit fl ">
+                        <label class="layui-form-label">审核人：</label>
+                        <div class="layui-input-block disinput">
+                            <input type="text" value="001" disabled id="zd">
+                        </div>
+                    </div>
+                    <div class="layui-form-lsit fl ">
+                        <label class="layui-form-label">审核日期：</label>
+                        <div class="layui-input-block disinput">
+                            <input type="text" value="" disabled id="zd">
+                        </div>
+                    </div>
+                    <div class="layui-form-lsit fl ">
+                        <label class="layui-form-label">业务员：</label>
+                        <div class="layui-input-block disinput">
+                            <input type="text" value="001" disabled id="zd">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+
+    </div>
+
+    <script type="text/html" id="selectcrp">
+        <select id="CraftEntry_Nick" lay-filter="CraftEntry_Nick" lay-search name="CraftEntry_Nick">
+        <option value="">请选择或输入</option>
+        {{# layui.each(dateslit1, function(index, item){ }}
+        <option value="{{item.Process_Name}}">{{ item.Process_Nick}}</option>
+        {{# }); }}
+    </select>
+</script>
+
+
+    <script type="text/html" id="selectuser">
+    <select name="Fuser" lay-filter="Fuser" lay-search>
+        <option value=""></option>
+        <option value="1">张一</option>
+        <option value="2">徐少春</option>
+    </select>
+</script>
+
+
+
+
+
+
+</body>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/layui.all.js"></script>
+<script src="../../main.js"></script>
+<script src="../../assets/js/product/producthb.js"></script>
+<!-- <script src="../assets/js/drop.js"></script> -->
+
+</html>

@@ -1,0 +1,196 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../assets/css/layui.css">
+    <link rel="stylesheet" href="../assets/css/mypublic.css">
+    <link rel="stylesheet" href="../assets/css/view.css" />
+</head>
+
+<body>
+    <div id="lct">
+        <div id="lct_link">
+                <!-- <a href="javascript:void(parent.changeLct(1,0))" class="lct_right">采购订单</a>
+                <a href="javascript:void(parent.changeLct(4,0))" style="margin-left: 325px;" class="lct_right">生产订单</a>
+                <a href="javascript:void(parent.changeLct(2,0))" style="margin-left: 650px;">销售订单</a>
+                <a href="javascript:void(0)" style="margin-top: 130px;margin-left: 445px;" class="lct_top">工程流转卡</a>
+                <a href="javascript:void(parent.changeLct(4,2))" style="margin-top: 210px;margin-left: 445px;" class="lct_top">工序汇报</a>
+                <a href="javascript:void(parent.changeLct(4,3))" style="margin-top: 290px;margin-left: 445px;" class="lct_top">产品入库</a>
+                <a href="javascript:void(parent.changeLct(4,1))" style="margin-top: 290px;margin-left: 206px;" class="lct_top">生产领料单</a>
+                <a href="javascript:void(parent.changeLct(3,0))" style="margin-top: 290px;" class="lct_top">采购入库</a>
+                <a href="javascript:void(parent.changeLct(1,1))" style="margin-top: 380px;" class="lct_top">采购发票</a>
+                <a href="javascript:void(parent.changeLct(5,1))" style="margin-top: 470px;" class="lct_top">付款</a>
+                <a href="javascript:void(parent.changeLct(3,1))" style="margin-top: 290px;margin-left: 650px;" class="lct_top">销售出库单</a>
+                <a href="javascript:void(parent.changeLct(2,1))" style="margin-top: 380px;margin-left: 650px;" class="lct_top">销售发票</a>
+                <a href="javascript:void(parent.changeLct(5,0))" style="margin-top: 470px;margin-left: 650px;" class="lct_top">收款单</a> -->
+            <a href="javascript:void(0)" class="lct_right">采购订单</a>
+            <a href="javascript:void(0)" style="margin-left: 325px;" class="lct_right">生产订单</a>
+            <a href="javascript:void(0))" style="margin-left: 650px;">销售订单</a>
+            <a href="javascript:void(0)" style="margin-top: 130px;margin-left: 445px;" class="lct_top">工程流转卡</a>
+            <a href="javascript:void(0)" style="margin-top: 210px;margin-left: 445px;" class="lct_top">工序汇报</a>
+            <a href="javascript:void(0)" style="margin-top: 290px;margin-left: 445px;" class="lct_top">产品入库</a>
+            <a href="javascript:void(0)" style="margin-top: 290px;margin-left: 206px;" class="lct_top">生产领料单</a>
+            <a href="javascript:void(0)" style="margin-top: 290px;" class="lct_top">采购入库</a>
+            <a href="javascript:void(0)" style="margin-top: 380px;" class="lct_top">采购发票</a>
+            <a href="javascript:void(0)" style="margin-top: 470px;" class="lct_top">付款</a>
+            <a href="javascript:void(0)" style="margin-top: 290px;margin-left: 650px;" class="lct_top">销售出库单</a>
+            <a href="javascript:void(0)" style="margin-top: 380px;margin-left: 650px;" class="lct_top">销售发票</a>
+            <a href="javascript:void(0)" style="margin-top: 470px;margin-left: 650px;" class="lct_top">收款单</a>
+        </div>
+        <div id="lct_line">
+            <div id="lct_line_1"></div>
+            <div id="lct_line_2"></div>
+            <div id="lct_line_3"></div>
+            <div id="lct_line_4"></div>
+            <div id="lct_line_5"></div>
+            <div id="lct_line_6"></div>
+            <div id="lct_line_7"></div>
+        </div>
+    </div>
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        #lct {
+            position: relative;
+            /* border: 1px solid #f00; */
+            /* padding-left: 50px; */
+            /* padding-top: 50px; */
+            /* width: 800px; */
+            height: 800px;
+            background: #fff;
+            margin: 15px;
+            padding: 30px;
+        }
+
+        #lct_link a {
+            border: 1px solid #4a7ebb;
+            display: block;
+            width: 148px;
+            height: 44px;
+            line-height: 44px;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+            border-radius: 8px;
+            background: #fff;
+            background: -webkit-linear-gradient(#e4eeff, #a5c5ff);
+            background: -o-linear-gradient(#e4eeff, #a5c5ff);
+            background: -moz-linear-gradient(#e4eeff, #a5c5ff);
+            background: linear-gradient(#e4eeff, #a5c5ff);
+            box-shadow: 0px 0px 10px #ccc;
+            position: absolute;
+            z-index: 10;
+        }
+
+        #lct_link a.lct_top::before,
+        #lct_link a.lct_right::before {
+            display: block;
+            content: " ";
+            z-index: 15;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAICAYAAAFVIUVZAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDMyMjU4NDUwODUyMTFFOTg3MDBERUUzNkNCOEMxRUEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDMyMjU4NDYwODUyMTFFOTg3MDBERUUzNkNCOEMxRUEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowMzIyNTg0MzA4NTIxMUU5ODcwMERFRTM2Q0I4QzFFQSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowMzIyNTg0NDA4NTIxMUU5ODcwMERFRTM2Q0I4QzFFQSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PvxBQtYAAABKSURBVHjaYmBgYPgPxAwAAQRD/wECCJkBlgEIINwIIIAw9ODgYwoCBBBJxmE4C6dCFDcDBBgjEoeRHGvxhQDB0EFW8J8k7+NTDAAIbRfrNPl7oAAAAABJRU5ErkJggg==") no-repeat;
+            position: absolute;
+        }
+
+        #lct_link a.lct_top::before {
+            margin-left: 67px;
+            width: 13px;
+            height: 8px;
+            top: -9px;
+        }
+
+        #lct_link a.lct_right::before {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAANCAYAAAHjxR+uAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDhDMjE3QjgwODUyMTFFOUFERjU4NTVEQTUyMkRDRTkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDhDMjE3QjkwODUyMTFFOUFERjU4NTVEQTUyMkRDRTkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpEOEMyMTdCNjA4NTIxMUU5QURGNTg1NURBNTIyRENFOSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpEOEMyMTdCNzA4NTIxMUU5QURGNTg1NURBNTIyRENFOSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Ppp4kiQAAABBSURBVHjaYmCAAYAAQiCAAMJEAAEEQ//hBBOGFEAAYeX8x2sSQAARZwZ+DhmCAAGGz03/qSPBxEAi+I/PYVgVAgBSQhbujuFyhAAAAABJRU5ErkJggg==") no-repeat;
+            width: 8px;
+            height: 13px;
+            top: 14.5px;
+            right: -9px;
+        }
+
+        /*横 第一*/
+        #lct_line_1 {
+            position: absolute;
+            width: 750px;
+            height: 1px;
+            background: #000;
+            margin-top: 22px;
+            margin-left: 20px;
+            z-index: 1;
+        }
+
+        /*坚左一*/
+        #lct_line_2 {
+            position: absolute;
+            height: 450px;
+            width: 1px;
+            background: #000;
+            margin-top: 32px;
+            margin-left: 74px;
+            z-index: 1;
+        }
+
+        /*坚右一*/
+        #lct_line_3 {
+            position: absolute;
+            height: 460px;
+            width: 1px;
+            background: #000;
+            margin-top: 32.5px;
+            margin-left: 724px;
+            z-index: 1;
+        }
+
+        #lct_line_4 {
+            position: absolute;
+            height: 67px;
+            width: 1px;
+            background: #000;
+            margin-top: 32.5px;
+            margin-left: 400px;
+            z-index: 1;
+        }
+
+        #lct_line_5 {
+            position: absolute;
+            height: 1px;
+            width: 240px;
+            background: #000;
+            margin-top: 100px;
+            margin-left: 280px;
+            z-index: 1;
+        }
+
+        #lct_line_6 {
+            position: absolute;
+            height: 200px;
+            width: 1px;
+            background: #000;
+            margin-top: 100px;
+            margin-left: 280px;
+            z-index: 1;
+        }
+
+        #lct_line_7 {
+            position: absolute;
+            height: 200px;
+            width: 1px;
+            background: #000;
+            margin-top: 100px;
+            margin-left: 519px;
+            z-index: 1;
+        }
+    </style> 
+
+
+</body>
+
+</html>

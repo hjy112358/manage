@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="../../assets/css/mypublic.css">
+    <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/fontlist/iconfont.css">
+    <link rel="stylesheet" href="../../assets/css/table.css">
+    <link rel="stylesheet" href="../../assets/css/searchlist.css">
+    <title>工作查询</title>
+</head>
+
+<body class="layui-view-body produwork craftwork">
+    <div class="layui-content">
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form">
+
+                        <div class="layui-form layui-form-item " style="padding-top:10px;padding-left:15px">
+
+
+                            <div class="clearfix">
+                                <div class="layui-form-lsit fl">
+                                    <label class="layui-form-label">流程名称：</label>
+                                    <div class="layui-input-block " data-type="daten">
+                                        <select name="" class="" id="" lay-search="" lay-filter="selecstyle">
+                                            <option value="">请选择</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit fl ">
+                                    <label class="layui-form-label">流水号：</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" id="" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit fl ">
+                                    <label class="layui-form-label">工作名称/文号：</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" id="" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit fl">
+                                    <label class="layui-form-label">范围：</label>
+                                    <div class="layui-input-block " data-type="daten">
+                                        <select name="" class="" id="" lay-search="" >
+                                            <option value="">请选择</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <span class="layui-btn checklist">查询</span>
+                                    <span class="layui-btn reset">重置</span>
+                                    <span class="layui-btn more" data-type="daten">更多</span>
+                                </div>
+                            </div>
+                            <div class="clearfix hidden morelists">
+                                <div class="layui-form-lsit fl">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">流程发起日期：</label>
+                                        <div class="layui-input-inline datew">
+                                            <input type="text" name="dateBegin" id="dateBegin" lay-verify="date"
+                                                autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid">至：</div>
+                                        <div class="layui-input-inline datew">
+                                            <input type="text" name="dateEnd" id="dateEnd" lay-verify="date"
+                                                autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit fl">
+                                    <label class="layui-form-label">状态：</label>
+                                    <div class="layui-input-block " data-type="daten">
+                                        <select name="" class="" id="" lay-search="" >
+                                            <option value="">请选择</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit fl">
+                                    <label class="layui-form-label">优先级：</label>
+                                    <div class="layui-input-block " data-type="daten">
+                                        <select name="" class="" id="" lay-search="" >
+                                            <option value="">请选择</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                </form>
+
+                <div id="tablelist" style="clear:left" class="">
+                    <section>
+                        <div class="layui-card">
+                            <!-- <i class="iconfont icon-guanbi iconclose"></i> -->
+                            <div class="layui-card-body layui-text">
+                                <div id="tableRes" class="table-overlay">
+                                    <table id="analy" lay-filter="analy" class="layui-hide"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+
+    </div>
+
+    </div>
+
+
+
+
+
+
+
+
+</body>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/layui.all.js"></script>
+<script src="../../assets/js/jquery.cookie.js"></script>
+<script src="../../main.js"></script>
+<script src="../../assets/js/mywork/mywork.js"></script>
+<!-- <script src="../assets/js/drop.js"></script> -->
+
+</html>

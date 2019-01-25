@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="../../assets/css/mypublic.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/fontlist/iconfont.css">
+    <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="stylesheet" href="../../assets/css/table.css">
+    <link rel="stylesheet" href="../../assets/css/proreprots.css">
+    <title>计量单位</title>
+    <style>
+        .masktitle{
+        position: absolute;
+    top: -30px;
+    left: 5px;
+    font-size: 18px;
+    color: #fff;
+    }
+    .mackbody {
+        padding: 45px 20px;
+    }
+    #action{
+        padding-bottom:20px;
+        text-align: center;
+    }
+    .craftwork .layui-form-item .layui-input-block{
+        width:60% !important
+    }
+    .craftwork .disinput input{
+        width:99%
+    }
+    .chooseterm .layui-form-selected .layui-anim-upbit{
+        animation-name:unset;
+        -webkit-animation-name: unset;
+    }
+    .craftwork .layui-form-select dl{
+        top:30px;
+        max-height: 100px
+    }
+    .termform .layui-form-label{
+        width:100px !important
+    }
+    </style>
+</head>
+
+<body class="layui-view-body produwork craftwork">
+    <div class="layui-content">
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="btnlist">
+                            <span class="layui-btn add">新增</span>
+                            <span class="layui-btn  checklist search">查询</span>
+                        </div>
+                        <div class="layui-form layui-form-item " style="padding-top:25px">
+                            <!-- <div class="form-box">
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label"><span>*</span> 类别：</label>
+                                        <div class="layui-input-block matertype" data-type="daten">
+                                            <select name="matertype" class="" id="matertype" lay-search="" lay-filter="selecstyle">
+                                                <option value="">请选择</option>
+                                                <option value="">加载中...</option>
+                                            </select>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div> -->
+                        </div>
+                        <div id="tablelist" style="padding-top:25px">
+                            <table id="analy" lay-filter="analy"></table>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="termask  hidden">
+        <section class=" chooseterm">
+            <form class="termform">
+                <div class="layui-card">
+                    <div class="masktitle">新增计量单位</div>
+                    <i class="iconfont icon-guanbi iconclose"></i>
+                    <div class="layui-card-body layui-text">
+                        <div class="mackbody layui-form layui-form-item">
+                            <div class="form-box">
+                                <div class="layui-form-lsit  ">
+                                    <label class="layui-form-label">计量单位代码：</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" id="Measure_Name" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit  ">
+                                    <label class="layui-form-label">计量单位名称：</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" id="Measure_Nick" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit">
+                                    <label class="layui-form-label">基础单位：</label>
+                                    <div class="layui-input-block basicmea" data-type="daten">
+                                        <select name="Measure_Default" class="" id="Measure_Default" lay-search=""
+                                            lay-filter="">
+                                            <option value="">请选择</option>
+                                            <option value="">加载中...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="action" class="">
+                            <span class="layui-btn save">保存</span>
+                            <span class="layui-btn editsave hidden">保存修改</span>
+                            <span class="layui-btn cancel">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+
+</body>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/layui.all.js"></script>
+<script src="../../assets/js/jquery.cookie.js"></script>
+<script src="../../main.js"></script>
+<script src="../../assets/js/basic/unit.js"></script>
+<!-- <script src="../assets/js/drop.js"></script> -->
+
+</html>

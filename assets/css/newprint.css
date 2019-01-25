@@ -1,0 +1,92 @@
+html{
+    min-width:1000px;
+    overflow: auto;
+}
+/* .form-box{
+    position: relative;
+    z-index: 9999;
+} */
+#btns{
+    margin-left:15px
+}
+.editbox{
+    max-width:1000px;
+    overflow: auto;
+    margin-left:15px;
+    margin-top:10px
+}
+#editor{
+    width:100%;
+    min-height:450px
+}
+.attributs ul li input{
+    width:60%;
+    display: inline-block
+}
+.attributs ul li{
+    padding:5px 0;
+}
+.attributs{
+    text-align: center;
+background: #fff;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+min-height: 554px;
+box-sizing: border-box;
+    border-right: 1px solid #d4d4d4;
+    border-bottom: 1px solid #d4d4d4;
+}
+.attributs p{
+    background: #ccc;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+line-height: 30px;
+height: 30px;
+}
+#edui1{
+    width:auto !important
+} 
+.craftwork  .layui-form-label{
+    width:auto;
+    padding:3px 0;
+}
+.craftwork  .layui-input{
+    height: 26px;
+    line-height: 26px;
+}
+.craftwork .layui-btn{
+    padding: 0;
+    /* width: 50px;*/
+    padding: 0 5px; 
+    text-align: center;
+    display: inline-block;
+    height: 26px;
+    line-height: 26px;
+}
+.produwork .layui-form-lsit{
+    margin-bottom:10px;
+    height: 28px;
+}
+.craftwork .layui-content{
+    padding:8px;
+}
+.craftwork .form-box{
+    padding-bottom:0
+}
+.craftwork .layui-card-body{
+    padding-bottom:30px
+}
+.craftwork .layui-form-select dl{
+    top:30px;
+    z-index:99999
+}
+.craftwork  .layui-form-select dl dd{
+    line-height: 28px
+}
+.addattr{
+    text-align: right;
+    margin-right: 10px;
+}
+.attrlists ul li span{
+    margin-right: 2px
+}

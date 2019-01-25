@@ -1,0 +1,195 @@
+.craftwork   .layui-input-block{
+    margin-left:100px;
+}
+.craftwork  .layui-form-label{
+    width:100px;
+    padding:4px 0;
+}
+.craftwork .disinput input{
+    width: 92.4%;
+    line-height: 24px;
+    height:24px;
+}
+.craftwork .labelinput{
+    width: 100%;
+height: 36px;
+line-height: 36px;
+border: 1px solid #e6e6e6;
+}
+.craftwork   .layui-form-lsit textarea{
+    width:93%;
+    padding:5px;
+    resize:none ;
+    border: 1px solid #e6e6e6;
+}
+.craftwork  .layui-form-lsit.textarlist{
+    margin-bottom:40px
+}
+
+.craftwork   .labelinput
+{
+    width: 80%;
+    line-height: 26px;
+    height: 26px;
+}
+.craftwork .layui-form-select .layui-input{
+    line-height: 26px;
+    height: 26px;
+}
+.craftwork  .layui-input{
+    height: 26px;
+}
+.craftwork table .layui-form-select .layui-input{
+    line-height: 34px;
+    height: 34px;
+}
+.craftwork table  .layui-input{
+    height: 34px;
+}
+.craftwork .layui-form-item .layui-input-block{
+    width:157px;
+}
+.craftwork .layui-form-checkbox i{
+    border-left:1px solid #d2d2d2;
+}
+.craftwork  .layui-form-checkbox i{
+    width: 16px;
+height: 18px;
+font-size: 15px;
+line-height: 20px;
+height: 20px;
+}
+.craftwork .layui-form-checkbox{
+    margin-right: 0
+}
+.layui-form-lsit{
+    height:20px;
+}
+.craftwork .produwork .layui-form-lsit{
+    margin-bottom:15px;
+}
+.craftwork .layui-input-block{
+    min-height: 28px;
+}
+.craftwork .layui-content{
+    padding:8px;
+}
+.craftwork .layui-btn{
+    height: 25px;
+line-height: 25px;
+padding: 0 15px;
+}
+.craftwork.disinput input{
+    width:92.4%;
+    line-height: 24px;
+    height: 24px;
+}
+/* .craftwork table .layui-form-select .layui-input, */
+.craftwork table .layui-table-edit{
+    height: 34px;
+    line-height: 34px;
+}
+.craftwork .layui-table-view .layui-table th{
+    text-align: center
+}
+
+.craftwork #toolbar{
+  margin-left:15px;
+  margin-bottom:-15px;
+}
+.craftwork .choosecraft .layui-border-box{
+  max-height:350px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.cpmtable .layui-table-body{
+    /* height: 350px;
+    overflow: auto */
+}
+.craftwork  .layui-table-view .layui-table td{
+    padding:0;
+}
+/* .craftwork   .layui-form-select dl{
+    top:20px;
+} */
+.craftwork  .layui-form-select dl dd{
+    line-height: 30px;
+    height: 30px;
+}
+.craftwork #tablelist .layui-table-body{
+    height: auto;
+    /* overflow: auto */
+ } 
+.craftwork  #tablelist .layui-form-select dl{
+    max-height: 160px;
+}
+.craftwork  #tablelist1 .layui-form-select dl{
+    max-height: 160px;
+}
+/* .layui-table-body,
+.layui-table-box,
+.layui-table-view
+{
+    overflow:visible !important;
+} */
+
+.overvis{
+    overflow:visible !important;
+}
+
+.layui-table-hover{
+    background-color:#d7e9f8 !important
+}
+.form-box{
+    max-width:1030px;
+    margin-left: 15px;
+}
+.taplist{
+    margin-left:15px;
+  
+}
+.taplist span{
+    display: block;
+    width: 90px;
+    height: 30px;
+    color:#000;
+    border:1px solid #ccc;
+    float:left;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+.taplist span.checkgy{
+    border-left:0;
+}
+.taplist span.active{
+    background-color: #177ce3;
+    background-repeat: repeat-y;
+    background-image: -moz-linear-gradient(left,#29adeb,#177ce3);
+    background-image: -webkit-linear-gradient(left,#29adeb,#177ce3);
+    background-image: -o-linear-gradient(left,#29adeb,#177ce3);
+    background-image: linear-gradient(left,#29adeb,#177ce3);
+    color:#fff;
+}
+
+ /* #tablelist1 .layui-table-view .layui-table td[data-field="FName"] .layui-table-cell, 
+ #tablelist1 .layui-table-view .layui-table td[data-field="FNumber"] .layui-table-cell, 
+{
+width: 50%;
+}  */
+form .layui-form-select dl{
+    top:30px;
+}
+.form-box
+,#tablelist1 .layui-table td,
+#tablelist .layui-table td,
+#tablelist1  .layui-table th,
+#tablelist .layui-table th,
+.formfoot{
+    font-size:12px !important;
+}
+
+#tablelist1 {
+    table-layout:fixed
+}

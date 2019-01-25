@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="../../assets/css/mypublic.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/fontlist/iconfont.css">
+    <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="stylesheet" href="../../assets/css/table.css">
+    <link rel="stylesheet" href="../../assets/css/proreprots.css">
+    <title>物料类别</title>
+    <style>
+        .masktitle{
+        position: absolute;
+    top: -30px;
+    left: 5px;
+    font-size: 18px;
+    color: #fff;
+    }
+    .mackbody {
+       padding: 30px 20px 0px 20px;
+    }
+    #action{
+        padding-bottom:20px;
+        text-align: center;
+    }
+    td[data-field="FamilyEntry_Datatype"] .layui-table-cell {
+        padding-left:0;
+    }
+    #tableRes .layui-table-view,
+    #tableRes1 .layui-table-view
+    {
+        max-height: 200px;
+        overflow: hidden;
+    overflow-y: auto;
+    }
+    #tableRes .layui-table-body,
+    #tableRes1 .layui-table-body{
+        height:auto !important
+    }
+    .chooseterm .layui-table-view .layui-table-body {
+    min-height: 100px;
+}
+#tableRes .layui-form-selected .layui-anim-upbit,
+#tableRes1 .layui-form-selected .layui-anim-upbit{
+animation-name:unset;
+-webkit-animation-name: unset;
+}
+    </style>
+</head>
+
+<body class="layui-view-body produwork craftwork">
+    <div class="layui-content">
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="btnlist">
+                            <span class="layui-btn add">新增</span>
+                            <span class="layui-btn  checklist search">查询</span>
+
+                        </div>
+                        <div class="layui-form layui-form-item " style="padding-top:25px">
+                        </div>
+                        <div id="tablelist " style="padding-top:25px">
+                            <table id="analy" lay-filter="analy"></table>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="termask  hidden">
+        <section class=" chooseterm">
+            <form class="terform">
+                <div class="layui-card">
+                    <div class="masktitle">新增物料类别</div>
+                    <i class="iconfont icon-guanbi iconclose"></i>
+                    <div class="layui-card-body layui-text">
+                        <div class="mackbody ">
+                            <div class="layui-form-lsit  ">
+                                <label class="layui-form-label">物料类别代码：</label>
+                                <div class="layui-input-block disinput">
+                                    <input type="text" value="" id="Family_Name" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="layui-form-lsit  ">
+                                <label class="layui-form-label">物料类别名称：</label>
+                                <div class="layui-input-block disinput">
+                                    <input type="text" value="" id="Family_Nick" autocomplete="off">
+                                </div>
+                            </div>
+                            <div id="toolbar">
+                                <div style="margin-bottom:10px">
+                                    <button type="button" class="layui-btn layui-btn-sm addattr addfirst" data-type="addRow"
+                                        title="添加一行">
+                                        <i class="layui-icon layui-icon-add-1"></i> 添加类别属性
+                                    </button>
+
+                                </div>
+                            </div>
+                            <div id="tableRes" class="table-overlay hidden">
+                                <table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+                            </div>
+                            <div id="tableRes1" class="table-overlay" style="padding:9px 15px;">
+                                <table id="dataTable1" lay-filter="dataTable1" class="layui-hide"></table>
+                            </div>
+
+                        </div>
+                        <div id="action" class="">
+                            <span class="layui-btn save">保存</span>
+                            <span class="layui-btn editsave hidden">保存修改</span>
+                            <span class="layui-btn cancel" data-type="cancel">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <script type="text/html" id="selectattr">
+        <select name="datatype" lay-filter="datatype" lay-search>
+        <option value="">请选择数据类型</option>
+        <option value="NVarChar(50)">文本</option>
+        <option value="INT">整数</option>
+        <option value="Decimal(18,2)">小数</option>
+        <option value="DATETIME">时间</option>  
+    </select>
+
+</script>
+</body>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/layui.all.js"></script>
+<script src="../../assets/js/jquery.cookie.js"></script>
+<script src="../../main.js"></script>
+<script src="../../assets/js/basic/prodctlb.js"></script>
+<!-- <script src="../assets/js/drop.js"></script> -->
+
+</html>

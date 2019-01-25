@@ -1,0 +1,343 @@
+.layui-form-item{
+    /* margin-top:15px; */
+    margin-bottom:0;
+}
+.layui-form-lsit{
+    margin-bottom:10px;
+    height: 38px;
+}
+.divide{
+    position: relative;
+    margin-right: 10px;
+}
+.divide .iconadd {
+    position: absolute;
+    top:-1px;
+    right: 0;
+    font-size: 40px;
+}
+
+.divide .term{
+    height: 36px;
+    border:1px solid #e6e6e6;
+    line-height: 36px;
+    float: left;
+    position: relative;
+    padding-right:40px;
+    min-width:140px;
+    padding-left:10px;
+}
+.termlist span{
+    background: #ddd;
+    text-align: center;
+    margin-right: 2px;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.chooseterm{
+    width:50%;
+}
+.chooseterm .layui-table-box{
+    width:100%;
+}
+.chooseterm .layui-btn-sm {
+    line-height: normal;
+    font-size: 12.5px;
+}
+
+.chooseterm .layui-table-view .layui-table-body {
+    min-height: 256px;
+}
+
+.chooseterm .layui-table-cell .layui-input.layui-unselect {
+    height: 30px;
+    line-height: 30px;
+}
+
+/*设置 layui 表格中单元格内容溢出可见样式*/
+.chooseterm .table-overlay .layui-table-view,
+.chooseterm .table-overlay .layui-table-box,
+.chooseterm .table-overlay .layui-table-body {
+    overflow: visible;
+}
+
+.chooseterm .table-overlay .layui-table-cell {
+    height: auto;
+    overflow: visible;
+}
+
+
+.termask{
+    width:100%;
+    height: 100%;
+    position: fixed;
+    left:0;
+    top:0;
+    z-index:999;
+
+}
+.termask .chooseterm{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background-color: #177ce3;
+    background-repeat: repeat-y;
+    background-image: -moz-linear-gradient(left,#29adeb,#177ce3);
+    background-image: -webkit-linear-gradient(left,#29adeb,#177ce3);
+    background-image: -o-linear-gradient(left,#29adeb,#177ce3);
+    background-image: linear-gradient(left,#29adeb,#177ce3);
+    padding:40px 10px 10px 10px;
+    border-radius: 10px;
+}
+.termask .layui-btn:hover{
+    opacity: 1;
+}
+.termask  .layui-card{
+    position: relative;
+}
+
+.termask .iconclose{
+    position: absolute;
+    top: -35px;
+    right: 0px;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+}
+.layui-btn{
+    background-color: #177ce3;
+    background-repeat: repeat-y;
+    background-image: -moz-linear-gradient(left,#29adeb,#177ce3);
+    background-image: -webkit-linear-gradient(left,#29adeb,#177ce3);
+    background-image: -o-linear-gradient(left,#29adeb,#177ce3);
+    background-image: linear-gradient(left,#29adeb,#177ce3);
+    color:#fff;
+}  
+.layui-table-view .layui-table{
+    width: 100%;
+}
+.audit .layui-form-label{
+    width:100px;
+}
+.audit .layui-input-block{
+    margin-left:130px;
+    margin-right: 10px;
+}
+.termask .layui-btn-primary:hover{
+    color:#fff;
+}
+
+.repay .layui-form-label{
+    width:85px;
+}
+.repay .layui-input-block{
+    margin-left:115px;
+}
+.layui-form-item .layui-input-inline.scalelist{
+    width:95px !important;
+    position: relative;
+}
+.scale .scalelist .layui-input{
+    width: 70%;
+    text-align: center;
+    padding-left: 0;
+    float: left;
+}
+
+.scale .scalelist span{
+    position: absolute;
+    right:9px;
+    line-height: 38px;
+    top:0;
+}
+.scale .scalelist i{
+    position: absolute;
+    right: 30px;
+    color: #666;
+    height:0;
+    font-size: 16px;
+}
+.scale .scalelist i.up{
+    top: 1px;
+}
+.scale .scalelist i.down{
+    bottom: 23px;
+}
+
+/* .productworktable .layui-table-body .layui-table-main{
+    min-height: 300px
+} */
+.productworktable{
+    margin-top:-15px;
+}
+.productworktable .layui-table-body{
+    height: 390px;;
+}
+.produwork .layui-form-lsit{
+    margin-bottom:20px;
+}
+
+#tablelist .layui-table-view .layui-table td[data-field="term"],
+#tablelist1 .layui-table-view .layui-table td[data-field="FName"],
+#tablelist1 .layui-table-view .layui-table td[data-field="Fuser"],
+#tablelist .layui-table-view .layui-table td[data-field="FFetchDate"],
+#tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Deadline"],
+#tablelist .layui-table-view .layui-table td[data-field="datatype"],
+#tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Currency"],
+#tablelist .layui-table-view .layui-table td[data-field="Material_Name"],
+#tablelist .layui-table-view .layui-table td[data-field="materialName"],
+#tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Nick"],
+#tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Name"],
+#tablelist .layui-table-view .layui-table td[data-field="FMaterialName"]
+{
+    padding:0;
+}
+#tablelist .layui-table-view .layui-table td[data-field="term"] .layui-table-cell,
+#tablelist1 .layui-table-view .layui-table td[data-field="FName"] .layui-table-cell,
+#tablelist1 .layui-table-view .layui-table td[data-field="Fuser"] .layui-table-cell,
+#tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Nick"] .layui-table-cell,
+#tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Name"] .layui-table-cell,
+#tablelist .layui-table-view .layui-table td[data-field="FFetchDate"] .layui-table-cell,
+#tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Deadline"] .layui-table-cell,
+#tablelist .layui-table-view .layui-table td[data-field="datatype"] .layui-table-cell,
+#tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Currency"] .layui-table-cell,
+#tablelist .layui-table-view .layui-table td[data-field="Material_Name"] .layui-table-cell,
+#tablelist .layui-table-view .layui-table td[data-field="materialName"] .layui-table-cell,
+#tablelist .layui-table-view .layui-table td[data-field="FMaterialName"] .layui-table-cell
+{
+    padding:0;
+    height:auto;
+    overflow:visible;
+}
+#tablelist .layui-table-view .layui-table td[data-field="term"]  .layui-form-select .layui-input,
+#tablelist1 .layui-table-view .layui-table td[data-field="FName"]  .layui-form-select .layui-input,
+#tablelist1 .layui-table-view .layui-table td[data-field="Fuser"]  .layui-form-select .layui-input,
+#tablelist1 .layui-table-view .layui-table td[data-field="FMaterialName"]  .layui-form-select .layui-input,
+#tablelist1 .layui-table-view .layui-table td[data-field="datatype"]  .layui-form-select .layui-input,
+#tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Currency"]  .layui-input,
+#tablelist .layui-table-view .layui-table td[data-field="FFetchDate"] .layui-input,
+#tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Nick"] .layui-input,
+#tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Name"] .layui-input,
+#tablelist .layui-table-view .layui-table td[data-field="Material_Name"] .layui-input,
+#tablelist .layui-table-view .layui-table td[data-field="materialName"] .layui-input,
+#tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Deadline"] .layui-input{
+    border-color:#fff;
+    border:0 !important
+}
+
+#tablelist  .layui-form-select dl,
+#tablelist1  .layui-form-select dl{
+    max-height: 225px;
+}
+.layui-table-cell{
+    padding:0;
+    padding-left:4px;
+}
+.produwork .layui-table-cell.laytable-cell-checkbox{
+    padding-left:0px;
+}
+thead  .layui-table-cell{
+    padding-left:0;
+    text-align:center;
+}
+.layui-table-view .layui-table td[align="center"] .layui-table-cell{
+    padding-left:0;
+}
+.layui-table-view .layui-table td[align="right"] .layui-table-cell{
+    padding-right:6px;
+}
+ .layui-card-body{
+    padding:0;
+} 
+.layui-form-label {
+    padding:9px 5px;
+}
+#tableRes,
+#tablecpm,
+#tablesu{
+    padding:9px 15px;
+}
+.datew{
+    width:105px !important;
+}
+.layui-input-block{
+    margin-left:90px;
+}
+.layui-form-item .layui-input-inline{
+    width:170px
+}
+
+.layui-card{
+    box-shadow: none
+}
+.layui-btn.layui-btn-danger{
+    padding:0 5px !important;
+}
+.layui-form-lsit label span{
+    color:red
+}
+#tablelist,
+#tablelist1{
+    padding:0 10px
+}
+.layui-table.imgtable th {
+    
+    padding: 0;
+    min-height: auto;
+    height: 25px;
+    text-align:center;
+}
+ .layui-table.imgtable td {
+    
+    padding: 0 5px;
+    min-height: auto;
+    height: 25px;
+}
+ .layui-card-body .layui-table.imgtable{
+    margin:0;
+    width:100%;
+}
+.imgtable .layui-btn+.layui-btn{
+margin-left:0;
+}
+.imgtable .layui-btn{
+    height: 20px !important;
+    line-height: 20px !important;
+}
+.layui-upload{
+    margin-left:10px
+}
+.layui-upload{
+    max-height: 105px;
+    overflow-y: scroll;
+    width: 40%;
+    margin-bottom: 10px;
+}
+.btnlist {
+    position: absolute;
+    right: 15px;
+    top: 8px;
+    z-index: 99999;
+}
+form .layui-form-label {
+    width: auto !important;
+    padding: 3px 0 !important;
+}
+.layui-form-item .layui-input-block {
+    width: 120px !important;
+    float: left;
+    margin-left: 0 !important;
+    margin-right: 10px;
+}
+.craftwork .disinput input {
+    width: 100%;
+    line-height: 24px;
+    height: 24px;
+    padding-left: 0;
+    text-indent: 10px;
+}
+.disclick{
+    background:#ccc !important
+}   

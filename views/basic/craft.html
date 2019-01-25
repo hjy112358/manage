@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="../../assets/css/mypublic.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/fontlist/iconfont.css">
+    <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="stylesheet" href="../../assets/css/table.css">
+    <link rel="stylesheet" href="../../assets/css/proreprots.css">
+    <title>工序</title>
+    <style>
+        .masktitle{
+        position: absolute;
+        top: -30px;
+        left: 5px;
+        font-size: 18px;
+        color: #fff;
+    }
+    .mackbody {
+        padding:  20px;
+    }
+    #action{
+        padding-bottom:20px;
+        text-align: center;
+    }
+    td[data-field="FamilyEntry_Datatype"] .layui-table-cell {
+        padding-left:0;
+    }
+    #tableRes .layui-table-view,
+    #tableRes1 .layui-table-view
+    {
+        max-height: 300px;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+    #tableRes .layui-table-body,
+    #tableRes1 .layui-table-body{
+        height:auto !important
+    }
+    .chooseterm .layui-table-view .layui-table-body {
+        min-height: 100px;
+    }
+    #tableRes .layui-form-selected .layui-anim-upbit,
+    .chooseterm .layui-form-selected .layui-anim-upbit,
+    #tableRes1 .layui-form-selected .layui-anim-upbit{
+        animation-name:unset;
+        -webkit-animation-name: unset;
+    }
+    .craftwork .layui-form-select dl{
+        max-height:162px;
+        top:32px;
+    }
+    .craftwork  .layui-form-selectup dl{
+        bottom:32px;
+    }
+    
+    #tableRes,
+    #tableRes1{
+        padding:0
+    }
+    form .layui-form-label{
+        width:90px !important
+    }
+    .layui-form-item .layui-input-block {
+        width: 220px !important;
+    }
+    .craftwork .disinput input {
+        width:98.5%
+    }
+    </style>
+</head>
+
+<body class="layui-view-body produwork craftwork">
+    <div class="layui-content">
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="btnlist">
+                            <span class="layui-btn add">新增</span>
+                            <span class="layui-btn  checklist search">查询</span>
+
+                        </div>
+                        <div class="layui-form layui-form-item " style="padding-top:25px">
+                            <!-- <div class="form-box">
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label"><span>*</span> 类别：</label>
+                                        <div class="layui-input-block matertype" data-type="daten">
+                                            <select name="matertype" class="" id="matertype" lay-search="" lay-filter="selecstyle">
+                                                <option value="">请选择</option>
+                                                <option value="">加载中...</option>
+                                            </select>
+                                        </div>
+                                    </div> 
+
+                                </div>
+                            </div> -->
+
+                        </div>
+                        <div id="tablelist" style="padding-top:25px">
+                            <table id="analy" lay-filter="analy"></table>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="termask  hidden">
+        <section class=" chooseterm">
+
+            <div class="layui-card">
+                <div class="masktitle">新增工艺</div>
+                <i class="iconfont icon-guanbi iconclose"></i>
+                <div class="layui-card-body layui-text">
+                    <form class="termform layui-form">
+                        <div class="mackbody layui-form layui-form-item ">
+                            <div class="form-box">
+                                <div class="layui-form-lsit">
+                                    <label class="layui-form-label">工艺路线代码：</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" id="Craft_Name" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit">
+                                    <label class="layui-form-label">工艺路线名称：</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" id="Craft_Nick" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit">
+                                    <label class="layui-form-label">产品：</label>
+                                    <div class="layui-input-block matertype" data-type="daten">
+                                        <select name="Craft_Material" class="" id="Craft_Material" lay-search=""
+                                            lay-filter="">
+                                            <option value="">请选择</option>
+                                            <option value="">加载中...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit">
+                                        <label class="layui-form-label"> 启用：</label>
+                                        <div class="layui-input-block " data-type="daten">
+                                            <select name="IsEnabled" class="" id="IsEnabled" lay-search=""
+                                                lay-filter="">
+                                                <option value="true">是</option>
+                                                <option value="false">否</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                <div id="tableRes" class="table-overlay hidden">
+                                    <table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+                                </div>
+                                <div id="tableRes1" class="table-overlay hidden">
+                                    <table id="dataTable1" lay-filter="dataTable1" class="layui-hide"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="action" class="">
+                        <span class="layui-btn save">保存</span>
+                        <span class="layui-btn editsave hidden">保存修改</span>
+                        <span class="layui-btn cancel">取消</button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+    <script type="text/html" id="selectcrp">
+        <select id="CraftEntry_Nick" lay-filter="CraftEntry_Nick" lay-search name="CraftEntry_Nick">
+        <option value="">请选择或输入</option>
+        {{# layui.each(dateslit1, function(index, item){ }}
+        <option value="{{item.Process_Name}}">{{ item.Process_Nick}}</option>
+        {{# }); }}
+    </select>
+</script>
+
+</body>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/layui.all.js"></script>
+<script src="../../assets/js/jquery.cookie.js"></script>
+<script src="../../main.js"></script>
+<script src="../../assets/js/basic/craft.js"></script>
+<!-- <script src="../assets/js/drop.js"></script> -->
+
+</html>

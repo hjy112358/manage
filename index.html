@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="assets/images/29.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/layui.css">
+    <link rel="stylesheet" href="assets/css/mypublic.css">
+    <link rel="stylesheet" type="text/css" href="assets/fontlist/iconfont.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <title>管理后台</title>
+</head>
+
+<body class="layui-layout-body" id="mainindex" style="display: none">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header custom-header">
+            <ul class="layui-nav layui-layout-left clearfix">
+                <li class="layui-nav-item slide-sidebar fl" lay-unselect>
+                    <a href="javascript:;" class="icon-font"><i class="ai ai-menufold"></i></a>
+                </li>
+                <li class="fl " id="setbok"> <span class="setbok"></span></li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="username"></a>
+                    <dl class="layui-nav-child">
+                        <!-- <dd><a href="">帮助中心</a></dd> -->
+                        <dd><a href="login.html">退出</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-side custom-admin">
+            <div class="layui-side-scroll">
+
+                <div class="custom-logo">
+                    <img src="assets/images/29.png" alt="" />
+                    <h1>硕航云</h1>
+                </div>
+                <ul id="Nav" class="layui-nav layui-nav-tree">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="icon-zhuye iconfont"></i>
+                            <em>主页</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="views/console.html">我的工作台</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="iconfont icon-dingdanwuliaocaigouguanli"></i>
+                            <em>工作流</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="views/mywork/mywork.html">我的工作</a></dd>
+                            <dd><a href="views/mywork/worksearch.html">工作查询</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="iconfont icon-dingdanwuliaocaigouguanli"></i>
+                            <em>采购管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="views/purchase/purchwork.html">采购订单</a></dd>
+                            <dd><a href="views/purchase/purchInvo.html">采购发票</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="iconfont icon-xiaoshouguanli1"></i>
+                            <em>销售管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="views/scale/scalContract.html">销售合同</a></dd>
+                            <dd class="hidden"><a href="views/scale/scalworkdetail.html">销售订单</a></dd><!-- 查看详情 -->
+                            <!-- <dd><a href="views/scalwork.html">销售订单</a></dd> -->
+                            <dd><a href="views/scale/scalwork1.html">销售订单</a></dd><!-- 新增 -->
+                            <dd><a href="views/scale/scalworklist.html">销售订单列表</a></dd>
+                            <!-- <dd><a href="views/scaledetail.html">销售订单明细表</a></dd> -->
+                            <dd><a href="views/scale/scaleInvo.html">销售发票</a></dd>
+                            <dd class="hidden"><a href="views/scale/scalworkchange.html">销售订单</a></dd><!-- 变更 -->
+                          
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="iconfont icon-cangkuguanli-"></i>
+                            <em>仓库管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="views/warehouse/scaleIn.html">采购入库</a></dd>
+                            <dd><a href="views/warehouse/scalestock.html">销售出库</a></dd>
+                            <dd><a href="views/warehouse/otherIn.html">其他入库</a></dd>
+                            <dd><a href="views/warehouse/otherStock.html">其他出库</a></dd>
+                            <dd><a href="views/warehouse/outIn.html">委外入库</a></dd>
+                            <dd><a href="views/warehouse/outstock.html">委外出库</a></dd>
+                        </dl> 
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="iconfont icon-shengchanguanli"></i>
+                            <em>生产管理</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="views/product/productwork.html">生产订单</a></dd>
+                            <dd><a href="views/product/productlist.html">生产订单列表</a></dd>
+                            <dd><a href="views/product/productll.html?isnew=10">领料单</a></dd>
+                            <dd><a href="views/product/producthb.html?isnew=10">工序汇报</a></dd>
+                            <dd><a href="views/product/productpro.html">产品入库</a></dd>
+                            <dd><a href="views/product/productworkgx.html">生产报表-工序执行</a></dd>
+                            <dd><a href="views/product/productworkll.html">生产报表-领料分析</a></dd>
+                            <dd class="hidden"><a href="views/product/productdetail.html">查看生产订单</a></dd>
+                            <dd class="hidden"><a href="views/product/productchange.html">修改生产订单</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="iconfont icon-yingshouyingfu-"></i>
+                            <em>应收应付</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="views/receanpay/procee.html">收款单</a></dd>
+                            <dd><a href="views/receanpay/paylist.html">付款单</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="iconfont icon-kaifajichushezhi"></i>
+                            <em>基础设置</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="views/basic/basicSet.html">公司信息</a></dd>
+                            <dd><a href="views/basic/productype.html">物料类别</a></dd>
+                            <!-- <dd><a href="views/producs.html">物料</a></dd> -->
+                            <dd><a href="views/basic/materManmant.html">物料管理</a></dd>
+                            <dd><a href="views/basic/unit.html">计量单位</a></dd>
+                            <dd><a href="views/basic/cusasupper/custom.html">客户管理</a></dd>
+                            <dd><a href="views/basic/cusasupper/supplier.html">供应商管理</a></dd>
+                            <dd class="hidden"><a href="views/basic/cusasupper/newcustom.html">新增客户信息</a></dd>
+                            <dd class="hidden"><a href="views/basic/cusasupper/newsupplier.html">新增供应商信息</a></dd>
+                            <dd><a href="views/basic/print/pritempletlist.html">打印模板</a></dd>
+                            <dd class="hidden"><a href="views/basic/print/newpritemplet.html">新增打印模板</a></dd>
+                            <dd class="hidden"><a href="views/basic/print/editpritemplet.html">查看打印模板</a></dd>
+                            <dd><a href="views/basic/stock/stocklist.html">仓库管理</a></dd>
+                            <dd class="hidden"><a href="views/basic/stock/newstock.html">新增仓库信息</a></dd>
+                            <dd><a href="views/basic/craft.html">工艺管理</a></dd>
+                            <dd><a href="views/basic/process.html">工序名称</a></dd>
+                            
+                        </dl>
+                    </li>
+                    <!-- <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="iconfont icon-shengchanguanli"></i>
+                            <em>金蝶软件</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="views/productwork1.html?status=0">生产订单</a></dd>
+                            <dd><a href="views/productworklist.html">生产订单汇总表</a></dd>
+                            <dd><a href="views/scalremoval.html">销售出库明细表</a></dd>
+                            <dd><a href="views/chronoentry.html">销售订单序时簿</a></dd>
+                            <dd><a href="views/recollect.html">应收账款汇总表</a></dd>
+                            <dd><a href="views/redetail.html">应收账款明细表</a></dd>
+                        </dl>
+                    </li> -->
+
+                </ul>
+            </div>
+        </div>
+        <div class="layui-body">
+            <div class="layui-tab app-container" lay-allowClose="true" lay-filter="tabs">
+                <ul id="appTabs" class="layui-tab-title custom-tab"></ul>
+                <div id="appTabPage" class="layui-tab-content"></div>
+            </div>
+        </div>
+        <!-- <div class="layui-footer">
+            <p>© 2018</p> 
+        </div> -->
+        <div class="mobile-mask"></div>
+    </div>
+    <script src="assets/layui.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <script  src="assets/js/jquery.table2excel.min.js"></script>
+    <script src="index.js" data-main="home"></script>
+</body>
+
+</html>

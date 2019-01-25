@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="../../assets/css/mypublic.css">
+    <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/fontlist/iconfont.css">
+    <link rel="stylesheet" href="../../assets/css/table.css">
+    <link rel="stylesheet" href="../../assets/css/product.css">
+    <title>生产订单</title>
+    <style>
+        .craftwork .layui-table-cell .layui-form-checkbox[lay-skin=primary]{
+        top:-5px;
+    }
+    </style>
+</head>
+
+<body class="layui-view-body produwork craftwork">
+    <div class="layui-content">
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="btnlist">
+                            <!-- <span class="layui-btn add">新增</span> -->
+                            <span class="layui-btn sub">保存</span>
+                            <span class="layui-btn audit disclick">审核</span>
+                            <span class="layui-btn changeStatus disclick">变更</span>
+                            <span class="layui-btn " style="background:#5fb878">计算物料用量</span>
+                            <button type="button" class="layui-btn layui-btn-normal" id="testList">上传附件</button>
+                        </div>
+                        <div class="layui-form layui-form-item " style="padding-top:25px;">
+                            <div class="form-box">
+                                <div class="layui-upload">
+                                    <div>
+                                        <table class="layui-table imgtable">
+                                            <thead id="tablehead">
+
+                                            </thead>
+                                            <tbody id="tablebody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">客户订单号：</label>
+                                        <div class="layui-input-block  cusOrder" data-type="daten">
+                                            <select name="" class="" id="cusOrder" lay-search="" lay-filter="cusorder">
+                                                <option value="">请选择</option>
+                                                <option value="">加载中...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label">客户：</label>
+                                        <div class="layui-input-block checkcus" data-type="daten">
+                                            <select name="Assign_Customer" class="" id="Assign_Customer" lay-search=""
+                                                lay-filter="">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label">单据日期：</label>
+                                        <div class="layui-input-block ">
+                                            <input type="text" name="Assign_DateTime" id="Assign_DateTime" lay-verify="date"
+                                                autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">单据编号：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" id="Assign_Name" autocomplete="off" name="Assign_Name">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">产品代码：</label>
+                                        <div class="layui-input-block checkpro layui-select-title layui-form-select"
+                                            data-type="daten">
+                                            <!-- <select name="checkprobegin" class="" id="checkprobegin" lay-search=""
+                                                lay-filter="selectpro">
+                                                <option value="">请选择</option>
+                                            </select> -->
+                                            <input type="text" placeholder="请选择" value="" class="layui-input materName"
+                                                name="Assign_Material" autocomplete="off">
+                                                <input type="hidden" id="Craft_Material">
+                                            <i class="layui-edge"></i>
+                                            <div class="selectlist hidden">
+                                                <div class="dateload">
+                                                    <span>加载中...</span>
+                                                </div>
+                                                <div class="datelist hidden">
+                                                    <ul>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label">产品名称：</label>
+                                        <div class="layui-input-block disinput" data-type="daten">
+                                            <input type="text" value="" id="nick" autocomplete="off" class="maternick"
+                                                name="">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">规格型号：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" id="specifications" autocomplete="off" class="materspe"
+                                                name="Assign_Specifications">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label">交货日期：</label>
+                                        <div class="layui-input-block ">
+                                            <input type="text" name="" class="layui-input" readonly id="deadline">
+                                        </div>
+                                    </div>
+                                </div>
+
+ 
+
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">单位：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" id="measure" autocomplete="off" name="Assign_Unit">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">BOM编号：</label>
+                                        <div class="layui-input-block checkbom" data-type="daten">
+                                            <select name="Assign_BillOfMaterial" class="" id="Assign_BillOfMaterial"
+                                                lay-search="" lay-filter="bom">
+                                                <option value="">请选择</option>
+                                                <option value="">加载中...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">工艺路线：</label>
+                                        <div class="layui-input-block checkcraft" data-type="daten">
+                                            <select name="Assign_Craft" class="" id="Assign_Craft" lay-search=""
+                                                lay-filter="craft">
+                                                <option value="">请选择</option>
+                                                <option value="">加载中...</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl " style="margin-left:1px ">
+                                        <input type="checkbox" checked id="checkl" name="">
+                                        <label for="checkl" class="labelg">自动生成BOM和工艺</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label">类型：</label>
+                                        <div class="layui-input-block worktype" data-type="daten">
+                                            <select name="Assign_Type" class="" id="Assign_Type" lay-search=""
+                                                lay-filter="">
+                                                <option value="">请选择</option>
+                                                <!-- <option value="1">普通订单</option>
+                                                <option value="2">返工</option> -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">计划生产数量：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" id="" autocomplete="off" name="Assign_Quantity">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label">计划开工日期：</label>
+                                        <div class="layui-input-block ">
+                                            <input type="text" name="Assign_StartTime" id="Assign_StartTime" lay-verify="date"
+                                                autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label">计划完工日期：</label>
+                                        <div class="layui-input-block ">
+                                            <input type="text" name="Assign_Deadline" id="Assign_Deadline" lay-verify="date"
+                                                autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="clearfix">
+
+                                    <div class="layui-form-lsit fl textarlist">
+                                        <label class="layui-form-label">备注：</label>
+                                        <div class="layui-input-block " data-type="daten" style="width:400px">
+                                            <textarea name="Rmark" id="" rows='3'></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="isAttribute clearfix">
+
+
+                                </div>
+
+
+                            </div>
+                            <div class="taplist clearfix" data-staut="2">
+                                <span class="checkone checkorder active" data-status='2'>物料</span>
+                                <span class="checkone  checkgy" data-status='1'>工艺</span>
+                                <span class="nextbill ordernext">下推领料单</span>
+                                <span class="nextbill gynext hidden layui-btn" lay-event="getdata">下推工序汇报</span>
+                            </div>
+
+                            <div id="tablelist1" style="clear:left" class="hidden">
+                                <section class="cpmtable">
+                                    <div class="layui-card">
+                                        <!-- <i class="iconfont icon-guanbi iconclose"></i> -->
+                                        <div class="layui-card-body layui-text">
+                                            <div id="tablecpm" class="table-overlay">
+                                                <table id="dataTable1" lay-filter="dataTable1" class="layui-hide"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div id="tablelist" style="clear:left" class="">
+                                <section class="productworktable" data-type="daten">
+                                    <div class="layui-card">
+                                        <!-- <i class="iconfont icon-guanbi iconclose"></i> -->
+                                        <div class="layui-card-body layui-text">
+                                            <div id="tableRes" class="table-overlay">
+                                                <table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="clearfix formfoot">
+                                <div class="layui-form-lsit fl ">
+                                    <label class="layui-form-label">制单人：</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="001" disabled id="zd">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit fl ">
+                                    <label class="layui-form-label">审核人：</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="001" disabled id="zd">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit fl ">
+                                    <label class="layui-form-label">审核日期：</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" disabled id="zd">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                </div>
+                </form>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+  
+
+    <script type="text/html" id="selectTool">
+    <div class="  layui-select-title layui-form-select checkmater" data-type="daten" id="checkmater">
+            <input type="text" placeholder="请选择" value="" class="layui-input materName1" id="materName1" autocomplete="off">
+            <i class="layui-edge"></i>
+            <div class="selectlist1 hidden">
+                <div class="dateload hidden">
+                    <span>加载中...</span>
+                </div>
+                <div class="datelist hidden">
+                    <ul>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+</script>
+    <script type="text/html" id="selectcrp">
+        <select id="CraftEntry_Nick" lay-filter="CraftEntry_Nick" lay-search name="CraftEntry_Nick">
+        <option value="">请选择或输入</option>
+        {{# layui.each(dateslit1, function(index, item){ }}
+        <option value="{{item.Process_Name}}" >{{ item.Process_Nick}}</option>
+        {{# }); }}
+    </select>
+</script>
+
+
+
+    <!-- <script type="text/html" id="selectuser">
+        <select id="Fuser" lay-filter="Fuser" lay-search>
+        <option value="">请选择</option>
+        <option value="1">张一</option>
+       <option value="2">徐少春</option>
+    </select>
+</script> -->
+
+
+
+
+
+
+</body>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/layui.all.js"></script>
+<script src="../../assets/js/jquery.cookie.js"></script>
+<script src="../../main.js"></script>
+<script src="../../assets/js/product/productwork.js"></script>
+<!-- <script src="../assets/js/drop.js"></script> -->
+
+</html>
