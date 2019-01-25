@@ -921,7 +921,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     // 保存--
     $(".sub").on("click", function () {
-        sendcraft();
+        var list=$("form").serializeArray()
+        console.log(list)
+        // sendcraft();
     })
 
     // 保存工艺--
@@ -1006,6 +1008,13 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
 
 $(function () {
+
+     // 制单人
+     var mouser = $.cookie("User_Id");
+     var username = $.cookie("User_Nick")
+     $("#Assign_Biller").val(mouser)
+     $("#Assign_Billername").val(username)
+ 
 
     $("#tablelist1 .layui-table-body").addClass("overvis");
     $("#tablelist1 .layui-table-box").addClass("overvis");
@@ -1394,6 +1403,7 @@ $(function () {
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
+                        $("#Assign_SalesOrderEntry").val(res.Data.F_Id)
                         getpro(data.Details)
 
                     } else {
@@ -1594,17 +1604,56 @@ function getcraftone(id) {
             var isussecc = res.Succeed;
             if (isussecc) {
                 if (res.Data) {
+                    $("#assCraftid").val(res.F_Id)
                     craftdetail=res.Data.Details
                     var select = 'dd[lay-value="' + res.Data.F_Id + '"]';
                     $('#Assign_Craft').siblings("div.layui-form-select").find('dl').find(select).click();
+                    newcraftdefalue(res.Data.Details)
                 } else {
                     var select1 = 'dd[lay-value=""]';
                     $('#Assign_Craft').siblings("div.layui-form-select").find('dl').find(select1).click();
                 }
-
             } else {
                 alert(res.Message)
             }
         }
     })
+}
+
+// 创建工单工序
+function newcraftdefalue(data){
+    console.log(data)
+    // 获取工单主键
+    // $.ajax({
+    //     url:getMain,
+    //     success:function(res){
+    //         console.log(res)
+    //         var isussecc=res.Succeed;
+    //         if(isussecc){
+    //             $("#fid").val(res.Data)
+    //             $.each(data,function(i,v){
+    //                 var data={
+    //                     AssignCraft_Nick:v.CraftEntry_Nick,
+    //                     AssignCraft_Name:v.CraftEntry_Namem,
+    //                     AssignCraft_Process:F_Id,
+    //                     AssignCraft_Assign:res.Data
+    //                 } 
+    //                 $.ajax({
+    //                     url:addassignCraft,
+    //                     type:'POST',
+    //                     success:function(result){
+    //                         console.log(result);
+    //                         if(result.Succeed){
+
+    //                         }else{
+    //                             alert(result.Message)
+    //                         }
+    //                     }
+    //                 })   
+    //             })
+    //         }else{
+    //             alert(res.Message)
+    //         }
+    //     }
+    // })
 }

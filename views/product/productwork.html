@@ -19,6 +19,9 @@
 </head>
 
 <body class="layui-view-body produwork craftwork">
+    <input type="hidden" id="fid"> <!-- 工单id-->
+    <input type="hidden" id="assCraftid">
+    <!--工艺路线id-->
     <div class="layui-content">
         <div class="layui-row">
             <div class="layui-card">
@@ -46,8 +49,9 @@
                                 <div class="clearfix">
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">客户订单号：</label>
+                                        <input type="hidden" name="Assign_SalesOrderEntry" id="Assign_SalesOrderEntry">
                                         <div class="layui-input-block  cusOrder" data-type="daten">
-                                            <select name="" class="" id="cusOrder" lay-search="" lay-filter="cusorder">
+                                            <select name="Assign_SalesOrder" class="" id="cusOrder" lay-search="" lay-filter="cusorder">
                                                 <option value="">请选择</option>
                                                 <option value="">加载中...</option>
                                             </select>
@@ -76,7 +80,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="clearfix">
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">产品代码：</label>
@@ -87,8 +90,8 @@
                                                 <option value="">请选择</option>
                                             </select> -->
                                             <input type="text" placeholder="请选择" value="" class="layui-input materName"
-                                                name="Assign_Material" autocomplete="off">
-                                                <input type="hidden" id="Craft_Material">
+                                                 autocomplete="off">
+                                            <input type="hidden" id="Craft_Material" name="Assign_Material"> <!-- 产品ID-->
                                             <i class="layui-edge"></i>
                                             <div class="selectlist hidden">
                                                 <div class="dateload">
@@ -109,7 +112,6 @@
                                                 name="">
                                         </div>
                                     </div>
-
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">规格型号：</label>
                                         <div class="layui-input-block disinput">
@@ -124,9 +126,6 @@
                                         </div>
                                     </div>
                                 </div>
-
- 
-
                                 <div class="clearfix">
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">单位：</label>
@@ -152,16 +151,13 @@
                                                 <option value="">请选择</option>
                                                 <option value="">加载中...</option>
                                             </select>
-
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl " style="margin-left:1px ">
                                         <input type="checkbox" checked id="checkl" name="">
                                         <label for="checkl" class="labelg">自动生成BOM和工艺</label>
                                     </div>
-
                                 </div>
-
                                 <div class="clearfix">
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">类型：</label>
@@ -194,7 +190,6 @@
                                                 autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="clearfix">
 
@@ -205,13 +200,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="isAttribute clearfix">
-
-
                                 </div>
-
-
                             </div>
                             <div class="taplist clearfix" data-staut="2">
                                 <span class="checkone checkorder active" data-status='2'>物料</span>
@@ -248,19 +238,20 @@
                                 <div class="layui-form-lsit fl ">
                                     <label class="layui-form-label">制单人：</label>
                                     <div class="layui-input-block disinput">
-                                        <input type="text" value="001" disabled id="zd">
+                                        <input type="hidden" value="" id="Assign_Biller" name="Assign_Biller" readonly>
+                                        <input type="text" value="" id="Assign_Billername" readonly>
                                     </div>
                                 </div>
                                 <div class="layui-form-lsit fl ">
                                     <label class="layui-form-label">审核人：</label>
                                     <div class="layui-input-block disinput">
-                                        <input type="text" value="001" disabled id="zd">
+                                        <input type="text" value="" disabled id="">
                                     </div>
                                 </div>
                                 <div class="layui-form-lsit fl ">
                                     <label class="layui-form-label">审核日期：</label>
                                     <div class="layui-input-block disinput">
-                                        <input type="text" value="" disabled id="zd">
+                                        <input type="text" value="" disabled id="">
                                     </div>
                                 </div>
 
@@ -276,7 +267,7 @@
 
     </div>
 
-  
+
 
     <script type="text/html" id="selectTool">
     <div class="  layui-select-title layui-form-select checkmater" data-type="daten" id="checkmater">
@@ -295,7 +286,7 @@
         </div>
 </script>
     <script type="text/html" id="selectcrp">
-        <select id="CraftEntry_Nick" lay-filter="CraftEntry_Nick" lay-search name="CraftEntry_Nick">
+        <select id="CraftEntry_Nick" lay-filter="CraftEntry_Nick" lay-search >
         <option value="">请选择或输入</option>
         {{# layui.each(dateslit1, function(index, item){ }}
         <option value="{{item.Process_Name}}" >{{ item.Process_Nick}}</option>

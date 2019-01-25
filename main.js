@@ -105,8 +105,10 @@ var assignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/GetList?keyword='
 var addassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Add'
 // 修改工单工序
 var editassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Edit'
-// 获取工单主键
+// 获取工单主键fid
 var getMain=ajaxURl+'/api/PSIBase/BatchNo/GetNewId'
+// 获取单据编号
+var getnum=ajaxURl+'//api/PSIBase/BatchNo/GetNext'
 // 删除工单工序
 var removeassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Remove' 
 
