@@ -20,7 +20,9 @@
 
 <body class="layui-view-body produwork craftwork">
     <input type="hidden" id="fid"> <!-- 工单id-->
-    <input type="hidden" id="assCraftid">
+    <input type="hidden" id="assCraftid"><!-- 记录工艺路线的fid-->
+   <input type="hidden" id="isadd" value="false">  <!-- 记录工艺是否新建-->
+   <input type="hidden" id="editdefault"><!-- 记录新增工单工序的fid-->
     <!--工艺路线id-->
     <div class="layui-content">
         <div class="layui-row">
@@ -51,7 +53,8 @@
                                         <label class="layui-form-label">客户订单号：</label>
                                         <input type="hidden" name="Assign_SalesOrderEntry" id="Assign_SalesOrderEntry">
                                         <div class="layui-input-block  cusOrder" data-type="daten">
-                                            <select name="Assign_SalesOrder" class="" id="cusOrder" lay-search="" lay-filter="cusorder">
+                                            <select name="Assign_SalesOrder" class="" id="cusOrder" lay-search=""
+                                                lay-filter="cusorder">
                                                 <option value="">请选择</option>
                                                 <option value="">加载中...</option>
                                             </select>
@@ -90,8 +93,9 @@
                                                 <option value="">请选择</option>
                                             </select> -->
                                             <input type="text" placeholder="请选择" value="" class="layui-input materName"
-                                                 autocomplete="off">
-                                            <input type="hidden" id="Craft_Material" name="Assign_Material"> <!-- 产品ID-->
+                                                autocomplete="off">
+                                            <input type="hidden" id="Craft_Material" name="Assign_Material">
+                                            <!-- 产品ID-->
                                             <i class="layui-edge"></i>
                                             <div class="selectlist hidden">
                                                 <div class="dateload">
@@ -192,7 +196,12 @@
                                     </div>
                                 </div>
                                 <div class="clearfix">
-
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">项目号：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" id="Assign_Project" autocomplete="off" name="Assign_Project">
+                                        </div>
+                                    </div>
                                     <div class="layui-form-lsit fl textarlist">
                                         <label class="layui-form-label">备注：</label>
                                         <div class="layui-input-block " data-type="daten" style="width:400px">
@@ -209,7 +218,6 @@
                                 <span class="nextbill ordernext">下推领料单</span>
                                 <span class="nextbill gynext hidden layui-btn" lay-event="getdata">下推工序汇报</span>
                             </div>
-
                             <div id="tablelist1" style="clear:left" class="hidden">
                                 <section class="cpmtable">
                                     <div class="layui-card">
@@ -248,26 +256,27 @@
                                         <input type="text" value="" disabled id="">
                                     </div>
                                 </div>
+                                <div class="layui-form-lsit fl">
+                                    <label class="layui-form-label">单据状态：</label>
+                                    <div class="layui-input-block disinput orderstatus" data-type="daten">
+                                        <input type="text" value="" id="Assign_Status" name="Assign_Status" autocomplete="off"
+                                            readonly>
+                                      
+                                    </div>
+                                </div>
                                 <div class="layui-form-lsit fl ">
                                     <label class="layui-form-label">审核日期：</label>
                                     <div class="layui-input-block disinput">
                                         <input type="text" value="" disabled id="">
                                     </div>
                                 </div>
-
                             </div>
                         </div>
+                    </form>
                 </div>
-                </form>
-
-
             </div>
-
         </div>
-
     </div>
-
-
 
     <script type="text/html" id="selectTool">
     <div class="  layui-select-title layui-form-select checkmater" data-type="daten" id="checkmater">
@@ -289,7 +298,7 @@
         <select id="CraftEntry_Nick" lay-filter="CraftEntry_Nick" lay-search >
         <option value="">请选择或输入</option>
         {{# layui.each(dateslit1, function(index, item){ }}
-        <option value="{{item.Process_Name}}" >{{ item.Process_Nick}}</option>
+        <option value="{{item.Process_Name}}" data-fid="{{item.F_Id}}">{{ item.Process_Nick}}</option>
         {{# }); }}
     </select>
 </script>

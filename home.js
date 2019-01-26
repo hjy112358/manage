@@ -359,12 +359,12 @@ function newproduct(){
 }
 // 查看生产订单
 function getproduct(id){
-    var oldhref = $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(7)').attr("href");
+    var oldhref = $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(9)').attr("href");
     var href = oldhref
     href = href + '?fid='+id
-    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(7)').attr("href", href)
-    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(7)').trigger('click');
-    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(7)').attr("href", oldhref)
+    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(9)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(9)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(9)').attr("href", oldhref)
     
 }
 // 新增仓库

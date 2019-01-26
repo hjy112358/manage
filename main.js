@@ -71,6 +71,8 @@ var saleEntry=ajaxURl + '/Api/PSISales/SalesOrder/GetEntry?keyValue='
 // -------------------生产管理----------------------
 // 生产订单类型
 var ajaxAsstype=ajaxURl + "/Api/SystemManager/Dictionary/GetEntry?keyword=PSIAssign_Type"
+// 生产工单单据状态 --
+var assginsta=ajaxURl+'/Api/SystemManager/Dictionary/GetEntry?keyword=PSIAssign_Status'
 // 工序列表
 var processlist=ajaxURl + '/Api/PSIBase/Process/GetList?keyword='
 // 添加工序
@@ -93,6 +95,8 @@ var addCrafty=ajaxURl + '/api/PSIBase/CraftEntry/Add'
 var saveAssign=ajaxURl + '/Api/Manufacture/Assign/Add'
 // 工艺列表
 var craftlist=ajaxURl+'/api/PSIBase/Craft/GetList?keyword=&PageSize=&PageIndex='
+// 删除工艺列表
+var removecraftlist=ajaxURl+'/Api/Manufacture/Assign/Remove'
 // 工艺详细列表
 var craftEnty=ajaxURl+'/api/PSIBase/Craft/GetEntity?keyValue='
 // BOM清单
@@ -108,7 +112,7 @@ var editassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Edit'
 // 获取工单主键fid
 var getMain=ajaxURl+'/api/PSIBase/BatchNo/GetNewId'
 // 获取单据编号
-var getnum=ajaxURl+'//api/PSIBase/BatchNo/GetNext'
+var getnum=ajaxURl+'//api/PSIBase/BatchNo/GetNext?billType='
 // 删除工单工序
 var removeassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Remove' 
 

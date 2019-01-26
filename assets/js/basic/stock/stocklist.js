@@ -59,7 +59,7 @@ $(function () {
     $(".checklist").trigger("click")
 
     $(".add").on("click", function () {
-        parent.newstock();
+        // parent.newstock();
     })
 })
 
