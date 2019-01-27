@@ -1,69 +1,124 @@
 var token = $.cookie("token");
 var currname = [], currnick = [], cusid = [], cusnick = [], printdata;
+var materid = [], matername = [], maternick = [],subindex,layer;
+
+layui.use(['layer'], function () {
+    layer = layui.layer;
+   
+});
 $(function () {
     var strwl = [
         { title: '序号', type: 'checkbox' },
-        { field: 'materialName', title: '物料代码'},
-        { field: 'materialNick', title: '物料名称' },
+        {
+            field: 'AssignEntry_Material', title: '物料代码', templet: function (d) {
+                var index1 = materid.indexOf(d.AssignEntry_Material)
+                if (index1 == '-1') {
+
+                    return ''
+                } else {
+                    return matername[index1]
+                }
+            }
+        },
+        {
+            field: 'AssignEntry_Material', title: '物料名称', templet: function (d) {
+                var index2 = materid.indexOf(d.AssignEntry_Material)
+                if (index2 == '-1') {
+                    return ''
+                } else {
+                    return maternick[index2]
+                }
+            }
+        },
         { field: 'AssignEntry_Specifications', title: '规格型号' },
         // { field: 'term3', title: '辅助属性', edit: 'text' },
         { field: 'AssignEntry_Unit', title: '计量单位' },
         // { field: 'term5', title: '批号', edit: 'text' },
-        { field: 'AssignEntry_Quantity', title: '计划用料数量'},
-        { field: '', title: '实际用料数量'},
-        { field: 'AssignEntry_ScrapRate', title: '损耗率'},
-        { field: 'AssignEntry_Total', title: '理论用量'},//计划用料数量*损耗率
+        { field: 'AssignEntry_Quantity', title: '计划用料数量' },
+        // { field: '', title: '实际用料数量' },
+        { field: 'AssignEntry_ScrapRate', title: '损耗率(%)',templet:function(d){
+            var num='0.00'
+            if(d.AssignEntry_ScrapRate){
+                num=parseFloat(d.AssignEntry_ScrapRate).toFixed(2);
+            }
+            return num
+            
+        } },
+        { field: 'AssignEntry_Total', title: '理论用量' },//计划用料数量*损耗率
         { field: '', title: '领料差异' },
         // 领料差异=计划用量-实际用料
         { field: '', title: '领料差异率' },
         { field: 'Rmark', title: '备注' }
     ];
-    var strgy=[
-        { title: '序号', type: 'checkbox' },
-        { field: 'CraftEntry_Nick', title: '工艺名称' },
-        { field: 'Rmark', title: '备注' },
-        // { field: 'Fuser', title: '操作工', templet: "#selectuser" },
-        { field: '', title: '工时' },
-        { field: '', title: '接收数' },
-        { field: '', title: '实做数'},
-        { field: '', title: '合格数'},
-        { field: '', title: '报废数'},
-        { field: '', title: '报废率'},
-        { field: '', title: '移交数'},
-        { field: '', title: '待制数'},
-        { field: '', title: '待交数'},
-    ]
     var url = window.location.search;
     var fid = url.split("?")[1].split("=")[1]
     $.ajax({
         type: "get",
-        url: ajaxURl + '/Api/Manufacture/Assign/GetEntity?keyValue=' + fid,
+        url: getassone + fid,
         success: function (res) {
+            subindex = layer.load();
             console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             // printdata = res
             if (isussecc) {
                 if (data) {
-                    $("#Assign_Customer").val(data.Assign_Customer)
-                    $("#Assign_DateTime").val(data.Assign_DateTime)
+                    $("#Assign_DateTime").val(data.Assign_DateTime.split(" ")[0])
                     $("#Assign_Name").val(data.Assign_Name)
-                    $("#Assign_Material").val(data.Assign_Material)//物料
-                    $("#nick").val()//物料
-                    $("#specifications").val()//物料
-                    $("#Assign_Unit").val()//物料
-                    $("#Assign_BillOfMaterial").val(data.Assign_BillOfMaterial)
-                    $("#Assign_Craft").val(data.Assign_Craft)
-                    $("#Assign_Type").val(data.Assign_Type)//类型
                     $("#Assign_Quantity").val(data.Assign_Quantity)
-                    $("#Assign_StartTime").val(data.Assign_StartTime)
-                    $("#Assign_Deadline").val(data.Assign_Deadline)
+                    $("#Assign_Project").val(data.Assign_Project)
+                    $("#Assign_StartTime").val(data.Assign_StartTime.split(" ")[0])
+                    $("#Assign_Deadline").val(data.Assign_Deadline.split(" ")[0])
                     $("#Rmark").val(data.Rmark)
-                    
-                    
-                   getmarter(data.Assign_Material)
-                   gettype(Assign_Type)
-                    tablerender(strwl, data.Details)
+                    setInterval(function(){
+                        layer.close(subindex)
+                    },1500)
+                    //单据类型
+                    gettype(data.Assign_Type)
+                    // bom
+                    getbom(data.Assign_BillOfMaterial)
+                    // 工艺路线
+                    getcraft(data.Assign_Craft)
+                    // 客户
+                    getcustom(data.Assign_Customer)
+                    // 制单人
+                    getbil(data.Assign_Biller)
+                    // 单据状态
+                    getstatus(data.Assign_Status)
+
+                    // 工艺加载
+                    getcraflist(data.Assign_Material)
+                    // 产品
+                    $.ajax({
+                        type: "get",
+                        url: ajaxMater,
+                        success: function (result) {
+                            console.log(result)
+                            var isussecc1 = result.Succeed;
+                            var datamater = result.Data;
+                            if (isussecc1) {
+                                for (var i = 0; i < datamater.length; i++) {
+                                    var datanow = datamater[i]
+                                    materid.push(datanow.F_Id)
+                                    matername.push(datanow.Material_Name)
+                                    maternick.push(datanow.Material_Nick)
+                                    if (datanow.F_Id == data.Assign_Material) {
+                                        $("#Assign_Material").val(datanow.Material_Name)
+                                        $("#nick").val(datanow.Material_Nick)
+                                        $("#specifications").val(datanow.Material_Specifications)
+                                        $("#Assign_Unit").val(datanow.Material_Measure)
+                                       
+                                    }
+                                }
+                                // 物料加载
+                                console.log(data.Details)
+                                tablerender(strwl, data.Details)
+                            } else {
+                                alert(result.Message)
+                            }
+                        }
+                    })
+
                 }
 
             } else {
@@ -72,15 +127,11 @@ $(function () {
         }
     })
 
-
-    
-
-    $(".audit").on("click", function () {
+// 变更
+    $(".changeStatus").on("click", function () {
         var href = '/views/product/productchange.html?scaleorder=' + fid;
         window.location.replace(href)
     })
-
-
 
     $(".checkone").click(function () {
         var stau = $(this).attr("data-status");
@@ -111,24 +162,24 @@ $(function () {
 
 
 
-//物料
-function getmarter(id){
-    console.log(id)
+
+
+
+
+// 工单类型
+function gettype(id) {
     $.ajax({
         type: "get",
-        url: ajaxURl + "/Api/PSIBase/Material/GetList?keyword=&PageIndex=&PageSize=",
+        url: ajaxAsstype,
         success: function (res) {
             console.log(res)
             var isussecc = res.Succeed;
-            var data = res.Data;
+            var data = res.Data.Details;
             if (isussecc) {
                 for (var i = 0; i < data.length; i++) {
                     var datanow = data[i]
-                    if (datanow.Material_Name == id) {
-                        $("#Assign_Material").val(datanow.Material_Name)
-                        $("#nick").val(datanow.Material_Nick)
-                        $("#specifications").val(datanow.Material_Specifications)
-                        $("#Assign_Unit").val(datanow.Material_Measure)
+                    if (datanow.DictionaryItem_Value == id) {
+                        $("#Assign_Type").val(datanow.DictionaryItem_Nick)
                     }
                 }
             } else {
@@ -138,8 +189,158 @@ function getmarter(id){
     })
 }
 
-function gettype(){
+// bom
+function getbom(id) {
+    $.ajax({
+        type: "get",
+        url: bomlist,
+        success: function (res) {
+            console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data;
+            if (isussecc) {
+                for (var i = 0; i < data.length; i++) {
+                    var datanow = data[i]
+                    if (datanow.F_Id == id) {
+                        $("#Assign_BillOfMaterial").val(datanow.BillOfMaterial_Name)
+                    }
+                }
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
+}
 
+// 客户
+function getcustom(id) {
+    $.ajax({
+        type: "get",
+        url: ajaxCus,
+        success: function (res) {
+            console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data;
+            if (isussecc) {
+                for (var i = 0; i < data.length; i++) {
+                    var datanow = data[i]
+                    if (datanow.F_Id == id) {
+                        $("#Assign_Customer").val(datanow.Customer_Nick)
+                    }
+                }
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
+}
+
+// 工艺路线
+function getcraft(id) {
+    $.ajax({
+        type: "get",
+        url: craftlist,
+        success: function (res) {
+            console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data;
+            if (isussecc) {
+                for (var i = 0; i < data.length; i++) {
+                    var datanow = data[i]
+                    if (datanow.F_Id == id) {
+                        var nick;
+                        if(datanow.Craft_Nick){
+                            nick=datanow.Craft_Nick
+                        }else{
+                            nick=datanow.Craft_Name
+                        }
+                        $("#Assign_Craft").val(nick)
+                    }
+                }
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
+}
+
+//制单人
+function getbil(id) {
+    $.ajax({
+        type: "get",
+        url: ajaxUsr,
+        success: function (res) {
+            console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data;
+            if (isussecc) {
+                for (var i = 0; i < data.length; i++) {
+                    var datanow = data[i]
+                    if (datanow.F_Id == id) {
+                        $("#Assign_Biller").val(datanow.User_Nick)
+                    }
+                }
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
+}
+
+//单据状态
+function getstatus(id) {
+    $.ajax({
+        type: "get",
+        url: assginsta,
+        success: function (res) {
+            console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data.Details;
+            if (isussecc) {
+                for (var i = 0; i < data.length; i++) {
+                    var datanow = data[i]
+                    if (datanow.DictionaryItem_Value == id) {
+                        $("#Assign_Status").val(datanow.DictionaryItem_Nick)
+                    }
+                }
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
+}
+
+function getcraflist(id) {
+    var strgy = [
+        { title: '序号', type: 'numbers' },
+        { field: 'CraftEntry_Nick', title: '工艺名称' },
+        { field: 'Rmark', title: '备注' },
+        // { field: 'Fuser', title: '操作工', templet: "#selectuser" },
+        { field: '', title: '工时' },
+        { field: '', title: '接收数' },
+        { field: '', title: '实做数' },
+        { field: '', title: '合格数' },
+        { field: '', title: '报废数' },
+        { field: '', title: '报废率' },
+        { field: '', title: '移交数' },
+        { field: '', title: '待制数' },
+        { field: '', title: '待交数' },
+    ]
+    $.ajax({
+        type: "get",
+        url: materCraft + id,
+        success: function (res) {
+            console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data.Details;
+
+            if (isussecc) {
+                tablerendercraft(strgy, data)
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
 }
 
 function tablerender(str, data) {
@@ -158,5 +359,24 @@ function tablerender(str, data) {
         return false;
     })
 }
+
+
+function tablerendercraft(str, data) {
+    layui.use(['jquery', 'table'], function () {
+        var $ = layui.$,
+            table = layui.table;
+        table.render({
+            elem: '#dataTable1'
+            , toolbar: true
+            , cols: [str]
+            , data: data
+            , page: true
+            , limits: [1000, 2000, 3000, 4000, 5000]
+            , limit: 1000
+        });
+        return false;
+    })
+}
+
 
 

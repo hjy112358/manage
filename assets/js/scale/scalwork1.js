@@ -1125,7 +1125,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 var index = layer.load();
 
                 data.Details = newdata;
-                data.SalesOrder_Status="11100"
+                data.SalesOrder_Status="10000"
                 console.log(list)
                 $.ajax({
                     type: "POST",

@@ -34,7 +34,7 @@ var materid=[],maternick=[],matername=[],
 asstypeid=[],asstypename=[],asstypenick=[],
 astatusid=[],astatusnick=[],
 bomid=[],bomnick=[],
-craftid=[],craftnick=[],
+craftid=[],craftnick=[],craftname=[],
 cotnick=[],custid=[],
 billid=[],billnick=[]
 
@@ -111,7 +111,7 @@ $(function () {
             console.log(data)
             if(isussecc){
                 for(var i=0;i<data.length;i++){
-                    asstypeid.push(data[i].F_Id)  
+                    asstypeid.push(data[i].DictionaryItem_Value)  
                     asstypenick.push(data[i].DictionaryItem_Nick)
                 }
                 islist++;
@@ -151,6 +151,7 @@ $(function () {
                 for(var i=0;i<data.length;i++){
                     craftid.push(data[i].F_Id)   
                     craftnick.push(data[i].Craft_Nick)
+                    craftname.push(data[i].Craft_Name)
                 }
                 islist++;
                 isclick()
@@ -224,7 +225,13 @@ $(function () {
                 } 
             } },
             {field: 'Assign_Specifications', title: '规格', align: 'center', width: "150"},
-            {field: 'Assign_Unit', title: '单位', align: 'center', width: "100"},
+            {field: 'Assign_Unit', title: '单位', align: 'center', width: "100",templet:function(d){
+                if(d.Assign_Unit=="null"){
+                    return ''
+                }else {
+                    return d.Assign_Unit
+                }
+            }},
             { field: 'Assign_Quantity', title: '数量', width: "150"},            
             {field: 'Assign_Deadline', title: '计划完工日期', width: '150',align: 'center',templet:function(d){
                 if(d.Assign_Deadline){
@@ -270,11 +277,14 @@ $(function () {
             }},     
             { field: 'Assign_Craft', title: '工艺路线', width: '200' ,templet:function(d){
                 var index5= craftid.indexOf(d.Assign_Craft)
-                if (index5 == '-1') {    
-                    return ''
-                } else {
+                if(craftnick[index5]){
                     return craftnick[index5]
-                } 
+                }else if(craftname[index5]){
+                    return craftname[index5]
+                }else{
+                    return ''
+                }
+               
             } },      
             { field: 'Assign_Customer', title: '客户', width: "180"  ,templet:function(d){
                 var index6= custid.indexOf(d.Assign_Customer)
@@ -286,6 +296,7 @@ $(function () {
             }},
             { field: 'Assign_Project', title: '项目', width: "100" },
             { field: 'Assign_Biller', title: '制单人', width: '200'  ,templet:function(d){
+                
                 var index7= billid.indexOf(d.Assign_Biller)
                 if (index7 == '-1') {
                     return ''
@@ -302,7 +313,7 @@ $(function () {
         $.ajax({
             type: "GET",
             async: false,
-            url: ajaxURl + "/Api/Manufacture/Assign/GetList?keyword=",
+            url: asslist,
             success: function (res) {
                 var data = res.Data;
                 console.log(data)

@@ -72,7 +72,7 @@ var saleEntry=ajaxURl + '/Api/PSISales/SalesOrder/GetEntry?keyValue='
 // 生产订单类型
 var ajaxAsstype=ajaxURl + "/Api/SystemManager/Dictionary/GetEntry?keyword=PSIAssign_Type"
 // 生产工单单据状态 --
-var assginsta=ajaxURl+'/Api/SystemManager/Dictionary/GetEntry?keyword=PSIAssign_Status'
+var assginsta=ajaxURl+'/Api/SystemManager/Dictionary/GetEntry?keyword=PSIBill_Status'
 // 工序列表
 var processlist=ajaxURl + '/Api/PSIBase/Process/GetList?keyword='
 // 添加工序
@@ -91,8 +91,14 @@ var removeCraft=ajaxURl + '/api/PSIBase/Craft/Remove'
 var removeCraftety=ajaxURl + '/api/PSIBase/CraftEntry/Remove'
 // 添加工艺字表
 var addCrafty=ajaxURl + '/api/PSIBase/CraftEntry/Add'
+// 生产订单列表
+var asslist=ajaxURl + "/Api/Manufacture/Assign/GetList?keyword="
+// 获取工单
+var getassone=ajaxURl + "/Api/Manufacture/Assign/GetEntity?keyvalue="
 // 保存生产订单
 var saveAssign=ajaxURl + '/Api/Manufacture/Assign/Add'
+// 修改生产订单
+var editAssign=ajaxURl + '/Api/Manufacture/Assign/Edit'
 // 工艺列表
 var craftlist=ajaxURl+'/api/PSIBase/Craft/GetList?keyword=&PageSize=&PageIndex='
 // 删除工艺列表
@@ -117,10 +123,6 @@ var getnum=ajaxURl+'//api/PSIBase/BatchNo/GetNext?billType='
 var removeassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Remove' 
 
 // -------------------生产管理----------------------
-
-
-
-
 
 
 function paramString2obj(serializedParams) {

@@ -275,16 +275,16 @@ function protypesta(sta, id) {
 
 // 新增物料
 function addmater() {
-    $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(2)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(2)').trigger('click');
 }
 //查看物料
 function editmater(name,nick) {
-    var oldhref = $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(2)').attr("href");
+    var oldhref = $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(2)').attr("href");
     var href = oldhref
     href = href + '?matername=' + name+'&maternick='+nick;
-    $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(2)').attr("href", href)
-    $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(2)').trigger('click');
-    $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(2)').attr("href", oldhref)
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(2)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(2)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(2)').attr("href", oldhref)
     
 }
 
@@ -331,26 +331,26 @@ function newscale(){
 
 // 新增模板
 function newtemp(){
-    $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(9)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(9)').trigger('click');
 }
 
 // 查看修改模板
 function gettemplte(type,id){
-    var oldhref = $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(10)').attr("href");
+    var oldhref = $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(10)').attr("href");
     var href = oldhref
     href = href + '?type=' + type+'&tepid='+id;
-    $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(10)').attr("href", href)
-    $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(10)').trigger('click');
-    $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(10)').attr("href", oldhref)
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(10)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(10)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(10)').attr("href", oldhref)
 }
 
 // 新增客户信息
 function newcustom(){
-    $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(6)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(6)').trigger('click');
 }
 // 新增供应商信息
 function newsupp(){
-    $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(7)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(7)').trigger('click');
 }
 
 // 新增生产订单
@@ -369,6 +369,6 @@ function getproduct(id){
 }
 // 新增仓库
 function newstock(){
-    $('#Nav li.layui-nav-item:eq(7) > dl.layui-nav-child > dd > a:eq(12)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(12)').trigger('click');
 
 }

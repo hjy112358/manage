@@ -189,6 +189,7 @@
 #tablelist .layui-table-view .layui-table td[data-field="Material_Name"],
 #tablelist .layui-table-view .layui-table td[data-field="materialName"],
 #tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Nick"],
+#tablelist1 .layui-table-view .layui-table td[data-field="AssignCraft_Nick"],
 #tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Name"],
 #tablelist .layui-table-view .layui-table td[data-field="FMaterialName"]
 {
@@ -198,6 +199,7 @@
 #tablelist1 .layui-table-view .layui-table td[data-field="FName"] .layui-table-cell,
 #tablelist1 .layui-table-view .layui-table td[data-field="Fuser"] .layui-table-cell,
 #tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Nick"] .layui-table-cell,
+#tablelist1 .layui-table-view .layui-table td[data-field="AssignCraft_Nick"] .layui-table-cell,
 #tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Name"] .layui-table-cell,
 #tablelist .layui-table-view .layui-table td[data-field="FFetchDate"] .layui-table-cell,
 #tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Deadline"] .layui-table-cell,
@@ -219,6 +221,7 @@
 #tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Currency"]  .layui-input,
 #tablelist .layui-table-view .layui-table td[data-field="FFetchDate"] .layui-input,
 #tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Nick"] .layui-input,
+#tablelist1 .layui-table-view .layui-table td[data-field="AssignCraft_Nick"] .layui-input,
 #tablelist1 .layui-table-view .layui-table td[data-field="CraftEntry_Name"] .layui-input,
 #tablelist .layui-table-view .layui-table td[data-field="Material_Name"] .layui-input,
 #tablelist .layui-table-view .layui-table td[data-field="materialName"] .layui-input,

@@ -12,8 +12,19 @@
     <link rel="stylesheet" href="../../assets/css/product.css">
     <title>生产订单</title>
     <style>
-        .craftwork .layui-table-cell .layui-form-checkbox[lay-skin=primary]{
+    .craftwork .layui-table-cell .layui-form-checkbox[lay-skin=primary]{
         top:-5px;
+    }
+    .craftclick{
+        position: relative;
+    }
+    .nocheck{
+        position: absolute;
+        width: 100%;
+        height: 28px;
+        top: 0;
+        left: 0;
+        z-index: 555;
     }
     </style>
 </head>
@@ -147,7 +158,8 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="layui-form-lsit fl ">
+                                    <div class="layui-form-lsit fl craftclick">
+                                        <div class="nocheck"></div>
                                         <label class="layui-form-label">工艺路线：</label>
                                         <div class="layui-input-block checkcraft" data-type="daten">
                                             <select name="Assign_Craft" class="" id="Assign_Craft" lay-search=""
@@ -295,7 +307,7 @@
         </div>
 </script>
     <script type="text/html" id="selectcrp">
-        <select id="CraftEntry_Nick" lay-filter="CraftEntry_Nick" lay-search >
+        <select id="AssignCraft_Nick" lay-filter="AssignCraft_Nick" lay-search >
         <option value="">请选择或输入</option>
         {{# layui.each(dateslit1, function(index, item){ }}
         <option value="{{item.Process_Name}}" data-fid="{{item.F_Id}}">{{ item.Process_Nick}}</option>
