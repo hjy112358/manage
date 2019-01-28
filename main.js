@@ -105,8 +105,7 @@ var craftlist=ajaxURl+'/api/PSIBase/Craft/GetList?keyword=&PageSize=&PageIndex='
 var removecraftlist=ajaxURl+'/Api/Manufacture/Assign/Remove'
 // 工艺详细列表
 var craftEnty=ajaxURl+'/api/PSIBase/Craft/GetEntity?keyValue='
-// BOM清单
-var bomlist=ajaxURl+'/api/PSIBase/BillOfMaterial/GetList?keyword=&PageSize=&PageIndex='
+
 // 根据物料查工艺路线
 var materCraft=ajaxURl+'/api/PSIBase/Craft/GetDefault?keyvalue='
 // 工单工序查询
@@ -118,11 +117,21 @@ var editassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Edit'
 // 获取工单主键fid
 var getMain=ajaxURl+'/api/PSIBase/BatchNo/GetNewId'
 // 获取单据编号
-var getnum=ajaxURl+'//api/PSIBase/BatchNo/GetNext?billType='
+var getnum=ajaxURl+'/api/PSIBase/BatchNo/GetNext?billType='
 // 删除工单工序
 var removeassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Remove' 
 
 // -------------------生产管理----------------------
+
+
+// --------------生产数据---------------------------
+// bom分组
+var matertype=ajaxURl + "/Api/SystemManager/Dictionary/GetEntry?keyword=PSIBillOfMaterial_Type"
+// BOM清单
+var bomlist=ajaxURl+'/api/PSIBase/BillOfMaterial/GetList?keyword=&PageSize=&PageIndex='
+//  分组--BOM清单
+var bomlistone=ajaxURl+'/api/PSIBase/BillOfMaterial/GetList?'
+// --------------生产数据---------------------------
 
 
 function paramString2obj(serializedParams) {
