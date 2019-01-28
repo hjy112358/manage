@@ -239,22 +239,13 @@ function nextly() {
     $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(1)').attr("href", oldhref)
 }
 //汇报单
-function nexthb() {
-    var oldhref = $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(2)').attr("href");
-    var href = oldhref
-    // href = href.substr(0, href.length - 1);  
-    if (href.split("?")[1].split("=")[1] == '10') {
-        href = href.substr(0, href.length - 1);
-    }
-
-    console.log(href)
-    $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(2)').attr("href", href)
-    $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(2)').trigger('click');
-    $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(2)').attr("href", oldhref)
+function nexthb(id) {
+    var oldhref = $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(3)').attr("href");
+    var href = oldhref+'?orderid='+id
+    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(3)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(3)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(3)').attr("href", oldhref)
 }
-
-// 新增
-//查看
 
 
 //金蝶生产订单    0新增   1查看   2变更

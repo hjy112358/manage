@@ -120,6 +120,8 @@ var getMain=ajaxURl+'/api/PSIBase/BatchNo/GetNewId'
 var getnum=ajaxURl+'/api/PSIBase/BatchNo/GetNext?billType='
 // 删除工单工序
 var removeassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Remove' 
+// 下推生产工艺路线
+var pushcraft=ajaxURl+'/Api/Manufacture/Assign/AutoPushCraft'
 
 // -------------------生产管理----------------------
 

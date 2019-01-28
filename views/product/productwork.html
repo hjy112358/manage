@@ -150,12 +150,13 @@
                                     </div>
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">BOM编号：</label>
-                                        <div class="layui-input-block checkbom" data-type="daten">
-                                            <select name="Assign_BillOfMaterial" class="" id="Assign_BillOfMaterial"
+                                        <div class="layui-input-block disinput checkbom" data-type="daten">
+                                                <input type="text" value="" id="Assign_BillOfMaterial" autocomplete="off" name="Assign_BillOfMaterial" readonly>
+                                            <!-- <select name="Assign_BillOfMaterial" class="" id="Assign_BillOfMaterial"
                                                 lay-search="" lay-filter="bom">
                                                 <option value="">请选择</option>
                                                 <option value="">加载中...</option>
-                                            </select>
+                                            </select> -->
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl craftclick">
@@ -223,12 +224,12 @@
                                 </div>
                                 <div class="isAttribute clearfix">
                                 </div>
-                            </div>
+                            </div> 
                             <div class="taplist clearfix" data-staut="2">
                                 <span class="checkone checkorder active" data-status='2'>物料</span>
                                 <span class="checkone  checkgy" data-status='1'>工艺</span>
-                                <span class="nextbill ordernext">下推领料单</span>
-                                <span class="nextbill gynext hidden layui-btn" lay-event="getdata">下推工序汇报</span>
+                                <!-- <span class="nextbill ordernext">下推领料单</span>
+                                <span class="nextbill gynext hidden layui-btn" lay-event="getdata">下推工序汇报</span> -->
                             </div>
                             <div id="tablelist1" style="clear:left" class="hidden">
                                 <section class="cpmtable">

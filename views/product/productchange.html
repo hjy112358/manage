@@ -40,7 +40,8 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <form class="layui-form">
-                            <input type="hidden" id="fid" name=F_Id> <!-- 工单id-->
+                            <input type="hidden" id="fid" name="F_Id"> <!-- 工单id-->
+                            <input type="hidden" id="assign_Status" name="Assign_Status"> <!-- 工单状态-->
                         <div class="btnlist">
                             <!-- <span class="layui-btn add">新增</span> -->
                             <span class="layui-btn editsub">保存修改</span>
@@ -229,8 +230,8 @@
                             <div class="taplist clearfix" data-staut="2">
                                 <span class="checkone checkorder active" data-status='2'>物料</span>
                                 <span class="checkone  checkgy" data-status='1'>工艺</span>
-                                <span class="nextbill ordernext">下推领料单</span>
-                                <span class="nextbill gynext hidden layui-btn" lay-event="getdata">下推工序汇报</span>
+                                <!-- <span class="nextbill ordernext">下推领料单</span>
+                                <span class="nextbill gynext hidden layui-btn" lay-event="getdata">下推工序汇报</span> -->
                             </div>
                             <!-- 工序 -->
                             <div id="tablelist1" style="clear:left" class="hidden">

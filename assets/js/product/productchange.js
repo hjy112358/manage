@@ -36,8 +36,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 });
 var dateslit1 = [];
 var materdata, craftdetail = [];
-var sendfacture, sendcraft, reloadcraft, getpro, getcraft, 
-getcraftdata, getmaterdata, subindex,layer;
+var sendfacture, sendcraft, reloadcraft, getpro, getcraft,
+    getcraftdata, getmaterdata, subindex, layer;
 var dateslit = [];
 var materid = [], matername = [], maternick = []
 var renderForm1;
@@ -69,7 +69,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         laydate = layui.laydate,
         element = layui.element,
         table = layui.table;
-        layer = layui.layer;
+    layer = layui.layer;
     //数据表格实例化		
     var layTableId1 = "layTable";
     tableIns = table.render({
@@ -82,7 +82,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         // even: true,
         cols: [
             [{ title: '序号', type: 'checkbox' },
-            { field: 'materialName', title: '物料代码', templet: '#selectTool' }, 
+            { field: 'materialName', title: '物料代码', templet: '#selectTool' },
             { field: 'materialNick', title: '物料名称' },
             { field: 'AssignEntry_Specifications', title: '规格型号' },
             // { field: 'term3', title: '辅助属性', edit: 'text' },
@@ -90,19 +90,21 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             // { field: 'term5', title: '批号', edit: 'text' },
             { field: 'AssignEntry_Quantity', title: '计划用料数量', edit: 'text' },
             // { field: '', title: '实际用料数量' },
-            { field: 'AssignEntry_ScrapRate', title: '损耗率(%)', edit: 'text' ,templet:function(d){
-                var num='0.00'
-                if(d.AssignEntry_ScrapRate){
-                    num=parseFloat(d.AssignEntry_ScrapRate).toFixed(2);
+            {
+                field: 'AssignEntry_ScrapRate', title: '损耗率(%)', edit: 'text', templet: function (d) {
+                    var num = '0.00'
+                    if (d.AssignEntry_ScrapRate) {
+                        num = parseFloat(d.AssignEntry_ScrapRate).toFixed(2);
+                    }
+                    if (d.AssignEntry_Material) {
+                        return num
+                    } else {
+                        return ""
+                    }
+
+
                 }
-                if(d.AssignEntry_Material){
-                    return num
-                }else{
-                    return ""
-                }
-              
-                
-            }},
+            },
             { field: 'AssignEntry_Total', title: '理论用量' },//计划用料数量*损耗率
             { field: '', title: '领料差异' },
             // 领料差异=计划用量-实际用料
@@ -243,8 +245,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         var oldData = table.cache[layTableId1];
         $.each(tabledata, function (index, value) {
             if (value.LAY_TABLE_INDEX == dataindex) {
-                if (value.AssignEntry_Quantity && value.AssignEntry_ScrapRate){
-                    value.AssignEntry_Total = parseFloat(value.AssignEntry_Quantity) * parseFloat(value.AssignEntry_ScrapRate/100+1)
+                if (value.AssignEntry_Quantity && value.AssignEntry_ScrapRate) {
+                    value.AssignEntry_Total = parseFloat(value.AssignEntry_Quantity) * parseFloat(value.AssignEntry_ScrapRate / 100 + 1)
                 }
             }
         });
@@ -279,10 +281,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         if (data) {
             viewObj.limit = data.length + 1;
             $.each(data, function (i, v) {
-                var indexmater=materid.indexOf(v.AssignEntry_Material)
-                if( indexmater!='-1'){
-                    v.materialName=matername[indexmater]
-                    v.materialNick=maternick[indexmater]
+                var indexmater = materid.indexOf(v.AssignEntry_Material)
+                if (indexmater != '-1') {
+                    v.materialName = matername[indexmater]
+                    v.materialNick = maternick[indexmater]
                 }
                 newdata.push(v)
             })
@@ -315,17 +317,17 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         });
     }
 
-    $(".ordernext").on("click", function () {
-        var data = table.cache[layTableId1];
-        if (data.length == 1) {
-            if (data[0].FMaterialName == '') {
-                alert("至少选择一条物料代码")
-            }
-        } else {
-            sessionStorage.setItem('wlist', JSON.stringify(data));
-            parent.nextly()
-        }
-    })
+    // $(".ordernext").on("click", function () {
+    //     var data = table.cache[layTableId1];
+    //     if (data.length == 1) {
+    //         if (data[0].FMaterialName == '') {
+    //             alert("至少选择一条物料代码")
+    //         }
+    //     } else {
+    //         sessionStorage.setItem('wlist', JSON.stringify(data));
+    //         parent.nextly()
+    //     }
+    // })
 
 
     var htmlterm = '';
@@ -333,6 +335,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     var arri = {};
     function prolist() {
         $(".productworktable td[data-field='materialName']").each(function () {
+            $(".dateload").addClass("hidden")
+            $(".datelist").removeClass("hidden")
             var curnow = $(this);
             curnow.on("click", function () {
                 $("#tablelist .layui-table-body").addClass("overvis");
@@ -371,7 +375,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                         } else {
                         }
                     })
-                    //console.log(showList)
+                    ////console.log(showList)
                     for (var j = 0; j < showList.length; j++) {
                         var shownow = showList[j]
                         searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-fid="' + shownow.materid + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
@@ -389,19 +393,17 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                     });
                     _this1.on("click", function () {
                         var oldData = table.cache[layTableId1];
-                        //console.log(oldData)
+                        ////console.log(oldData)
                         var name = $(this).attr("data-name");
                         var nick = $(this).attr("data-nick");
                         var specife = $(this).attr("data-spe");
                         var measure = $(this).attr("data-materme");
                         var fid = $(this).attr("data-fid");
-                        // //console.log(fid)
                         $(".materName1").val(name);
                         // $(".maternick").val(nick);
                         // $(".materspe").val(specife);
                         // $("#measure").val(measure);
                         $.each(tabledata, function (index, value) {
-                            //console.log(value)
                             if (value.LAY_TABLE_INDEX == dataindex) {
                                 value.materialName = name;
                                 value.materialNick = nick
@@ -446,72 +448,104 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     // 客户订单号变更后包含的产品列表
     getpro = function (data) {
         $(".checkpro").on("click", function () {
-            $(".selectlist").removeClass("hidden");
-            var _this = $(this);
-            _this.addClass("layui-form-selected")
-            $(".checkpro").attr("data-type", "datey");
-            // $(".dateload").removeClass("hidden")
-            // $(".datelist").addClass("hidden");
-            $(".dateload").addClass("hidden")
-            $(".datelist").removeClass("hidden")
-            var html = '';
-            var arrlist = [];
-            var arri = {};
-            var materdatanew;
-            var deadline;
-            // data[i].Material_Name data[i].Material_Nick  data[i].Material_Specification
-            for (var i = 0; i < data.length; i++) {
-                var datanow = data[i];
-                for (var j = 0; j < materdata.length; j++) {
-                    if (materdata[j].F_Id == datanow.SalesOrderEntry_Material) {
-                        materdatanew = materdata[j]
-                        deadline = datanow.SalesOrderEntry_Deadline
+            if ($("#cusOrder").val()) {
+                $(".selectlist").removeClass("hidden");
+                var _this = $(this);
+                _this.addClass("layui-form-selected")
+                
+                $(".dateload").addClass("hidden")
+                $(".datelist").removeClass("hidden")
+                var html = '';
+                var arrlist = [];
+                var arri = {};
+                var materdatanew;
+                var deadline;
+                // data[i].Material_Name data[i].Material_Nick  data[i].Material_Specification
+                for (var i = 0; i < data.length; i++) {
+                    var datanow = data[i];
+                    for (var j = 0; j < materdata.length; j++) {
+                        if (materdata[j].F_Id == datanow.SalesOrderEntry_Material) {
+                            materdatanew = materdata[j]
+                            deadline = datanow.SalesOrderEntry_Deadline
+                        }
                     }
+                    html += '<li data-name="' + materdatanew.Material_Name + '" data-nick="' + materdatanew.Material_Nick + '" data-spe="' + materdatanew.Material_Specifications + '" data-materme="' + materdatanew.Material_Measure + '" data-deadline="' + deadline + '" data-materid="' + materdatanew.F_Id + '" data-matertype="' + materdatanew.Material_Type + '"><p>' + materdatanew.Material_Name + '</p><p>' + materdatanew.Material_Nick + '</p><p>' + materdatanew.Material_Specifications + '</p></li>'
+                    arri = { materame: materdatanew.Material_Name, maternick: materdatanew.Material_Nick, matersp: materdatanew.Material_Specifications, materdatanew: materdatanew.Material_Measure, deadline: deadline, materid: materdatanew.F_Id, matertype: materdatanew.Material_Type };
+                    arrlist.push(arri)
                 }
-                html += '<li data-name="' + materdatanew.Material_Name + '" data-nick="' + materdatanew.Material_Nick + '" data-spe="' + materdatanew.Material_Specifications + '" data-materme="' + materdatanew.Material_Measure + '" data-deadline="' + deadline + '" data-materid="' + materdatanew.F_Id + '"><p>' + materdatanew.Material_Name + '</p><p>' + materdatanew.Material_Nick + '</p><p>' + materdatanew.Material_Specifications + '</p></li>'
-                arri = { materame: materdatanew.Material_Name, maternick: materdatanew.Material_Nick, matersp: materdatanew.Material_Specifications, materdatanew: materdatanew.Material_Measure, deadline: deadline, materid: materdatanew.F_Id };
-                arrlist.push(arri)
-            }
-            if (html) {
-                $(".selectlist ul").html(html);
-            } else {
-                $(".selectlist ul").html("<span style='text-align:center;display: block;padding: 10px 0;'>没有数据</span>");
-            }
-            $(".materName").on("keyup", function () {
-                var searchVal = $(this).val();
-                var showList = [];
-                var searchlist = '';
-                //将和所输入的字符串匹配的项存入showList
-                //将匹配项显示，不匹配项隐藏
-                $.each(arrlist, function (index, item) {
-                    if (item.materame.indexOf(searchVal) != -1 || item.maternick.indexOf(searchVal) != -1 || item.matersp.indexOf(searchVal) != -1) {
-                        showList.push(item);
-                    } else {
+                if (html) {
+                    $(".selectlist ul").html(html);
+                } else {
+                    $(".selectlist ul").html("<span style='text-align:center;display: block;padding: 10px 0;'>没有数据</span>");
+                }
+                $(".materName").on("keyup", function () {
+                    var searchVal = $(this).val();
+                    var showList = [];
+                    var searchlist = '';
+                    //将和所输入的字符串匹配的项存入showList
+                    //将匹配项显示，不匹配项隐藏
+                    $.each(arrlist, function (index, item) {
+                        if (item.materame.indexOf(searchVal) != -1 || item.maternick.indexOf(searchVal) != -1 || item.matersp.indexOf(searchVal) != -1) {
+                            showList.push(item);
+                        } else {
 
+                        }
+                    })
+                    for (var j = 0; j < showList.length; j++) {
+                        var shownow = showList[j]
+                        searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-deadline="' + deadline + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
                     }
+                    if (showList.length == 0) {
+                        searchlist = '<div style="text-align:center;padding:15px 0">暂无数据</div>'
+                    }
+                    $(".selectlist ul").html("");
+                    $(".selectlist ul").html(searchlist);
+                    $('.selectlist ul').find('li').each(function () {
+                        var _this1 = $(this);
+                        _this1.hover(function () {
+                            $(this).addClass("active").siblings().removeClass("active")
+                        });
+                        _this1.on("click", function () {
+                            $(".editsub").attr("data-craftid", "")
+                            var name = $(this).attr("data-name");
+                            var nick = $(this).attr("data-nick");
+                            var specife = $(this).attr("data-spe");
+                            var measure = $(this).attr("data-materme");
+                            var deadlin = $(this).attr("data-deadline")
+                            var materid = $(this).attr("data-materid")
+                            var matertype = $(this).attr("data-matertype")
+                            matertypelist(matertype)
+                            $("#Craft_Material").val(materid)
+                            getcraftone(materid)
+                            $("#deadline").val(deadlin.split(" ")[0])
+                            $(".materName").val(name);
+                            $(".maternick").val(nick);
+                            $(".materspe").val(specife);
+                            $("#measure").val(measure);
+                            $(".selectlist").addClass("hidden");
+                            $(".checkpro").removeClass("layui-form-selected");
+                            $(".isAttribute").html("");
+                            $(".isAttribute").css("padding", "0")
+
+                            return false
+                        })
+                    })
                 })
-                for (var j = 0; j < showList.length; j++) {
-                    var shownow = showList[j]
-                    searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-deadline="' + deadline + '" data-materid="' + shownow.materid + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
-                }
-                if (showList.length == 0) {
-                    searchlist = '<div style="text-align:center;padding:15px 0">暂无数据</div>'
-                }
-                $(".selectlist ul").html("");
-                $(".selectlist ul").html(searchlist);
                 $('.selectlist ul').find('li').each(function () {
                     var _this1 = $(this);
                     _this1.hover(function () {
                         $(this).addClass("active").siblings().removeClass("active")
                     });
                     _this1.on("click", function () {
-                        $(".editsub").attr("data-craftid", "")
                         var name = $(this).attr("data-name");
                         var nick = $(this).attr("data-nick");
+                        $(".editsub").attr("data-craftid", "")
                         var specife = $(this).attr("data-spe");
                         var measure = $(this).attr("data-materme");
                         var deadlin = $(this).attr("data-deadline")
                         var materid = $(this).attr("data-materid")
+                        var matertype = $(this).attr("data-matertype")
+                        matertypelist(matertype)
                         $("#Craft_Material").val(materid)
                         getcraftone(materid)
                         $("#deadline").val(deadlin.split(" ")[0])
@@ -523,54 +557,29 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                         $(".checkpro").removeClass("layui-form-selected");
                         $(".isAttribute").html("");
                         $(".isAttribute").css("padding", "0")
-
                         return false
                     })
                 })
-            })
-            $('.selectlist ul').find('li').each(function () {
-                var _this1 = $(this);
-                _this1.hover(function () {
-                    $(this).addClass("active").siblings().removeClass("active")
-                });
-                _this1.on("click", function () {
-                    var name = $(this).attr("data-name");
-                    var nick = $(this).attr("data-nick");
-                    $(".editsub").attr("data-craftid", "")
-                    var specife = $(this).attr("data-spe");
-                    var measure = $(this).attr("data-materme");
-                    var deadlin = $(this).attr("data-deadline")
-                    var materid = $(this).attr("data-materid")
-                    $("#Craft_Material").val(materid)
-                    getcraftone(materid)
-                    $("#deadline").val(deadlin.split(" ")[0])
-                    $(".materName").val(name);
-                    $(".maternick").val(nick);
-                    $(".materspe").val(specife);
-                    $("#measure").val(measure);
-                    $(".selectlist").addClass("hidden");
-                    $(".checkpro").removeClass("layui-form-selected");
-                    $(".isAttribute").html("");
-                    $(".isAttribute").css("padding", "0")
-                    return false
-                })
-            })
-            return false;
+                return false;
+
+            }
+
+
         })
     }
 
-     
+
 });
 
 
 var renderForm;
-var tablelist1;
+var tablelist1,getproNorder;
 var firstone = 'a' + new Date().valueOf();
 var viewObjcra = {
     tbData1: [{
         state: 0,
         AssignCraft_Nick: '',
-        AssignCraft_Process:'',
+        AssignCraft_Process: '',
         crsId: firstone,
         AssignCraft_Name: '',
         fid: '',
@@ -639,7 +648,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 AssignCraft_Nick: '',
                 crsId: tid,
                 AssignCraft_Name: '',
-                AssignCraft_Process:'',
+                AssignCraft_Process: '',
                 fid: '',
                 state: 0,
                 IsEnabled: true
@@ -785,11 +794,11 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     // 重载工序列表
     reloadcraft = function (data) {
         var id = 'a' + new Date().valueOf();
-        var newdata = [];
+        // var newdata = [];
         var adddata = {
             state: 0,
             AssignCraft_Nick: '',
-            AssignCraft_Process:'',
+            AssignCraft_Process: '',
             crsId: id,
             AssignCraft_Name: '',
             IsEnabled: true
@@ -797,19 +806,14 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         viewObjcra.last = id;
         if (data) {
             viewObjcra.limit = data.length + 1;
-            $.each(data, function (i, v) {
-                v.AssignCraft_Name=v.CraftEntry_Name
-                v.AssignCraft_Nick=v.CraftEntry_Nick
-                v.AssignCraft_Process=v.F_Id
-                newdata.push(v)
-            })
-            newdata.push(adddata)
+            
+            data.push(adddata)
         } else {
             viewObjcra.limit = 1;
-            newdata.push(adddata)
+            data.push(adddata)
         }
         tablecrm.reload({
-            data: newdata,
+            data: data,
             limit: viewObjcra.limit
         });
     }
@@ -851,44 +855,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     }
 
 
-    // 保存工艺--
-    sendcraft = function () {
-        var oldData = table.cache[layTableId];
-        var newdata = [];
-        for (var j = 0; j < oldData.length; j++) {
-            var nowdata = oldData[j]
-            if (nowdata.AssignCraft_Nick) {
-                newdata.push(nowdata)
-            }
-        }
-        var mater = $("#Craft_Material").val()
-        var data = {
-            Craft_Material: mater,
-            Details: newdata
-        }
-
-        // 新增工艺路线
-        $.ajax({
-            type: 'POST',
-            url: addCraft,
-            data: data,
-            success: function (res) {
-                var isussecc = res.Succeed;
-                if (isussecc) {
-                    var oldData = table.cache[layTableId];
-                    tablecrm.reload({
-                        data: oldData,
-                        limit: viewObjcra.limit
-                    });
-                    getcraft(res.Data.F_Id)
-                } else {
-                    alert(res.Message)
-                }
-            }
-        })
-
-    }
-
     getcraftdata = function () {
         var oldData = table.cache[layTableId];
         return oldData
@@ -904,14 +870,14 @@ $(function () {
         url: getassone + fid,
         success: function (res) {
             subindex = layer.load();
-            console.log(res)
+            //console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             // printdata = res
             if (isussecc) {
-                setInterval(function(){
+                setInterval(function () {
                     layer.close(subindex)
-                },1200)
+                }, 1200)
                 if (data) {
 
                     $("#Assign_DateTime").val(data.Assign_DateTime.split(" ")[0])
@@ -924,6 +890,9 @@ $(function () {
                     $("#fid").val(data.F_Id)
                     // 工艺加载
                     getcraftone(data.Assign_Material)
+
+                    // 查询产品种属
+                    getfamily(data.Assign_Material)
                     // 产品
                     $.ajax({
                         type: "get",
@@ -933,7 +902,7 @@ $(function () {
                             var datamater = result.Data;
                             materdata = result.Data;
                             if (isussecc1) {
-                               
+
                                 for (var i = 0; i < datamater.length; i++) {
 
                                     var datanow = datamater[i]
@@ -945,7 +914,6 @@ $(function () {
                                         $("#nick").val(datanow.Material_Nick)
                                         $("#specifications").val(datanow.Material_Specifications)
                                         $("#Assign_Unit").val(datanow.Material_Measure)
-
                                     }
                                 }
                                 reloadmater(data.Details)
@@ -956,8 +924,10 @@ $(function () {
                             }
                         }
                     })
+                    // 重载工序
+                    reloadcraft(data.Crafts)
                     // bom
-                    getbom(data.Assign_BillOfMaterial)
+                    // getbom(data.Assign_BillOfMaterial)
                     // 工艺路线
                     getcraft1(data.Assign_Craft)
                     // 客户
@@ -966,6 +936,7 @@ $(function () {
                     getbil(data.Assign_Biller)
                     // 单据状态
                     getstatus(data.Assign_Status)
+                    $("#assign_Status").val(data.Assign_Status)
                     //单据类型
                     gettype(data.Assign_Type)
                 }
@@ -978,7 +949,7 @@ $(function () {
     var iscontinue = true
     $(".editsub").on("click", function () {
         var list = $("form").serializeArray();
-        console.log(list)
+        //console.log(list)
         $.each(list, function (i, v) {
             if (v.name == "Assign_Name") {
                 if (v.value == '') {
@@ -1023,19 +994,9 @@ $(function () {
                 newdata.push(v)
             }
         })
-        // if ($("#isadd").val() == "false") {
-        //     newcraftdefalue(newdata,1)
-        // }else{
-        //     editcraftdefult(newdata)
-        // }
-        if (iscontinue) {
-            var craftid = $(".editsub").attr("data-craftid")
-            if (!craftid) {
-                sendcraft();
-            } else {
-                sendfacture()
-            }
-        }
+        
+        sendfacture()
+       
         return false
     })
 
@@ -1044,13 +1005,13 @@ $(function () {
     $("#tablelist1 .layui-table-view").addClass("overvis");
     // 产品代码
     $(".checkpro").on("click", function () {
+        $(".dateload").addClass("hidden")
         if ($("#cusOrder").val()) {
-
         } else {
             $(".selectlist").removeClass("hidden");
             var _this = $(this);
             _this.addClass("layui-form-selected")
-            $(".dateload").addClass("hidden")
+           
             $(".datelist").removeClass("hidden")
             var data = materdata;
 
@@ -1060,8 +1021,8 @@ $(function () {
             // data[i].Material_Name data[i].Material_Nick  data[i].Material_Specification
             for (var i = 0; i < data.length; i++) {
                 var datanow = data[i];
-                html += '<li data-name="' + datanow.Material_Name + '" data-nick="' + datanow.Material_Nick + '" data-spe="' + datanow.Material_Specifications + '" data-materme="' + datanow.Material_Measure + '" data-materid="' + datanow.F_Id + '"><p>' + datanow.Material_Name + '</p><p>' + datanow.Material_Nick + '</p><p>' + datanow.Material_Specifications + '</p></li>'
-                arri = { materame: datanow.Material_Name, maternick: datanow.Material_Nick, matersp: datanow.Material_Specifications, matermea: datanow.Material_Measure, materid: datanow.F_Id };
+                html += '<li data-name="' + datanow.Material_Name + '" data-nick="' + datanow.Material_Nick + '" data-spe="' + datanow.Material_Specifications + '" data-materme="' + datanow.Material_Measure + '" data-materid="' + datanow.F_Id + '" data-matertype="' + datanow.Material_Type + '"><p>' + datanow.Material_Name + '</p><p>' + datanow.Material_Nick + '</p><p>' + datanow.Material_Specifications + '</p></li>'
+                arri = { materame: datanow.Material_Name, maternick: datanow.Material_Nick, matersp: datanow.Material_Specifications, matermea: datanow.Material_Measure, materid: datanow.F_Id, matertype: datanow.Material_Type };
                 arrlist.push(arri)
             }
             $(".selectlist ul").html(html);
@@ -1080,7 +1041,7 @@ $(function () {
                 })
                 for (var j = 0; j < showList.length; j++) {
                     var shownow = showList[j]
-                    searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-materid="' + shownow.materid + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
+                    searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
                 }
                 if (showList.length == 0) {
                     searchlist = '<div style="text-align:center;padding:15px 0">暂无数据</div>'
@@ -1099,6 +1060,8 @@ $(function () {
                         var specife = $(this).attr("data-spe");
                         var measure = $(this).attr("data-materme");
                         var materid = $(this).attr("data-materid")
+                        var matertype = $(this).attr("data-matertype")
+                        matertypelist(matertype)
                         getcraftone(materid)
                         $("#Craft_Material").val(materid)
                         $(".materName").val(name);
@@ -1125,6 +1088,8 @@ $(function () {
                     var nick = $(this).attr("data-nick");
                     var specife = $(this).attr("data-spe");
                     var materid = $(this).attr("data-materid")
+                    var matertype = $(this).attr("data-matertype")
+                    matertypelist(matertype)
                     getcraftone(materid)
                     $("#Craft_Material").val(materid)
                     var measure = $(this).attr("data-materme");
@@ -1144,6 +1109,110 @@ $(function () {
 
         return false;
     })
+    getproNorder = function () {
+        $(".dateload").addClass("hidden")
+        if ($("#cusOrder").val()) {
+
+        } else {
+            $(".selectlist ul").html("");
+            $(".datelist").removeClass("hidden")
+            var data = materdata;
+            var html = '';
+            var arrlist = [];
+            var arri = {};
+            for (var i = 0; i < data.length; i++) {
+                var datanow = data[i];
+                html += '<li data-name="' + datanow.Material_Name + '" data-nick="' + datanow.Material_Nick + '" data-spe="' + datanow.Material_Specifications + '" data-materme="' + datanow.Material_Measure + '" data-materid="' + datanow.F_Id + '" data-matertype="' + datanow.Material_Type + '"><p>' + datanow.Material_Name + '</p><p>' + datanow.Material_Nick + '</p><p>' + datanow.Material_Specifications + '</p></li>'
+                arri = { materame: datanow.Material_Name, maternick: datanow.Material_Nick, matersp: datanow.Material_Specifications, matermea: datanow.Material_Measure, materid: datanow.F_Id, matertype: datanow.Material_Type };
+                arrlist.push(arri)
+            }
+            $(".selectlist ul").html(html);
+            $(".materName").on("keyup", function () {
+                var searchVal = $(this).val();
+                var showList = [];
+                var searchlist = '';
+                //将和所输入的字符串匹配的项存入showList
+                //将匹配项显示，不匹配项隐藏
+                $.each(arrlist, function (index, item) {
+                    if (item.materame.indexOf(searchVal) != -1 || item.maternick.indexOf(searchVal) != -1 || item.matersp.indexOf(searchVal) != -1) {
+                        showList.push(item);
+                    } else {
+
+                    }
+                })
+                ////console.log(showList)
+                for (var j = 0; j < showList.length; j++) {
+                    var shownow = showList[j]
+                    searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
+                }
+                if (showList.length == 0) {
+                    searchlist = '<div style="text-align:center;padding:15px 0">暂无数据</div>'
+                }
+                $(".selectlist ul").html("");
+                $(".selectlist ul").html(searchlist);
+                $('.selectlist ul').find('li').each(function () {
+                    var _this1 = $(this);
+                    _this1.hover(function () {
+                        $(this).addClass("active").siblings().removeClass("active")
+                    });
+                    _this1.on("click", function () {
+                        var name = $(this).attr("data-name");
+                        $(".sub").attr("data-craftid", "")
+                        var nick = $(this).attr("data-nick");
+                        var specife = $(this).attr("data-spe");
+                        var measure = $(this).attr("data-materme");
+                        var materid = $(this).attr("data-materid")
+                        var matertype = $(this).attr("data-matertype");
+                        matertypelist(matertype)
+                        getcraftone(materid)
+                        $("#Craft_Material").val(materid)
+                        $(".materName").val(name);
+                        $(".maternick").val(nick);
+                        $(".materspe").val(specife);
+                        $("#measure").val(measure);
+                        $(".selectlist").addClass("hidden");
+                        $(".checkpro").removeClass("layui-form-selected");
+                        $(".isAttribute").html("");
+                        $(".isAttribute").css("padding", "0")
+                        // getblong(name, nick);
+                        return false
+                    })
+                })
+            })
+            $('.selectlist ul').find('li').each(function () {
+                var _this1 = $(this);
+                _this1.hover(function () {
+                    $(this).addClass("active").siblings().removeClass("active")
+                });
+                _this1.on("click", function () {
+                    $(".sub").attr("data-craftid", "")
+                    var name = $(this).attr("data-name");
+                    var nick = $(this).attr("data-nick");
+                    var specife = $(this).attr("data-spe");
+                    var materid = $(this).attr("data-materid")
+                    var matertype = $(this).attr("data-matertype");
+                    matertypelist(matertype)
+                    getcraftone(materid)
+                    $("#Craft_Material").val(materid)
+                    var measure = $(this).attr("data-materme");
+                    $(".materName").val(name);
+                    $(".maternick").val(nick);
+                    $(".materspe").val(specife);
+                    $("#measure").val(measure);
+                    $(".selectlist").addClass("hidden");
+                    $(".checkpro").removeClass("layui-form-selected");
+                    $(".isAttribute").html("");
+                    $(".isAttribute").css("padding", "0")
+                    // getblong(name, nick);
+                    return false
+                })
+            })
+
+
+        }
+
+        return false;
+    }
     $("input[data-type='checkpro']").blur(function () {
         var _this = $(this);
         _this.parent().removeClass("layui-form-selected")
@@ -1167,7 +1236,7 @@ $(function () {
     function getcus(id) {
         var select = 'dd[lay-value="' + id + '"]';
         $('#Assign_Customer').siblings("div.layui-form-select").find('dl').find(select).click();
-     
+
     }
     // 客户订单号--
     $(".cusOrder").on("click", function () {
@@ -1203,7 +1272,10 @@ $(function () {
     })
     // 切换客户订单号
     layui.form.on('select(cusorder)', function (data) {
-        if (data.value) {
+        if (data.value=='') {
+            getproNorder()
+     
+        }else{
             var id = data.value;
             var cusid;
             if (data.elem.selectedOptions) {
@@ -1223,6 +1295,7 @@ $(function () {
                 type: "get",
                 url: saleEntry + id,
                 success: function (res) {
+                    ////console.log(res)
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
@@ -1239,55 +1312,7 @@ $(function () {
 
 
     })
-    // 切换工艺路线
-    layui.form.on('select(craft)', function (data) {
-        var id = data.value;
-        var crafid;
-        if (data.value) {
-            if (data.elem.selectedOptions) {
-                crafid = data.elem.selectedOptions[0].attributes[0].value;
-            } else {
-                var elems = data.elem;
-                for (var i = 0; i < elems.length; i++) {
-                    var elemnow = elems[i];
-                    if (elemnow.selected) {
-                        crafid = elemnow.attributes[0].value;
-                    }
-                }
-            }
-        }
-        $(".editsub").attr("data-craftid", crafid)
-        if (id) {
-            // 切换工艺之后查询此工艺路线下的工序列表
-            $.ajax({
-                type: "get",
-                url: assignCraft + id,
-                success: function (res) {
-                    console.log(res)
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        if (res.Data.length >= 1) {
-                            console.log("大于一")
-                            reloadcraft(data)
-                        } else {
-                            console.log("直接")
-                            console.log(craftdetail)
-                            reloadcraft(craftdetail)
-                        }
-                        $(".editsub").attr("data-nick", data.Craft_Nick)
-                        $(".editsub").attr("data-name", data.Craft_Name)
-                    } else {
-                        alert(res.Message)
-                    }
-                }
-            })
-            // reloadcraft(craftdetail)
-        } else {
-            var datanul = []
-            reloadcraft(datanul)
-        }
-    })
+   
     $(".checkone").click(function () {
         var stau = $(this).attr("data-status");
         if (stau == '1') {
@@ -1382,16 +1407,13 @@ function getcraftone(id) {
     $.ajax({
         url: materCraft + id,
         success: function (res) {
-            console.log(res)
             var isussecc = res.Succeed;
             if (isussecc) {
                 if (res.Data) {
                     $("#assCraftid").val(res.F_Id)
                     craftdetail = res.Data.Details
-                    console.log("根据选择的产品查工艺路线")
                     var select = 'dd[lay-value="' + res.Data.F_Id + '"]';
                     $('#Assign_Craft').siblings("div.layui-form-select").find('dl').find(select).click();
-                    // newcraftdefalue(res.Data.Details,0)
                 } else {
                     var select1 = 'dd[lay-value=""]';
                     $('#Assign_Craft').siblings("div.layui-form-select").find('dl').find(select1).click();
@@ -1403,161 +1425,32 @@ function getcraftone(id) {
         }
     })
 }
-// 创建工单工序
-function newcraftdefalue(data, issub) {
-    $("#isadd").val("true")
-    // 获取工单主键
-    var fid = $("#fid").val()
-    var len = data.length - 1;
-    if (issub) {
-        $.each(data, function (i, v) {
-            var data1 = {
-                AssignCraft_Nick: v.AssignCraft_Nick,
-                AssignCraft_Name: v.AssignCraft_Name,
-                AssignCraft_Process: v.fid,
-                AssignCraft_Assign: fid,
-                IsEnabled: true
-            }
-            $.ajax({
-                url: addassignCraft,
-                type: 'POST',
-                data: data1,
-                success: function (res) {
-                    console.log(res);
-                    if (res.Succeed) {
-                        $("#editdefault").val(res.Data.F_Id)
-                        if (i == len) {
-                            sendfacture()
-                        }
-                    } else {
-                        alert(res.Message)
-                    }
-                }
-            })
-        })
 
-    } else {
-        $.each(data, function (i, v) {
-            var data1 = {
-                AssignCraft_Nick: v.AssignCraft_Nick,
-                AssignCraft_Name: v.AssignCraft_Name,
-                AssignCraft_Process: v.F_Id,
-                AssignCraft_Assign: fid,
-                IsEnabled: true
-            }
-            $.ajax({
-                url: addassignCraft,
-                type: 'POST',
-                data: data1,
-                success: function (res) {
-                    $("#editdefault").val(res.Data.F_Id)
-                    if (res.Succeed) {
 
-                    } else {
-                        alert(res.Message)
-                    }
-                }
-            })
-        })
-    }
-
-}
-//保存工艺后更新工艺路线
-getcraft = function (checid) {
-    $.ajax({
-        type: "get",
-        url: craftlist,
-        success: function (res) {
-            console.log(res)
-            var isussecc = res.Succeed;
-            var data = res.Data;
-            if (isussecc) {
-                craftdetail = data.Details
-                console.log("保存供以后更新工艺路线")
-                var html = '<option value="">全部</option>';
-                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                for (var i = 0; i < data.length; i++) {
-                    var nowD = data[i];
-                    var nick = '';
-                    if (nowD.Craft_Nick) {
-                        nick = nowD.Craft_Nick;
-                    } else {
-                        nick = nowD.Craft_Name
-                    }
-                    html += '<option value="' + nowD.F_Id + '" >' + nick + '</option>';
-                    htmlsel += '<dd lay-value="' + nowD.F_Id + '" >' + nick + '</dd>'
-                }
-                $("#Assign_Craft").html(html);
-                $(".checkcraft .layui-anim.layui-anim-upbit").html(htmlsel);
-                layui.use('form', function () {
-                    var form = layui.form;
-                    form.render()
-                    renderForm1()
-                    renderForm()
-                });
-                var select = 'dd[lay-value="' + checid + '"]';
-                $('#Assign_Craft').siblings("div.layui-form-select").find('dl').find(select).click();
-                sendfacture()
-            } else {
-                alert(res.Message)
-            }
-
-        }
-    })
-}
-// 修改工艺工序
-function editcraftdefult(data) {
-    var fid = $("#editdefault").val()
-    $.each(data, function (i, v) {
-        var datanow = {
-            AssignCraft_Nick: v.AssignCraft_Nick,
-            AssignCraft_Name: v.AssignCraft_Name,
-            AssignCraft_Process: v.F_Id,
-            AssignCraft_Assign: fid,
-            F_Id: fid,
-            IsEnabled: true
-        }
-        $.ajax({
-            type: 'POST',
-            data: datanow,
-            url: editassignCraft,
-            success: function (res) {
-                if (res.Succeed) {
-                    console.log("修改工单工序的时候触发保存")
-                    sendfacture()
-                } else {
-                    alert(res.Message)
-                }
-            }
-        })
-    })
-}
 // 保存物料工单
 var isSend = true;
 sendfacture = function () {
     var list = $("form").serializeArray();
-    var data = {};
+    var data = {},craftdata={};
     var newdata = [], cradata = [];
     var fid = $("#fid").val()
     for (var j = 0; j < list.length; j++) {
-        //console.log(list[j])
         data[list[j].name] = list[j].value
+        cradata[list[j].name] = list[j].value
     }
 
     var oldData = getmaterdata();
     var oldCraftdata = getcraftdata();
-    console.log(oldData)
+
     for (var j = 0; j < oldData.length; j++) {
         var nowdata = oldData[j]
         if (nowdata.AssignEntry_Material == '') {
-
-        } else {
             isSend = true;
             if (nowdata.AssignEntry_Quantity == '') {
                 alert("请填写计划用量")
                 isSend = false;
                 return
-            } else if (nowdata.AssignEntry_ScrapRate == ''&nowdata.AssignEntry_ScrapRate!=0) {
+            } else if (nowdata.AssignEntry_ScrapRate == '' & nowdata.AssignEntry_ScrapRate != 0) {
                 alert("请填写损耗")
                 isSend = false;
                 return
@@ -1571,31 +1464,56 @@ sendfacture = function () {
     for (var k = 0; k < oldCraftdata.length; k++) {
         var nowdata1 = oldCraftdata[k]
         if (nowdata1.AssignCraft_Nick) {
+            if (nowdata1.crsId) {
+                newcraft = true;
+            }
             cradata.push(nowdata1)
         }
     }
-    console.log(cradata)
+    //console.log(cradata)
     subindex = layer.load();
     if (isSend) {
         data.Details = newdata;
         data.Crafts = cradata
-        // console.log(list)
-        data.Assign_Status = '10000'
-        console.log(data)
+        cradata.Crafts = cradata
         $.ajax({
             type: "POST",
             url: editAssign,
             data: data,
             success: function (res) {
-                //console.log(res)
                 var isussecc = res.Succeed;
                 var data = res.Data;
                 if (isussecc) {
-                    layer.close(subindex);
-                    layer.msg("修改成功");
-                    setInterval(function () {
-                        window.location.reload()
-                    }, 1000)
+                    if (newcraft) {
+                        var index = layer.confirm('是否下推工序汇报？', {
+                            btn: ['确定', '取消'] //按钮
+                        }, function () {
+                            $.ajax({
+                                type: "POST",
+                                url: pushcraft,
+                                data: craftdata,
+                                success: function (res) {
+                                    layer.close(index)
+                                    var isussecc = res.Succeed;
+                                    if (isussecc) {
+                                        layer.close(subindex);
+                                        layer.msg("修改成功");
+                                        setInterval(function () {
+                                            window.location.reload()
+                                        }, 1000)
+                                    } else {
+                                        alert(res.Message)
+                                    }
+                                }
+                            })
+                        });
+                    } else {
+                        layer.close(subindex);
+                        layer.msg("修改成功");
+                        setInterval(function () {
+                            window.location.reload()
+                        }, 1000)
+                    }
                 } else {
                     layer.close(subindex);
                     alert(res.Message)
@@ -1643,7 +1561,7 @@ function getcraft1(id) {
     $.ajax({
         type: "get",
         url: craftlist,
-        success: function (res) { 
+        success: function (res) {
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -1677,38 +1595,38 @@ function getcraft1(id) {
     })
 }
 // BOM
-function getbom(id) {
-    var bomid;
-    $.ajax({
-        type: "get",
-        url: bomlist,
-        success: function (res) {
-            var isussecc = res.Succeed;
-            var data = res.Data;
-            if (isussecc) {
-                var html = '<option value="">全部</option>';
-                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                for (var i = 0; i < data.length; i++) {
-                    var bomnw = data[i];
-                    if (bomnw.F_Id == id) {
-                        bomid = bomnw.F_Id
-                    }
-                    html += '<option value="' + bomnw.F_Id + '" >' + bomnw.BillOfMaterial_Name + '</option>';
-                    htmlsel += '<dd lay-value="' + bomnw.F_Id + '" >' + bomnw.BillOfMaterial_Name + '</dd>'
-                }
-                $("#Assign_BillOfMaterial").html(html);
-                $(".checkbom .layui-anim.layui-anim-upbit").html(htmlsel);
-                reloadform();
-                var select = 'dd[lay-value="' + bomid + '"]';
-                $('#Assign_BillOfMaterial').siblings("div.layui-form-select").find('dl').find(select).click();
+// function getbom(id) {
+//     var bomid;
+//     $.ajax({
+//         type: "get",
+//         url: bomlist,
+//         success: function (res) {
+//             var isussecc = res.Succeed;
+//             var data = res.Data;
+//             if (isussecc) {
+//                 var html = '<option value="">全部</option>';
+//                 var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+//                 for (var i = 0; i < data.length; i++) {
+//                     var bomnw = data[i];
+//                     if (bomnw.F_Id == id) {
+//                         bomid = bomnw.F_Id
+//                     }
+//                     html += '<option value="' + bomnw.F_Id + '" >' + bomnw.BillOfMaterial_Name + '</option>';
+//                     htmlsel += '<dd lay-value="' + bomnw.F_Id + '" >' + bomnw.BillOfMaterial_Name + '</dd>'
+//                 }
+//                 $("#Assign_BillOfMaterial").html(html);
+//                 $(".checkbom .layui-anim.layui-anim-upbit").html(htmlsel);
+//                 reloadform();
+//                 var select = 'dd[lay-value="' + bomid + '"]';
+//                 $('#Assign_BillOfMaterial').siblings("div.layui-form-select").find('dl').find(select).click();
 
-            } else {
-                alert(res.Message)
-            }
+//             } else {
+//                 alert(res.Message)
+//             }
 
-        }
-    })
-}
+//         }
+//     })
+// }
 // 制单员
 function getbil(id) {
     $.ajax({
@@ -1739,7 +1657,7 @@ function gettype(id) {
         type: "get",
         url: ajaxAsstype,
         success: function (res) {
-            console.log(res)
+            //console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data.Details;
             if (isussecc) {
@@ -1792,5 +1710,71 @@ function getstatus(id) {
 
         }
     })
+
+}
+
+function getfamily(id) {
+    $.ajax({
+        url: ajaxMaterone + '?keyword=' + id + '&PageIndex=&PageSize=',
+        success: function (res) {
+            //console.log(res)
+            var isussecc = res.Succeed;
+            if (isussecc) {
+                var data = res.Data;
+                matertypelist(data[0].Material_Type)
+
+            }
+        }
+    })
+}
+// 物料种属
+function matertypelist(id) {
+    var familyid;
+    $.ajax({
+        url: materFlist,
+        success: function (res) {
+            //console.log(res)
+            var isussecc = res.Succeed;
+            if (isussecc) {
+                var data = res.Data;
+                var html = ''
+                for (var i = 0; i < data.length; i++) {
+                    var materdata = data[i]
+                    if (id == materdata.Family_Nick) {
+                        familyid = materdata.F_Id
+
+                    }
+                }
+                $.ajax({
+                    url: materFlistone + '?keyword=' + familyid + '&PageIndex=&PageSize=',
+                    success: function (res) {
+                        //console.log(res)
+                        var isussecc = res.Succeed;
+                        if (isussecc) {
+                            var data = res.Data;
+                            var html = ''
+                            if(data.length>=1){
+                                for (var i = 0; i < data.length; i++) {
+                                    html += '<div class="layui-form-lsit fl ">' +
+                                        '<label class="layui-form-label">' + data[i].FamilyEntry_Nick + '：</label>' +
+                                        '<div class="layui-input-block disinput">' +
+                                        '<input type="text" value="" id="">' +
+                                        '</div>' +
+                                        '</div>';
+                                }
+                                $(".isAttribute").html(html)
+                                $(".isAttribute").css("padding", "10px")
+                            }else{
+                                $(".isAttribute").html(html)
+                                $(".isAttribute").css("padding", "0")
+                            }
+                            
+                        }
+                    }
+                })
+            }
+        }
+    })
+
 
 }

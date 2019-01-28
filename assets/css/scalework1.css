@@ -294,9 +294,7 @@ padding: 20px 0px;
     min-width: 1000px;
     overflow: auto;
 }
-.produwork .layui-btn+.layui-btn {
-    margin-left: 2px;
-}
+
 .selectlist,.selectlist1{
     position: absolute;
 left: 0;

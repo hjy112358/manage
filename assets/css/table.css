@@ -344,3 +344,6 @@ form .layui-form-label {
 .disclick{
     background:#ccc !important
 }   
+.produwork .layui-btn+.layui-btn {
+    margin-left: 2px;
+}
