@@ -333,10 +333,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     var htmlterm = '';
     var arrlist = [];
     var arri = {};
+    // 列表产品
     function prolist() {
         $(".productworktable td[data-field='materialName']").each(function () {
-            $(".dateload").addClass("hidden")
-            $(".datelist").removeClass("hidden")
             var curnow = $(this);
             curnow.on("click", function () {
                 $("#tablelist .layui-table-body").addClass("overvis");
@@ -345,87 +344,191 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 var _this = $(this);
                 var dataindex = _this.parents("tr").attr("data-index");
                 _this.find(".checkmater").addClass("layui-form-selected")
-                $("#tableRes").find("tr").each(function (i, v) {
-                    var nowtr = v;
-                    var nowindex = $(v).attr("data-index");
-                    if (dataindex != nowindex) {
-                    } else {
-                        $(nowtr).find(".selectlist1").removeClass("hidden");
-                        $(nowtr).find(".dateload").removeClass("hidden")
-                        $(nowtr).find(".datelist").addClass("hidden")
-                    }
-                });
-                var data = materdata;
-                for (var i = 0; i < data.length; i++) {
-                    var datanow = data[i];
-                    htmlterm += '<li data-name="' + (datanow.Material_Name || '') + '" data-nick="' + (datanow.Material_Nick || '') + '" data-spe="' + (datanow.Material_Specifications || '') + '" data-materme="' + (datanow.Material_Measure || '') + '" data-fid="' + datanow.F_Id + '"><p>' + (datanow.Material_Name || '') + '</p><p>' + (datanow.Material_Nick || '') + '</p><p>' + (datanow.Material_Specifications || '') + '</p></li>'
-                    arri = { materame: (datanow.Material_Name || ''), maternick: (datanow.Material_Nick || ''), matersp: (datanow.Material_Specifications || ''), matermea: (datanow.Material_Measure || ''), materid: (datanow.F_Id || '') };
-                    arrlist.push(arri)
-                }
-                $(".selectlist1 ul").html(htmlterm);
-                $(".materName1").on("keyup", function () {
-                    var searchVal = $(this).val();
-                    var showList = [];
-                    var searchlist = '';
-                    //将和所输入的字符串匹配的项存入showList
-                    //将匹配项显示，不匹配项隐藏
-                    $.each(arrlist, function (index, item) {
-                        if ((item.materame && item.materame.indexOf(searchVal) != -1) || (item.maternick && item.maternick.indexOf(searchVal) != -1) || (item.matersp && item.matersp.indexOf(searchVal) != -1)) {
-                            showList.push(item);
+                var date = $(".productworktable").attr("data-type");
+                if (date == 'daten') {
+                    $(".productworktable").attr("data-type", "datey");
+                    $("#tableRes").find("tr").each(function (i, v) {
+                        var nowtr = v;
+                        var nowindex = $(v).attr("data-index");
+                        if (dataindex != nowindex) {
                         } else {
+                            $(nowtr).find(".selectlist1").removeClass("hidden");
+                            $(nowtr).find(".dateload").removeClass("hidden")
+                            $(nowtr).find(".datelist").addClass("hidden")
+                        }
+                    });
+                    $.ajax({
+                        type: 'GET',
+                        url: ajaxMater,
+                        success: function (res) {
+                            $(".dateload").addClass("hidden")
+                            $(".datelist").removeClass("hidden")
+                            //console.log(res)
+                            var data = res.Data;
+                            var isussecc = res.Succeed;
+                            // data[i].Material_Name data[i].Material_Nick  data[i].Material_Specification
+                            for (var i = 0; i < data.length; i++) {
+                                var datanow = data[i];
+                                htmlterm += '<li data-name="' + (datanow.Material_Name || '') + '" data-nick="' + (datanow.Material_Nick || '') + '" data-spe="' + (datanow.Material_Specifications || '') + '" data-materme="' + (datanow.Material_Measure || '') + '" data-fid="' + datanow.F_Id + '" data-matertype="' + datanow.Material_Type + '"><p>' + (datanow.Material_Name || '') + '</p><p>' + (datanow.Material_Nick || '') + '</p><p>' + (datanow.Material_Specifications || '') + '</p></li>'
+                                arri = { materame: (datanow.Material_Name || ''), maternick: (datanow.Material_Nick || ''), matersp: (datanow.Material_Specifications || ''), matermea: (datanow.Material_Measure || ''), materid: (datanow.F_Id || ''), matertype: datanow.Material_Type };
+                                arrlist.push(arri)
+                            }
+                            $(".selectlist1 ul").html(htmlterm);
+                            $(".materName1").on("keyup", function () {
+                                var searchVal = $(this).val();
+                                var showList = [];
+                                var searchlist = '';
+                                //将和所输入的字符串匹配的项存入showList
+                                //将匹配项显示，不匹配项隐藏
+                                $.each(arrlist, function (index, item) {
+                                    if ((item.materame && item.materame.indexOf(searchVal) != -1) || (item.maternick && item.maternick.indexOf(searchVal) != -1) || (item.matersp && item.matersp.indexOf(searchVal) != -1)) {
+                                        showList.push(item);
+                                    } else {
+                                    }
+                                })
+                                //console.log(showList)
+                                for (var j = 0; j < showList.length; j++) {
+                                    var shownow = showList[j]
+                                    searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-fid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
+                                }
+                                if (showList.length == 0) {
+                                    searchlist = '<div style="text-align:center;padding:15px 10px 15px 0; ">暂无数据</div>'
+                                }
+                                $(".selectlist1 ul").html("");
+                                $(".selectlist1 ul").html(searchlist);
+                            })
+                            $('.selectlist1 ul').find('li').each(function () {
+                                var _this1 = $(this);
+                                _this1.hover(function () {
+                                    $(this).addClass("active").siblings().removeClass("active")
+                                });
+                                _this1.on("click", function () {
+                                    var oldData = table.cache[layTableId1];
+                                    //console.log(oldData)
+                                    var name = $(this).attr("data-name");
+                                    var nick = $(this).attr("data-nick");
+                                    var specife = $(this).attr("data-spe");
+                                    var measure = $(this).attr("data-materme");
+                                    var fid = $(this).attr("data-fid");
+
+                                    // //console.log(fid)
+                                    $(".materName1").val(name);
+                                    // $(".maternick").val(nick);
+                                    // $(".materspe").val(specife);
+                                    // $("#measure").val(measure);
+                                    $.each(tabledata, function (index, value) {
+                                        //console.log(value)
+                                        if (value.LAY_TABLE_INDEX == dataindex) {
+                                            value.materialName = name;
+                                            value.materialNick = nick
+                                            value.AssignEntry_Specifications = specife;
+                                            value.AssignEntry_Unit = measure
+                                            value.AssignEntry_Material = fid
+                                            value.AssignEntry_ScrapRate = '0'
+                                            if (value.tempId == viewObj.last) {
+                                                activeByType("add");
+                                            } else {
+                                                var oldData = table.cache[layTableId1];
+                                                tableIns.reload({
+                                                    data: oldData,
+                                                    limit: viewObj.limit
+                                                });
+                                            }
+                                        }
+                                    });
+                                    $(".selectlist1").addClass("hidden");
+                                    $(".checkmater").removeClass("layui-form-selected");
+                                    return false
+                                })
+                            })
                         }
                     })
-                    ////console.log(showList)
-                    for (var j = 0; j < showList.length; j++) {
-                        var shownow = showList[j]
-                        searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-fid="' + shownow.materid + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
-                    }
-                    if (showList.length == 0) {
-                        searchlist = '<div style="text-align:center;padding:15px 10px 15px 0; ">暂无数据</div>'
-                    }
-                    $(".selectlist1 ul").html("");
-                    $(".selectlist1 ul").html(searchlist);
-                })
-                $('.selectlist1 ul').find('li').each(function () {
-                    var _this1 = $(this);
-                    _this1.hover(function () {
-                        $(this).addClass("active").siblings().removeClass("active")
+                } else {
+                    $(".selectlist1 ul").html(htmlterm);
+                    $("#tableRes").find("tr").each(function (i, v) {
+                        var nowtr = v;
+                        var nowindex = $(v).attr("data-index");
+                        if (dataindex != nowindex) {
+                        } else {
+                            $(nowtr).find(".selectlist1").removeClass("hidden");
+                            $(nowtr).find(".dateload").addClass("hidden")
+                            $(nowtr).find(".datelist").removeClass("hidden")
+                        }
                     });
-                    _this1.on("click", function () {
-                        var oldData = table.cache[layTableId1];
-                        ////console.log(oldData)
-                        var name = $(this).attr("data-name");
-                        var nick = $(this).attr("data-nick");
-                        var specife = $(this).attr("data-spe");
-                        var measure = $(this).attr("data-materme");
-                        var fid = $(this).attr("data-fid");
-                        $(".materName1").val(name);
-                        // $(".maternick").val(nick);
-                        // $(".materspe").val(specife);
-                        // $("#measure").val(measure);
-                        $.each(tabledata, function (index, value) {
-                            if (value.LAY_TABLE_INDEX == dataindex) {
-                                value.materialName = name;
-                                value.materialNick = nick
-                                value.AssignEntry_Specifications = specife;
-                                value.AssignEntry_Unit = measure
-                                value.AssignEntry_Material = fid
-                                if (value.tempId == viewObj.last) {
-                                    activeByType("add");
-                                } else {
-                                    var oldData = table.cache[layTableId1];
-                                    tableIns.reload({
-                                        data: oldData,
-                                        limit: viewObj.limit
-                                    });
-                                }
+                    $(".materName1").on("keyup", function () {
+                        var searchVal = $(this).val();
+                        var showList = [];
+                        var searchlist = '';
+                        //将和所输入的字符串匹配的项存入showList
+                        //将匹配项显示，不匹配项隐藏
+                        $.each(arrlist, function (index, item) {
+                            if ((item.materame && item.materame.indexOf(searchVal) != -1) || (item.maternick && item.maternick.indexOf(searchVal) != -1) || (item.matersp && item.matersp.indexOf(searchVal) != -1)) {
+                                showList.push(item);
+                            } else {
+                            }
+                        })
+                        //console.log(showList)
+                        for (var j = 0; j < showList.length; j++) {
+                            var shownow = showList[j]
+                            searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-fid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
+                        }
+                        if (showList.length == 0) {
+                            searchlist = '<div style="text-align:center;padding:15px 10px 15px 0; ">暂无数据</div>'
+                        }
+                        $(".selectlist1 ul").html("");
+                        $(".selectlist1 ul").html(searchlist);
+                        $("#tableRes").find("tr").each(function (i, v) {
+                            var nowtr = v;
+                            var nowindex = $(v).attr("data-index");
+                            if (dataindex != nowindex) {
+                                $(nowtr).find("selectlist").addClass("hidden")
                             }
                         });
-                        $(".selectlist1").addClass("hidden");
-                        $(".checkmater").removeClass("layui-form-selected");
-                        return false
                     })
-                })
+                    $('.selectlist1 ul').find('li').each(function () {
+                        var _this1 = $(this);
+                        _this1.hover(function () {
+                            $(this).addClass("active").siblings().removeClass("active")
+                        });
+                        _this1.on("click", function () {
+                            var oldData = table.cache[layTableId1];
+                            //console.log(oldData)
+                            var name = $(this).attr("data-name");
+                            var nick = $(this).attr("data-nick");
+                            var specife = $(this).attr("data-spe");
+                            var measure = $(this).attr("data-materme");
+                            var fid = $(this).attr("data-fid");
+
+                            $(".materName1").val(name);
+                            // $(".maternick").val(nick);
+                            // $(".materspe").val(specife);
+                            // $("#measure").val(measure);
+                            $.each(tabledata, function (index, value) {
+                                //console.log(value)
+                                if (value.LAY_TABLE_INDEX == dataindex) {
+                                    value.materialName = name;
+                                    value.materialNick = nick
+                                    value.AssignEntry_Specifications = specife;
+                                    value.AssignEntry_Unit = measure
+                                    value.AssignEntry_Material = fid
+                                    value.AssignEntry_ScrapRate = '0'
+                                    if (value.tempId == viewObj.last) {
+                                        activeByType("add");
+                                    } else {
+                                        var oldData = table.cache[layTableId1];
+                                        tableIns.reload({
+                                            data: oldData,
+                                            limit: viewObj.limit
+                                        });
+                                    }
+                                }
+                            });
+                            $(".selectlist1").addClass("hidden");
+                            $(".checkmater").removeClass("layui-form-selected");
+                            return false
+                        })
+                    })
+                }
                 return false;
             })
         })
@@ -452,7 +555,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 $(".selectlist").removeClass("hidden");
                 var _this = $(this);
                 _this.addClass("layui-form-selected")
-                
+
                 $(".dateload").addClass("hidden")
                 $(".datelist").removeClass("hidden")
                 var html = '';
@@ -573,7 +676,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
 
 var renderForm;
-var tablelist1,getproNorder;
+var tablelist1, getproNorder;
 var firstone = 'a' + new Date().valueOf();
 var viewObjcra = {
     tbData1: [{
@@ -738,9 +841,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     });
     // 切换列表中工序
     form.on('select(AssignCraft_Nick)', function (data, e) {
-        $("#tablelist1 .layui-table-body").removeClass("overvis");
-        $("#tablelist1 .layui-table-box").removeClass("overvis");
-        $("#tablelist1 .layui-table-view").removeClass("overvis");
+        // $("#tablelist1 .layui-table-body").removeClass("overvis");
+        // $("#tablelist1 .layui-table-box").removeClass("overvis");
+        // $("#tablelist1 .layui-table-view").removeClass("overvis");
         var elem = data.othis.parents('tr');
         var dataindex = elem.attr("data-index");
         $.each(tablelist1, function (index, value) {
@@ -806,7 +909,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         viewObjcra.last = id;
         if (data) {
             viewObjcra.limit = data.length + 1;
-            
+
             data.push(adddata)
         } else {
             viewObjcra.limit = 1;
@@ -831,17 +934,17 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     }
 
 
-    $(".gynext").on("click", function () {
-        var data = table.cache[layTableId];
-        if (data.length == 1) {
-            // if (data[0].FMaterialName == '') {
-            //     alert("至少选择一条工艺")
-            // }
-        } else {
-            sessionStorage.setItem('gylist', JSON.stringify(data));
-            // parent.nexthb()
-        }
-    })
+    // $(".gynext").on("click", function () {
+    //     var data = table.cache[layTableId];
+    //     if (data.length == 1) {
+    //         // if (data[0].FMaterialName == '') {
+    //         //     alert("至少选择一条工艺")
+    //         // }
+    //     } else {
+    //         sessionStorage.setItem('gylist', JSON.stringify(data));
+    //         // parent.nexthb()
+    //     }
+    // })
 
     function checklist() {
         $("#tablelist1 td[data-field='AssignCraft_Nick']").each(function () {
@@ -864,13 +967,14 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 $(function () {
     var url = window.location.search;
     var fid = url.split("?")[1].split("=")[1]
+
     // 查询订单详情
     $.ajax({
         type: "get",
         url: getassone + fid,
         success: function (res) {
             subindex = layer.load();
-            //console.log(res)
+            console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             // printdata = res
@@ -888,6 +992,7 @@ $(function () {
                     $("#Assign_Deadline").val(data.Assign_Deadline.split(" ")[0])
                     $("#Rmark").val(data.Rmark)
                     $("#fid").val(data.F_Id)
+                    $("#Craft_Material").val(data.Assign_Material)
                     // 工艺加载
                     getcraftone(data.Assign_Material)
 
@@ -987,16 +1092,9 @@ $(function () {
                 }
             }
         })
-        var oldData = getcraftdata()
-        var newdata = [];
-        $.each(oldData, function (i, v) {
-            if (v.AssignCraft_Nick != '') {
-                newdata.push(v)
-            }
-        })
-        
-        sendfacture()
        
+        sendfacture()
+
         return false
     })
 
@@ -1011,7 +1109,7 @@ $(function () {
             $(".selectlist").removeClass("hidden");
             var _this = $(this);
             _this.addClass("layui-form-selected")
-           
+
             $(".datelist").removeClass("hidden")
             var data = materdata;
 
@@ -1272,10 +1370,10 @@ $(function () {
     })
     // 切换客户订单号
     layui.form.on('select(cusorder)', function (data) {
-        if (data.value=='') {
+        if (data.value == '') {
             getproNorder()
-     
-        }else{
+
+        } else {
             var id = data.value;
             var cusid;
             if (data.elem.selectedOptions) {
@@ -1312,7 +1410,7 @@ $(function () {
 
 
     })
-   
+
     $(".checkone").click(function () {
         var stau = $(this).attr("data-status");
         if (stau == '1') {
@@ -1429,14 +1527,15 @@ function getcraftone(id) {
 
 // 保存物料工单
 var isSend = true;
+var newcraft = false;
 sendfacture = function () {
     var list = $("form").serializeArray();
-    var data = {},craftdata={};
+    var data1 = {}, craftdata = {};
     var newdata = [], cradata = [];
     var fid = $("#fid").val()
     for (var j = 0; j < list.length; j++) {
-        data[list[j].name] = list[j].value
-        cradata[list[j].name] = list[j].value
+        data1[list[j].name] = list[j].value
+        craftdata[list[j].name] = list[j].value
     }
 
     var oldData = getmaterdata();
@@ -1444,7 +1543,7 @@ sendfacture = function () {
 
     for (var j = 0; j < oldData.length; j++) {
         var nowdata = oldData[j]
-        if (nowdata.AssignEntry_Material == '') {
+        if (nowdata.AssignEntry_Material) {
             isSend = true;
             if (nowdata.AssignEntry_Quantity == '') {
                 alert("请填写计划用量")
@@ -1473,13 +1572,14 @@ sendfacture = function () {
     //console.log(cradata)
     subindex = layer.load();
     if (isSend) {
-        data.Details = newdata;
-        data.Crafts = cradata
-        cradata.Crafts = cradata
+        data1.Details = newdata;
+        data1.Crafts = cradata
+        craftdata.Crafts = cradata
+       console.log(data1)
         $.ajax({
             type: "POST",
             url: editAssign,
-            data: data,
+            data: data1,
             success: function (res) {
                 var isussecc = res.Succeed;
                 var data = res.Data;
@@ -1753,7 +1853,7 @@ function matertypelist(id) {
                         if (isussecc) {
                             var data = res.Data;
                             var html = ''
-                            if(data.length>=1){
+                            if (data.length >= 1) {
                                 for (var i = 0; i < data.length; i++) {
                                     html += '<div class="layui-form-lsit fl ">' +
                                         '<label class="layui-form-label">' + data[i].FamilyEntry_Nick + '：</label>' +
@@ -1764,11 +1864,11 @@ function matertypelist(id) {
                                 }
                                 $(".isAttribute").html(html)
                                 $(".isAttribute").css("padding", "10px")
-                            }else{
+                            } else {
                                 $(".isAttribute").html(html)
                                 $(".isAttribute").css("padding", "0")
                             }
-                            
+
                         }
                     }
                 })

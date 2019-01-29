@@ -11,6 +11,108 @@
     <link rel="stylesheet" href="../../assets/css/table.css">
     <link rel="stylesheet" href="../../assets/css/product.css">
     <title>工序汇报单</title>
+    <style>
+        #tablelist1 .layui-table-view .layui-table td[data-field="AssignCraft_Nick"] .layui-table-cell{
+        padding-left:5px
+    }
+    .mark{
+        /* background: rgba(0,0,0,.2); */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .form-box1{
+        width: 100%;
+        margin: 0 auto;
+        text-align:center;
+        padding-top:15px;
+    } 
+    .form-box1 .layui-form-lsit{
+        display: inline-block;
+        width:80%;
+    }
+    .form-box1 .layui-form-lsit .layui-form-label{
+        width:20% !important
+    }
+    .form-box1 .layui-form-lsit .layui-input-block{
+        width:60% !important
+    }
+    .pup{
+        width: 30%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate;
+        transform: translate(-50%,-50%);
+        background: #fff;
+        border-radius: 12px;
+    }
+    .puptitle{
+        text-align: center;
+        font-size: 16px;
+        padding: 5px 0;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    .pup label{
+        width: 22%;
+        padding:5px 0px;
+        margin-right: 5px
+    }
+    .pup .layui-input-block{
+        width: 65%;
+        min-height:28px;
+        margin-left: 0;
+    }
+    .pup .layui-input-block input{
+        line-height: 28px;
+        height: 28px;
+        width:100%;
+        border:1px solid #e6e6e6;
+        text-indent: 5px;
+    }
+    .pup .layui-input{
+        padding-left:0
+    }
+
+    .pup .layui-anim-upbit{
+        animation-name:unset;
+        -webkit-animation-name: unset;
+    }
+    .layui-form-lsit{
+        margin-bottom:5px;
+    }
+    .btnlist{
+        text-align: center
+    }
+    .btnlist span{
+        height: 28px;
+        line-height: 28px;
+        padding: 0 10px;
+        background:#0b9be4;
+    }
+    .pup .layui-form-item{
+        margin-bottom:0
+    }
+    .prosearch .capture{
+        width: 41px;
+        height: 30px;
+        background: #000;
+        /* margin-left: -40px; */
+        position: absolute;
+        /* margin-top: -7px; */
+        top: -7px;
+        left: -23px;
+        z-index:-1
+    }
+    .pupbtn{
+        cursor: pointer;
+        padding: 5px 9px;
+        border-radius: 2px;
+    }
+    </style>
 </head>
 
 <body class="layui-view-body produwork craftwork">
@@ -19,11 +121,9 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <form class="layui-form">
+                        <input type="hidden" name='IsEnabled' value="true">
                         <div class="btnlist">
-                            <!-- <span class="layui-btn add">新增</span> -->
                             <span class="layui-btn sub">保存</span>
-                            <span class="layui-btn audit disclick">审核</span>
-                            <span class="layui-btn changeStatus disclick">变更</span>
                         </div>
                         <div class="layui-form layui-form-item " style="padding-top:25px">
                             <div class="form-box">
@@ -46,32 +146,32 @@
                                             </select>
                                         </div>
                                     </div> -->
-                                    <div class="layui-form-lsit fl">
-                                        <label class="layui-form-label">单据日期：</label>
-                                        <div class="layui-input-block ">
-                                            <input type="text" name="date" id="date" lay-verify="date" autocomplete="off"
-                                                class="layui-input">
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-lsit fl ">
+
+                                    <!-- <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">单据编号：</label>
                                         <div class="layui-input-block disinput">
                                             <input type="text" value="" id="" autocomplete="off">
                                         </div>
-                                    </div>
-                                    <div class="layui-form-lsit fl ">
-                                        <div class="hignckick" data-type="daten">更多</div>
+                                    </div> -->
+                                    <div class="layui-form-lsit fl morebtn hidden">
+                                        <div class="hignckick" data-type="daten">收起</div>
                                     </div>
                                 </div>
 
 
                                 <div class="more hidden">
-
+                                    <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label">单据日期：</label>
+                                        <div class="layui-input-block ">
+                                            <input type="text" name="Assign_DateTime" id="Assign_DateTime" lay-verify="date" autocomplete="off"
+                                                class="layui-input" readonly>
+                                        </div>
+                                    </div>
                                     <div class="clearfix">
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">产品代码：</label>
                                             <div class="layui-input-block disinput">
-                                                <input type="text" value="" id="matername" autocomplete="off" readonly>
+                                                <input type="text" value="" id="Assign_Material" autocomplete="off" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
@@ -84,34 +184,35 @@
                                         <div class="layui-form-lsit fl ">
                                             <label class="layui-form-label">规格型号：</label>
                                             <div class="layui-input-block disinput">
-                                                <input type="text" value="" id="" readonly name="">
+                                                <input type="text" value="" id="specifications" readonly name="" readonly>
                                             </div>
                                         </div>
-                                        <div class="layui-form-lsit fl">
-                                            <label class="layui-form-label">交货日期：</label>
-                                            <div class="layui-input-block ">
-                                                <input type="text" name="" id="" lay-verify="" autocomplete="off" class="layui-input">
-                                            </div>
-                                        </div>
+
                                     </div>
 
                                     <div class="clearfix">
+                                        <div class="layui-form-lsit fl">
+                                            <label class="layui-form-label">交货日期：</label>
+                                            <div class="layui-input-block ">
+                                                <input type="text" name="" id="" lay-verify="" autocomplete="off" class="layui-input" readonly>
+                                            </div>
+                                        </div>
                                         <div class="layui-form-lsit fl ">
                                             <label class="layui-form-label">单位：</label>
                                             <div class="layui-input-block disinput">
-                                                <input type="text" value="" id="" name="" readonly>
+                                                <input type="text" value="" id="measure" name="" readonly >
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl ">
                                             <label class="layui-form-label">BOM编号：</label>
                                             <div class="layui-input-block disinput">
-                                                <input type="text" value="" id="" name="" readonly>
+                                                <input type="text" value="" id="Assign_BillOfMaterial" name="" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl ">
                                             <label class="layui-form-label">工艺路线：</label>
                                             <div class="layui-input-block disinput">
-                                                <input type="text" value="" id="" name="" readonly>
+                                                <input type="text" value="" id="Assign_Craft" name="" readonly>
                                             </div>
                                         </div>
                                         <!-- <div class="layui-form-lsit fl ">
@@ -122,49 +223,37 @@
                                     </div>
 
                                     <div class="clearfix">
-                                        <div class="layui-form-lsit fl ">
+                                        <!-- <div class="layui-form-lsit fl ">
                                             <label class="layui-form-label">工艺名称：</label>
                                             <div class="layui-input-block disinput">
                                                 <input type="text" value="" id="" readonly name="">
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="layui-form-lsit fl ">
                                             <label class="layui-form-label">计划生产数量：</label>
                                             <div class="layui-input-block disinput">
-                                                <input type="text" value="" id="" name="">
+                                                <input type="text" value="" id="Assign_Quantity" name="" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">计划开工日期：</label>
                                             <div class="layui-input-block ">
-                                                <input type="text" name="" id="" lay-verify="" autocomplete="off" class="layui-input">
+                                                <input type="text" name="" id="Assign_StartTime" lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">计划完工日期：</label>
                                             <div class="layui-input-block ">
-                                                <input type="text" name="" id="" lay-verify="" autocomplete="off" class="layui-input">
+                                                <input type="text" name="" id="Assign_Deadline" lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
-
                                     </div>
-
                                     <div class="isAttribute">
-
                                     </div>
-
-
                                 </div>
-
-
                             </div>
                         </div>
                     </form>
-                    <!-- <div class="taplist" data-staut="2">
-                        <span class="checkone checkorder active" data-status='2'>物料</span>
-                        <span class="checkone  checkgy" data-status='1'>工艺</span>
-
-                    </div> -->
 
                     <div id="tablelist1" style="clear:left" class="">
                         <section class="cpmtable">
@@ -178,75 +267,64 @@
                             </div>
                         </section>
                     </div>
-                    <!-- <div id="tablelist" style="clear:left" class="">
-                        <section class="productworktable">
-                            <div class="layui-card">
-                                <i class="iconfont icon-guanbi iconclose"></i>
-                                <div class="layui-card-body layui-text">
-                                    <div id="tableRes" class="table-overlay">
-                                        <table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+                    <div class="mark hidden">
+                        <div class="pup layui-form layui-form-item ">
+                            <div class='puptitle btncolor'>工序汇报</div>
+                            <form class="form-box1">
+                                <div class="layui-form-lsit  clearfix">
+                                    <label class="layui-form-label fl">类型</label>
+                                    <div class="layui-input-block fl craftype">
+                                        <select name="" class="" id="ReportEntry_Type" lay-filter="">
+                                            
+                                            <!-- <option value="0">正常</option>
+                                            <option value="1">返工</option> -->
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
-                    </div> -->
+                                <div class="layui-form-lsit clearfix">
+                                    <label class="layui-form-label fl">实做数量</label>
+                                    <div class="layui-input-block  fl">
+                                        <input type="number" value="" id="doreal" name="doreal" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit  clearfix">
+                                    <label class="layui-form-label fl">报废数量</label>
+                                    <div class="layui-input-block fl">
+                                        <input type="number" value="" id="scrap" name="scrap" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit  clearfix">
+                                    <label class="layui-form-label fl">合格数量</label>
+                                    <div class="layui-input-block fl">
+                                        <input type="number" value="" id="qualified" name="qualified" autocomplete="off"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit clearfix">
+                                    <label class="layui-form-label fl">备注</label>
+                                    <div class="layui-input-block fl">
+                                        <input type="text" value="" id="" name="remark" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit  clearfix">
+                                    <label class="layui-form-label fl">操作员</label>
+                                    <div class="layui-input-block fl">
+                                        <select name="" class="" id="" lay-filter="">
+                                            <option value="0">管理员</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit  clearfix btnlists">
+                                    <span class="pupbtn sure btncolor">确定</span>
+                                    <span class="pupbtn cancel btncolor">取消</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="clearfix formfoot">
-                    <div class="layui-form-lsit fl ">
-                        <label class="layui-form-label">制单人：</label>
-                        <div class="layui-input-block disinput">
-                            <input type="text" value="001" disabled id="zd">
-                        </div>
-                    </div>
-                    <div class="layui-form-lsit fl ">
-                        <label class="layui-form-label">审核人：</label>
-                        <div class="layui-input-block disinput">
-                            <input type="text" value="001" disabled id="zd">
-                        </div>
-                    </div>
-                    <div class="layui-form-lsit fl ">
-                        <label class="layui-form-label">审核日期：</label>
-                        <div class="layui-input-block disinput">
-                            <input type="text" value="" disabled id="zd">
-                        </div>
-                    </div>
-                    <div class="layui-form-lsit fl ">
-                        <label class="layui-form-label">业务员：</label>
-                        <div class="layui-input-block disinput">
-                            <input type="text" value="001" disabled id="zd">
-                        </div>
-                    </div>
-                </div>
-
             </div>
-
         </div>
-
     </div>
-
-  
-    <script type="text/html" id="selectcrp">
-        <select id="CraftEntry_Nick" lay-filter="CraftEntry_Nick" lay-search name="CraftEntry_Nick">
-        <option value="">请选择或输入</option>
-        {{# layui.each(dateslit1, function(index, item){ }}
-        <option value="{{item.Process_Name}}">{{ item.Process_Nick}}</option>
-        {{# }); }}
-    </select>
-</script>
-
-
-    <script type="text/html" id="selectuser">
-    <select name="Fuser" lay-filter="Fuser" lay-search>
-        <option value=""></option>
-        <option value="1">张一</option>
-        <option value="2">徐少春</option>
-    </select>
-</script>
-
-
-
-
-
 
 </body>
 <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>

@@ -71,8 +71,10 @@ var saleEntry=ajaxURl + '/Api/PSISales/SalesOrder/GetEntry?keyValue='
 // -------------------生产管理----------------------
 // 生产订单类型
 var ajaxAsstype=ajaxURl + "/Api/SystemManager/Dictionary/GetEntry?keyword=PSIAssign_Type"
-// 生产工单单据状态 --
+// 生产工单单据状态 
 var assginsta=ajaxURl+'/Api/SystemManager/Dictionary/GetEntry?keyword=PSIBill_Status'
+// 报工类型
+var craftypesta=ajaxURl+'/Api/SystemManager/Dictionary/GetEntry?keyword=PSIReportCraft_Type'
 // 工序列表
 var processlist=ajaxURl + '/Api/PSIBase/Process/GetList?keyword='
 // 添加工序

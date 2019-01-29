@@ -331,7 +331,7 @@ function getcraflist(id) {
         success: function (res) {
             console.log(res)
             var isussecc = res.Succeed;
-            var data = res.Data;
+            var data = res.Data.Details;
 
             if (isussecc) {
                 tablerendercraft(strgy, data)

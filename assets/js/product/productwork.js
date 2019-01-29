@@ -330,7 +330,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                         success: function (res) {
                             $(".dateload").addClass("hidden")
                             $(".datelist").removeClass("hidden")
-                            //console.log(res)
+                           
                             var data = res.Data;
                             var isussecc = res.Succeed;
                             // data[i].Material_Name data[i].Material_Nick  data[i].Material_Specification
@@ -353,7 +353,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                                     } else {
                                     }
                                 })
-                                //console.log(showList)
+                                
                                 for (var j = 0; j < showList.length; j++) {
                                     var shownow = showList[j]
                                     searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-fid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
@@ -371,21 +371,19 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                                 });
                                 _this1.on("click", function () {
                                     var oldData = table.cache[layTableId1];
-                                    //console.log(oldData)
+                                  
                                     var name = $(this).attr("data-name");
                                     var nick = $(this).attr("data-nick");
                                     var specife = $(this).attr("data-spe");
                                     var measure = $(this).attr("data-materme");
                                     var fid = $(this).attr("data-fid");
-                                    var matertype = $(this).attr("data-matertype")
-                                    matertypelist(matertype)
-                                    // //console.log(fid)
+                                  
                                     $(".materName1").val(name);
                                     // $(".maternick").val(nick);
                                     // $(".materspe").val(specife);
                                     // $("#measure").val(measure);
                                     $.each(tabledata, function (index, value) {
-                                        //console.log(value)
+                                        
                                         if (value.LAY_TABLE_INDEX == dataindex) {
                                             value.materialName = name;
                                             value.materialNick = nick
@@ -435,7 +433,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                             } else {
                             }
                         })
-                        //console.log(showList)
+                      
                         for (var j = 0; j < showList.length; j++) {
                             var shownow = showList[j]
                             searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-fid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
@@ -460,20 +458,19 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                         });
                         _this1.on("click", function () {
                             var oldData = table.cache[layTableId1];
-                            //console.log(oldData)
+                           
                             var name = $(this).attr("data-name");
                             var nick = $(this).attr("data-nick");
                             var specife = $(this).attr("data-spe");
                             var measure = $(this).attr("data-materme");
                             var fid = $(this).attr("data-fid");
-                            var matertype = $(this).attr("data-matertype")
-                            matertypelist(matertype)
+                           
                             $(".materName1").val(name);
                             // $(".maternick").val(nick);
                             // $(".materspe").val(specife);
                             // $("#measure").val(measure);
                             $.each(tabledata, function (index, value) {
-                                //console.log(value)
+                               
                                 if (value.LAY_TABLE_INDEX == dataindex) {
                                     value.materialName = name;
                                     value.materialNick = nick
@@ -519,7 +516,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     // 客户订单号变更后包含的产品列表
     getpro = function (data) {
-        //console.log(data)
+      
         $(".checkpro").on("click", function () {
             if ($("#cusOrder").val()) {
                 $(".selectlist").removeClass("hidden");
@@ -544,7 +541,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                             deadline = datanow.SalesOrderEntry_Deadline
                         }
                     }
-                    //console.log(materdatanew)
+                  
                     html += '<li data-name="' + materdatanew.Material_Name + '" data-nick="' + materdatanew.Material_Nick + '" data-spe="' + materdatanew.Material_Specifications + '" data-materme="' + materdatanew.Material_Measure + '" data-deadline="' + deadline + '" data-materid="' + materdatanew.F_Id + '" data-matertype="' + materdatanew.Material_Type + '"><p>' + materdatanew.Material_Name + '</p><p>' + materdatanew.Material_Nick + '</p><p>' + materdatanew.Material_Specifications + '</p></li>'
                     arri = { materame: materdatanew.Material_Name, maternick: materdatanew.Material_Nick, matersp: materdatanew.Material_Specifications, materdatanew: materdatanew.Material_Measure, deadline: deadline, materid: materdatanew.F_Id, matertype: materdatanew.Material_Type };
                     arrlist.push(arri)
@@ -567,7 +564,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
                         }
                     })
-                    //console.log(showList)
+                   
                     for (var j = 0; j < showList.length; j++) {
                         var shownow = showList[j]
                         searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-deadline="' + deadline + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
@@ -813,7 +810,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         $("#tablelist1 .layui-table-body").removeClass("overvis");
         $("#tablelist1 .layui-table-box").removeClass("overvis");
         $("#tablelist1 .layui-table-view").removeClass("overvis");
-        console.log(data)
+       
         var elem = data.othis.parents('tr');
         var dataindex = elem.attr("data-index");
         $.each(tablelist1, function (index, value) {
@@ -847,7 +844,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         type: "GET",
         url: processlist,
         success: function (res) {
-            //console.log(res)
+           
             var isussecc = res.Succeed;
             if (isussecc) {
                 for (var i = 0; i < res.Data.length; i++) {
@@ -867,7 +864,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     // 重载工序列表
     reloadcraft = function (data) {
-        console.log(data)
+       
         var id = 'a' + new Date().valueOf();
         var newdata = [];
         var adddata = {
@@ -926,7 +923,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         $("#tablelist1 td[data-field='AssignCraft_Nick']").each(function () {
             var curnow = $(this);
             curnow.on("click", function () {
-                //console.log(dateslit1)
+               
                 $("#tablelist1 .layui-table-body").addClass("overvis");
                 $("#tablelist1 .layui-table-box").addClass("overvis");
                 $("#tablelist1 .layui-table-view").addClass("overvis");
@@ -949,7 +946,7 @@ $(function () {
     var iscontinue = true
     $(".sub").on("click", function () {
         var list = $("form").serializeArray();
-        console.log(list)
+       
         $.each(list, function (i, v) {
             if (v.name == "Assign_Material") {
                 if (v.value == '') {
@@ -987,7 +984,7 @@ $(function () {
                 }
             }
         })
-        console.log(list)
+       
         var oldData = getcraftdata()
         var newdata = [];
         $.each(oldData, function (i, v) {
@@ -1009,7 +1006,7 @@ $(function () {
         //         sendfacture()
         //     }
         // }
-        //console.log(list)
+       
         return false
     })
 
@@ -1019,8 +1016,6 @@ $(function () {
     var username = $.cookie("User_Nick")
     $("#Assign_Biller").val(mouser)
     $("#Assign_Billername").val(username)
-
-
     $("#tablelist1 .layui-table-body").addClass("overvis");
     $("#tablelist1 .layui-table-box").addClass("overvis");
     $("#tablelist1 .layui-table-view").addClass("overvis");
@@ -1063,7 +1058,7 @@ $(function () {
 
                     }
                 })
-                //console.log(showList)
+                
                 for (var j = 0; j < showList.length; j++) {
                     var shownow = showList[j]
                     searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
@@ -1168,7 +1163,7 @@ $(function () {
 
                     }
                 })
-                //console.log(showList)
+              
                 for (var j = 0; j < showList.length; j++) {
                     var shownow = showList[j]
                     searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
@@ -1346,7 +1341,7 @@ $(function () {
                 type: "get",
                 url: salelist,
                 success: function (res) {
-                    //console.log(res)
+                   
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
@@ -1376,7 +1371,7 @@ $(function () {
         type: "get",
         url: craftlist,
         success: function (res) {
-            //console.log(res)
+          
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -1415,7 +1410,7 @@ $(function () {
     //             type: "get",
     //             url: bomlist,
     //             success: function (res) {
-    //                 //console.log(res)
+    //               
     //                 var isussecc = res.Succeed;
     //                 var data = res.Data;
     //                 if (isussecc) {
@@ -1441,7 +1436,7 @@ $(function () {
 
     // 切换客户订单号
     layui.form.on('select(cusorder)', function (data) {
-        console.log(data)
+     
         if (data.value == '') {
             getproNorder()
         } else {
@@ -1465,7 +1460,7 @@ $(function () {
                     type: "get",
                     url: saleEntry + id,
                     success: function (res) {
-                        console.log(res)
+                       
                         var isussecc = res.Succeed;
                         var data = res.Data;
                         if (isussecc) {
@@ -1486,53 +1481,60 @@ $(function () {
     })
 
     // 切换工艺路线
-    // layui.form.on('select(craft)', function (data) {
-    //     console.log(data)
-    //     var id = data.value;
-    //     var crafid;
-    //     if (data.value) {
-    //         if (data.elem.selectedOptions) {
-    //             crafid = data.elem.selectedOptions[0].attributes[0].value;
+    layui.form.on('select(craft)', function (data) {
+       
+        var id = data.value;
+        var crafid;
+        if (data.value) {
+            if (data.elem.selectedOptions) {
+                crafid = data.elem.selectedOptions[0].attributes[0].value;
 
-    //         } else {
-    //             var elems = data.elem;
-    //             for (var i = 0; i < elems.length; i++) {
-    //                 var elemnow = elems[i];
-    //                 if (elemnow.selected) {
-    //                     crafid = elemnow.attributes[0].value;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     //console.log(crafid)
-    //     $(".sub").attr("data-craftid", crafid)
-    //     if (id) {
-    //         // 切换工艺之后查询此工艺路线下的工序列表
-    //         $.ajax({
-    //             type: "get",
-    //             url: assignCraft + id,
-    //             success: function (res) {
-    //                 console.log(res)
-    //                 var isussecc = res.Succeed;
-    //                 var data = res.Data;
-    //                 if (isussecc) {
-    //                     if (res.Data.length >= 1) {
-    //                         reloadcraft(data)
-    //                     } else {
-    //                         reloadcraft(craftdetail)
-    //                     }
-    //                     $(".sub").attr("data-nick", data.Craft_Nick)
-    //                     $(".sub").attr("data-name", data.Craft_Name)
-    //                 } else {
-    //                     alert(res.Message)
-    //                 }
-    //             }
-    //         })
-    //     } else {
-    //         var datanul = []
-    //         reloadcraft(datanul)
-    //     }
-    // })
+            } else {
+                var elems = data.elem;
+                for (var i = 0; i < elems.length; i++) {
+                    var elemnow = elems[i];
+                    if (elemnow.selected) {
+                        crafid = elemnow.attributes[0].value;
+                    }
+                }
+            }
+        }
+       
+        $(".sub").attr("data-craftid", crafid)
+        if(craftdetail.length>=1){
+            reloadcraft(craftdetail)
+        } else {
+            var datanul = []
+            reloadcraft(datanul)
+        }
+       
+        // if (id) {
+        //     // 切换工艺之后查询此工艺路线下的工序列表
+        //     $.ajax({
+        //         type: "get",
+        //         url: assignCraft + id,
+        //         success: function (res) {
+        //            
+        //             var isussecc = res.Succeed;
+        //             var data = res.Data;
+        //             if (isussecc) {
+        //                 if (res.Data.length >= 1) {
+        //                     reloadcraft(data)
+        //                 } else {
+        //                     reloadcraft(craftdetail)
+        //                 }
+        //                 $(".sub").attr("data-nick", data.Craft_Nick)
+        //                 $(".sub").attr("data-name", data.Craft_Name)
+        //             } else {
+        //                 alert(res.Message)
+        //             }
+        //         }
+        //     })
+        // } else {
+        //     var datanul = []
+        //     reloadcraft(datanul)
+        // }
+    })
 
     $(".checkone").click(function () {
         var stau = $(this).attr("data-status");
@@ -1670,7 +1672,7 @@ $(function () {
     $.ajax({
         url: getMain,
         success: function (res) {
-            //console.log(res)
+          
             var isussecc = res.Succeed;
             if (isussecc) {
                 $("#fid").val(res.Data)
@@ -1694,11 +1696,11 @@ function reloadform() {
 
 // 根据选择的产品查工艺路线
 function getcraftone(id) {
-    console.log(id)
+   
     $.ajax({
         url: materCraft + id,
         success: function (res) {
-            //console.log(res)
+           
             var isussecc = res.Succeed;
             if (isussecc) {
                 if (res.Data) {
@@ -1708,6 +1710,7 @@ function getcraftone(id) {
                     $('#Assign_Craft').siblings("div.layui-form-select").find('dl').find(select).click();
                     // newcraftdefalue(res.Data.Details,0)
                 } else {
+                    craftdetail = []
                     var select1 = 'dd[lay-value=""]';
                     $('#Assign_Craft').siblings("div.layui-form-select").find('dl').find(select1).click();
                     $("#isadd").val("false")
@@ -1755,6 +1758,9 @@ sendfacture = function () {
     for (var k = 0; k < oldCraftdata.length; k++) {
         var nowdata1 = oldCraftdata[k]
         if (nowdata1.AssignCraft_Nick) {
+            if(nowdata1.F_Id){
+                nowdata1.F_Id=null
+            }
             if (nowdata1.crsId) {
                 newcraft = true;
             }
@@ -1766,22 +1772,20 @@ sendfacture = function () {
         data.Details = newdata;
         data.Crafts = cradata
         craftdata.Crafts = cradata
-        // console.log(list)
+       
         if (fid) {
             data.F_Id = fid
             craftdata.F_Id = fid
         }
         data.Assign_Status = '10000'
         craftdata.Assign_Status = '10000'
-        console.log(data)
-        console.log(craftdata)
-
+       
         $.ajax({
             type: "POST",
             url: saveAssign,
             data: data,
             success: function (res) {
-                //console.log(res)
+               
                 var isussecc = res.Succeed;
                 var data = res.Data;
                 if (isussecc) {
@@ -1829,12 +1833,12 @@ sendfacture = function () {
 
 // 物料种属
 function matertypelist(id) {
-    console.log(id)
+   
     var familyid;
     $.ajax({
         url: materFlist,
         success: function (res) {
-            console.log(res)
+           
             var isussecc = res.Succeed;
             if (isussecc) {
                 var data = res.Data;
@@ -1846,11 +1850,11 @@ function matertypelist(id) {
 
                     }
                 }
-                console.log(familyid)
+               
                 $.ajax({
                     url: materFlistone + '?keyword=' + familyid + '&PageIndex=&PageSize=',
                     success: function (res) {
-                        console.log(res)
+                       
                         var isussecc = res.Succeed;
                         if (isussecc) {
                             var data = res.Data;
@@ -1860,7 +1864,7 @@ function matertypelist(id) {
                                     html += '<div class="layui-form-lsit fl ">' +
                                         '<label class="layui-form-label">' + data[i].FamilyEntry_Nick + '：</label>' +
                                         '<div class="layui-input-block disinput">' +
-                                        '<input type="text" value="" id="">' +
+                                        '<input type="text" value="" id="" name="'+data[i].FamilyEntry_Name+'">' +
                                         '</div>' +
                                         '</div>';
                                 }

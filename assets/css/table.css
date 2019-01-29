@@ -106,7 +106,7 @@
     font-size: 30px;
     cursor: pointer;
 }
-.layui-btn{
+.layui-btn,.btncolor{
     background-color: #177ce3;
     background-repeat: repeat-y;
     background-image: -moz-linear-gradient(left,#29adeb,#177ce3);

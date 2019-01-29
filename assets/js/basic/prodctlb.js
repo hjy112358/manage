@@ -1,4 +1,4 @@
-var datalist = [];
+
 $(function () {
     $(".add").on("click", function () {
         $(".termask").removeClass("hidden");
@@ -21,6 +21,8 @@ $(function () {
     $(".cancel,.iconclose").on("click", function () {
         $(".termask").addClass("hidden");
         tablelist();
+        var data=[];
+        editablelist(data)
     })
 
     function renderForm() {
@@ -60,7 +62,7 @@ $(function () {
                 $(".editsave").removeClass("hidden");
                 $(".save").addClass("hidden");
                 $("#tableRes").addClass("hidden");
-                $("#tableRes1").removeClass("hidden");
+                $("#tableRes1").removeClass("hidden"); 
                 $(".editsave").removeClass("hidden");
                 $(".masktitle").html("修改物料类别");
                 $("#Family_Name").val(obj.data.Family_Name);
@@ -76,12 +78,12 @@ $(function () {
                         console.log(res)
                         var success  =res.Succeed;
                         if (success) {
-                            $(".addattr").removeClass("addfirst");
-                            $(".addattr").addClass("editadd");
+                            // $(".addattr").removeClass("addfirst");
+                            // $(".addattr").addClass("editadd");
                             // $(".addattr").html("增加一行");
                             console.log(res)
-                            datalist = res.Data
-                            editablelist();
+                            var datalist = res.Data
+                            editablelist(datalist);
                         } else {
                             alert(res.Message)
                         }
@@ -111,7 +113,7 @@ $(function () {
             url: materFlist,
             // data:datas,
             success: function (res) {
-                console.log(res)
+                
                 tablerender(str, res.Data);
 
             }
@@ -122,8 +124,7 @@ $(function () {
 
     var isSend = true;
     $(".save").on("click", function () {
-        console.log("保存属性")
-        console.log(tabledatalist)
+       
         var name = $("#Family_Name").val();
         var nick = $("#Family_Nick").val();
 
@@ -182,7 +183,7 @@ $(function () {
                 url:addmater,
                 data: data,
                 success: function (res) {
-                    console.log(res)
+                  
                     var isussecc = res.Succeed;
                     if (isussecc) {
                         $(".termask").addClass("hidden");
@@ -234,8 +235,7 @@ $(function () {
     })
 
     $(".editsave").on("click", function () {
-        console.log("保存属性")
-        console.log(tabledatalist)
+      
         var id = $(".editsave").attr("data-id")
         var name = $("#Family_Name").val();
         var nick = $("#Family_Nick").val();
@@ -293,7 +293,7 @@ $(function () {
                 url: editmater,
                 data: data,
                 success: function (res) {
-                    console.log(res)
+                   
                     var isussecc = res.Succeed;
                     if (isussecc) {
                         $(".termask").addClass("hidden");
@@ -323,7 +323,7 @@ function delmeasure(id) {
             url: removemater,
             data: data,
             success: function (res) {
-                console.log(res)
+              
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(index)
@@ -405,9 +405,10 @@ function tablelist() {
         //定义事件集合
         var active = {
             addRow: function () {	//添加一行
+                console.log("new")
                 viewObj.limit = viewObj.limit + 1;
                 var oldData = table.cache[layTableId];
-                // console.log(oldData);
+               
                 var newRow = { tempId: new Date().valueOf(), state: 0, FamilyEntry_Nick: '', FamilyEntry_Datatype: '', datatypeText: '' };
                 oldData.push(newRow);
                 tableIns.reload({
@@ -417,7 +418,7 @@ function tablelist() {
             },
             updateRow: function (obj) {
                 var oldData = table.cache[layTableId];
-                // console.log(oldData);
+               
                 for (var i = 0, row; i < oldData.length; i++) {
                     row = oldData[i];
                     var nowi = i;
@@ -475,7 +476,7 @@ function tablelist() {
         //监听工具条
         table.on('tool(dataTable)', function (obj) {
             var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
-            // console.log(data);
+          
             switch (event) {
                 case "state":
                     var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
@@ -502,7 +503,7 @@ function tablelist() {
                 if (value.LAY_TABLE_INDEX == dataindex) {
                     value.FamilyEntry_Datatype = data.value;
                     var elems = data.elem;
-                    // console.log(elems)
+                   
                     for (var i = 0; i < elems.length; i++) {
                         var elemnow = elems[i];
                         if (elemnow.selected) {
@@ -525,12 +526,11 @@ function tablelist() {
     });
 }
 
-function editablelist() {
-    window.viewObj1 = {
+function editablelist(datalist) {
+    var viewObj1 = {
         tbData1: datalist,
         limit1: datalist.length
     };
-
     //layui 模块化引用
     layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function () {
         var $ = layui.$,
@@ -543,7 +543,7 @@ function editablelist() {
 
         //数据表格实例化			
         var tbWidth = $("#tableRes1").width();
-        var layTableId1 = "layTable1";
+        var layTableId1 = "layTable";
         var tableIns1 = table.render({
             elem: '#dataTable1',
             id: layTableId1,
@@ -567,7 +567,6 @@ function editablelist() {
             done: function (res, curr, count) {
                  var scrollHeight = $('#tableRes1 .layui-table-body.layui-table-main').prop("scrollHeight");
                  $('#tableRes1 .layui-table-body.layui-table-main').animate({ scrollTop: scrollHeight }, 400);
-                console.log(res.data)
                 viewObj1.tbData1 = res.data;
                 tabledata1 = res.data;
                 tabledatalist = res.data;
@@ -604,7 +603,6 @@ function editablelist() {
                     });
                 });
                 $(".chooseterm .layui-table-view .layui-table td[data-field='FamilyEntry_Datatype']").on("click", function () {
-                    console.log(1);
                     var scrollHeight = $('#tableRes1 .layui-table-body.layui-table-main').prop("scrollHeight");
                     $('#tableRes1 .layui-table-body.layui-table-main').animate({ scrollTop: scrollHeight }, 600);
                 })
@@ -613,9 +611,9 @@ function editablelist() {
         //定义事件集合
         var active = {
             addRow: function () {	//添加一行
+                console.log(viewObj1)
                 viewObj1.limit1 = viewObj1.limit1 + 1;
                 var oldData = table.cache[layTableId1];
-                // console.log(oldData);
                 var newRow = { tempId: new Date().valueOf(), state: 0, FamilyEntry_Nick: '', FamilyEntry_Datatype: '', datatypeText: '' };
                 oldData.push(newRow);
                 tableIns1.reload({
@@ -625,7 +623,6 @@ function editablelist() {
             },
             updateRow: function (obj) {
                 var oldData = table.cache[layTableId1];
-                // console.log(oldData);
                 for (var i = 0, row; i < oldData.length; i++) {
                     row = oldData[i];
                     var nowi = i;
@@ -633,8 +630,6 @@ function editablelist() {
                         $.extend(oldData[i], obj);
                         return;
                     }
-
-
                 }
                 tableIns1.reload({
                     data: oldData,
@@ -650,18 +645,15 @@ function editablelist() {
                     }
                     continue;
                 }
-
                 tableIns1.reload({
                     data: oldData,
                     limit: viewObj1.limit1
                 });
             },
-
             cancel: function () {
                 $(".termask").addClass("hidden");
                 tablelist();
             }
-
         }
         //激活事件
         var activeByType = function (type, arg) {
@@ -678,12 +670,9 @@ function editablelist() {
             activeByType(type);
         });
 
-
-
         //监听工具条
         table.on('tool(datatype)', function (obj) {
             var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
-            // console.log(data);
             switch (event) {
                 case "state":
                     var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
@@ -709,7 +698,6 @@ function editablelist() {
                 if (value.LAY_TABLE_INDEX == dataindex) {
                     value.FamilyEntry_Datatype = data.value;
                     var elems = data.elem;
-                    console.log(elems)
                     for (var i = 0; i < elems.length; i++) {
                         var elemnow = elems[i];
                         if (elemnow.selected) {
