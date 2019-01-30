@@ -124,7 +124,18 @@ var getnum=ajaxURl+'/api/PSIBase/BatchNo/GetNext?billType='
 var removeassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Remove' 
 // 下推生产工艺路线
 var pushcraft=ajaxURl+'/Api/Manufacture/Assign/AutoPushCraft'
-
+// 添加报工
+var ajaxaddReport=ajaxURl+'/Api/Manufacture/Report/Add'
+// 添加报工
+// var addReportone=ajaxURl+'/Api/Manufacture/ReportEntry/Add'
+// 修改报工
+var editReportone=ajaxURl+'/Api/Manufacture/Report/Edit'
+// 获取报工one
+var getReportone=ajaxURl+'/Api/Manufacture/Report/GetEntity'
+// 获取报工列表
+var getReportlist=ajaxURl+'/Api/Manufacture/Report/GetList?keyword=&PageSize=&PageIndex='
+// 删除报工one
+var rempveReportlist=ajaxURl+'/Api/Manufacture/Report/Remove'
 // -------------------生产管理----------------------
 
 

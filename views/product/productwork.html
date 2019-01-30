@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../../assets/css/product.css">
     <title>生产订单</title>
     <style>
-    .craftwork .layui-table-cell .layui-form-checkbox[lay-skin=primary]{
+        .craftwork .layui-table-cell .layui-form-checkbox[lay-skin=primary]{
         top:-5px;
     }
     .craftclick{
@@ -32,8 +32,8 @@
 <body class="layui-view-body produwork craftwork">
     <input type="hidden" id="fid"> <!-- 工单id-->
     <input type="hidden" id="assCraftid"><!-- 记录工艺路线的fid-->
-   <input type="hidden" id="isadd" value="false">  <!-- 记录工艺是否新建-->
-   <input type="hidden" id="editdefault"><!-- 记录新增工单工序的fid-->
+    <input type="hidden" id="isadd" value="false"> <!-- 记录工艺是否新建-->
+    <input type="hidden" id="editdefault"><!-- 记录新增工单工序的fid-->
     <!--工艺路线id-->
     <div class="layui-content">
         <div class="layui-row">
@@ -151,7 +151,8 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">BOM编号：</label>
                                         <div class="layui-input-block disinput checkbom" data-type="daten">
-                                                <input type="text" value="" id="Assign_BillOfMaterial" autocomplete="off" name="Assign_BillOfMaterial" readonly>
+                                            <input type="text" value="" id="Assign_BillOfMaterial" autocomplete="off"
+                                                name="Assign_BillOfMaterial" readonly>
                                             <!-- <select name="Assign_BillOfMaterial" class="" id="Assign_BillOfMaterial"
                                                 lay-search="" lay-filter="bom">
                                                 <option value="">请选择</option>
@@ -222,9 +223,11 @@
                                         </div>
                                     </div>
                                 </div>
+                              
                                 <div class="isAttribute clearfix">
                                 </div>
-                            </div> 
+                               
+                            </div>
                             <div class="taplist clearfix" data-staut="2">
                                 <span class="checkone checkorder active" data-status='2'>物料</span>
                                 <span class="checkone  checkgy" data-status='1'>工艺</span>
@@ -272,9 +275,9 @@
                                 <div class="layui-form-lsit fl">
                                     <label class="layui-form-label">单据状态：</label>
                                     <div class="layui-input-block disinput orderstatus" data-type="daten">
-                                        <input type="text" value="" id="Assign_Status" name="Assign_Status" autocomplete="off"
-                                            readonly>
-                                      
+                                        <input type="text" value="" id="Assign_Status" name="Assign_Status"
+                                            autocomplete="off" readonly>
+
                                     </div>
                                 </div>
                                 <div class="layui-form-lsit fl ">
@@ -289,6 +292,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="attrhide hidden "> 
+        <form class="attrform"></form>
     </div>
 
     <script type="text/html" id="selectTool">

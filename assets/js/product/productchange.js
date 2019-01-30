@@ -1021,7 +1021,7 @@ $(function () {
                                         $("#Assign_Unit").val(datanow.Material_Measure)
                                     }
                                 }
-                                reloadmater(data.Details)
+                                reloadmater(data.Children)
                                 // 物料加载
                                 // tablerender(strwl, data.Details)
                             } else {

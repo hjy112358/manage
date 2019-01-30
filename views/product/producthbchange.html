@@ -49,7 +49,6 @@
         transform: translate(-50%,-50%);
         background: #fff;
         border-radius: 12px;
-        min-width: 360px;
     }
     .puptitle{
         text-align: center;
@@ -134,10 +133,11 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">生产任务单号：</label>
                                         <div class="layui-input-block  checknum" data-type="daten">
-                                            <select name="Report_Name" class="" id="Report_Name" lay-search=""
+                                            <!-- <select name="Report_Name" class="" id="Report_Name" lay-search=""
                                                 lay-filter="num">
                                                 <option value="">请选择</option>
-                                            </select>
+                                            </select> -->
+                                            <input type="text" name='Report_Name' id="Report_Name" readonly>
                                         </div>
                                     </div>
                                     <!-- <div class="layui-form-lsit fl">
@@ -292,19 +292,18 @@
                                     </div>
                                 </div>
                                 <div class="layui-form-lsit  clearfix">
-                                        <label class="layui-form-label fl">合格数量</label>
-                                        <div class="layui-input-block fl">
-                                            <input type="number" value="" id="ReportEntry_Qualified" name="ReportEntry_Qualified" autocomplete="off"
-                                                >
-                                        </div>
-                                    </div>
-                                <div class="layui-form-lsit  clearfix">
                                     <label class="layui-form-label fl">报废数量</label>
                                     <div class="layui-input-block fl">
                                         <input type="number" value="" id="ReportEntry_Scrap" name="ReportEntry_Scrap" autocomplete="off">
                                     </div>
                                 </div>
-                               
+                                <div class="layui-form-lsit  clearfix">
+                                    <label class="layui-form-label fl">合格数量</label>
+                                    <div class="layui-input-block fl">
+                                        <input type="number" value="" id="ReportEntry_Qualified" name="ReportEntry_Qualified" autocomplete="off"
+                                            readonly>
+                                    </div>
+                                </div>
                                 <div class="layui-form-lsit clearfix">
                                     <label class="layui-form-label fl">备注</label>
                                     <div class="layui-input-block fl">
@@ -337,7 +336,7 @@
 <script src="../../assets/layui.all.js"></script>
 <script src="../../assets/js/jquery.cookie.js"></script>
 <script src="../../main.js"></script>
-<script src="../../assets/js/product/producthb.js"></script>
+<script src="../../assets/js/product/producthbchange.js"></script>
 <!-- <script src="../assets/js/drop.js"></script> -->
 
 </html>

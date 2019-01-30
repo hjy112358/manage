@@ -946,7 +946,7 @@ $(function () {
     var iscontinue = true
     $(".sub").on("click", function () {
         var list = $("form").serializeArray();
-       
+        console.log(list)
         $.each(list, function (i, v) {
             if (v.name == "Assign_Material") {
                 if (v.value == '') {
@@ -992,20 +992,9 @@ $(function () {
                 newdata.push(v)
             }
         })
-        // if ($("#isadd").val() == "false") {
-        //     newcraftdefalue(newdata,1)
-        // }else{
-        //     editcraftdefult(newdata)
-        // }
+       
         sendfacture()
-        // if (iscontinue) {
-        //     var craftid = $(".sub").attr("data-craftid")
-        //     if (!craftid) {
-        //         sendcraft();
-        //     } else {
-        //         sendfacture()
-        //     }
-        // }
+        
        
         return false
     })
@@ -1727,6 +1716,22 @@ var isSend = true;
 var newcraft = false;
 sendfacture = function () {
     var list = $("form").serializeArray();
+    var attrdatalist=[]
+    $(".attrhide form").html($(".isAttribute").html())
+    var attrdata=$(".attrform").serializeArray();
+    $.each(attrdata,function(i,v){
+        $.each(list,function(index,value){
+            if(v.name==value.name){
+                v.value=value.value
+            }
+        })
+    })
+    var newattrdata={}
+    $.each(attrdata,function(i,v){
+        newattrdata[v.name] =v.value
+    })
+    attrdatalist.push(newattrdata)
+    console.log(attrdatalist)
     var data = {}, craftdata = {};
     var newdata = [], cradata = [];
     var fid = $("#fid").val()
@@ -1769,10 +1774,11 @@ sendfacture = function () {
     }
     subindex = layer.load();
     if (isSend) {
-        data.Details = newdata;
+        data.Children = newdata;
         data.Crafts = cradata
+        data.Details=attrdatalist
         craftdata.Crafts = cradata
-       
+       console.log(data)
         if (fid) {
             data.F_Id = fid
             craftdata.F_Id = fid
@@ -1864,7 +1870,7 @@ function matertypelist(id) {
                                     html += '<div class="layui-form-lsit fl ">' +
                                         '<label class="layui-form-label">' + data[i].FamilyEntry_Nick + '：</label>' +
                                         '<div class="layui-input-block disinput">' +
-                                        '<input type="text" value="" id="" name="'+data[i].FamilyEntry_Name+'">' +
+                                        '<input type="text" value="" id="" name="'+data[i].FamilyEntry_Name+'" class="attrs">' +
                                         '</div>' +
                                         '</div>';
                                 }

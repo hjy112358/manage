@@ -115,7 +115,7 @@ $(function () {
                                 }
                                 // 物料加载
                                 //console.log(data.Details)
-                                tablerender(strwl, data.Details)
+                                tablerender(strwl, data.Children)
                             } else {
                                 alert(result.Message)
                             }
