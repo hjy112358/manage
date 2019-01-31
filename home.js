@@ -363,12 +363,3 @@ function newstock(){
     $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(12)').trigger('click');
 
 }
-
-function getproductchange(id){
-    var oldhref = $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(12)').attr("href");
-    var href = oldhref
-    href = href + '?fid='+id
-    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(12)').attr("href", href)
-    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(12)').trigger('click');
-    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(12)').attr("href", oldhref)
-}

@@ -1,6 +1,6 @@
 var reload, subdata;
-var custid=[],custnick=[]
-var issure=true;
+var custid = [], custnick = []
+var issure = true;
 $(function () {
     $(".hignckick").on("click", function () {
         var _this = $(this)
@@ -56,7 +56,7 @@ $(function () {
                     var datanow = data[i]
                     html += '<option value="' + datanow.F_Id + '">' + datanow.User_Nick + '</option>';
                     htmlsel += '<dd lay-value="' + datanow.F_Id + '">' + datanow.User_Nick + '</dd>'
-                    custid.push(datanow.F_Id) 
+                    custid.push(datanow.F_Id)
                     custnick.push(datanow.User_Nick)
                     if (datanow.F_Id == mouser) {
                         cheuser = datanow.F_Id
@@ -87,7 +87,7 @@ $(function () {
                 type: "get",
                 url: asslist,
                 success: function (res) {
-                    console.log(res)
+                    // console.log(res)
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
@@ -110,8 +110,8 @@ $(function () {
     })
     // 切换单号
     layui.form.on("select(num)", function (obj) {
-        console.log(obj.value)
-        $('.mark').attr("data-fid",obj.value)
+        // console.log(obj.value)
+        $('.mark').attr("data-fid", obj.value)
         $.ajax({
             type: "get",
             url: getassone + obj.value,
@@ -155,16 +155,36 @@ $(function () {
 
                     var crafts = res.Data.Crafts
                     // 查询是否有汇报
-                    getisreport(obj.value,crafts);
-                    
+                    getisreport(obj.value, crafts);
+
                 } else {
                     alert(res.Message)
                 }
             }
-        }) 
+        })
+
+
+
     })
     $(".sure").on("click", function () {
-        if(issure){
+        var issure = true;
+        // ReportEntry_Quantity  实做数量
+    // ReportEntry_Qualified  合格数量
+    // ReportEntry_Scrap  报废数量
+        var quant=($("#ReportEntry_Quantity").val())||0
+        var quanted=($("#ReportEntry_Qualified").val())||0
+        var scrp=($("#ReportEntry_Scrap").val())||0
+        var correctnum=parseInt(quant)-parseInt(scrp)
+        if(!quant){
+            alert("实做数量不能为空")
+        }else if(correctnum!=parseInt(quanted)){
+            alert("请核对数据")
+            issure=false
+        }else{
+            issure=true;
+        }
+
+        if (issure) {
             $(".mark").addClass("hidden");
             var id = $(".mark").attr("data-craid")
             var data = $(".form-box1").serializeArray()
@@ -184,57 +204,8 @@ $(function () {
     // ReportEntry_Quantity  实做数量
     // ReportEntry_Qualified  合格数量
     // ReportEntry_Scrap  报废数量
-    // $("#ReportEntry_Quantity").bind('input propertychange', function () {
-    //     if ($("#ReportEntry_Scrap").val()) {
-    //         var cout = parseFloat($("#ReportEntry_Quantity").val()) - parseFloat($("#ReportEntry_Scrap").val())
-    //         $("#ReportEntry_Qualified").val(cout)
 
-    //     }
-    // })
-    // $("#ReportEntry_Scrap").bind('input propertychange', function () {
-    //     if ($("#ReportEntry_Quantity").val()) {
-    //         var cout = parseFloat($("#ReportEntry_Quantity").val()) - parseFloat($("#ReportEntry_Scrap").val())
-    //         $("#ReportEntry_Qualified").val(cout)
 
-    //     }
-    // })
-    var time1,time2;
-    // $("#ReportEntry_Scrap").bind('input propertychange', function () {
-    //     cleartimeout(time1)
-    //     // clearInterval(time2)
-    //     time1=setTimeout(function(){
-    //         console.log("time1")
-    //         if ($("#ReportEntry_Qualified").val()&&$("#ReportEntry_Quantity").val()) {
-    //             var cout = parseFloat($("#ReportEntry_Scrap").val()) +parseFloat($("#ReportEntry_Qualified").val())
-    //             var surecout=parseFloat($("#ReportEntry_Quantity").val())
-    //             if(cout!=surecout){
-    //                 issure=false
-    //                 alert("数据不符")
-    //             }else{
-    //                 issure=true
-    //             } 
-    //         }
-    //     },200)
-       
-    // })
-    // $("#ReportEntry_Qualified").bind('input propertychange', function () {
-    //     clearInterval(time1)
-    //     clearInterval(time2)
-    //     console.log("time2")
-    //     time2=setInterval(function(){
-    //         if ($("#ReportEntry_Scrap").val()&&$("#ReportEntry_Quantity").val()) {
-    //             var cout = parseFloat($("#ReportEntry_Scrap").val()) +parseFloat($("#ReportEntry_Qualified").val())
-    //             var surecout=parseFloat($("#ReportEntry_Quantity").val())
-    //             if(cout!=surecout){
-    //                 issure=false
-    //                 alert("数据不符")
-    //             }else{
-    //                 issure=true
-    //             }
-    //         }
-    //     },200)
-       
-    // })
 })
 
 function tablerender(data) {
@@ -249,18 +220,20 @@ function tablerender(data) {
             , cols: [[
                 { title: '序号', type: 'numbers' },
                 { field: 'AssignCraft_Nick', title: '工艺名称' },
-                { field: 'ReportEntry_Biller', title: '操作员',templet:function(d){
-                    if(d.ReportEntry_Biller){
-                        var index = custid.indexOf(d.ReportEntry_Biller)
-                        if (index == '-1') {
-                            return ''
+                {
+                    field: 'ReportEntry_Biller', title: '操作员', templet: function (d) {
+                        if (d.ReportEntry_Biller) {
+                            var index = custid.indexOf(d.ReportEntry_Biller)
+                            if (index == '-1') {
+                                return ''
+                            } else {
+                                return custnick[index]
+                            }
                         } else {
-                            return custnick[index]
+                            return ''
                         }
-                    }else {
-                        return ''
                     }
-                }},
+                },
                 { field: '', title: '工时' },
                 { field: '', title: '接收数' },
                 { field: 'ReportEntry_Quantity', title: '实做数' },
@@ -269,9 +242,13 @@ function tablerender(data) {
                 {
                     field: 'Fscrappage', title: '报废率(%)', templet: function (d) {
                         var scrappage = '';
-                        if (d.ReportEntry_Quantity && d.ReportEntry_Scrap) {
-                            scrappage = (parseFloat(d.ReportEntry_Scrap) / parseFloat(d.ReportEntry_Quantity) )* 100
-                            scrappage = scrappage.toFixed(2)
+                        if (d.ReportEntry_Qualified) {
+                            if (d.ReportEntry_Quantity == d.ReportEntry_Qualified) {
+                                scrappage = '0.00'
+                            } else {
+                                scrappage = (parseFloat(d.ReportEntry_Scrap) / parseFloat(d.ReportEntry_Quantity)) * 100
+                                scrappage = scrappage.toFixed(2)
+                            }
                         }
                         return scrappage
                     }
@@ -279,7 +256,7 @@ function tablerender(data) {
                 { field: 'Rmark', title: '备注' },
                 {
                     field: 'FNumber', title: '操作', align: 'center', templet: function (d) {
-                        return '<a class="layui-btn layui-btn-xs layui-btn-danger btn-hb" href="javascript:void(0)" onclick=addreport("' + d.F_Id + '","'+d.cfid+'")>汇报</a>';
+                        return '<a class="layui-btn layui-btn-xs layui-btn-danger btn-hb" href="javascript:void(0)" onclick=addreport("' + d.F_Id + '","' + d.cfid + '")>汇报</a>';
                     }
                 }
             ]]
@@ -288,19 +265,19 @@ function tablerender(data) {
             , limits: [1000, 2000, 3000, 4000, 5000]
             , limit: 1000
             , done: function (res) {
-                console.log(res.data)
+                // console.log(res.data)
             }
         });
 
         reloadtable = function (id, data) {
             var oldData = table.cache[layTableId];
-            var isadd=true;
+            var isadd = true;
             $.each(oldData, function (index, value) {
-                if (value.F_Id == id||value.cfid ==id) {
-                    if(value.cfid){
-                        isadd=false
+                if (value.F_Id == id || value.cfid == id) {
+                    if (value.cfid) {
+                        isadd = false
                     }
-                    console.log(value)
+                    // console.log(value)
                     var addnum = 0;
                     for (var i = 0; i < data.length; i++) {
                         var datanow = data[i]
@@ -315,29 +292,32 @@ function tablerender(data) {
                             value[name] = parseInt(datanow.value) + addnum;
                         }
                     }
-                    var fid=$('.mark').attr("data-fid")
-                    subdata(fid,isadd,value)
+
+                    subdata(isadd, value)
                 }
             })
-            console.log(oldData)
-            tableIns.reload({
-                data: oldData,
-                limit: 1000
-            });
+            // console.log(oldData)
+            // tableIns.reload({
+            //     data: oldData,
+            //     limit: 1000
+            // });
         }
 
-        subdata = function (id,isadd,updata) {
+        subdata = function (isadd, updata) {
+            var id = $('#Report_Name option:selected').val()
             console.log(id)
-            if(isadd){
+            var oldData = table.cache[layTableId];
+            if (isadd) {
                 var subindex = layer.load();
-                updata.ReportEntry_CraftEntry=updata.AssignCraft_Process
-                var craid=updata.F_Id//存放工单工序ID
-                updata.cfid=updata.F_Id
-                updata.F_Id=null
-                var data={}
-                data.Details=[]
+                updata.ReportEntry_CraftEntry = updata.AssignCraft_Process
+                var craid = updata.F_Id//存放工单工序ID
+                updata.cfid = updata.F_Id
+                updata.ReportEntry_Assign = id
+                updata.F_Id = null
+                var data = {}
+                data.Details = []
                 data.Details.push(updata)
-                data.Report_Assign=id
+                data.Report_Assign = id
                 $.ajax({
                     type: 'POST',
                     url: ajaxaddReport,
@@ -346,33 +326,42 @@ function tablerender(data) {
                         console.log(res)
                         var isussecc = res.Succeed
                         if (isussecc) {
-                            var fid=res.Data.Details[0].F_Id
-                             var mfid=res.Data.F_Id
-                            var oldData = table.cache[layTableId];
-                            $.each(oldData,function(i,v){
-                                if(craid==v.cfid){
-                                    v.F_Id=fid
-                                    v.mfid=mfid
+                            var fid = res.Data.Details[0].F_Id
+                            var mfid = res.Data.F_Id
+                            // var oldData = table.cache[layTableId];
+                            $.each(data.Details, function (i, v) {
+                                if (craid == v.cfid) {
+                                    v.F_Id = fid
+                                    v.mfid = mfid
+                                }
+                            })
+                            var noramldata = data.Details[0]
+                            var reloaddata = []
+                            $.each(oldData, function (i, v) {
+                                if (v.AssignCraft_Process == noramldata.ReportEntry_CraftEntry) {
+                                    reloaddata.push(noramldata)
+                                } else {
+                                    reloaddata.push(v)
                                 }
                             })
                             tableIns.reload({
-                                data: oldData,
+                                data: reloaddata,
                                 limit: 1000
                             });
                             layer.close(subindex);
                             layer.msg("汇报成功");
-                        }else{
+                        } else {
                             layer.close(subindex);
                             alert(res.Message)
                         }
                     }
                 })
-            }else{
+            } else {
                 var subindex = layer.load();
-                var editdata={}
-                editdata.Report_Assign=id
-                editdata.F_Id=updata.mfid
-                editdata.Details=[]
+                var editdata = {}
+                editdata.Report_Assign = id
+                editdata.F_Id = updata.mfid
+                editdata.Details = []
                 editdata.Details.push(updata)
                 console.log(editdata)
                 $.ajax({
@@ -383,48 +372,95 @@ function tablerender(data) {
                         console.log(res)
                         var isussecc = res.Succeed
                         if (isussecc) {
+
+                            var noramldata = editdata.Details[0]
+                            var reloaddata = []
+                            $.each(oldData, function (i, v) {
+                                if (v.AssignCraft_Process == noramldata.ReportEntry_CraftEntry) {
+                                    reloaddata.push(noramldata)
+                                } else {
+                                    reloaddata.push(v)
+                                }
+                            })
+                            tableIns.reload({
+                                data: reloaddata,
+                                limit: 1000
+                            });
                             layer.close(subindex);
                             layer.msg("汇报成功");
-                        }else{
+                        } else {
                             layer.close(subindex);
                             alert(res.Message)
                         }
                     }
                 })
             }
-            
-           
+
+
         }
         return false;
     })
 }
 
-function getisreport(id,crafts){
-    var assignid='';
+function getisreport(id, crafts) {
+    console.log(crafts)
+    // 查询报工列表
     $.ajax({
-        url:getReportlist,
-        success:function(res){
-            console.log(res)
-            var isussecc=res.Succeed
-            if(isussecc){
-                $.each(res.Data,function(i,v){
-                    if(v.Report_Assign==id){
-                        assignid=v.F_Id
-                    }
-                })
-                if(assignid){
-                    $.ajax({
-                        url:getReportone+'?keyvalue='+assignid,
-                        success:function(res){
-                            console.log(res)
+        type: "GET",
+        async: false,
+        url: getReportlist,
+        success: function (res) {
+            var isussecc = res.Succeed;
+            if (isussecc) {
+                var data = res.Data;
+                console.log(data)
+                if (data.length >= 1) {
+                    $.each(data, function (i, v) {
+                        if (v.Report_Assign == id) {
+                            // 查询报工
+                            $.ajax({
+                                url: getReportone + '?keyvalue=' + v.F_Id,
+                                success: function (res) {
+                                    console.log(res)
+                                    if (res.Succeed) {
+                                        if (res.Data.Details.length >= 1) {
+                                            $.each(res.Data.Details, function (i, v) {
+                                                $.each(crafts, function (index, value) {
+                                                    if (v.ReportEntry_CraftEntry == value.AssignCraft_Process) {
+                                                        value.ReportEntry_Qualified = v.ReportEntry_Qualified
+                                                        value.ReportEntry_Quantity = v.ReportEntry_Quantity
+                                                        value.ReportEntry_Scrap = v.ReportEntry_Scrap
+                                                        value.ReportEntry_Type = v.ReportEntry_Type
+                                                        value.Rmark = v.Rmark
+                                                        value.ReportEntry_Biller = v.ReportEntry_Biller
+                                                        value.ReportEntry_CraftEntry = value.AssignCraft_Process
+                                                        value.cfid = v.F_Id
+                                                        value.ReportEntry_Assign = id
+                                                        value.mfid = res.Data.F_Id
+                                                        value.F_Id = null
+                                                    }
+                                                })
+                                            })
+                                            tablerender(crafts)
+                                        }
+                                    }
+                                }
+                            })
+                        } else {
+                            tablerender(crafts)
                         }
                     })
+                } else {
+                    tablerender(crafts)
                 }
+
+            } else {
+                alert(res.Message)
             }
         }
     })
-    
-    tablerender(crafts)
+
+
 
 }
 
@@ -437,15 +473,15 @@ function renderForm() {
 }
 
 
-function addreport(id,cfid) {
+function addreport(id, cfid) {
     $(".mark").removeClass("hidden")
-    if(cfid!='undefined'){
+    if (cfid != 'undefined') {
         $(".mark").attr("data-craid", cfid);
-    }else{
+    } else {
         $(".mark").attr("data-craid", id);
 
     }
-    
+
 }
 
 // 产品详情
@@ -453,7 +489,7 @@ function getprodetail(id) {
     $.ajax({
         url: ajaxMaterone + '?keyword=' + id + '&PageIndex=&PageSize=',
         success: function (res) {
-            console.log(res)
+            // console.log(res)
             var isussecc = res.Succeed
             if (isussecc) {
                 var data = res.Data[0];

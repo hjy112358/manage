@@ -10,6 +10,33 @@
     <link rel="stylesheet" href="../../assets/css/table.css">
     <link rel="stylesheet" href="../../assets/css/searchlist.css">
     <title>工序汇报列表</title>
+    <style>
+    .termask .chooseterm{
+        padding:10px
+    }
+    .mackbody{
+        width: 300px;
+        margin: 0 auto;
+    }
+    #action{
+        text-align: center;
+        padding-bottom:20px
+    }
+    .mackbody  .layui-form-label {
+        width: 50px !important;
+        margin-right: 10px;
+    }
+    .mackbody .layui-input-block {
+        width: 150px !important;
+    }
+    .mackbody .form-box{
+        padding-top:20px
+    }
+    .chooseterm .layui-form-selected .layui-anim-upbit{
+        animation-name:unset;
+        -webkit-animation-name: unset;
+    }
+    </style>
 </head>
 
 <body class="layui-view-body produwork craftwork">
@@ -63,6 +90,66 @@
         </div>
     </div>
     <div class="printbody"></div>
+    <div class="termask hidden">
+        <section class="chooseterm">
+            <form class="terform">
+                <div class="layui-card">
+                    <div class="layui-card-body layui-text">
+                        <div class="mackbody layui-form layui-form-item">
+                            <div class="form-box">
+                                <div class="layui-form-lsit  clearfix">
+                                    <label class="layui-form-label fl">类型</label>
+                                    <div class="layui-input-block fl craftype">
+                                        <select name="ReportEntry_Type" class="" id="ReportEntry_Type" lay-filter="">
+                                            <option value="">请选择</option>
+                                            <option value="">正在加载...</option>
+                                            <!-- <option value="0">正常</option>
+                                                <option value="1">返工</option> -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit">
+                                    <label class="layui-form-label">实做数量</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" id="ReportEntry_Quantity" autocomplete="off" name="ReportEntry_Quantity">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit">
+                                    <label class="layui-form-label">合格数量</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" id="ReportEntry_Qualified" autocomplete="off" name="ReportEntry_Qualified">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit">
+                                    <label class="layui-form-label">作废数量</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" id="ReportEntry_Scrap" autocomplete="off" name="ReportEntry_Scrap">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit clearfix">
+                                    <label class="layui-form-label fl">备注</label>
+                                    <div class="layui-input-block disinput fl">
+                                        <input type="text" value="" id="Rmark" name="Rmark" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit  clearfix">
+                                    <label class="layui-form-label fl">操作员</label>
+                                    <div class="layui-input-block  fl checkuser">
+                                        <select class="" id="ReportEntry_Biller" name="ReportEntry_Biller" lay-filter="">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="action" class="">
+                            <span class="layui-btn editsave">汇报</span>
+                            <span class="layui-btn cancel" data-type="cancel">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
 </body>
 <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
 <script src="../../assets/layui.all.js"></script>

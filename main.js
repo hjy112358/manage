@@ -136,6 +136,8 @@ var getReportone=ajaxURl+'/Api/Manufacture/Report/GetEntity'
 var getReportlist=ajaxURl+'/Api/Manufacture/Report/GetList?keyword=&PageSize=&PageIndex='
 // 删除报工one
 var rempveReportlist=ajaxURl+'/Api/Manufacture/Report/Remove'
+// 根据工单号查询数量
+var getRepornum=ajaxURl+'/Api/Manufacture/Report/Gather?assign='
 // -------------------生产管理----------------------
 
 
