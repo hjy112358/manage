@@ -363,3 +363,8 @@ function newstock(){
     $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(12)').trigger('click');
 
 }
+
+// 新增汇报
+function newproducthb(){
+    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(3)').trigger('click');
+}

@@ -21,7 +21,7 @@ $(function () {
     $(".cancel,.iconclose").on("click", function () {
         $(".termask").addClass("hidden");
         tablelist();
-        var data=[];
+        var data = [];
         editablelist(data)
     })
 
@@ -62,7 +62,7 @@ $(function () {
                 $(".editsave").removeClass("hidden");
                 $(".save").addClass("hidden");
                 $("#tableRes").addClass("hidden");
-                $("#tableRes1").removeClass("hidden"); 
+                $("#tableRes1").removeClass("hidden");
                 $(".editsave").removeClass("hidden");
                 $(".masktitle").html("修改物料类别");
                 $("#Family_Name").val(obj.data.Family_Name);
@@ -72,11 +72,11 @@ $(function () {
                 $.ajax({
                     type: "GET",
                     async: false,
-                    url: materFlistone+'?keyword='+id+'&PageIndex=&PageSize=',
+                    url: materFlistone + '?keyword=' + id + '&PageIndex=&PageSize=',
                     // data:datas,
                     success: function (res) {
                         console.log(res)
-                        var success  =res.Succeed;
+                        var success = res.Succeed;
                         if (success) {
                             // $(".addattr").removeClass("addfirst");
                             // $(".addattr").addClass("editadd");
@@ -113,7 +113,7 @@ $(function () {
             url: materFlist,
             // data:datas,
             success: function (res) {
-                
+
                 tablerender(str, res.Data);
 
             }
@@ -124,7 +124,7 @@ $(function () {
 
     var isSend = true;
     $(".save").on("click", function () {
-       
+
         var name = $("#Family_Name").val();
         var nick = $("#Family_Nick").val();
 
@@ -175,15 +175,15 @@ $(function () {
                 // F_Id: id,
                 Family_Name: name,
                 Family_Nick: nick,
-                Details:tabledatalist
+                Details: tabledatalist
             }
             $.ajax({
                 type: "POST",
                 async: false,
-                url:addmater,
+                url: addmater,
                 data: data,
                 success: function (res) {
-                  
+
                     var isussecc = res.Succeed;
                     if (isussecc) {
                         $(".termask").addClass("hidden");
@@ -235,7 +235,7 @@ $(function () {
     })
 
     $(".editsave").on("click", function () {
-      
+
         var id = $(".editsave").attr("data-id")
         var name = $("#Family_Name").val();
         var nick = $("#Family_Nick").val();
@@ -285,7 +285,7 @@ $(function () {
                 F_Id: id,
                 Family_Name: name,
                 Family_Nick: nick,
-                Details:tabledatalist
+                Details: tabledatalist
             }
             $.ajax({
                 type: "POST",
@@ -293,12 +293,12 @@ $(function () {
                 url: editmater,
                 data: data,
                 success: function (res) {
-                   
+
                     var isussecc = res.Succeed;
                     if (isussecc) {
                         $(".termask").addClass("hidden");
                         window.location.reload();
-                        
+
                     } else {
                         alert(res.Message);
                     }
@@ -323,7 +323,7 @@ function delmeasure(id) {
             url: removemater,
             data: data,
             success: function (res) {
-              
+
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(index)
@@ -408,7 +408,7 @@ function tablelist() {
                 console.log("new")
                 viewObj.limit = viewObj.limit + 1;
                 var oldData = table.cache[layTableId];
-               
+
                 var newRow = { tempId: new Date().valueOf(), state: 0, FamilyEntry_Nick: '', FamilyEntry_Datatype: '', datatypeText: '' };
                 oldData.push(newRow);
                 tableIns.reload({
@@ -418,7 +418,7 @@ function tablelist() {
             },
             updateRow: function (obj) {
                 var oldData = table.cache[layTableId];
-               
+
                 for (var i = 0, row; i < oldData.length; i++) {
                     row = oldData[i];
                     var nowi = i;
@@ -476,7 +476,7 @@ function tablelist() {
         //监听工具条
         table.on('tool(dataTable)', function (obj) {
             var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
-          
+
             switch (event) {
                 case "state":
                     var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
@@ -495,7 +495,6 @@ function tablelist() {
             }
         });
 
-
         form.on('select(datatype)', function (data, e) {
             var elem = data.othis.parents('tr');
             var dataindex = elem.attr("data-index");
@@ -503,7 +502,7 @@ function tablelist() {
                 if (value.LAY_TABLE_INDEX == dataindex) {
                     value.FamilyEntry_Datatype = data.value;
                     var elems = data.elem;
-                   
+
                     for (var i = 0; i < elems.length; i++) {
                         var elemnow = elems[i];
                         if (elemnow.selected) {
@@ -565,8 +564,8 @@ function editablelist(datalist) {
                 }
             ]],
             done: function (res, curr, count) {
-                 var scrollHeight = $('#tableRes1 .layui-table-body.layui-table-main').prop("scrollHeight");
-                 $('#tableRes1 .layui-table-body.layui-table-main').animate({ scrollTop: scrollHeight }, 400);
+                var scrollHeight = $('#tableRes1 .layui-table-body.layui-table-main').prop("scrollHeight");
+                $('#tableRes1 .layui-table-body.layui-table-main').animate({ scrollTop: scrollHeight }, 400);
                 viewObj1.tbData1 = res.data;
                 tabledata1 = res.data;
                 tabledatalist = res.data;

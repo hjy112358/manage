@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../../assets/css/searchlist.css">
     <title>工序汇报列表</title>
     <style>
-    .termask .chooseterm{
+        .termask .chooseterm{
         padding:10px
     }
     .mackbody{
@@ -36,6 +36,50 @@
         animation-name:unset;
         -webkit-animation-name: unset;
     }
+    .assigndata .layui-form-label{
+        padding:0;
+        width:auto !important
+    }
+    .craftwork .assigndata .layui-input-block{
+        min-height: 20px;
+        line-height:20px;
+        margin-left:0 !important
+    }
+    .assigndata .layui-form-lsit{
+        margin-bottom:0
+    }
+    .craftwork .assigndata .layui-input-block input{
+        background: inherit;
+        border: none;
+        height:20px;
+        line-height: 20px;
+        text-indent: 0
+    }
+    .assigndata{
+        margin-bottom:5px;
+        padding-left:10px
+    }
+    .assignDetail span{
+        max-width: 20%;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        float:left;
+        margin-right:2px;
+    }
+    .assignDetail i{
+        margin-right:2px;
+        display: block;
+        float: left;
+    }
+    .chooseterm{
+        min-width: 540px
+    }
+    .assigndata>div{
+        width:50%
+    }
+    
     </style>
 </head>
 
@@ -92,6 +136,33 @@
     <div class="printbody"></div>
     <div class="termask hidden">
         <section class="chooseterm">
+            <div class="assigndata clearfix">
+                <div class="fl">
+                    <div class="layui-form-lsit  clearfix">
+                        <label class="layui-form-label fl">单号：</label>
+                        <div class="layui-input-block assigNum fl"></div>
+                    </div>
+                    <div class="layui-form-lsit">
+                        <div class="layui-input-block assignDetail">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="fr">
+                    <div class="layui-form-lsit  clearfix">
+                        <label class="layui-form-label fl">开工日期：</label>
+                        <div class="layui-input-block startTime disinput fl">
+                            <input type="text" id="Assign_StartTime" lay-verify="date"  autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-lsit  clearfix">
+                        <label class="layui-form-label fl">完工日期：</label>
+                        <div class="layui-input-block endTime disinput fl">
+                            <input type="text"  id="Assign_Deadline" lay-verify="date" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form class="terform">
                 <div class="layui-card">
                     <div class="layui-card-body layui-text">

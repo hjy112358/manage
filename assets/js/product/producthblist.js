@@ -5,14 +5,19 @@ layui.use(['layer', "laydate"], function () {
     layer = layui.layer;
     //日期
     laydate.render({
-        elem: '#date',
-        isInitValue: true,
+        elem: '#Assign_StartTime',
+        btns: ['now', 'confirm']
+    })
+     //日期
+     laydate.render({
+        elem: '#Assign_Deadline',
         btns: ['now', 'confirm']
     })
     
 });
 
 var billid = [], billnick = []
+var checkbgtype;
 
 // 渲染table
 function tablerender( data) {
@@ -54,8 +59,11 @@ function tablerender( data) {
             , limit: 1000
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
+                    console.log(obj)
                    $(".termask").removeClass("hidden");
-                   gethbdata(obj.data.F_Id)
+                   var select = 'dd[lay-value="' + checkbgtype + '"]';
+                    $('#ReportEntry_Type').siblings("div.layui-form-select").find('dl').find(select).click();
+                   gethbdata(obj.data.F_Id,obj.data.Report_Assign)
                 });
             }
         });
@@ -113,6 +121,9 @@ $(function () {
                 var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
                 for (var i = 0; i < data.length; i++) {
                     var typedata = data[i];
+                    if (typedata.DictionaryItem_Nick == '正常') {
+                        checkbgtype = typedata.DictionaryItem_Value
+                    }
                     html += '<option value="' + typedata.DictionaryItem_Value + '">' + typedata.DictionaryItem_Nick + '</option>';
                     htmlsel += '<dd lay-value="' + typedata.DictionaryItem_Value + '">' + typedata.DictionaryItem_Nick + '</dd>'
                 }
@@ -149,15 +160,16 @@ $(function () {
 
     $(".checklist").trigger("click")
     $(".add").on("click", function () {
-        parent.newproduct()
+        parent.newproducthb()
     })
 
-    function isclick() {
-        // if (islist == 6) {
-        //     layer.close(subindex);
-        //     $(".checklist").trigger("click")
-        // }
-    }
+    $(".cancel").on("click", function () {
+        $(".termask").addClass("hidden")
+        $(".terform")[0].reset()
+        var select = 'dd[lay-value="' + checkbgtype + '"]';
+        $('#ReportEntry_Type').siblings("div.layui-form-select").find('dl').find(select).click();
+    })
+  
 
     
 })
@@ -199,97 +211,134 @@ function delreport(id) {
 }
 
 var issure=true;
-function gethbdata(id){
- 
-    var oldetails;
+function gethbdata(id,assinId){
+    var oldetails={};
     $.ajax({
         url:getReportone + '?keyvalue=' + id,
         success:function(res){
             console.log(res)
             if(res.Succeed){
                 var data=res.Data.Details[0]
-                oldetails=data
-                // 实做数  ReportEntry_Quantity
-                $("#ReportEntry_Quantity").attr("data-num",data.ReportEntry_Quantity)
-                // 合格数  ReportEntry_Qualified
-                $("#ReportEntry_Qualified").attr("data-num",data.ReportEntry_Qualified)
-                // 作废数  ReportEntry_Scrap
-                $("#ReportEntry_Scrap").attr("data-num",data.ReportEntry_Scrap)
+                oldetails.ReportEntry_Assign=data.ReportEntry_Assign
+                oldetails.ReportEntry_CraftEntry=data.ReportEntry_CraftEntry
             }else{
                 alert(res.Message)
             }
         }
     })
 
+
+    $.ajax({
+        type: "get",
+        url: getassone + assinId,
+        success: function (res) {
+            console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data;
+            if (isussecc) {
+                // 产品代码
+                 getprodetail(data.Assign_Material)
+                $(".assigNum").html(data.Assign_Name)
+                // 计划开工日期
+                var start = data.Assign_StartTime
+                if (start) {
+                    start = start.split(" ")[0]
+                }
+                $('#Assign_StartTime').val(start)
+                // 计划完工日期
+                var endtime = data.Assign_Deadline
+                if (endtime) {
+                    endtime = endtime.split(" ")[0]
+                }
+                $('#Assign_Deadline').val(endtime)
+
+               
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
+
+
     
     $(".editsave").on("click",function(){
-        var issure=true;
+        console.log(oldetails)
+        var issure=true,details=[],data={};
         var quant=($("#ReportEntry_Quantity").val())||0
         var quanted=($("#ReportEntry_Qualified").val())||0
         var scrp=($("#ReportEntry_Scrap").val())||0
         var correctnum=parseInt(quant)-parseInt(scrp)
-        if(!quant){
-            alert("实做数量不能为空")
-        }else if(!quanted){
-            alert("合格数量不能为空")
-        }else if(correctnum!=parseInt(quanted)){
+        if(correctnum!=parseInt(quanted)){
             alert("请核对数据")
             issure=false
         }else{
             issure=true;
         }
+        oldetails.ReportEntry_Biller=$("#ReportEntry_Biller option:selected").val()
+        oldetails.ReportEntry_Qualified=$("#ReportEntry_Qualified").val()
+        oldetails.ReportEntry_Quantity=$("#ReportEntry_Quantity").val()
+        oldetails.ReportEntry_Scrap=$("#ReportEntry_Scrap").val()
+        oldetails.ReportEntry_Type=$("#ReportEntry_Type option:selected").val()
+        details.push(oldetails)
+        data.Details=details
+        data.Report_Assign=oldetails.ReportEntry_Assign
+        console.log(data)
         if(issure){
-            var data={}, details=[]
-            data.F_Id=id
-            // 类型
-            var reporttype=$("#ReportEntry_Type option:selected").val()
-            // 操作者
-            var bill=$("#ReportEntry_Biller option:selected").val()
-            // 备注
-            var rmark=$("#Rmark").val()
-            // 实做数  ReportEntry_Quantity
-            var quantity=$("#ReportEntry_Quantity").attr("data-num");
-            var oldquantity=oldetails.ReportEntry_Quantity;
-            var newquantity=parseInt(quantity)+parseInt(oldquantity)
-            oldetails.ReportEntry_Quantity=newquantity
-            console.log(newquantity)
-            // 合格数  ReportEntry_Qualified
-            var qualified=$("#ReportEntry_Qualified").attr("data-num")
-            var oldqualified=oldetails.ReportEntry_Qualified;
-            var newqualified=parseInt(qualified)+parseInt(oldqualified)
-            oldetails.ReportEntry_Qualified=newqualified
-            // 作废数  ReportEntry_Scrap
-            var scrap=$("#ReportEntry_Scrap").attr("data-num")
-            var oldscrap=oldetails.ReportEntry_Scrap;
-            var newscrap=parseInt(scrap)+parseInt(oldscrap)
-            oldetails.ReportEntry_Scrap=newscrap
-            console.log(oldetails)
-            details.push(oldetails)
-            data.Details=details
-            console.log(data)
-            // if(issure){
-            //     var subindex = layer.load();
-            //     $.ajax({
-            //         type: 'POST',
-            //         url: editReportone,
-            //         data: data,
-            //         success: function (res) {
-            //             console.log(res)
-            //             var isussecc = res.Succeed
-            //             if (isussecc) {
-            //                 layer.close(subindex);
-            //                 layer.msg("汇报成功");
-            //             } else {
-            //                 layer.close(subindex);
-            //                 alert(res.Message)
-            //             }
-            //         }
-            //     })
-            // }else{
-            //     alert("请核对数据")
-            // }
+            var subindex = layer.load();
+            $.ajax({
+                type:'POST',
+                url:ajaxaddReport,
+                data:data,
+                success:function(res){
+                    if(res.Succeed){
+                        $(".termask").addClass("hidden")
+                        $(".terform")[0].reset()
+                        var select = 'dd[lay-value="' + checkbgtype + '"]';
+                        $('#ReportEntry_Type').siblings("div.layui-form-select").find('dl').find(select).click();
+                        layer.close(subindex)
+                        layer.msg("汇报成功");
+
+                    }else {
+                        layer.close(subindex)
+                        alert(res.Message)
+                        $(".termask").addClass("hidden")
+                        $(".terform")[0].reset()
+                        var select = 'dd[lay-value="' + checkbgtype + '"]';
+                        $('#ReportEntry_Type').siblings("div.layui-form-select").find('dl').find(select).click();
+
+                    }
+                }
+            })
         }
        
     })
 
+}
+
+
+
+// 产品详情
+function getprodetail(id) {
+    $.ajax({
+        url: ajaxMaterone + '?keyword=' + id + '&PageIndex=&PageSize=',
+        success: function (res) {
+            // console.log(res)
+            var isussecc = res.Succeed
+            if (isussecc) {
+                var data = res.Data[0];
+                var matername=data.Material_Name
+                var maternick=data.Material_Nick
+                var matertype=data.Material_Type
+                var measure=data.Material_Measure
+                var materspe=data.Material_Specifications
+                var html=''
+                html+=' <span>'+matername+'</span><i> / </i>'+
+                      '<span>'+maternick+'</span><i> / </i>'+
+                      '<span>'+matertype+'</span><i> / </i>'+
+                      '<span>'+measure+'</span><i> / </i>'+
+                      '<span>'+materspe+'</span>';
+                    $(".assignDetail").html(html)
+            }
+        }
+    })
 }

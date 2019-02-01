@@ -126,10 +126,7 @@ var removeassignCraft=ajaxURl+'/Api/Manufacture/AssignCraft/Remove'
 var pushcraft=ajaxURl+'/Api/Manufacture/Assign/AutoPushCraft'
 // 添加报工
 var ajaxaddReport=ajaxURl+'/Api/Manufacture/Report/Add'
-// 添加报工
-// var addReportone=ajaxURl+'/Api/Manufacture/ReportEntry/Add'
-// 修改报工
-var editReportone=ajaxURl+'/Api/Manufacture/Report/Edit'
+
 // 获取报工one
 var getReportone=ajaxURl+'/Api/Manufacture/Report/GetEntity'
 // 获取报工列表
