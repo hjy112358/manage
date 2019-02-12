@@ -45,13 +45,13 @@ border: 1px solid #e6e6e6;
 .craftwork  .layui-input{
     height: 26px;
 }
-.craftwork table .layui-form-select .layui-input{
+/* .craftwork table .layui-form-select .layui-input{
     line-height: 34px;
     height: 34px;
 }
 .craftwork table  .layui-input{
     height: 34px;
-}
+} */
 .craftwork .layui-form-item .layui-input-block{
     width:120px;
     float:left;
@@ -78,7 +78,7 @@ height: 18px;
     margin-bottom:15px;
 }
 .craftwork .layui-input-block{
-    min-height: 28px;
+    min-height: 26px;
 }
 .craftwork .layui-content{
     padding:8px;
@@ -191,13 +191,16 @@ cursor: pointer;
     line-height: 30px;
 }
 
- #tablelist1 .layui-table-view .layui-table td[data-field="FName"] .layui-table-cell, 
- 
-{
+ #tablelist1 .layui-table-view .layui-table td[data-field="FName"] .layui-table-cell
+ {
 width: 100%;
 } 
 form .layui-form-select dl{
     top:30px;
+}
+form .layui-form-selectup dl{
+    bottom:30px;
+    top:auto;
 }
 .form-box
 ,#tablelist1 .layui-table td,

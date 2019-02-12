@@ -46,6 +46,8 @@ var addMea=ajaxURl + "/api/PSIBase/Measure/Add"
 var remvoeMea=ajaxURl + "/api/PSIBase/Measure/Remove"
 // 计量单位基础单位
 var basicMea=ajaxURl + "/Api/SystemManager/Dictionary/GetEntry?keyword=PSIMaterial_Unit"
+// 仓库列表
+var ajaxstocklist=ajaxURl + "/api/PSIBase/Stock/GetList?keyword=&PageIndex=&PageSize="
 //-------------------- 基础信息----------------------
 
 
@@ -137,6 +139,8 @@ var rempveReportlist=ajaxURl+'/Api/Manufacture/Report/Remove'
 var getRepornum=ajaxURl+'/Api/Manufacture/Report/Gather?assign='
 //工序汇报列表
 var  getreportentrylist=ajaxURl+'/Api/Manufacture/ReportEntry/GetList?keyword='
+// 添加领料单/添加产品入库
+var addbill=ajaxURl+'/Api/PSIInventory/StockBill/Add'
 // -------------------生产管理----------------------
 
 

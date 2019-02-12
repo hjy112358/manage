@@ -1,5 +1,10 @@
 var token = $.cookie("token");
 var currname = [], currnick = [], cusid = [], cusnick = [], printdata, materid=[],maternick=[],matername=[];
+var layer;
+layui.use(['layer'], function () {
+    layer = layui.layer
+});
+var layerindex= layer.load()
 $(function () {
     var str = [
         { title: '序号', type: 'numbers' },
@@ -129,6 +134,9 @@ $(function () {
                     getem(data.SalesOrder_Employee)
                     getcustom(data.SalesOrder_Customer)
                     germater(str,res.Data.Details)
+                     setInterval(function(){
+                        layer.close(layerindex)
+                    },1500)
                     
                 }
 

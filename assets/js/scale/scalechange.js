@@ -5,7 +5,11 @@ var token = $.cookie("token");
 var url = window.location.search;
 var id = url.split("?")[1].split("&")[0].split("=")[1];
 var scaleid = url.split("?")[1].split("&")[1].split("=")[1];
-
+var layer;
+layui.use(['layer'], function () {
+    layer = layui.layer
+});
+var layerindex= layer.load()
 $.ajax({
     type: "get",
     url: ajaxURl + '/Api/PSISales/SalesOrder/GetEntry?keyValue=' + scaleid,
@@ -41,6 +45,9 @@ $.ajax({
                 getmater(res.Data.Details)
                 // tableload(res.Data.Details)
                 // first = res.Data.Details[(res.Data.Details.length - 1).F_Id]
+                setInterval(function(){
+                    layer.close(layerindex)
+                },1500)
             }
 
         } else {
@@ -1024,7 +1031,6 @@ function getmater(data) {
                         // matername.push(res.Data[i].Material_Name)
                     }
                 }
-
                 tableload(data)
             }
         }
@@ -1053,7 +1059,6 @@ function getcusnick(id) {
                     curnick.push(datanow.Customer_Nick)
                     if (id == datanow.F_Id) {
                         checid = datanow.F_Id
-
                     }
 
                 }
@@ -1134,7 +1139,6 @@ function getstatus(id) {
 }
 //部门--
 function getdepart(id) {
-    console.log("bumen")
     $.ajax({
         type: "get",
         url: ajaxdepart,

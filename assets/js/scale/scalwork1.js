@@ -184,7 +184,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             { field: 'Remark', title: '备注', edit: 'text', width: '200' },
             {
                 field: 'tempId', title: '操作', align: 'center', width: '100', templet: function (d) {
-                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '"><i class="layui-icon layui-icon-delete"></i>删除</a>';
+                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '">删除</a>';
                 }
             }
         ]],
@@ -832,7 +832,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
 
         }
-    })
+    }) 
 
     // 制单人
     var mouser = $.cookie("Modify_User");

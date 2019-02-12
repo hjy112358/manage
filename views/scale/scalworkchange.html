@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../../assets/css/scalework1.css">
     <title>销售订单--变更</title>
     <style>
-        .craftwork .layui-btn.layui-btn-danger {
+    .craftwork .layui-btn.layui-btn-danger {
         padding: 0 5px !important;
     }
     .hignckick{
@@ -33,7 +33,6 @@
     }
     .produwork .layui-table-edit{
         padding-left:4px;
-        
     }
     .produwork  td[data-field="SalesOrderEntry_Price"] .layui-table-edit,
     .produwork  td[data-field="SalesOrderEntry_Amount"] .layui-table-edit,
@@ -41,6 +40,9 @@
     .produwork  td[data-field="SalesOrderEntry_TaxPrice"] .layui-table-edit{
         text-align:right
     }
+    /* form .layui-form-select dl{
+        min-height: 100px
+    } */
     </style>
 </head>
 
@@ -267,18 +269,10 @@
 
                         </div>
                     </form>
-
-
-
-
                 </div>
-
             </div>
         </div>
     </div>
-    </div>
-    </div>
-
     <script type="text/html" id="selectTool">
         <div class="layui-input-block  layui-select-title layui-form-select checkmater" data-type="daten" id="checkmater">
                 <input type="text" placeholder="" value="" class="layui-input materName">
@@ -295,8 +289,6 @@
                 </div>
             </div>
     </script>
-
-
 
     <script type="text/html" id="selectcur">
     <select name="SalesOrderEntry_Currency" lay-filter="curr" lay-search id="currlist">
