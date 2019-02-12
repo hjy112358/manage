@@ -25,6 +25,7 @@ $.ajax({
                 $("#SalesOrder_Status").val(data.SalesOrder_Status);
                 $("#SalesOrder_ExRate").val(data.SalesOrder_ExRate)
                 $("#SalesOrder_TaxRate").val(data.SalesOrder_TaxRate)
+                $("#recdate").val(data.SalesOrder_Deadline)
                 $("#SalesOrder_Biller").val(data.SalesOrder_Biller)
                 $("#Remark").val(data.Remark)
                 $("#SalesOrder_Project").val(data.SalesOrder_Project)

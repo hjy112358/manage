@@ -8,19 +8,19 @@ layui.use(['layer', "laydate"], function () {
         elem: '#Assign_StartTime',
         btns: ['now', 'confirm']
     })
-     //日期
-     laydate.render({
+    //日期
+    laydate.render({
         elem: '#Assign_Deadline',
         btns: ['now', 'confirm']
     })
-    
+
 });
 
-var billid = [], billnick = []
+var billid = [], billnick = [], reportid=[],reportname=[]
 var checkbgtype;
 
 // 渲染table
-function tablerender( data) {
+function tablerender(data) {
     layui.use(['jquery', 'table'], function () {
         var $ = layui.$,
             table = layui.table;
@@ -30,22 +30,38 @@ function tablerender( data) {
             , cols: [[
                 { title: '序号', type: 'numbers' },
                 { field: 'Assign_Name', title: '工单单号' },
-                { field: 'Report_Name', title: '报工单号' },
+                { field: 'ReportEntry_Report', title: '报工单号',templet:function(d){
+                
+                    var index= reportid.indexOf(d.ReportEntry_Report)
+                    if (index == '-1') {
+                        return ''
+                    } else {
+                        return reportname[index]
+                    } 
+                } },
+                { field: 'CraftEntry_Name', title: '工序名称' },
+                { field: 'CraftEntry_Nick', title: '工序编号' },
                 // { field: '', title: '工时' },
                 // { field: '', title: '接收数' },
-                { field: 'Report_Quantity', title: '实做数' },
-                { field: 'Report_Qualified', title: '合格数' },//实做数-报废数
-                { field: 'Report_Scrap', title: '报废数' },
+                { field: 'ReportEntry_Quantity', title: '实做数' },
+                { field: 'ReportEntry_Qualified', title: '合格数' },//实做数-报废数
+                { field: 'ReportEntry_Scrap', title: '报废数' },
                 {
-                    field: 'Fscrappage', title: '报废率(%)', templet: function (d) {
+                    field: '', title: '报废率(%)', templet: function (d) {
                         var scrappage = '';
-                        if (d.Report_Quantity && d.Report_Scrap) {
-                            scrappage = parseFloat(d.Report_Scrap) / parseFloat(d.Report_Quantity) * 100
+                        if (d.ReportEntry_Quantity && d.ReportEntry_Scrap) {
+                            scrappage = parseFloat(d.ReportEntry_Scrap) / parseFloat(d.ReportEntry_Quantity) * 100
                             scrappage = scrappage.toFixed(2)
+                        } else if (d.ReportEntry_Scrap == 0) {
+                            scrappage = '0.00'
                         }
                         return scrappage
                     }
                 },
+
+                { field: 'ReportStatus_StartTime', title: '开工时间' },
+                { field: 'ReportStatus_EndTime', title: '结束时间' },
+                { field: 'User_Nick', title: '操作人'},
                 { field: 'Rmark', title: '备注' },
                 {
                     field: 'FNumber', title: '操作', align: 'center', templet: function (d) {
@@ -59,11 +75,11 @@ function tablerender( data) {
             , limit: 1000
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
-                    console.log(obj)
-                   $(".termask").removeClass("hidden");
-                   var select = 'dd[lay-value="' + checkbgtype + '"]';
+
+                    $(".termask").removeClass("hidden");
+                    var select = 'dd[lay-value="' + checkbgtype + '"]';
                     $('#ReportEntry_Type').siblings("div.layui-form-select").find('dl').find(select).click();
-                   gethbdata(obj.data.F_Id,obj.data.Report_Assign)
+                    gethbdata(obj.data.F_Id, obj.data.ReportEntry_Assign)
                 });
             }
         });
@@ -81,7 +97,7 @@ $(function () {
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            //console.log(res)
+            // console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -91,10 +107,12 @@ $(function () {
                     var datanow = data[i]
                     html += '<option value="' + datanow.F_Id + '">' + datanow.User_Nick + '</option>';
                     htmlsel += '<dd lay-value="' + datanow.F_Id + '">' + datanow.User_Nick + '</dd>'
+                   
                     if (datanow.F_Id == mouser) {
                         cheuser = datanow.F_Id
                     }
                 }
+
                 $("#ReportEntry_Biller").html(html);
                 $(".checkuser .layui-anim.layui-anim-upbit").html(htmlsel);
                 layui.use('form', function () {
@@ -103,15 +121,15 @@ $(function () {
                 });
                 var select = 'dd[lay-value="' + cheuser + '"]';
                 $('#ReportEntry_Biller').siblings("div.layui-form-select").find('dl').find(select).click();
-
+               
             } else {
                 alert(res.Message)
             }
         }
     })
 
-     // 报工类型
-     $.ajax({
+    // 报工类型
+    $.ajax({
         url: craftypesta,
         success: function (res) {
             var isussecc = res.Succeed;
@@ -139,19 +157,32 @@ $(function () {
     })
 
     $(".checklist").on("click", function () {
-        
         $.ajax({
             type: "GET",
             async: false,
-            url: getReportlist,
-            success: function (res) {
-                var data = res.Data;
-                console.log(data)
-                var isussecc = res.Succeed;
-                if (isussecc) {
-                    tablerender(data);
+            url: getreportentrylist,
+            success: function (result) {
+                var datalist = result.Data;
+                console.log(datalist)
+                var isussecc1 = result.Succeed;
+                if (isussecc1) {
+                    $.ajax({
+                        url:getReportlist,
+                        success:function(res){
+                            if(res.Succeed){
+                                console.log(res)
+                                var data=res.Data
+                                for(var i=0;i<data.length;i++){
+                                    reportid.push(data[i].F_Id)    
+                                    reportname.push(data[i].Report_Name)
+                                }
+                                tablerender(datalist);
+                            }
+                        }
+                    })
+                  
                 } else {
-                    alert(res.Message)
+                    alert(result.Message)
                 }
             }
         })
@@ -169,9 +200,9 @@ $(function () {
         var select = 'dd[lay-value="' + checkbgtype + '"]';
         $('#ReportEntry_Type').siblings("div.layui-form-select").find('dl').find(select).click();
     })
-  
 
-    
+
+
 })
 
 function renderForm() {
@@ -210,18 +241,21 @@ function delreport(id) {
     });
 }
 
-var issure=true;
-function gethbdata(id,assinId){
-    var oldetails={};
+var issure = true;
+function gethbdata(id, assinId) {
+    var oldetails = {};
     $.ajax({
-        url:getReportone + '?keyvalue=' + id,
-        success:function(res){
+        url: getReportone + '?keyvalue=' + id,
+        success: function (res) {
             console.log(res)
-            if(res.Succeed){
-                var data=res.Data.Details[0]
-                oldetails.ReportEntry_Assign=data.ReportEntry_Assign
-                oldetails.ReportEntry_CraftEntry=data.ReportEntry_CraftEntry
-            }else{
+            if (res.Succeed) {
+                if (res.Data) {
+                    var data = res.Data.Details[0]
+                    oldetails.ReportEntry_Assign = data.ReportEntry_Assign
+                    oldetails.ReportEntry_CraftEntry = data.ReportEntry_CraftEntry
+                }
+
+            } else {
                 alert(res.Message)
             }
         }
@@ -234,25 +268,29 @@ function gethbdata(id,assinId){
         success: function (res) {
             console.log(res)
             var isussecc = res.Succeed;
-            var data = res.Data;
-            if (isussecc) {
-                // 产品代码
-                 getprodetail(data.Assign_Material)
-                $(".assigNum").html(data.Assign_Name)
-                // 计划开工日期
-                var start = data.Assign_StartTime
-                if (start) {
-                    start = start.split(" ")[0]
-                }
-                $('#Assign_StartTime').val(start)
-                // 计划完工日期
-                var endtime = data.Assign_Deadline
-                if (endtime) {
-                    endtime = endtime.split(" ")[0]
-                }
-                $('#Assign_Deadline').val(endtime)
 
-               
+            if (isussecc) {
+                var data = res.Data;
+                if (data) {
+                    // 产品代码
+                    getprodetail(data.Assign_Material)
+                    $(".assigNum").html(data.Assign_Name)
+                    // 计划开工日期
+                    var start = data.Assign_StartTime
+                    if (start) {
+                        start = start.split(" ")[0]
+                    }
+                    $('#Assign_StartTime').val(start)
+                    // 计划完工日期
+                    var endtime = data.Assign_Deadline
+                    if (endtime) {
+                        endtime = endtime.split(" ")[0]
+                    }
+                    $('#Assign_Deadline').val(endtime)
+
+
+                }
+
             } else {
                 alert(res.Message)
             }
@@ -260,37 +298,37 @@ function gethbdata(id,assinId){
     })
 
 
-    
-    $(".editsave").on("click",function(){
+
+    $(".editsave").on("click", function () {
         console.log(oldetails)
-        var issure=true,details=[],data={};
-        var quant=($("#ReportEntry_Quantity").val())||0
-        var quanted=($("#ReportEntry_Qualified").val())||0
-        var scrp=($("#ReportEntry_Scrap").val())||0
-        var correctnum=parseInt(quant)-parseInt(scrp)
-        if(correctnum!=parseInt(quanted)){
+        var issure = true, details = [], data = {};
+        var quant = ($("#ReportEntry_Quantity").val()) || 0
+        var quanted = ($("#ReportEntry_Qualified").val()) || 0
+        var scrp = ($("#ReportEntry_Scrap").val()) || 0
+        var correctnum = parseInt(quant) - parseInt(scrp)
+        if (correctnum != parseInt(quanted)) {
             alert("请核对数据")
-            issure=false
-        }else{
-            issure=true;
+            issure = false
+        } else {
+            issure = true;
         }
-        oldetails.ReportEntry_Biller=$("#ReportEntry_Biller option:selected").val()
-        oldetails.ReportEntry_Qualified=$("#ReportEntry_Qualified").val()
-        oldetails.ReportEntry_Quantity=$("#ReportEntry_Quantity").val()
-        oldetails.ReportEntry_Scrap=$("#ReportEntry_Scrap").val()
-        oldetails.ReportEntry_Type=$("#ReportEntry_Type option:selected").val()
+        oldetails.ReportEntry_Biller = $("#ReportEntry_Biller option:selected").val()
+        oldetails.ReportEntry_Qualified = $("#ReportEntry_Qualified").val()
+        oldetails.ReportEntry_Quantity = $("#ReportEntry_Quantity").val()
+        oldetails.ReportEntry_Scrap = $("#ReportEntry_Scrap").val()
+        oldetails.ReportEntry_Type = $("#ReportEntry_Type option:selected").val()
         details.push(oldetails)
-        data.Details=details
-        data.Report_Assign=oldetails.ReportEntry_Assign
+        data.Details = details
+        data.Report_Assign = oldetails.ReportEntry_Assign
         console.log(data)
-        if(issure){
+        if (issure) {
             var subindex = layer.load();
             $.ajax({
-                type:'POST',
-                url:ajaxaddReport,
-                data:data,
-                success:function(res){
-                    if(res.Succeed){
+                type: 'POST',
+                url: ajaxaddReport,
+                data: data,
+                success: function (res) {
+                    if (res.Succeed) {
                         $(".termask").addClass("hidden")
                         $(".terform")[0].reset()
                         var select = 'dd[lay-value="' + checkbgtype + '"]';
@@ -298,7 +336,7 @@ function gethbdata(id,assinId){
                         layer.close(subindex)
                         layer.msg("汇报成功");
 
-                    }else {
+                    } else {
                         layer.close(subindex)
                         alert(res.Message)
                         $(".termask").addClass("hidden")
@@ -310,7 +348,7 @@ function gethbdata(id,assinId){
                 }
             })
         }
-       
+
     })
 
 }
@@ -326,18 +364,18 @@ function getprodetail(id) {
             var isussecc = res.Succeed
             if (isussecc) {
                 var data = res.Data[0];
-                var matername=data.Material_Name
-                var maternick=data.Material_Nick
-                var matertype=data.Material_Type
-                var measure=data.Material_Measure
-                var materspe=data.Material_Specifications
-                var html=''
-                html+=' <span>'+matername+'</span><i> / </i>'+
-                      '<span>'+maternick+'</span><i> / </i>'+
-                      '<span>'+matertype+'</span><i> / </i>'+
-                      '<span>'+measure+'</span><i> / </i>'+
-                      '<span>'+materspe+'</span>';
-                    $(".assignDetail").html(html)
+                var matername = data.Material_Name
+                var maternick = data.Material_Nick
+                var matertype = data.Material_Type
+                var measure = data.Material_Measure
+                var materspe = data.Material_Specifications
+                var html = ''
+                html += ' <span>' + matername + '</span><i> / </i>' +
+                    '<span>' + maternick + '</span><i> / </i>' +
+                    '<span>' + matertype + '</span><i> / </i>' +
+                    '<span>' + measure + '</span><i> / </i>' +
+                    '<span>' + materspe + '</span>';
+                $(".assignDetail").html(html)
             }
         }
     })

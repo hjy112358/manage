@@ -62,18 +62,20 @@
                                     </div>
                                 </div>
                                 <div class="clearfix">
-                                    <div class="layui-form-lsit fl ">
+                                    <div class="layui-form-lsit fl position-re">
+                                            <div class="nocheck"></div>
                                         <label class="layui-form-label">客户订单号：</label>
                                         <input type="hidden" name="Assign_SalesOrderEntry" id="Assign_SalesOrderEntry">
                                         <div class="layui-input-block  cusOrder" data-type="daten">
                                             <select name="Assign_SalesOrder" class="" id="cusOrder" lay-search=""
-                                                lay-filter="cusorder">
+                                                lay-filter="cusorder" readonly>
                                                 <option value="">请选择</option>
                                                 <option value="">加载中...</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="layui-form-lsit fl">
+                                    <div class="layui-form-lsit fl position-re">
+                                            <div class="nocheck"></div>
                                         <label class="layui-form-label">客户：</label>
                                         <div class="layui-input-block checkcus" data-type="daten">
                                             <select name="Assign_Customer" class="" id="Assign_Customer" lay-search=""
@@ -86,13 +88,13 @@
                                         <label class="layui-form-label">单据日期：</label>
                                         <div class="layui-input-block ">
                                             <input type="text" name="Assign_DateTime" id="Assign_DateTime" lay-verify="date"
-                                                autocomplete="off" class="layui-input">
+                                                autocomplete="off" class="layui-input" readonly>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">单据编号：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" id="Assign_Name" autocomplete="off" name="Assign_Name">
+                                            <input type="text" value="" id="Assign_Name" autocomplete="off" name="Assign_Name" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -126,20 +128,20 @@
                                         <label class="layui-form-label">产品名称：</label>
                                         <div class="layui-input-block disinput" data-type="daten">
                                             <input type="text" value="" id="nick" autocomplete="off" class="maternick"
-                                                name="">
+                                                name="" readonly>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">规格型号：</label>
                                         <div class="layui-input-block disinput">
                                             <input type="text" value="" id="specifications" autocomplete="off" class="materspe"
-                                                name="Assign_Specifications">
+                                                name="Assign_Specifications" readonly>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">交货日期：</label>
                                         <div class="layui-input-block ">
-                                            <input type="text" name="" class="layui-input" readonly id="deadline">
+                                            <input type="text" name="" class="layui-input" readonly id="deadline" readonly> 
                                         </div>
                                     </div>
                                 </div>
@@ -147,11 +149,12 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">单位：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" id="measure" autocomplete="off" name="Assign_Unit">
+                                            <input type="text" value="" id="measure" autocomplete="off" name="Assign_Unit" readonly>
                                         </div>
                                     </div>
-                                    <div class="layui-form-lsit fl ">
+                                    <div class="layui-form-lsit fl position-re">
                                         <label class="layui-form-label">BOM编号：</label>
+                                        <div class="nocheck"></div>
                                         <div class="layui-input-block checkbom" data-type="daten">
                                             <select name="Assign_BillOfMaterial" class="" id="Assign_BillOfMaterial"
                                                 lay-search="" lay-filter="bom">
@@ -178,7 +181,8 @@
                                     </div>
                                 </div>
                                 <div class="clearfix">
-                                    <div class="layui-form-lsit fl">
+                                    <div class="layui-form-lsit fl position-re">
+                                            <div class="nocheck"></div>
                                         <label class="layui-form-label">类型：</label>
                                         <div class="layui-input-block worktype" data-type="daten">
                                             <select name="Assign_Type" class="" id="Assign_Type" lay-search=""
@@ -192,14 +196,14 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">计划生产数量：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" id="Assign_Quantity" autocomplete="off" name="Assign_Quantity">
+                                            <input type="text" value="" id="Assign_Quantity" autocomplete="off" name="Assign_Quantity" >
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">计划开工日期：</label>
                                         <div class="layui-input-block ">
                                             <input type="text" name="Assign_StartTime" id="Assign_StartTime" lay-verify="date"
-                                                autocomplete="off" class="layui-input">
+                                                autocomplete="off" class="layui-input" >
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl">

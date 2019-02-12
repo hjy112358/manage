@@ -347,3 +347,7 @@ form .layui-form-label {
 .produwork .layui-btn+.layui-btn {
     margin-left: 2px;
 }
+.craftwork .layui-table-edit{
+    height: 28px !important;
+    line-height: 28px !important;
+}

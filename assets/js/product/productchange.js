@@ -549,127 +549,127 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     })
 
     // 客户订单号变更后包含的产品列表
-    getpro = function (data) {
-        $(".checkpro").on("click", function () {
-            if ($("#cusOrder").val()) {
-                $(".selectlist").removeClass("hidden");
-                var _this = $(this);
-                _this.addClass("layui-form-selected")
+    // getpro = function (data) {
+    //     $(".checkpro").on("click", function () {
+    //         if ($("#cusOrder").val()) {
+    //             $(".selectlist").removeClass("hidden");
+    //             var _this = $(this);
+    //             _this.addClass("layui-form-selected")
 
-                $(".dateload").addClass("hidden")
-                $(".datelist").removeClass("hidden")
-                var html = '';
-                var arrlist = [];
-                var arri = {};
-                var materdatanew;
-                var deadline;
-                // data[i].Material_Name data[i].Material_Nick  data[i].Material_Specification
-                for (var i = 0; i < data.length; i++) {
-                    var datanow = data[i];
-                    for (var j = 0; j < materdata.length; j++) {
-                        if (materdata[j].F_Id == datanow.SalesOrderEntry_Material) {
-                            materdatanew = materdata[j]
-                            deadline = datanow.SalesOrderEntry_Deadline
-                        }
-                    }
-                    html += '<li data-name="' + materdatanew.Material_Name + '" data-nick="' + materdatanew.Material_Nick + '" data-spe="' + materdatanew.Material_Specifications + '" data-materme="' + materdatanew.Material_Measure + '" data-deadline="' + deadline + '" data-materid="' + materdatanew.F_Id + '" data-matertype="' + materdatanew.Material_Type + '"><p>' + materdatanew.Material_Name + '</p><p>' + materdatanew.Material_Nick + '</p><p>' + materdatanew.Material_Specifications + '</p></li>'
-                    arri = { materame: materdatanew.Material_Name, maternick: materdatanew.Material_Nick, matersp: materdatanew.Material_Specifications, materdatanew: materdatanew.Material_Measure, deadline: deadline, materid: materdatanew.F_Id, matertype: materdatanew.Material_Type };
-                    arrlist.push(arri)
-                }
-                if (html) {
-                    $(".selectlist ul").html(html);
-                } else {
-                    $(".selectlist ul").html("<span style='text-align:center;display: block;padding: 10px 0;'>没有数据</span>");
-                }
-                $(".materName").on("keyup", function () {
-                    var searchVal = $(this).val();
-                    var showList = [];
-                    var searchlist = '';
-                    //将和所输入的字符串匹配的项存入showList
-                    //将匹配项显示，不匹配项隐藏
-                    $.each(arrlist, function (index, item) {
-                        if (item.materame.indexOf(searchVal) != -1 || item.maternick.indexOf(searchVal) != -1 || item.matersp.indexOf(searchVal) != -1) {
-                            showList.push(item);
-                        } else {
+    //             $(".dateload").addClass("hidden")
+    //             $(".datelist").removeClass("hidden")
+    //             var html = '';
+    //             var arrlist = [];
+    //             var arri = {};
+    //             var materdatanew;
+    //             var deadline;
+    //             // data[i].Material_Name data[i].Material_Nick  data[i].Material_Specification
+    //             for (var i = 0; i < data.length; i++) {
+    //                 var datanow = data[i];
+    //                 for (var j = 0; j < materdata.length; j++) {
+    //                     if (materdata[j].F_Id == datanow.SalesOrderEntry_Material) {
+    //                         materdatanew = materdata[j]
+    //                         deadline = datanow.SalesOrderEntry_Deadline
+    //                     }
+    //                 }
+    //                 html += '<li data-name="' + materdatanew.Material_Name + '" data-nick="' + materdatanew.Material_Nick + '" data-spe="' + materdatanew.Material_Specifications + '" data-materme="' + materdatanew.Material_Measure + '" data-deadline="' + deadline + '" data-materid="' + materdatanew.F_Id + '" data-matertype="' + materdatanew.Material_Type + '"><p>' + materdatanew.Material_Name + '</p><p>' + materdatanew.Material_Nick + '</p><p>' + materdatanew.Material_Specifications + '</p></li>'
+    //                 arri = { materame: materdatanew.Material_Name, maternick: materdatanew.Material_Nick, matersp: materdatanew.Material_Specifications, materdatanew: materdatanew.Material_Measure, deadline: deadline, materid: materdatanew.F_Id, matertype: materdatanew.Material_Type };
+    //                 arrlist.push(arri)
+    //             }
+    //             if (html) {
+    //                 $(".selectlist ul").html(html);
+    //             } else {
+    //                 $(".selectlist ul").html("<span style='text-align:center;display: block;padding: 10px 0;'>没有数据</span>");
+    //             }
+    //             $(".materName").on("keyup", function () {
+    //                 var searchVal = $(this).val();
+    //                 var showList = [];
+    //                 var searchlist = '';
+    //                 //将和所输入的字符串匹配的项存入showList
+    //                 //将匹配项显示，不匹配项隐藏
+    //                 $.each(arrlist, function (index, item) {
+    //                     if (item.materame.indexOf(searchVal) != -1 || item.maternick.indexOf(searchVal) != -1 || item.matersp.indexOf(searchVal) != -1) {
+    //                         showList.push(item);
+    //                     } else {
 
-                        }
-                    })
-                    for (var j = 0; j < showList.length; j++) {
-                        var shownow = showList[j]
-                        searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-deadline="' + deadline + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
-                    }
-                    if (showList.length == 0) {
-                        searchlist = '<div style="text-align:center;padding:15px 0">暂无数据</div>'
-                    }
-                    $(".selectlist ul").html("");
-                    $(".selectlist ul").html(searchlist);
-                    $('.selectlist ul').find('li').each(function () {
-                        var _this1 = $(this);
-                        _this1.hover(function () {
-                            $(this).addClass("active").siblings().removeClass("active")
-                        });
-                        _this1.on("click", function () {
-                            $(".editsub").attr("data-craftid", "")
-                            var name = $(this).attr("data-name");
-                            var nick = $(this).attr("data-nick");
-                            var specife = $(this).attr("data-spe");
-                            var measure = $(this).attr("data-materme");
-                            var deadlin = $(this).attr("data-deadline")
-                            var materid = $(this).attr("data-materid")
-                            var matertype = $(this).attr("data-matertype")
-                            matertypelist(matertype)
-                            $("#Craft_Material").val(materid)
-                            getcraftone(materid)
-                            $("#deadline").val(deadlin.split(" ")[0])
-                            $(".materName").val(name);
-                            $(".maternick").val(nick);
-                            $(".materspe").val(specife);
-                            $("#measure").val(measure);
-                            $(".selectlist").addClass("hidden");
-                            $(".checkpro").removeClass("layui-form-selected");
-                            $(".isAttribute").html("");
-                            $(".isAttribute").css("padding", "0")
+    //                     }
+    //                 })
+    //                 for (var j = 0; j < showList.length; j++) {
+    //                     var shownow = showList[j]
+    //                     searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-deadline="' + deadline + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
+    //                 }
+    //                 if (showList.length == 0) {
+    //                     searchlist = '<div style="text-align:center;padding:15px 0">暂无数据</div>'
+    //                 }
+    //                 $(".selectlist ul").html("");
+    //                 $(".selectlist ul").html(searchlist);
+    //                 $('.selectlist ul').find('li').each(function () {
+    //                     var _this1 = $(this);
+    //                     _this1.hover(function () {
+    //                         $(this).addClass("active").siblings().removeClass("active")
+    //                     });
+    //                     _this1.on("click", function () {
+    //                         $(".editsub").attr("data-craftid", "")
+    //                         var name = $(this).attr("data-name");
+    //                         var nick = $(this).attr("data-nick");
+    //                         var specife = $(this).attr("data-spe");
+    //                         var measure = $(this).attr("data-materme");
+    //                         var deadlin = $(this).attr("data-deadline")
+    //                         var materid = $(this).attr("data-materid")
+    //                         var matertype = $(this).attr("data-matertype")
+    //                         matertypelist(matertype)
+    //                         $("#Craft_Material").val(materid)
+    //                         getcraftone(materid)
+    //                         $("#deadline").val(deadlin.split(" ")[0])
+    //                         $(".materName").val(name);
+    //                         $(".maternick").val(nick);
+    //                         $(".materspe").val(specife);
+    //                         $("#measure").val(measure);
+    //                         $(".selectlist").addClass("hidden");
+    //                         $(".checkpro").removeClass("layui-form-selected");
+    //                         $(".isAttribute").html("");
+    //                         $(".isAttribute").css("padding", "0")
 
-                            return false
-                        })
-                    })
-                })
-                $('.selectlist ul').find('li').each(function () {
-                    var _this1 = $(this);
-                    _this1.hover(function () {
-                        $(this).addClass("active").siblings().removeClass("active")
-                    });
-                    _this1.on("click", function () {
-                        var name = $(this).attr("data-name");
-                        var nick = $(this).attr("data-nick");
-                        $(".editsub").attr("data-craftid", "")
-                        var specife = $(this).attr("data-spe");
-                        var measure = $(this).attr("data-materme");
-                        var deadlin = $(this).attr("data-deadline")
-                        var materid = $(this).attr("data-materid")
-                        var matertype = $(this).attr("data-matertype")
-                        matertypelist(matertype)
-                        $("#Craft_Material").val(materid)
-                        getcraftone(materid)
-                        $("#deadline").val(deadlin.split(" ")[0])
-                        $(".materName").val(name);
-                        $(".maternick").val(nick);
-                        $(".materspe").val(specife);
-                        $("#measure").val(measure);
-                        $(".selectlist").addClass("hidden");
-                        $(".checkpro").removeClass("layui-form-selected");
-                        $(".isAttribute").html("");
-                        $(".isAttribute").css("padding", "0")
-                        return false
-                    })
-                })
-                return false;
+    //                         return false
+    //                     })
+    //                 })
+    //             })
+    //             $('.selectlist ul').find('li').each(function () {
+    //                 var _this1 = $(this);
+    //                 _this1.hover(function () {
+    //                     $(this).addClass("active").siblings().removeClass("active")
+    //                 });
+    //                 _this1.on("click", function () {
+    //                     var name = $(this).attr("data-name");
+    //                     var nick = $(this).attr("data-nick");
+    //                     $(".editsub").attr("data-craftid", "")
+    //                     var specife = $(this).attr("data-spe");
+    //                     var measure = $(this).attr("data-materme");
+    //                     var deadlin = $(this).attr("data-deadline")
+    //                     var materid = $(this).attr("data-materid")
+    //                     var matertype = $(this).attr("data-matertype")
+    //                     matertypelist(matertype)
+    //                     $("#Craft_Material").val(materid)
+    //                     getcraftone(materid)
+    //                     $("#deadline").val(deadlin.split(" ")[0])
+    //                     $(".materName").val(name);
+    //                     $(".maternick").val(nick);
+    //                     $(".materspe").val(specife);
+    //                     $("#measure").val(measure);
+    //                     $(".selectlist").addClass("hidden");
+    //                     $(".checkpro").removeClass("layui-form-selected");
+    //                     $(".isAttribute").html("");
+    //                     $(".isAttribute").css("padding", "0")
+    //                     return false
+    //                 })
+    //             })
+    //             return false;
 
-            }
+    //         }
 
 
-        })
-    }
+    //     })
+    // }
 
 
 });
@@ -1101,216 +1101,216 @@ $(function () {
     $("#tablelist1 .layui-table-body").addClass("overvis");
     $("#tablelist1 .layui-table-box").addClass("overvis");
     $("#tablelist1 .layui-table-view").addClass("overvis");
-    // 产品代码
-    $(".checkpro").on("click", function () {
-        $(".dateload").addClass("hidden")
-        if ($("#cusOrder").val()) {
-        } else {
-            $(".selectlist").removeClass("hidden");
-            var _this = $(this);
-            _this.addClass("layui-form-selected")
+    // // 产品代码
+    // $(".checkpro").on("click", function () {
+    //     $(".dateload").addClass("hidden")
+    //     if ($("#cusOrder").val()) {
+    //     } else {
+    //         $(".selectlist").removeClass("hidden");
+    //         var _this = $(this);
+    //         _this.addClass("layui-form-selected")
 
-            $(".datelist").removeClass("hidden")
-            var data = materdata;
+    //         $(".datelist").removeClass("hidden")
+    //         var data = materdata;
 
-            var html = '';
-            var arrlist = [];
-            var arri = {};
-            // data[i].Material_Name data[i].Material_Nick  data[i].Material_Specification
-            for (var i = 0; i < data.length; i++) {
-                var datanow = data[i];
-                html += '<li data-name="' + datanow.Material_Name + '" data-nick="' + datanow.Material_Nick + '" data-spe="' + datanow.Material_Specifications + '" data-materme="' + datanow.Material_Measure + '" data-materid="' + datanow.F_Id + '" data-matertype="' + datanow.Material_Type + '"><p>' + datanow.Material_Name + '</p><p>' + datanow.Material_Nick + '</p><p>' + datanow.Material_Specifications + '</p></li>'
-                arri = { materame: datanow.Material_Name, maternick: datanow.Material_Nick, matersp: datanow.Material_Specifications, matermea: datanow.Material_Measure, materid: datanow.F_Id, matertype: datanow.Material_Type };
-                arrlist.push(arri)
-            }
-            $(".selectlist ul").html(html);
-            $(".materName").on("keyup", function () {
-                var searchVal = $(this).val();
-                var showList = [];
-                var searchlist = '';
-                //将和所输入的字符串匹配的项存入showList
-                //将匹配项显示，不匹配项隐藏
-                $.each(arrlist, function (index, item) {
-                    if (item.materame.indexOf(searchVal) != -1 || item.maternick.indexOf(searchVal) != -1 || item.matersp.indexOf(searchVal) != -1) {
-                        showList.push(item);
-                    } else {
+    //         var html = '';
+    //         var arrlist = [];
+    //         var arri = {};
+    //         // data[i].Material_Name data[i].Material_Nick  data[i].Material_Specification
+    //         for (var i = 0; i < data.length; i++) {
+    //             var datanow = data[i];
+    //             html += '<li data-name="' + datanow.Material_Name + '" data-nick="' + datanow.Material_Nick + '" data-spe="' + datanow.Material_Specifications + '" data-materme="' + datanow.Material_Measure + '" data-materid="' + datanow.F_Id + '" data-matertype="' + datanow.Material_Type + '"><p>' + datanow.Material_Name + '</p><p>' + datanow.Material_Nick + '</p><p>' + datanow.Material_Specifications + '</p></li>'
+    //             arri = { materame: datanow.Material_Name, maternick: datanow.Material_Nick, matersp: datanow.Material_Specifications, matermea: datanow.Material_Measure, materid: datanow.F_Id, matertype: datanow.Material_Type };
+    //             arrlist.push(arri)
+    //         }
+    //         $(".selectlist ul").html(html);
+    //         $(".materName").on("keyup", function () {
+    //             var searchVal = $(this).val();
+    //             var showList = [];
+    //             var searchlist = '';
+    //             //将和所输入的字符串匹配的项存入showList
+    //             //将匹配项显示，不匹配项隐藏
+    //             $.each(arrlist, function (index, item) {
+    //                 if (item.materame.indexOf(searchVal) != -1 || item.maternick.indexOf(searchVal) != -1 || item.matersp.indexOf(searchVal) != -1) {
+    //                     showList.push(item);
+    //                 } else {
 
-                    }
-                })
-                for (var j = 0; j < showList.length; j++) {
-                    var shownow = showList[j]
-                    searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
-                }
-                if (showList.length == 0) {
-                    searchlist = '<div style="text-align:center;padding:15px 0">暂无数据</div>'
-                }
-                $(".selectlist ul").html("");
-                $(".selectlist ul").html(searchlist);
-                $('.selectlist ul').find('li').each(function () {
-                    var _this1 = $(this);
-                    _this1.hover(function () {
-                        $(this).addClass("active").siblings().removeClass("active")
-                    });
-                    _this1.on("click", function () {
-                        var name = $(this).attr("data-name");
-                        $(".editsub").attr("data-craftid", "")
-                        var nick = $(this).attr("data-nick");
-                        var specife = $(this).attr("data-spe");
-                        var measure = $(this).attr("data-materme");
-                        var materid = $(this).attr("data-materid")
-                        var matertype = $(this).attr("data-matertype")
-                        matertypelist(matertype)
-                        getcraftone(materid)
-                        $("#Craft_Material").val(materid)
-                        $(".materName").val(name);
-                        $(".maternick").val(nick);
-                        $(".materspe").val(specife);
-                        $("#measure").val(measure);
-                        $(".selectlist").addClass("hidden");
-                        $(".checkpro").removeClass("layui-form-selected");
-                        $(".isAttribute").html("");
-                        $(".isAttribute").css("padding", "0")
-                        // getblong(name, nick);
-                        return false
-                    })
-                })
-            })
-            $('.selectlist ul').find('li').each(function () {
-                var _this1 = $(this);
-                _this1.hover(function () {
-                    $(this).addClass("active").siblings().removeClass("active")
-                });
-                _this1.on("click", function () {
-                    $(".editsub").attr("data-craftid", "")
-                    var name = $(this).attr("data-name");
-                    var nick = $(this).attr("data-nick");
-                    var specife = $(this).attr("data-spe");
-                    var materid = $(this).attr("data-materid")
-                    var matertype = $(this).attr("data-matertype")
-                    matertypelist(matertype)
-                    getcraftone(materid)
-                    $("#Craft_Material").val(materid)
-                    var measure = $(this).attr("data-materme");
-                    $(".materName").val(name);
-                    $(".maternick").val(nick);
-                    $(".materspe").val(specife);
-                    $("#measure").val(measure);
-                    $(".selectlist").addClass("hidden");
-                    $(".checkpro").removeClass("layui-form-selected");
-                    $(".isAttribute").html("");
-                    $(".isAttribute").css("padding", "0")
-                    // getblong(name, nick);
-                    return false
-                })
-            })
-        }
+    //                 }
+    //             })
+    //             for (var j = 0; j < showList.length; j++) {
+    //                 var shownow = showList[j]
+    //                 searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
+    //             }
+    //             if (showList.length == 0) {
+    //                 searchlist = '<div style="text-align:center;padding:15px 0">暂无数据</div>'
+    //             }
+    //             $(".selectlist ul").html("");
+    //             $(".selectlist ul").html(searchlist);
+    //             $('.selectlist ul').find('li').each(function () {
+    //                 var _this1 = $(this);
+    //                 _this1.hover(function () {
+    //                     $(this).addClass("active").siblings().removeClass("active")
+    //                 });
+    //                 _this1.on("click", function () {
+    //                     var name = $(this).attr("data-name");
+    //                     $(".editsub").attr("data-craftid", "")
+    //                     var nick = $(this).attr("data-nick");
+    //                     var specife = $(this).attr("data-spe");
+    //                     var measure = $(this).attr("data-materme");
+    //                     var materid = $(this).attr("data-materid")
+    //                     var matertype = $(this).attr("data-matertype")
+    //                     matertypelist(matertype)
+    //                     getcraftone(materid)
+    //                     $("#Craft_Material").val(materid)
+    //                     $(".materName").val(name);
+    //                     $(".maternick").val(nick);
+    //                     $(".materspe").val(specife);
+    //                     $("#measure").val(measure);
+    //                     $(".selectlist").addClass("hidden");
+    //                     $(".checkpro").removeClass("layui-form-selected");
+    //                     $(".isAttribute").html("");
+    //                     $(".isAttribute").css("padding", "0")
+    //                     // getblong(name, nick);
+    //                     return false
+    //                 })
+    //             })
+    //         })
+    //         $('.selectlist ul').find('li').each(function () {
+    //             var _this1 = $(this);
+    //             _this1.hover(function () {
+    //                 $(this).addClass("active").siblings().removeClass("active")
+    //             });
+    //             _this1.on("click", function () {
+    //                 $(".editsub").attr("data-craftid", "")
+    //                 var name = $(this).attr("data-name");
+    //                 var nick = $(this).attr("data-nick");
+    //                 var specife = $(this).attr("data-spe");
+    //                 var materid = $(this).attr("data-materid")
+    //                 var matertype = $(this).attr("data-matertype")
+    //                 matertypelist(matertype)
+    //                 getcraftone(materid)
+    //                 $("#Craft_Material").val(materid)
+    //                 var measure = $(this).attr("data-materme");
+    //                 $(".materName").val(name);
+    //                 $(".maternick").val(nick);
+    //                 $(".materspe").val(specife);
+    //                 $("#measure").val(measure);
+    //                 $(".selectlist").addClass("hidden");
+    //                 $(".checkpro").removeClass("layui-form-selected");
+    //                 $(".isAttribute").html("");
+    //                 $(".isAttribute").css("padding", "0")
+    //                 // getblong(name, nick);
+    //                 return false
+    //             })
+    //         })
+    //     }
 
-        return false;
-    })
-    getproNorder = function () {
-        $(".dateload").addClass("hidden")
-        if ($("#cusOrder").val()) {
+    //     return false;
+    // })
+    // getproNorder = function () {
+    //     $(".dateload").addClass("hidden")
+    //     if ($("#cusOrder").val()) {
 
-        } else {
-            $(".selectlist ul").html("");
-            $(".datelist").removeClass("hidden")
-            var data = materdata;
-            var html = '';
-            var arrlist = [];
-            var arri = {};
-            for (var i = 0; i < data.length; i++) {
-                var datanow = data[i];
-                html += '<li data-name="' + datanow.Material_Name + '" data-nick="' + datanow.Material_Nick + '" data-spe="' + datanow.Material_Specifications + '" data-materme="' + datanow.Material_Measure + '" data-materid="' + datanow.F_Id + '" data-matertype="' + datanow.Material_Type + '"><p>' + datanow.Material_Name + '</p><p>' + datanow.Material_Nick + '</p><p>' + datanow.Material_Specifications + '</p></li>'
-                arri = { materame: datanow.Material_Name, maternick: datanow.Material_Nick, matersp: datanow.Material_Specifications, matermea: datanow.Material_Measure, materid: datanow.F_Id, matertype: datanow.Material_Type };
-                arrlist.push(arri)
-            }
-            $(".selectlist ul").html(html);
-            $(".materName").on("keyup", function () {
-                var searchVal = $(this).val();
-                var showList = [];
-                var searchlist = '';
-                //将和所输入的字符串匹配的项存入showList
-                //将匹配项显示，不匹配项隐藏
-                $.each(arrlist, function (index, item) {
-                    if (item.materame.indexOf(searchVal) != -1 || item.maternick.indexOf(searchVal) != -1 || item.matersp.indexOf(searchVal) != -1) {
-                        showList.push(item);
-                    } else {
+    //     } else {
+    //         $(".selectlist ul").html("");
+    //         $(".datelist").removeClass("hidden")
+    //         var data = materdata;
+    //         var html = '';
+    //         var arrlist = [];
+    //         var arri = {};
+    //         for (var i = 0; i < data.length; i++) {
+    //             var datanow = data[i];
+    //             html += '<li data-name="' + datanow.Material_Name + '" data-nick="' + datanow.Material_Nick + '" data-spe="' + datanow.Material_Specifications + '" data-materme="' + datanow.Material_Measure + '" data-materid="' + datanow.F_Id + '" data-matertype="' + datanow.Material_Type + '"><p>' + datanow.Material_Name + '</p><p>' + datanow.Material_Nick + '</p><p>' + datanow.Material_Specifications + '</p></li>'
+    //             arri = { materame: datanow.Material_Name, maternick: datanow.Material_Nick, matersp: datanow.Material_Specifications, matermea: datanow.Material_Measure, materid: datanow.F_Id, matertype: datanow.Material_Type };
+    //             arrlist.push(arri)
+    //         }
+    //         $(".selectlist ul").html(html);
+    //         $(".materName").on("keyup", function () {
+    //             var searchVal = $(this).val();
+    //             var showList = [];
+    //             var searchlist = '';
+    //             //将和所输入的字符串匹配的项存入showList
+    //             //将匹配项显示，不匹配项隐藏
+    //             $.each(arrlist, function (index, item) {
+    //                 if (item.materame.indexOf(searchVal) != -1 || item.maternick.indexOf(searchVal) != -1 || item.matersp.indexOf(searchVal) != -1) {
+    //                     showList.push(item);
+    //                 } else {
 
-                    }
-                })
-                ////console.log(showList)
-                for (var j = 0; j < showList.length; j++) {
-                    var shownow = showList[j]
-                    searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
-                }
-                if (showList.length == 0) {
-                    searchlist = '<div style="text-align:center;padding:15px 0">暂无数据</div>'
-                }
-                $(".selectlist ul").html("");
-                $(".selectlist ul").html(searchlist);
-                $('.selectlist ul').find('li').each(function () {
-                    var _this1 = $(this);
-                    _this1.hover(function () {
-                        $(this).addClass("active").siblings().removeClass("active")
-                    });
-                    _this1.on("click", function () {
-                        var name = $(this).attr("data-name");
-                        $(".sub").attr("data-craftid", "")
-                        var nick = $(this).attr("data-nick");
-                        var specife = $(this).attr("data-spe");
-                        var measure = $(this).attr("data-materme");
-                        var materid = $(this).attr("data-materid")
-                        var matertype = $(this).attr("data-matertype");
-                        matertypelist(matertype)
-                        getcraftone(materid)
-                        $("#Craft_Material").val(materid)
-                        $(".materName").val(name);
-                        $(".maternick").val(nick);
-                        $(".materspe").val(specife);
-                        $("#measure").val(measure);
-                        $(".selectlist").addClass("hidden");
-                        $(".checkpro").removeClass("layui-form-selected");
-                        $(".isAttribute").html("");
-                        $(".isAttribute").css("padding", "0")
-                        // getblong(name, nick);
-                        return false
-                    })
-                })
-            })
-            $('.selectlist ul').find('li').each(function () {
-                var _this1 = $(this);
-                _this1.hover(function () {
-                    $(this).addClass("active").siblings().removeClass("active")
-                });
-                _this1.on("click", function () {
-                    $(".sub").attr("data-craftid", "")
-                    var name = $(this).attr("data-name");
-                    var nick = $(this).attr("data-nick");
-                    var specife = $(this).attr("data-spe");
-                    var materid = $(this).attr("data-materid")
-                    var matertype = $(this).attr("data-matertype");
-                    matertypelist(matertype)
-                    getcraftone(materid)
-                    $("#Craft_Material").val(materid)
-                    var measure = $(this).attr("data-materme");
-                    $(".materName").val(name);
-                    $(".maternick").val(nick);
-                    $(".materspe").val(specife);
-                    $("#measure").val(measure);
-                    $(".selectlist").addClass("hidden");
-                    $(".checkpro").removeClass("layui-form-selected");
-                    $(".isAttribute").html("");
-                    $(".isAttribute").css("padding", "0")
-                    // getblong(name, nick);
-                    return false
-                })
-            })
+    //                 }
+    //             })
+    //             ////console.log(showList)
+    //             for (var j = 0; j < showList.length; j++) {
+    //                 var shownow = showList[j]
+    //                 searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-materid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
+    //             }
+    //             if (showList.length == 0) {
+    //                 searchlist = '<div style="text-align:center;padding:15px 0">暂无数据</div>'
+    //             }
+    //             $(".selectlist ul").html("");
+    //             $(".selectlist ul").html(searchlist);
+    //             $('.selectlist ul').find('li').each(function () {
+    //                 var _this1 = $(this);
+    //                 _this1.hover(function () {
+    //                     $(this).addClass("active").siblings().removeClass("active")
+    //                 });
+    //                 _this1.on("click", function () {
+    //                     var name = $(this).attr("data-name");
+    //                     $(".sub").attr("data-craftid", "")
+    //                     var nick = $(this).attr("data-nick");
+    //                     var specife = $(this).attr("data-spe");
+    //                     var measure = $(this).attr("data-materme");
+    //                     var materid = $(this).attr("data-materid")
+    //                     var matertype = $(this).attr("data-matertype");
+    //                     matertypelist(matertype)
+    //                     getcraftone(materid)
+    //                     $("#Craft_Material").val(materid)
+    //                     $(".materName").val(name);
+    //                     $(".maternick").val(nick);
+    //                     $(".materspe").val(specife);
+    //                     $("#measure").val(measure);
+    //                     $(".selectlist").addClass("hidden");
+    //                     $(".checkpro").removeClass("layui-form-selected");
+    //                     $(".isAttribute").html("");
+    //                     $(".isAttribute").css("padding", "0")
+    //                     // getblong(name, nick);
+    //                     return false
+    //                 })
+    //             })
+    //         })
+    //         $('.selectlist ul').find('li').each(function () {
+    //             var _this1 = $(this);
+    //             _this1.hover(function () {
+    //                 $(this).addClass("active").siblings().removeClass("active")
+    //             });
+    //             _this1.on("click", function () {
+    //                 $(".sub").attr("data-craftid", "")
+    //                 var name = $(this).attr("data-name");
+    //                 var nick = $(this).attr("data-nick");
+    //                 var specife = $(this).attr("data-spe");
+    //                 var materid = $(this).attr("data-materid")
+    //                 var matertype = $(this).attr("data-matertype");
+    //                 matertypelist(matertype)
+    //                 getcraftone(materid)
+    //                 $("#Craft_Material").val(materid)
+    //                 var measure = $(this).attr("data-materme");
+    //                 $(".materName").val(name);
+    //                 $(".maternick").val(nick);
+    //                 $(".materspe").val(specife);
+    //                 $("#measure").val(measure);
+    //                 $(".selectlist").addClass("hidden");
+    //                 $(".checkpro").removeClass("layui-form-selected");
+    //                 $(".isAttribute").html("");
+    //                 $(".isAttribute").css("padding", "0")
+    //                 // getblong(name, nick);
+    //                 return false
+    //             })
+    //         })
 
 
-        }
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
     $("input[data-type='checkpro']").blur(function () {
         var _this = $(this);
         _this.parent().removeClass("layui-form-selected")
@@ -1337,79 +1337,79 @@ $(function () {
 
     }
     // 客户订单号--
-    $(".cusOrder").on("click", function () {
-        var _this = $(this);
-        var date = _this.attr("data-type");
-        if (date == 'daten') {
-            $(".cusOrder").attr("data-type", "datey");
-            $.ajax({
-                type: "get",
-                url: salelist,
-                success: function (res) {
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        var html = '<option value="">全部</option>';
-                        var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                        for (var i = 0; i < data.length; i++) {
-                            html += '<option value="' + data[i].F_Id + '" data-cus="' + data[i].SalesOrder_Customer + '">' + data[i].SalesOrder_Name + '</option>';
-                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" data-cus="' + data[i].SalesOrder_Customer + '">' + data[i].SalesOrder_Name + '</dd>'
-                        }
-                        $("#cusOrder").html(html);
-                        $(".cusOrder .layui-anim.layui-anim-upbit").html(htmlsel);
-                        reloadform();
-                        _this.find("select").next().find('.layui-select-title input').click();
+    // $(".cusOrder").on("click", function () {
+    //     var _this = $(this);
+    //     var date = _this.attr("data-type");
+    //     if (date == 'daten') {
+    //         $(".cusOrder").attr("data-type", "datey");
+    //         $.ajax({
+    //             type: "get",
+    //             url: salelist,
+    //             success: function (res) {
+    //                 var isussecc = res.Succeed;
+    //                 var data = res.Data;
+    //                 if (isussecc) {
+    //                     var html = '<option value="">全部</option>';
+    //                     var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+    //                     for (var i = 0; i < data.length; i++) {
+    //                         html += '<option value="' + data[i].F_Id + '" data-cus="' + data[i].SalesOrder_Customer + '">' + data[i].SalesOrder_Name + '</option>';
+    //                         htmlsel += '<dd lay-value="' + data[i].F_Id + '" data-cus="' + data[i].SalesOrder_Customer + '">' + data[i].SalesOrder_Name + '</dd>'
+    //                     }
+    //                     $("#cusOrder").html(html);
+    //                     $(".cusOrder .layui-anim.layui-anim-upbit").html(htmlsel);
+    //                     reloadform();
+    //                     _this.find("select").next().find('.layui-select-title input').click();
 
-                    } else {
-                        alert(res.Message)
-                    }
+    //                 } else {
+    //                     alert(res.Message)
+    //                 }
 
-                }
-            })
-        }
-    })
+    //             }
+    //         })
+    //     }
+    // })
     // 切换客户订单号
-    layui.form.on('select(cusorder)', function (data) {
-        if (data.value == '') {
-            getproNorder()
+    // layui.form.on('select(cusorder)', function (data) {
+    //     if (data.value == '') {
+    //         // getproNorder()
 
-        } else {
-            var id = data.value;
-            var cusid;
-            if (data.elem.selectedOptions) {
-                cusid = data.elem.selectedOptions[0].attributes[1].value;
+    //     } else {
+    //         var id = data.value;
+    //         var cusid;
+    //         if (data.elem.selectedOptions) {
+    //             cusid = data.elem.selectedOptions[0].attributes[1].value;
 
-            } else {
-                var elems = data.elem;
-                for (var i = 0; i < elems.length; i++) {
-                    var elemnow = elems[i];
-                    if (elemnow.selected) {
-                        cusid = elemnow.attributes[1].value;
-                    }
-                }
-            }
-            getcus(cusid)
-            $.ajax({
-                type: "get",
-                url: saleEntry + id,
-                success: function (res) {
-                    ////console.log(res)
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        $("#Assign_SalesOrderEntry").val(res.Data.F_Id)
-                        // 获取客户订单号下产品列表
-                        getpro(data.Details)
+    //         } else {
+    //             var elems = data.elem;
+    //             for (var i = 0; i < elems.length; i++) {
+    //                 var elemnow = elems[i];
+    //                 if (elemnow.selected) {
+    //                     cusid = elemnow.attributes[1].value;
+    //                 }
+    //             }
+    //         }
+    //         getcus(cusid)
+    //         $.ajax({
+    //             type: "get",
+    //             url: saleEntry + id,
+    //             success: function (res) {
+    //                 ////console.log(res)
+    //                 var isussecc = res.Succeed;
+    //                 var data = res.Data;
+    //                 if (isussecc) {
+    //                     $("#Assign_SalesOrderEntry").val(res.Data.F_Id)
+    //                     // 获取客户订单号下产品列表
+    //                     // getpro(data.Details)
 
-                    } else {
-                        alert(res.Message)
-                    }
-                }
-            })
-        }
+    //                 } else {
+    //                     alert(res.Message)
+    //                 }
+    //             }
+    //         })
+    //     }
 
 
-    })
+    // })
 
     $(".checkone").click(function () {
         var stau = $(this).attr("data-status");

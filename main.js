@@ -128,13 +128,15 @@ var pushcraft=ajaxURl+'/Api/Manufacture/Assign/AutoPushCraft'
 var ajaxaddReport=ajaxURl+'/Api/Manufacture/Report/Add'
 
 // 获取报工one
-var getReportone=ajaxURl+'/Api/Manufacture/Report/GetEntity'
+var getReportone=ajaxURl+'/Api/Manufacture/Report/GetEntity' 
 // 获取报工列表
 var getReportlist=ajaxURl+'/Api/Manufacture/Report/GetList?keyword=&PageSize=&PageIndex='
 // 删除报工one
 var rempveReportlist=ajaxURl+'/Api/Manufacture/Report/Remove'
 // 根据工单号查询数量
 var getRepornum=ajaxURl+'/Api/Manufacture/Report/Gather?assign='
+//工序汇报列表
+var  getreportentrylist=ajaxURl+'/Api/Manufacture/ReportEntry/GetList?keyword='
 // -------------------生产管理----------------------
 
 

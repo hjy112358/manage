@@ -116,6 +116,7 @@ $(function () {
                     $("#SalesOrder_ExRate").val(data.SalesOrder_ExRate)
                     $("#SalesOrder_TaxRate").val(data.SalesOrder_TaxRate)
                     $("#SalesOrder_Project").val(data.SalesOrder_Project)
+                    $("#recdate").val(data.SalesOrder_Deadline)
                     $("#SalesOrder_Delivery").val(data.SalesOrder_Delivery)
                     $("#SalesOrder_Payment").val(data.SalesOrder_Payment)
                     $("#SalesOrder_Cycle").val(data.SalesOrder_Cycle)
