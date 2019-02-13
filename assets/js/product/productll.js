@@ -49,15 +49,27 @@ $.ajax({
         })
     }
 })
-// 批号
-// $.ajax({
-//     url:
-// })
+
+// 计量单位
+$.ajax({
+    url: ajaxMea,
+    success: function (res) {
+        var data = res.Data;
+        var isussecc = res.Succeed;
+        console.log(data)
+        if (isussecc) {
+            for (var i = 0; i < data.length; i++) {
+                measureid.push(data[i].Measure_Manufacture)  
+                measurnick.push(data[i].Measure_Nick)
+               
+            }
+        }
+    }
+})
 
 
-
-
-var renderForm1;
+var renderForm1,maternolist=[];
+var measureid=[],measurnick=[],layer;
 window.viewObj = {
     tbData: [],
     limit: 1
@@ -67,11 +79,12 @@ var tableIns;
 layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function () {
     var $ = layui.$,
         form = layui.form,
-        layer = layui.layer,
+       
         layedit = layui.layedit,
         laydate = layui.laydate,
         element = layui.element,
         table = layui.table;
+        layer = layui.layer;
     //数据表格实例化		
     var layTableId = "layTable";
     tableIns = table.render({
@@ -115,9 +128,13 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             { field: 'StockBillEntry_Specifications', title: '规格型号' },
             // { field: 'term3', title: '辅助属性', edit: 'text' },
             { field: 'StockBillEntry_Unit', title: '计量单位' },
-            { field: 'StockBillEntry_BatchNo', title: '批号' },
+            {
+                field: 'StockBillEntry_BatchNo', title: '批号'
+            },
+            { field: 'StockBillEntry_Price', title: '价格', edit: 'text'  },
             { field: 'quatity', title: '应发数量' },
             { field: 'StockBillEntry_Quantity', title: '实发数量', edit: 'text' },
+            { field: 'StockBillEntry_Amount', title: '总额'},
             { field: 'StockBillEntry_Stock', title: '仓库', templet: '#selectstock' },
             { field: 'Rmark', title: '备注', edit: 'text' },
             {
@@ -141,6 +158,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             //         }
             //     });
             // });
+           
             tabledata = res.data;
             $('#tableRes tr').each(function (e) {
                 var $cr = $(this);
@@ -203,6 +221,32 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         var type = $(this).data('type');
         activeByType(type);
     });
+
+     // 批号
+    function getbatno() {
+      
+        var oldData = table.cache[layTableId];
+        console.log(oldData)
+        
+        $.each(maternolist,function(i,v){
+            $.ajax({
+                url: ajaxstockno +v,
+                async: false,
+                success: function (res) {
+                    console.log(res)
+                    if(res.Succeed){
+                        oldData[i].StockBillEntry_BatchNo=res.Data[0].Inventory_BatchNo
+                    }
+                }
+            })
+        })
+        tableIns.reload({
+            data: oldData,
+            limit: viewObj.limit
+        });
+       
+    }
+
     //监听工具条
     table.on('tool(dataTable)', function (obj) {
         var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
@@ -231,14 +275,26 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     });
     table.on('edit(dataTable)', function (obj) {
         var oldData = table.cache[layTableId];
+        // console.log(obj)
         for (var i = 0; i < oldData.length; i++) {
             var datenow = oldData[i];
             if (datenow.F_Id === obj.data.F_Id) {
-                if (obj.field == 'StockBillEntry_Quantity') {
-                    if (!$.isNumeric(obj.value)) {
+                if(obj.field=='StockBillEntry_Quantity'){
+                    if (!$.isNumeric(obj.value)){
                         datenow.StockBillEntry_Quantity = parseInt(obj.value);
+                    }else{
+                        if(datenow.StockBillEntry_Price){
+                            datenow.StockBillEntry_Amount=parseFloat(datenow.StockBillEntry_Quantity)*parseFloat(datenow.StockBillEntry_Price)
+                            datenow.StockBillEntry_Amount=datenow.StockBillEntry_Amount.toFixed(2)
+                        }
+                    }
+                }else if(obj.field=='StockBillEntry_Price'){
+                    if(datenow.StockBillEntry_Quantity){
+                        datenow.StockBillEntry_Amount=parseFloat(datenow.StockBillEntry_Quantity)*parseFloat(datenow.StockBillEntry_Price)
+                        datenow.StockBillEntry_Amount=datenow.StockBillEntry_Amount.toFixed(2)
                     }
                 }
+                
             }
         }
         tableIns.reload({
@@ -269,9 +325,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             }
         });
     })
-
-
-
 
     // 新增
     $(".add").on("click", function () {
@@ -405,10 +458,30 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                             console.log(data.Children)
                             $.each(data.Children, function (index, value) {
                                 value.StockBillEntry_Specifications = value.AssignEntry_Specifications
-                                value.StockBillEntry_Unit = value.AssignEntry_Unit
+                                
                                 value.StockBillEntry_Material = value.AssignEntry_Material
                                 value.quatity = value.AssignEntry_Quantity
+                                var index = measurnick.indexOf(value.AssignEntry_Unit)
+                                if (index != '-1') {
+                                    value.StockBillEntry_Unit=measureid[index]
+                                } 
+                                $.ajax({
+                                    url: ajaxstockno +value.AssignEntry_Material,
+                                    async: false,
+                                    success: function (result) {
+                                        console.log(result)
+                                        if(result.Succeed){
+                                            if(result.Data.length>=1){
+                                                value.StockBillEntry_BatchNo=result.Data[0].Inventory_BatchNo
+                                            }
+                                            
+                                        }
+                                    }
+                                })
+                               
+                                
                             })
+
                             tableIns.reload({
                                 data: data.Children,
                                 limit: data.Children.length
@@ -436,6 +509,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     // 保存
     $(".sub").on("click", function () {
+        var indexlay=layer.load();
         var formlist = $("form").serializeArray()
         var oldData = table.cache[layTableId];
         var data = {}
@@ -450,7 +524,17 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             url: addbill,
             data: data,
             success: function (res) {
-                console.log(res)
+                var isussecc = res.Succeed;
+                if(isussecc){
+                    layer.close(indexlay);
+                    layer.msg("新增成功");
+                    setInterval(function () {
+                        window.location.reload()
+                    }, 1000) 
+                   }else{
+                       alert(res.Message)
+                   }
+
             }
         })
         return false

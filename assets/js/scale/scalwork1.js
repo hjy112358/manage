@@ -1065,7 +1065,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             var index = layer.load();
             $.ajax({
                 type: "POST",
-                url: ajaxURl + '/Api/PSISales/SalesOrder/Add',
+                url: ajaxaddsale,
                 data: list,
                 success: function (res) {
                     console.log(res)
@@ -1129,7 +1129,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 console.log(list)
                 $.ajax({
                     type: "POST",
-                    url: ajaxURl + '/Api/PSISales/SalesOrder/Add',
+                    url: ajaxaddsale,
                     data: data,
                     success: function (res) {
                         console.log(res)

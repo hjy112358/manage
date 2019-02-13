@@ -48,7 +48,24 @@ $.ajax({
        })
     }
 })
+// 计量单位
+$.ajax({
+    url: ajaxMea,
+    success: function (res) {
+        var data = res.Data;
+        var isussecc = res.Succeed;
+        console.log(data)
+        if (isussecc) {
+            for (var i = 0; i < data.length; i++) {
+                measureid.push(data[i].Measure_Manufacture)  
+                measurnick.push(data[i].Measure_Nick)
+               
+            }
+        }
+    }
+})
 var materid = [], maternick = [], matername = [],stocklist=[]
+var measureid=[],measurnick=[];
 var renderForm1;
 window.viewObj = {
     tbData: [],
@@ -102,17 +119,19 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             }},
             { field: 'StockBillEntry_Specifications', title: '规格型号' },
             { field: 'StockBillEntry_BatchNo', title: '批号'},
-            { field: 'StockBillEntry_Unit', title: '计量单位' },
+            { field: 'Unit', title: '计量单位' },
+            { field: 'StockBillEntry_Price', title: '价格', edit: 'text'  },
             { field: 'quatity', title: '应收数量'},
             { field: 'StockBillEntry_Quantity', title: '实收数量', edit: 'text' },
+            { field: 'StockBillEntry_Amount', title: '总额'},
             { field: 'StockBillEntry_Stock', title: '收货仓库',templet:'#selectstock' },
-            { field: 'Rmark', title: '备注', edit: 'text' },
+            { field: 'Rmark', title: '备注', edit: 'text' }
 
-            {
-                field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
-                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '">删除</a>';
-                }
-            }
+            // {
+            //     field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
+            //         return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '">删除</a>';
+            //     }
+            // }
         ]],
         done: function (res, curr, count) {
             viewObj.tbData = res.data;
@@ -208,26 +227,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 break;
         }
     });
-    table.on('edit(dataTable)', function (obj) {
-        var oldData = table.cache[layTableId];
-        // console.log(oldData)
-        // if (!$.isNumeric(obj.value)) {
-        //     for (var i = 0; i < oldData.length; i++) {
-        //         var datenow = oldData[i];
-        //         if (datenow.tempId === obj.data.tempId) {
-        //             datenow.dates = "";
-        //             layer.alert("请输入数字");
-        //         }
-        //     }
-        // }
-        // if (obj.data.tempId == viewObj.last) {
-        //     activeByType("add");
-        // }
-        tableIns.reload({
-            data: oldData,
-            limit: viewObj.limit
-        });
-    });
+    
    
     form.on('select(StockBillEntry_Stock)', function (data, e) {
         var elem = data.othis.parents('tr');
@@ -261,8 +261,19 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 if(obj.field=='StockBillEntry_Quantity'){
                     if (!$.isNumeric(obj.value)){
                         datenow.StockBillEntry_Quantity = parseInt(obj.value);
+                    }else{
+                        if(datenow.StockBillEntry_Price){
+                            datenow.StockBillEntry_Amount=parseFloat(datenow.StockBillEntry_Quantity)*parseFloat(datenow.StockBillEntry_Price)
+                            datenow.StockBillEntry_Amount=datenow.StockBillEntry_Amount.toFixed(2)
+                        }
+                    }
+                }else if(obj.field=='StockBillEntry_Price'){
+                    if(datenow.StockBillEntry_Quantity){
+                        datenow.StockBillEntry_Amount=parseFloat(datenow.StockBillEntry_Quantity)*parseFloat(datenow.StockBillEntry_Price)
+                        datenow.StockBillEntry_Amount=datenow.StockBillEntry_Amount.toFixed(2)
                     }
                 }
+                
             }
         }
         tableIns.reload({
@@ -384,6 +395,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     // 切换订单号
     layui.form.on('select(changeorder)', function (data) {
+        var count=0
         if (data.value != '') {
             $.ajax({
                 type: "get",
@@ -396,15 +408,19 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                         if (data.Children) {
                             console.log(data.Children)
                             $.each(data.Children, function (index, value) {
+                                count++;
                                 value.StockBillEntry_Specifications = value.AssignEntry_Specifications
-                                value.StockBillEntry_Unit = value.AssignEntry_Unit
+                                value.StockBillEntry_BatchNo = ""
+                                value.Unit = value.AssignEntry_Unit
+                               
+                                var index = measurnick.indexOf(value.AssignEntry_Unit)
+                                if (index != '-1') {
+                                    value.StockBillEntry_Unit=measureid[index]
+                                } 
                                 value.StockBillEntry_Material = value.AssignEntry_Material
                                 value.quatity = value.AssignEntry_Quantity
                             })
-                            tableIns.reload({
-                                data: data.Children,
-                                limit: data.Children.length
-                            });
+                            getbatno(data.Children,count)
                         }
 
                     } else {
@@ -414,6 +430,35 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             })
         }
     })
+
+    function getbatno(data,cout){
+        console.log(data[0])
+        for(var i=0;i<=cout-1;i++){
+            $.ajax({
+                async: false,
+                url:ordernum,
+                success:function(res){
+                    if(res.Succeed){
+                        console.log(data[i])
+                        data[i].StockBillEntry_BatchNo=res.Data
+                    }else{
+                        alert(res.Message)
+                    }
+                }
+            })
+        }
+       console.log(data)
+       
+        tableIns.reload({
+            data: data,
+            limit: data.length
+        });
+    }
+
+    function getno(){
+        
+    }
+    
     renderForm1 = function () {
         layui.use('form', function () {
             var form = layui.form;
@@ -428,6 +473,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     // 保存
     $(".sub").on("click", function () {
+        var indexlay=layer.load();
         var formlist=$("form").serializeArray()
         var oldData = table.cache[layTableId];
         var data = {}
@@ -442,7 +488,15 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             url:addbill,
             data:data,
             success:function(res){
-                console.log(res)
+               if(res.Succeed){
+                layer.close(indexlay);
+                layer.msg("新增成功");
+                setInterval(function () {
+                    window.location.reload()
+                }, 1000) 
+               }else{
+                   alert(res.Message)
+               }
             }
         })
         return false
@@ -464,7 +518,6 @@ $(function(){
         $("#tablelist .layui-table-view").addClass("overvis");
     })
 })
-
 
 
 
