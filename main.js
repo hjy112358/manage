@@ -149,6 +149,8 @@ var ajaxstockno=ajaxURl+'/Api/PSIInventory/StockBill/BatchNo?keyValue='
 var ajaxstockbilist=ajaxURl+'/Api/PSIInventory/StockBill/GetList?keyword=&PageSize=&PageIndex='
 // 删除出入库
 var removestockbill=ajaxURl+'/Api/PSIInventory/StockBill/Remove'
+// 查询出入库明细
+var ajaxstockbillone=ajaxURl+'/Api/PSIInventory/StockBill/GetEntry?key='
 // -------------------生产管理----------------------
 
 
