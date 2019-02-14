@@ -39,13 +39,13 @@ border: 1px solid #e6e6e6;
 .craftwork  .layui-input{
     height: 26px;
 }
-.craftwork table .layui-form-select .layui-input{
+/* .craftwork table .layui-form-select .layui-input{
     line-height: 34px;
     height: 34px;
 }
 .craftwork table  .layui-input{
     height: 34px;
-}
+} */
 .craftwork .layui-form-item .layui-input-block{
     width:157px;
 }

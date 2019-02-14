@@ -7,8 +7,15 @@ $(function(){
             console.log(res)
             if(res.Succeed){
                 var data=res.Data
+                $.each(data.Details,function(i,v){
+                    var index = measurnick.indexOf(v.AssignEntry_Unit)
+                    if (index != '-1') {
+                        v.StockBillEntry_Unit=measureid[index]
+                        v.unit=measurnick[index]
+                    } 
+                })
                 tablerender(data.Details)
-                getdepart(data.StockBill_Department)
+                getdepart(data.StockBill_Sender)
                 var time=data.StockBill_DateTime
                 if(time){
                     time=time.split(" ")[0]
@@ -16,7 +23,7 @@ $(function(){
                 $("#date").val(time)
                 $("#StockBill_Name").val(data.StockBill_Name)
                 $("#Rmark").val(data.Rmark)
-                getper(data.StockBill_Biller,data.StockBill_Sender)
+                getper(data.StockBill_Biller,data.StockBill_Receiver)
             }else{
                 alert(res.Message)
             }
@@ -25,18 +32,18 @@ $(function(){
 
 // 变更
     $(".change").on("click", function () {
-        var href = '/views/product/productllchange.html?fid=' + fid ;
+        var href = '/views/product/productprochange.html?fid=' + fid ;
         window.location.replace(href)
     })
     
     // 新增
     $(".add").on("click", function () {
-        var href = '/views/product/productll.html';
+        var href = '/views/product/productpro.html';
         window.location.replace(href)
     })
 
 })
-var materid=[],maternick=[],matername=[],stockid=[],stocknick=[],measurname=[],measureid=[],measurnick=[]
+var materid=[],maternick=[],matername=[],stockid=[],stocknick=[], measureid=[],measurnick=[]
 // 物料
 $.ajax({
     url: ajaxMater,
@@ -49,6 +56,21 @@ $.ajax({
                 materid.push(data[i].F_Id)
                 maternick.push(data[i].Material_Nick)
                 matername.push(data[i].Material_Name)
+            }
+        }
+    }
+})
+// 计量单位
+$.ajax({
+    url: ajaxMea,
+    success: function (res) {
+        var data = res.Data;
+        var isussecc = res.Succeed;
+        console.log(data)
+        if (isussecc) {
+            for (var i = 0; i < data.length; i++) {
+                measureid.push(data[i].Measure_Manufacture)  
+                measurnick.push(data[i].Measure_Nick) 
             }
         }
     }
@@ -67,26 +89,8 @@ $.ajax({
         }
     }
 })
-// 计量单位
-$.ajax({
-    url: ajaxMea,
-    success: function (res) {
-        var data = res.Data;
-        var isussecc = res.Succeed;
-        console.log(data)
-        if (isussecc) {
-            for (var i = 0; i < data.length; i++) {
-                measureid.push(data[i].Measure_Manufacture)    
-                measurnick.push(data[i].Measure_Nick)
-                measurname.push(data[i].Measure_Name)
-               
-            }
-        }
-    }
-})
-
 // 制单人/发料人
-function getper(biller,sender){
+function getper(biller,receiver){
     $.ajax({
         type: "get",
         url: ajaxUsr,
@@ -100,8 +104,8 @@ function getper(biller,sender){
                     if (datanow.F_Id == biller) {
                         $("#StockBill_Billername").val(datanow.User_Nick)
                     }
-                    if(datanow.F_Id == sender){
-                        $("#StockBill_Sender").val(datanow.User_Nick)
+                    if(datanow.F_Id == receiver){
+                        $("#StockBill_Receiver").val(datanow.User_Nick)
                     }
                 }  
             } else {
@@ -123,7 +127,7 @@ function getdepart(id){
                 for (var i = 0; i < data.length; i++) {
                     var datanow = data[i]
                     if (datanow.F_Id == id) {
-                        $("#StockBill_Department").val(datanow.Department_Nick)
+                        $("#StockBill_Sender").val(datanow.Department_Nick)
                     }
                 }
             } else {
@@ -135,7 +139,6 @@ function getdepart(id){
 
 // 渲染table
 function tablerender(data) {
-    console.log(data)
     layui.use(['jquery', 'table'], function () {
         var $ = layui.$,
             table = layui.table;
@@ -173,7 +176,7 @@ function tablerender(data) {
                     }
                 },
                 { field: 'StockBillEntry_Specifications', title: '规格型号' },
-                { field: 'StockBillEntry_Unit', title: '计量单位' ,templet:function(d){
+                { field: 'unit', title: '计量单位',templet:function(d){
                     if (d.StockBillEntry_Unit) {
                         var index2 = measureid.indexOf(d.StockBillEntry_Unit)
                         if (index2 == '-1') {
@@ -184,7 +187,7 @@ function tablerender(data) {
                     } else {
                         return ''
                     }
-                }},
+                } },
                 {
                     field: 'StockBillEntry_BatchNo', title: '批号'
                 },

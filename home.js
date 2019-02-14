@@ -387,6 +387,4 @@ function getstock(direc,id){
         $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(14)').trigger('click');
         $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(14)').attr("href", oldhref)
     }
-
-
 }

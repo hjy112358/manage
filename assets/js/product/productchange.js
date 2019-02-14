@@ -1858,7 +1858,7 @@ function matertypelist(id) {
                                     html += '<div class="layui-form-lsit fl ">' +
                                         '<label class="layui-form-label">' + data[i].FamilyEntry_Nick + '：</label>' +
                                         '<div class="layui-input-block disinput">' +
-                                        '<input type="text" value="" id="">' +
+                                        '<input type="text" value="" id="" autocomplete="off">' +
                                         '</div>' +
                                         '</div>';
                                 }

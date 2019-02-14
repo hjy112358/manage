@@ -886,7 +886,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             newdata.push(adddata)
         } else {
             viewObjcra.limit = 1;
-            newdata.push(adddata)
+            newdata.push(adddata) 
         }
         tablecrm.reload({
             data: newdata,
@@ -1869,7 +1869,7 @@ function matertypelist(id) {
                                     html += '<div class="layui-form-lsit fl ">' +
                                         '<label class="layui-form-label">' + data[i].FamilyEntry_Nick + '：</label>' +
                                         '<div class="layui-input-block disinput">' +
-                                        '<input type="text" value="" id="" name="' + data[i].FamilyEntry_Name + '" class="attrs">' +
+                                        '<input type="text" value="" id="" name="' + data[i].FamilyEntry_Name + '" class="attrs" autocomplete="off">' +
                                         '</div>' +
                                         '</div>';
                                 }

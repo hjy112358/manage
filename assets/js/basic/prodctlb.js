@@ -2,12 +2,8 @@
 $(function () {
     $(".add").on("click", function () {
         $(".termask").removeClass("hidden");
-        $(".editsave").addClass("hidden");
-        $(".save").removeClass("hidden");
-        $(".masktitle").html("新增物料类别");
-        $(".addattr").html("添加类别属性");
-        $("#tableRes1").addClass("hidden");
-        $("#tableRes").removeClass("hidden");
+        $(".terform").removeClass("hidden");
+        $(".terform1").addClass("hidden");
         $("#Family_Name").val("");
         $("#Family_Nick").val("");
         $(document).on("click", function () {
@@ -20,9 +16,6 @@ $(function () {
     })
     $(".cancel,.iconclose").on("click", function () {
         $(".termask").addClass("hidden");
-        tablelist();
-        var data = [];
-        editablelist(data)
     })
 
     function renderForm() {
@@ -47,7 +40,6 @@ $(function () {
                 table = layui.table;
             table.render({
                 elem: '#analy'
-
                 , toolbar: true
                 , cols: [str]
                 , data: data
@@ -57,14 +49,10 @@ $(function () {
             });
 
             table.on('rowDouble(analy)', function (obj) {
-                console.log(obj)
+                // console.log(obj)
                 $(".termask").removeClass("hidden");
-                $(".editsave").removeClass("hidden");
-                $(".save").addClass("hidden");
-                $("#tableRes").addClass("hidden");
-                $("#tableRes1").removeClass("hidden");
-                $(".editsave").removeClass("hidden");
-                $(".masktitle").html("修改物料类别");
+                $(".terform1").removeClass("hidden");
+                $(".terform").addClass("hidden");
                 $("#Family_Name").val(obj.data.Family_Name);
                 $("#Family_Nick").val(obj.data.Family_Nick);
                 var id = obj.data.F_Id;
@@ -75,13 +63,13 @@ $(function () {
                     url: materFlistone + '?keyword=' + id + '&PageIndex=&PageSize=',
                     // data:datas,
                     success: function (res) {
-                        console.log(res)
+                        // console.log(res)
                         var success = res.Succeed;
                         if (success) {
                             // $(".addattr").removeClass("addfirst");
                             // $(".addattr").addClass("editadd");
                             // $(".addattr").html("增加一行");
-                            console.log(res)
+                            // console.log(res)
                             var datalist = res.Data
                             editablelist(datalist);
                         } else {
@@ -177,13 +165,13 @@ $(function () {
                 Family_Nick: nick,
                 Details: tabledatalist
             }
+            console.log(data)
             $.ajax({
                 type: "POST",
                 async: false,
                 url: addmater,
                 data: data,
                 success: function (res) {
-
                     var isussecc = res.Succeed;
                     if (isussecc) {
                         $(".termask").addClass("hidden");
@@ -193,47 +181,10 @@ $(function () {
                     } else {
                         alert(res.Message);
                     }
-
                 }
             })
-
-            // for (var k = 0; k < tabledatalist.length; k++) {
-            //     var datanow = tabledatalist[k];
-            //     var datai = k;
-            //     var data = {
-            //         FamilyEntry_Name: datanow.FamilyEntry_Name,
-            //         FamilyEntry_Nick: datanow.FamilyEntry_Nick,
-            //         FamilyEntry_Datatype: datanow.FamilyEntry_Datatype,
-            //         FamilyEntry_Object: id
-            //     }
-            //     $.ajax({
-            //         type: "POST",
-            //         async: false,
-            //         url: addmaterfamily,
-            //         data: data,
-            //         success: function (res) {
-            //             console.log(JSON.parse(res))
-            //             var isussecc = JSON.parse(res).Succeed;
-            //             if (isussecc) {
-            //                 if (datai == tabledatalist.length - 1) {
-            //                     $(".termask").addClass("hidden");
-            //                     // $(".checklist").trigger("click");
-            //                     // tabledatalist=[];
-            //                     window.location.reload()
-            //                 }
-            //             } else {
-            //                 alert(JSON.parse(res).Message);
-            //             }
-
-            //         }
-            //     })
-            // }
-
         }
-
-
     })
-
     $(".editsave").on("click", function () {
 
         var id = $(".editsave").attr("data-id")
@@ -313,7 +264,6 @@ function delmeasure(id) {
     var index = layer.confirm('确认删除？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
-
         var data = {
             F_Id: id
         }
@@ -323,7 +273,6 @@ function delmeasure(id) {
             url: removemater,
             data: data,
             success: function (res) {
-
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(index)
@@ -331,12 +280,9 @@ function delmeasure(id) {
                 } else {
                     alert(res.Message)
                 }
-
             }
         })
     });
-
-
 }
 
 function tablelist() {
@@ -345,6 +291,10 @@ function tablelist() {
             tempId: new Date().valueOf(),
             FamilyEntry_Nick: '',
             FamilyEntry_Datatype: '',
+            FamilyEntry_Sales:'',
+            FamilyEntry_Purchase:"",
+            FamilyEntry_Manufacture:'',
+            FamilyEntry_Inventory:'',
             state: 0,
             datatypeText: ''
         }],
@@ -378,9 +328,13 @@ function tablelist() {
                 { title: '序号', type: 'numbers' },
                 { field: 'FamilyEntry_Nick', title: '类别属性名称', edit: 'text' },
                 { field: 'FamilyEntry_Datatype', title: '数据类型', templet: "#selectattr" },
+                // { field: 'FamilyEntry_Sales', title: '销售', templet: "#checkscale" },
+                // { field: 'FamilyEntry_Purchase', title: '采购', templet: "#checkpur" },
+                // { field: 'FamilyEntry_Manufacture', title: '生产', templet: "#checkfacture" },
+                // { field: 'FamilyEntry_Inventory', title: '仓储', templet: "#checkinve" },
                 {
                     field: 'tempId', title: '操作', templet: function (d) {
-                        return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '"><i class="layui-icon layui-icon-delete"></i>移除</a>';
+                        return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '">删除</a>';
                     }
                 }
             ]],
@@ -405,11 +359,10 @@ function tablelist() {
         //定义事件集合
         var active = {
             addRow: function () {	//添加一行
-                console.log("new")
                 viewObj.limit = viewObj.limit + 1;
                 var oldData = table.cache[layTableId];
-
-                var newRow = { tempId: new Date().valueOf(), state: 0, FamilyEntry_Nick: '', FamilyEntry_Datatype: '', datatypeText: '' };
+                var newRow = { tempId: new Date().valueOf(), state: 0, FamilyEntry_Nick: '', FamilyEntry_Datatype: '', datatypeText: '' , FamilyEntry_Sales:'',FamilyEntry_Purchase:"",
+                FamilyEntry_Manufacture:'',FamilyEntry_Inventory:''};
                 oldData.push(newRow);
                 tableIns.reload({
                     data: oldData,
@@ -418,7 +371,6 @@ function tablelist() {
             },
             updateRow: function (obj) {
                 var oldData = table.cache[layTableId];
-
                 for (var i = 0, row; i < oldData.length; i++) {
                     row = oldData[i];
                     var nowi = i;
@@ -426,8 +378,6 @@ function tablelist() {
                         $.extend(oldData[i], obj);
                         return;
                     }
-
-
                 }
                 tableIns.reload({
                     data: oldData,
@@ -443,18 +393,15 @@ function tablelist() {
                     }
                     continue;
                 }
-
                 tableIns.reload({
                     data: oldData,
                     limit: viewObj.limit
                 });
             },
-
             cancel: function () {
                 $(".termask").addClass("hidden");
                 tablelist();
             }
-
         }
         //激活事件
         var activeByType = function (type, arg) {
@@ -464,14 +411,11 @@ function tablelist() {
                 active[type] ? active[type].call(this) : '';
             }
         }
-
         //注册按钮事件
         $('.layui-btn[data-type]').on('click', function () {
             var type = $(this).data('type');
             activeByType(type);
         });
-
-
 
         //监听工具条
         table.on('tool(dataTable)', function (obj) {
@@ -495,6 +439,7 @@ function tablelist() {
             }
         });
 
+        // 单据类型
         form.on('select(datatype)', function (data, e) {
             var elem = data.othis.parents('tr');
             var dataindex = elem.attr("data-index");
@@ -522,6 +467,46 @@ function tablelist() {
                 }
             });
         })
+        // 销售
+        // form.on('select(checkscale)', function (data, e) {
+        //     var elem = data.othis.parents('tr');
+        //     var dataindex = elem.attr("data-index");
+        //     $.each(tabledata, function (index, value) {
+        //         if (value.LAY_TABLE_INDEX == dataindex) {
+        //             value.FamilyEntry_Sales = data.value;
+        //         }
+        //     });
+        // })
+        // 采购
+        // form.on('select(checkpur)', function (data, e) {
+        //     var elem = data.othis.parents('tr');
+        //     var dataindex = elem.attr("data-index");
+        //     $.each(tabledata, function (index, value) {
+        //         if (value.LAY_TABLE_INDEX == dataindex) {
+        //             value.FamilyEntry_Purchase = data.value;
+        //         }
+        //     });
+        // })
+        // 生产
+        // form.on('select(checkfacture)', function (data, e) {
+        //     var elem = data.othis.parents('tr');
+        //     var dataindex = elem.attr("data-index");
+        //     $.each(tabledata, function (index, value) {
+        //         if (value.LAY_TABLE_INDEX == dataindex) {
+        //             value.FamilyEntry_Manufacture = data.value;
+        //         }
+        //     });
+        // })
+        // 仓储
+        // form.on('select(checkinve)', function (data, e) {
+        //     var elem = data.othis.parents('tr');
+        //     var dataindex = elem.attr("data-index");
+        //     $.each(tabledata, function (index, value) {
+        //         if (value.LAY_TABLE_INDEX == dataindex) {
+        //             value.FamilyEntry_Inventory = data.value;
+        //         }
+        //     });
+        // })
     });
 }
 
@@ -557,6 +542,10 @@ function editablelist(datalist) {
                 { title: '序号', type: 'numbers' },
                 { field: 'FamilyEntry_Nick', title: '类别属性名称', edit: 'text' },
                 { field: 'FamilyEntry_Datatype', title: '数据类型', templet: "#selectattr" },
+                // { field: 'FamilyEntry_Sales', title: '销售', templet: "#checkscale" },
+                // { field: 'FamilyEntry_Purchase', title: '采购', templet: "#checkpur" },
+                // { field: 'FamilyEntry_Manufacture', title: '生产', templet: "#checkfacture" },
+                // { field: 'FamilyEntry_Inventory', title: '仓储', templet: "#checkinve" },
                 {
                     field: 'tempId', title: '操作', templet: function (d) {
                         return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '"><i class="layui-icon layui-icon-delete"></i>移除</a>';
@@ -609,11 +598,12 @@ function editablelist(datalist) {
         });
         //定义事件集合
         var active = {
-            addRow: function () {	//添加一行
+            add: function () {	//添加一行
                 console.log(viewObj1)
                 viewObj1.limit1 = viewObj1.limit1 + 1;
                 var oldData = table.cache[layTableId1];
-                var newRow = { tempId: new Date().valueOf(), state: 0, FamilyEntry_Nick: '', FamilyEntry_Datatype: '', datatypeText: '' };
+                var newRow = { tempId: new Date().valueOf(), state: 0, FamilyEntry_Nick: '', FamilyEntry_Datatype: '', datatypeText: '', FamilyEntry_Sales:'',FamilyEntry_Purchase:"",
+                FamilyEntry_Manufacture:'',FamilyEntry_Inventory:'' };
                 oldData.push(newRow);
                 tableIns1.reload({
                     data: oldData,
