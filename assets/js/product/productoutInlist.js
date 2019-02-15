@@ -30,13 +30,68 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     });
 });
 
-var materid = [], maternick = [], matername = [],
-    asstypeid = [], asstypename = [], asstypenick = [],
-    astatusid = [], astatusnick = [],
-    bomid = [], bomnick = [],
-    craftid = [], craftnick = [], craftname = [],
-    cotnick = [], custid = [],
-    billid = [], billnick = []
+var  departid=[],departnick=[],usernick=[],userid=[],cusid=[],cusnick=[]
+var istrue=0,isclick
+// 客户
+$.ajax({
+    type: "get",
+    url: ajaxCus,
+    success: function (res) {
+        if (res.Succeed) {
+            istrue++;
+            var data=res.Data
+            for (var i = 0; i < data.length; i++) {
+                cusid.push(data[i].F_Id)
+                cusnick.push(data[i].Customer_Nick)
+            } 
+            isclick()
+        } else {
+            alert(res.Message)
+        }
+
+    }
+})
+// 制单人
+$.ajax({
+    type: "get",
+    url: ajaxUsr,
+    success: function (res) {
+        var isussecc = res.Succeed;
+        var data = res.Data;
+        if (isussecc) {
+            istrue++;
+            for (var i = 0; i < data.length; i++) {
+                var datanow = data[i]  
+                usernick.push(datanow.User_Nick)
+                userid.push(datanow.F_Id)
+            }
+            isclick()
+        } else {
+            alert(res.Message)
+        }
+    }
+})
+// 部门
+$.ajax({
+    type: "get",
+    url: ajaxdepart,
+    success: function (res) {
+        console.log(res)
+        var isussecc = res.Succeed;
+        if (isussecc) {
+            istrue++;
+            var data = res.Data;
+            for (var i = 0; i < data.length; i++) {
+                departid.push(data[i].F_Id)  
+                departnick.push(data[i].Department_Nick)
+            }
+            isclick()
+        } else {
+            alert(res.Message)
+        }
+
+    }
+})
 
 // 渲染table
 function tablerender(str, data) {
@@ -62,16 +117,13 @@ function tablerender(str, data) {
     })
 }
 
-var islist = 0;
+
 $(function () {
-    // var subindex = layer.load();
-
-
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers'},
             { field: 'StockBill_Name', title: '编号'},
-            { field: 'StockBill_Project', title: '项目号'},
+            // { field: 'StockBill_Project', title: '项目号'},
             { field: 'Currency_Nick', title: '币别'},
             { field: 'Direction_Nick', title: '方向'},
             {
@@ -82,9 +134,48 @@ $(function () {
                 }
             },
             { field: 'Status_Nick', title: '状态'},
-            { field: 'StockBill_Biller', title: '制单人'} ,
-            { field: 'StockBill_Receiver', title: '收货方'},
-            { field: 'StockBill_Sender', title: '发货方'},
+            { field: 'StockBill_Biller', title: '制单人',templet:function(d){
+                var index= userid.indexOf(d.StockBill_Biller)
+                if (index == '-1') {
+                    return ''
+                } else {
+                    return usernick[index]
+                } 
+            }} ,
+            { field: 'StockBill_Receiver', title: '收货方',templet:function(d){
+                if(d.StockBill_Direction==1){//入库
+                    var index3= userid.indexOf(d.StockBill_Receiver)
+                    if (index3 == '-1') {
+                        return ''
+                    } else {
+                        return usernick[index3]
+                    } 
+                }else{
+                    var index2= departid.indexOf(d.StockBill_Receiver)
+                    if (index2 == '-1') {
+                        return ''
+                    } else {
+                        return departnick[index2]
+                    } 
+                }
+            }},
+            { field: 'StockBill_Sender', title: '发货方',templet:function(d){
+                if(d.StockBill_Direction==1){//入库
+                    var index4= cusid.indexOf(d.StockBill_Sender)
+                    if (index4 == '-1') {
+                        return ''
+                    } else {
+                        return cusnick[index4]
+                    } 
+                }else{
+                    var index1= userid.indexOf(d.StockBill_Sender)
+                    if (index1 == '-1') {
+                        return ''
+                    } else {
+                        return usernick[index1]
+                    } 
+                }
+            }},
             { field: 'StockBill_Type', title: '单据类型',templet:function(d){
                 if(d.StockBill_Type=='400200'){
                     return "生产发料"
@@ -129,11 +220,13 @@ $(function () {
     })
 
 
-    // $(".add").on("click", function () {
-    //     parent.newstock()
-    // })
-
-    $(".checklist").trigger("click")
+    isclick=function(){
+        if(istrue==3){
+            $(".checklist").trigger("click")
+        }
+       
+    }
+   
 
 })
 

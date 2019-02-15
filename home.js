@@ -388,3 +388,18 @@ function getstock(direc,id){
         $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(14)').attr("href", oldhref)
     }
 }
+
+
+// 新增销售发票
+function newscaleinvo(){
+    $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').trigger('click');
+}
+// 销售发票详情
+function getinvo(id){
+    var oldhref = $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').attr("href");
+    var href = oldhref
+    href = href + '?fid='+id
+    $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').attr("href", oldhref)
+}

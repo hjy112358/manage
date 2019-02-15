@@ -325,7 +325,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             }
         }
     })
-    // 部门
+    // 客户
     $(".checkdepart").on("click", function () {
         var _this = $(this);
         var date = _this.attr("data-type");
@@ -333,7 +333,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             $(".checkdepart").attr("data-type", "datey");
             $.ajax({
                 type: "get",
-                url: ajaxdepart,
+                url: ajaxCus,
                 success: function (res) {
                     console.log(res)
                     var isussecc = res.Succeed;
@@ -342,8 +342,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                         var html = '<option value="">全部</option>';
                         var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
                         for (var i = 0; i < data.length; i++) {
-                            html += '<option value="' + data[i].F_Id + '" >' + data[i].Department_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].Department_Nick + '</dd>'
+                            html += '<option value="' + data[i].F_Id + '" >' + data[i].Customer_Nick + '</option>';
+                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].Customer_Nick + '</dd>'
                         }
                         $("#department").html(html);
                         $(".checkdepart .layui-anim.layui-anim-upbit").html(htmlsel);
@@ -412,7 +412,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                                 value.StockBillEntry_Specifications = value.AssignEntry_Specifications
                                 value.StockBillEntry_BatchNo = ""
                                 value.Unit = value.AssignEntry_Unit
-                               
+                                value.F_Id=null
                                 var index = measurnick.indexOf(value.AssignEntry_Unit)
                                 if (index != '-1') {
                                     value.StockBillEntry_Unit=measureid[index]
@@ -480,7 +480,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         for (var j = 0; j < formlist.length; j++) {
             data[formlist[j].name] = formlist[j].value
         }
-        data.StockBill_Sender=$("#department option:selected").val()
+        // data.StockBill_Sender=$("#department option:selected").val()
         data.Details=oldData
         console.log(data)
         $.ajax({

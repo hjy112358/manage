@@ -75,6 +75,16 @@ var ordernum=ajaxURl+'/Api/PSIBase/BatchNo/GetNext?billType=&dateFormart='
 var saleEntry=ajaxURl + '/Api/PSISales/SalesOrder/GetEntry?keyValue='
 // 添加销售订单
 var ajaxaddsale=ajaxURl + '/Api/PSISales/SalesOrder/Add'
+// 添加销售发票
+var ajaxaddinvo=ajaxURl + '/Api/PSISales/SalesInvoice/Add'
+// 销售发票列表
+var ajaxinvolist=ajaxURl + '/Api/PSISales/SalesInvoice/GetList?keyword=&PageSize=&PageIndex='
+// 销售发票one
+var ajaxinvolistone=ajaxURl + '/Api/PSISales/SalesInvoice/GetList?'
+// 销售发票one详情
+var ajaxinvolistonedetail=ajaxURl + '/Api/PSISales/SalesInvoice/GetEntry?keyValue='
+// 删除销售发票
+var ajaxremoveinvo=ajaxURl + '/Api/PSISales/SalesInvoice/Remove'
 
 //-------------------- 销售管理---------------------
 

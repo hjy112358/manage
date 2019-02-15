@@ -141,7 +141,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 field: 'StockBillEntry_BatchNo', title: '批号'
             },
             { field: 'StockBillEntry_Price', title: '价格', edit: 'text'  },
-            { field: 'quatity', title: '应发数量' },
+            { field: 'quatity', title: '应发数量', edit: 'text'  },
             { field: 'StockBillEntry_Quantity', title: '实发数量', edit: 'text' },
             { field: 'StockBillEntry_Amount', title: '总额'},
             { field: 'StockBillEntry_Stock', title: '仓库', templet: '#selectstock' },

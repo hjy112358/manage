@@ -457,7 +457,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                             console.log(data.Children)
                             $.each(data.Children, function (index, value) {
                                 value.StockBillEntry_Specifications = value.AssignEntry_Specifications
-                                
+                                value.F_Id=null
                                 value.StockBillEntry_Material = value.AssignEntry_Material
                                 value.quatity = value.AssignEntry_Quantity
                                 var index = measurnick.indexOf(value.AssignEntry_Unit)

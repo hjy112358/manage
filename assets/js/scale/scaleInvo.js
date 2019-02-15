@@ -30,6 +30,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 });
 
 var dateslit = [];
+var materid = [], maternick = [],meaid=[],meanick=[]
 var first = new Date().valueOf();
 window.viewObj = {
     tbData: [{
@@ -66,22 +67,77 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         even: true,
         cols: [[
             { title: '序号', type: 'numbers' },
-            { field: 'term', title: '物料', templet: '#selectTool' },
-            { field: 'FQty', title: '客户料号', edit: 'text' },
-            { field: 'FNote', title: '规格型号', edit: 'text' },
-            { field: 'FNote', title: '单位', edit: 'text' },
-            { field: 'FNote', title: '数量', edit: 'text' },
-            { field: 'FNote', title: '单价', edit: 'text' },
-            { field: 'FNote', title: '含税单价', edit: 'text' },
-            { field: 'FNote', title: '金额', edit: 'text' },
-            { field: 'FNote', title: '税率(%)', edit: 'text' },
-            { field: 'FNote', title: '税额', edit: 'text' },
-            { field: 'FNote', title: '价税合计', edit: 'text' },
-            {field: 'FFetchDate', title: '源单单号', edit: 'text' },
-            { field: 'FNote', title: '备注', edit: 'text' },
+            { field: 'SalesInvoiceEntry_Material', title: '物料' ,templet:function(d){
+                var index = materid.indexOf(d.SalesInvoiceEntry_Material)
+                if (index == '-1') {
+                    return ''
+                } else {
+                    return maternick[index]
+                }
+            }},
+            // { field: 'StockBillEntry_Material', title: '客户料号', edit: 'text' },
+            { field: 'SalesInvoiceEntry_Specifications', title: '规格型号'},
+            { field: 'SalesInvoiceEntry_Unit', title: '单位' ,templet:function(d){
+                if(d.SalesInvoiceEntry_Unit){
+                    var index1 = meaid.indexOf(d.SalesInvoiceEntry_Unit)
+                    if (index1 == '-1') {
+                        return d.SalesInvoiceEntry_Unit
+                    } else {
+                        return meanick[index1]
+                    }
+                }else{
+                    return ''
+                }
+                
+            }},
+            { field: 'SalesInvoiceEntry_BatchNo', title: '批号' },
+            { field: 'SalesInvoiceEntry_Quantity', title: '数量' },
+            { field: 'SalesInvoiceEntry_Price', title: '单价' },
+            { field: 'SalesInvoiceEntry_TaxPrice', title: '含税单价' , templet: function (d) {
+                if (d.SalesInvoiceEntry_TaxPrice) {
+                    var num = parseFloat(d.SalesInvoiceEntry_TaxPrice);
+                    num = num.toFixed(2);
+                } else {
+                    num = ''
+                }
+                return num
+            }},
+            { field: 'SalesInvoiceEntry_Amount', title: '金额' , templet: function (d) {
+                if (d.SalesInvoiceEntry_Amount) {
+                    var num = parseFloat(d.SalesInvoiceEntry_Amount);
+                    num = num.toFixed(2);
+                } else {
+                    num = ''
+                }
+                return num
+            }},
+            { field: 'SalesInvoiceEntry_ExRate', title: '税率(%)' },
+            { field: 'SalesInvoiceEntry_Tax', title: '税额' , templet: function (d) {   
+                if (d.SalesInvoiceEntry_Tax) {
+                    var num = parseFloat(d.SalesInvoiceEntry_Tax);
+                    num = num.toFixed(2);
+                } else {
+                    num = ''
+                }
+
+                return num
+            } },
+            { field: 'total', title: '价税合计' , templet: function (d) {
+                if (d.total) {
+                    var num = parseFloat(d.total);
+                    num = num.toFixed(2);
+                } else {
+                    num = ''
+                }
+
+                return num
+            } },
+            { field: 'SalesInvoiceEntry_Total', title: '开票金额' },
+            // { field: 'FFetchDate', title: '源单单号'},
+            { field: 'Remark', title: '备注', edit: 'text' },
             {
-                field: 'tempId', title: '操作', align: 'center', templet: function (d) {
-                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '">删除</a>';
+                field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
+                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '">删除</a>';
                 }
             }
         ]],
@@ -218,16 +274,27 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             limit: viewObj.limit
         });
     });
-   
+
     var lastid;
-   
+
     // 新增
     $(".add").on("click", function () {
-      window.location.reload()
+        window.location.reload()
     })
 
-  
-   
+    // 获取单据编号
+    $.ajax({
+        url: getnum,
+        success: function (res) {
+            if (res.Succeed) {
+                $("#SalesInvoice_Name").val(res.Data)
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
+
+
     // 物料
     $.ajax({
         url: ajaxMater,
@@ -236,66 +303,138 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             var isussecc = res.Succeed;
             if (isussecc) {
                 for (var i = 0; i < data.length; i++) {
-                   
+                    materid.push(data[i].F_Id)
+                    maternick.push(data[i].Material_Nick)
                 }
-               
+
             }
         }
     })
 
-   
-    // 币别
-    $(".currency").on("click", function () {
-        var _this = $(this);
-        var date = _this.attr("data-type");
-        if (date == 'daten') {
-            $(".currency").attr("data-type", "datey");
-            $.ajax({
-                type: "get",
-                url: ajaxCurrency,
-                success: function (res) {
-                    var isussecc = res.Succeed;
-                    var data =res.Data;
-                    if (isussecc) {
-                        var html = '<option value="">请选择币别</option>';
-                        var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">请选择币别</dd>'
-                        for (var i = 0; i < data.length; i++) {
-                            html += '<option value="' + data[i].Currency_Name+ '">' + data[i].Currency_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' +data[i].Currency_Name + '">' + data[i].Currency_Nick + '</dd>'
-                        }
-                        $("#currency").html(html);
-                        $(".currency .layui-anim.layui-anim-upbit").html(htmlsel);
-                        renderForm();
-                        _this.find("select").next().find('.layui-select-title input').click();
-                    } else {
-                        alert(data.Message)
-                    }
+    // 计量单位
+    $.ajax({
+        type:"GET",
+        url: ajaxMea,
+        success: function (res) {
+            console.log(res)
+            var data = res.Data;
+            var isussecc = res.Succeed;
+            if (isussecc) {
+                for (var i = 0; i < data.length; i++) {
+                    meaid.push(data[i].Measure_Manufacture)  
+                    meanick.push(data[i].Measure_Nick)
                 }
-            })
+            } else {
+                alert(data.Message)
+            }
         }
     })
+
+    // 币别
+    $.ajax({
+        type: "get",
+        url: ajaxCurrency,
+        success: function (res) {
+            var isussecc = res.Succeed;
+            var data = res.Data;
+            if (isussecc) {
+                var html = '<option value="">请选择币别</option>';
+                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">请选择币别</dd>'
+                for (var i = 0; i < data.length; i++) {
+                    html += '<option value="' + data[i].F_Id + '">' + data[i].Currency_Nick + '</option>';
+                    htmlsel += '<dd lay-value="' + data[i].F_Id + '">' + data[i].Currency_Nick + '</dd>'
+                }
+                $("#currency").html(html);
+                $(".currency .layui-anim.layui-anim-upbit").html(htmlsel);
+                renderForm();
+               
+            } else {
+                alert(data.Message)
+            }
+        }
+    })
+
 
     // 切换客户
     layui.form.on('select(seleccus)', function (data, e) {
         console.log(data)
-        var cusid=data.value;
+        var cusnick,curr,rate;
+        if (data.elem.selectedOptions) {
+            cusnick = data.elem.selectedOptions[0].innerHTML;
+            curr= data.elem.selectedOptions[0].attributes[2].value;
+            rate= data.elem.selectedOptions[0].attributes[1].value;
+            $("#SalesInvoice_TaxRate").val(rate)
+            var select = 'dd[lay-value="' + curr + '"]';
+            $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
+        } else {
+            var elems = data.elem;
+            for (var i = 0; i < elems.length; i++) {
+                var elemnow = elems[i];
+                if (elemnow.selected) {
+                    cusnick = elemnow.text;
+                    curr= elemnow.attributes[2].value;
+                    rate= elemnow.attributes[1].value;
+                    $("#SalesInvoice_TaxRate").val(rate)
+                    var select = 'dd[lay-value="' + curr + '"]';
+                    $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
+                }
+            }
+        }
         $.ajax({
-            url:ajaxstockbionelist+'keyword='+cusid+'&PageSize=&PageIndex=',
-            success:function(res){
+            url: ajaxstockbionelist + 'keyword=' + cusnick + '&PageSize=&PageIndex=',
+            success: function (res) {
                 console.log(res)
+                if (res.Succeed) {
+                    if(res.Data.length>=1){
+                        $("#SalesInvoice_ExRate").val(res.Data[0].StockBill_ExRate)
+                        $.ajax({
+                            url: ajaxstockbillone + res.Data[0].F_Id,
+                            success: function (result) {
+                                console.log(result)
+                                if(result.Succeed){
+                                    var data=result.Data.Details
+                                    
+                                    $.each(data,function(i,value){
+                                      
+                                        // 含税单价=销售单价*（1+税率/100）
+                                        value.SalesInvoiceEntry_TaxPrice = parseFloat(value.StockBillEntry_Price) * (1 + parseFloat(rate) / 100)
+                                        // 价税合计=数量*含税单价
+                                        value.total = parseFloat(value.StockBillEntry_Quantity) * parseFloat(value.SalesInvoiceEntry_TaxPrice)
+                                        // 税额=未税金额*（税率/100）
+                                        value.SalesInvoiceEntry_Tax = parseFloat(value.StockBillEntry_Amount) * (parseFloat(rate) / 100)
+                                        value.SalesInvoiceEntry_Quantity=value.StockBillEntry_Quantity
+                                        value.SalesInvoiceEntry_Price=value.StockBillEntry_Price
+                                        value.SalesInvoiceEntry_Amount=value.StockBillEntry_Amount
+                                        value.SalesInvoiceEntry_ExRate=value.StockBillEntry_ExRate  
+                                        value.SalesInvoiceEntry_BatchNo=value.StockBillEntry_BatchNo 
+                                        value.SalesInvoiceEntry_Unit=value.StockBillEntry_Unit 
+                                        value.SalesInvoiceEntry_Specifications=value.StockBillEntry_Specifications 
+                                        value.SalesInvoiceEntry_Material=value.StockBillEntry_Material 
+                                        value.F_Id=null
+                                    })
+                                    tableIns.reload({
+                                        data:data,
+                                        limit:data.length
+                                    })
+                                }
+                            }
+                        })
+                    }
+                    
+                }
             }
         })
-     })
- 
-     // 客户--
-     $(".checkcus").on("click", function () {
+    })
+
+    // 客户--
+    $(".checkcus").on("click", function () {
         var _this = $(this);
         var date = _this.attr("data-type");
         if (date == 'daten') {
             $(".checkcus").attr("data-type", "datey");
             $.ajax({
                 type: "get",
-                url:ajaxCus,
+                url: ajaxCus,
                 success: function (res) {
 
                     var isussecc = res.Succeed;
@@ -304,8 +443,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                         var html = '<option value="">全部</option>';
                         var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
                         for (var i = 0; i < data.length; i++) {
-                            html += '<option value="' + data[i].F_Id + '" data-rate="' + data[i].Customer_TaxRate + '">' + data[i].Customer_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" data-rate="' + data[i].Customer_TaxRate + '">' + data[i].Customer_Nick + '</dd>'
+                            html += '<option value="' + data[i].F_Id + '" data-rate="' + data[i].Customer_TaxRate + '" data-curr="' + data[i].Customer_Currency + '">' + data[i].Customer_Nick + '</option>';
+                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" data-rate="' + data[i].Customer_TaxRate + '" data-curr="' + data[i].Customer_Currency + '">' + data[i].Customer_Nick + '</dd>'
                         }
                         $("#checkprobegin").html(html);
                         $(".checkcus .layui-anim.layui-anim-upbit").html(htmlsel);
@@ -321,6 +460,13 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         }
     })
 
+       // 制单人
+       var mouser = $.cookie("Modify_User");
+       var username = $.cookie("User_Nick")
+       $("#SalesInvoice_Biller").val(mouser)
+       $("#SalesInvoice_Billername").val(username)
+   
+
 
     function renderForm() {
         layui.use('form', function () {
@@ -330,10 +476,55 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     }
 
 
+    $("#SalesInvoice_Total").on("blur",function(){
+        var totalprice=$(this).val();
+        var oldData = table.cache[layTableId];
+        $.each(oldData,function(i,v){
+            if(v.SalesInvoiceEntry_Material){
+                if(totalprice>=v.StockBillEntry_Amount&&totalprice!=0){
+                    v.SalesInvoiceEntry_Total=v.StockBillEntry_Amount
+                    totalprice=parseFloat(totalprice)-parseFloat(v.StockBillEntry_Amount)
+                }else{
+                    v.SalesInvoiceEntry_Total=totalprice
+                }
+            }
+        })
+        tableIns.reload({
+            data: oldData,
+            limit: oldData.length
+        });
+    })
 
-     // 保存
-     $(".sub").on("click", function () {
-        console.log(datelist)
+    // 保存
+    $(".sub").on("click", function () {
+        var indexlay=layer.load();
+        var formlist = $("form").serializeArray()
+        var oldData = table.cache[layTableId];
+        var data = {}
+        for (var j = 0; j < formlist.length; j++) {
+            data[formlist[j].name] = formlist[j].value
+        }
+       
+        data.Details = oldData
+        console.log(data)
+        $.ajax({
+            type:"POST",
+            url:ajaxaddinvo,
+            data:data,
+            success:function(res){
+                console.log(res)
+                if(res.Succeed){
+                    layer.close(indexlay);
+                    layer.msg("新增成功");
+                    setInterval(function () {
+                        window.location.reload()
+                    }, 1000) 
+                }else{
+                    alert(res.Message)
+                }
+            }
+
+        })
         return false
     })
 
