@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../assets/css/view.css" />
     <link rel="stylesheet" href="../../assets/css/table.css">
     <link rel="stylesheet" href="../../assets/css/scalestock.css">
-    <title>采购发票</title>
+    <title>采购申请</title>
     <style>
         .layui-upload{
         margin-left:10px;
@@ -88,7 +88,7 @@ padding: 20px 0px;
                         <div class="btnlist" >
                             <span class="layui-btn add">新增</span>
                             <span class="layui-btn sub">保存</span>
-                            <span class="layui-btn audit ">审核</span>
+                            <span class="layui-btn audit">审核</span>
                             <span class="layui-btn changeStatus disclick">变更</span>
                             <button type="button" class="layui-btn layui-btn-normal" id="testList">上传附件</button>
                         </div>
@@ -136,7 +136,7 @@ padding: 20px 0px;
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">单据日期：</label>
                                         <div class="layui-input-block ">
-                                            <input type="text" name="PurchaseInvoice_DeadTime" id="date" lay-verify="date"
+                                            <input type="text" name="SalesOrder_DateTime" id="date" lay-verify="date"
                                                 autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
@@ -190,7 +190,7 @@ padding: 20px 0px;
                             </section>
                         </div>
                     </form>
-                    <!-- <div class="clearfix">
+                    <div class="clearfix">
                         <div class="layui-form-lsit fl ">
                             <label class="layui-form-label">制单人：</label>
                             <div class="layui-input-block disinput checkbiller " data-type="daten">
@@ -201,28 +201,20 @@ padding: 20px 0px;
                         <div class="layui-form-lsit fl ">
                             <label class="layui-form-label">申请人：</label>
                             <div class="layui-input-block disinput">
-                                <input type="text" value="" disabled id="shr"> -->
-                                <!-- <input type="text" value="" id="PurchaseApply_Employeename" readonly>
+                                <!-- <input type="text" value="" disabled id="shr"> -->
+                                <input type="text" value="" id="PurchaseApply_Employeename" readonly>
                                 <input type="hidden" value="" id="PurchaseApply_Employee" name="PurchaseApply_Employee">
                             </div>
                         </div>
                         <div class="layui-form-lsit fl ">
-                            <label class="layui-form-label">单据日期：</label>
-                            <div class="layui-input-block disinput"> -->
-                                <!-- <input type="text" value="" disabled id="shrq"> -->
-                                <!-- <input type="text" value="" id="PurchaseApply_DateTimename" readonly>
-                                <input type="hidden" value="" id="PurchaseApply_DateTime" name="PurchaseApply_DateTime">
-                            </div>
-                        </div>
-                        <div class="layui-form-lsit fl ">
                             <label class="layui-form-label">单据状态：</label>
-                            <div class="layui-input-block disinput"> -->
+                            <div class="layui-input-block disinput">
                                 <!-- <input type="text" value="" disabled id="ywy"> -->
-                                <!-- <input type="text" value="" id="PurchaseApply_Statusname" readonly>
+                                <input type="text" value="" id="PurchaseApply_Statusname" readonly>
                                 <input type="hidden" value="" id="PurchaseApply_Status" name="PurchaseApply_Status">
                             </div>
                         </div>
-                    </div> -->
+                    </div>
 
                 </div>
 
@@ -264,7 +256,7 @@ padding: 20px 0px;
 <script src="../../assets/layui.all.js"></script>
 <script src="../../assets/js/jquery.cookie.js"></script>
 <script src="../../main.js"></script>
-<script src="../../assets/js/purchase/purchInvo.js"></script>
+<script src="../../assets/js/purchase/purchapp.js"></script>
 <!-- <script src="../assets/js/drop.js"></script> -->
 
 </html>
