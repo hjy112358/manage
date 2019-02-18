@@ -309,7 +309,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         }
         tableIns.reload({
             data: oldData,
-            limit: viewObj.limit
+            limit:  oldData.length
         });
     });
 
@@ -395,6 +395,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                         window.location.reload()
                     }, 1000) 
                    }else{
+                        layer.close(indexlay);
                        alert(res.Message)
                    }
 

@@ -30,8 +30,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     });
 });
 
-var  departid=[],departnick=[],usernick=[],userid=[],cusid=[],cusnick=[]
-var istrue=0,isclick
+var departid = [], departnick = [], usernick = [], userid = [], cusid = [], cusnick = [], supperid = [], suppernick = []
+var istrue = 0, isclick
 // 客户
 $.ajax({
     type: "get",
@@ -39,11 +39,11 @@ $.ajax({
     success: function (res) {
         if (res.Succeed) {
             istrue++;
-            var data=res.Data
+            var data = res.Data
             for (var i = 0; i < data.length; i++) {
                 cusid.push(data[i].F_Id)
                 cusnick.push(data[i].Customer_Nick)
-            } 
+            }
             isclick()
         } else {
             alert(res.Message)
@@ -61,7 +61,7 @@ $.ajax({
         if (isussecc) {
             istrue++;
             for (var i = 0; i < data.length; i++) {
-                var datanow = data[i]  
+                var datanow = data[i]
                 usernick.push(datanow.User_Nick)
                 userid.push(datanow.F_Id)
             }
@@ -82,7 +82,7 @@ $.ajax({
             istrue++;
             var data = res.Data;
             for (var i = 0; i < data.length; i++) {
-                departid.push(data[i].F_Id)  
+                departid.push(data[i].F_Id)
                 departnick.push(data[i].Department_Nick)
             }
             isclick()
@@ -90,6 +90,23 @@ $.ajax({
             alert(res.Message)
         }
 
+    }
+})
+// 供应商
+$.ajax({
+    type: "get",
+    url: ajaxsupplist,
+    success: function (res) {
+        var isussecc = res.Succeed;
+        if (isussecc) {
+            var data = res.Data;
+            for (var i = 0; i < data.length; i++) {
+                supperid.push(data[i].F_Id)
+                suppernick.push(data[i].Supplier_Nick)
+            }
+        } else {
+            alert(res.Message)
+        }
     }
 })
 
@@ -106,26 +123,28 @@ function tablerender(str, data) {
             , page: true
             , limits: [1000, 2000, 3000, 4000, 5000]
             , limit: 1000
+            , loading: true
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
                     console.log(obj);
-                    parent.getstock(obj.data.StockBill_Direction,obj.data.F_Id)
+                    parent.getstock(obj.data.StockBill_Direction, obj.data.F_Id,obj.data.StockBill_Type)
                 });
             }
         });
         return false;
-    })
+    }) 
 }
 
 
 $(function () {
     $(".checklist").on("click", function () {
+        var listlayer=layer.load()
         var str = [
-            { title: '序号', type: 'numbers'},
-            { field: 'StockBill_Name', title: '编号'},
+            { title: '序号', type: 'numbers' },
+            { field: 'StockBill_Name', title: '编号' },
             // { field: 'StockBill_Project', title: '项目号'},
-            { field: 'Currency_Nick', title: '币别'},
-            { field: 'Direction_Nick', title: '方向'},
+            { field: 'Currency_Nick', title: '币别' },
+            { field: 'Direction_Nick', title: '方向' },
             {
                 field: 'StockBill_DateTime', title: '日期', templet: function (d) {
                     if (d.StockBill_DateTime) {
@@ -133,60 +152,80 @@ $(function () {
                     }
                 }
             },
-            { field: 'Status_Nick', title: '状态'},
-            { field: 'StockBill_Biller', title: '制单人',templet:function(d){
-                var index= userid.indexOf(d.StockBill_Biller)
-                if (index == '-1') {
-                    return ''
-                } else {
-                    return usernick[index]
-                } 
-            }} ,
-            { field: 'StockBill_Receiver', title: '收货方',templet:function(d){
-                if(d.StockBill_Direction==1){//入库
-                    var index3= userid.indexOf(d.StockBill_Receiver)
-                    if (index3 == '-1') {
-                        return ''
-                    } else {
-                        return usernick[index3]
-                    } 
-                }else{
-                    var index2= departid.indexOf(d.StockBill_Receiver)
-                    if (index2 == '-1') {
-                        return ''
-                    } else {
-                        return departnick[index2]
-                    } 
-                }
-            }},
-            { field: 'StockBill_Sender', title: '发货方',templet:function(d){
-                if(d.StockBill_Direction==1){//入库
-                    var index4= cusid.indexOf(d.StockBill_Sender)
-                    if (index4 == '-1') {
-                        return ''
-                    } else {
-                        return cusnick[index4]
-                    } 
-                }else{
-                    var index1= userid.indexOf(d.StockBill_Sender)
-                    if (index1 == '-1') {
-                        return ''
-                    } else {
-                        return usernick[index1]
-                    } 
-                }
-            }},
-            { field: 'StockBill_Type', title: '单据类型',templet:function(d){
-                if(d.StockBill_Type=='400200'){
-                    return "生产发料"
-                }else if(d.StockBill_Type=="400100"){
-                    return "生产领料"
-                }else{
-                    return ""
-                }
-            }},
+            { field: 'Status_Nick', title: '状态' },
             {
-                field: 'IsEnabled', title: '启用',templet: function (d) {
+                field: 'StockBill_Biller', title: '制单人', templet: function (d) {
+                    var index = userid.indexOf(d.StockBill_Biller)
+                    if (index == '-1') {
+                        return ''
+                    } else {
+                        return usernick[index]
+                    }
+                }
+            },
+            {
+                field: 'StockBill_Receiver', title: '收货方', templet: function (d) {
+                    if (d.StockBill_Direction == 1) {//入库
+                        var index3 = userid.indexOf(d.StockBill_Receiver)
+                        if (index3 == '-1') {
+                            return ''
+                        } else {
+                            return usernick[index3]
+                        }
+                    } else {
+                        var index2 = departid.indexOf(d.StockBill_Receiver)
+                        if (index2 == '-1') {
+                            return ''
+                        } else {
+                            return departnick[index2]
+                        }
+                    }
+                }
+            },
+            {
+                field: 'StockBill_Sender', title: '发货方', templet: function (d) {
+                    if (d.StockBill_Direction == 1) {//入库
+                        if (d.StockBill_Type == '400200') {
+                            var index4 = cusid.indexOf(d.StockBill_Sender)
+                            if (index4 == '-1') {
+                                return ''
+                            } else {
+                                return cusnick[index4]
+                            }
+                        } else if (d.StockBill_Type == "200200") {
+                            var index5 = supperid.indexOf(d.StockBill_Sender)
+                            if (index5 == '-1') {
+                                return ''
+                            } else {
+                                return suppernick[index5]
+                            }
+                        } 
+                        
+                    } else {
+                        var index1 = userid.indexOf(d.StockBill_Sender)
+                        if (index1 == '-1') {
+                            return ''
+                        } else {
+                            return usernick[index1]
+                        }
+                    }
+                }
+            },
+            {
+                field: 'StockBill_Type', title: '单据类型', templet: function (d) {
+                    if (d.StockBill_Type == '400200') {
+                        return "生产发料"
+                    } else if (d.StockBill_Type == "400100") {
+                        return "生产领料"
+                    } else if (d.StockBill_Type == "200200") {
+                        return "采购发料"
+                    } else {
+                        return ""
+                    }
+                }
+            },
+            {
+                field: 'IsEnabled', title: '启用', templet: function (d) {
                     if (d.IsEnabled) {
                         return "是"
                     } else {
@@ -194,7 +233,7 @@ $(function () {
                     }
                 }
             },
-            { field: 'Remark', title: '备注'},
+            { field: 'Remark', title: '备注' },
             {
                 field: 'F_Id', title: '操作', templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=delscale("' + d.F_Id + '")>删除</a>';
@@ -211,6 +250,7 @@ $(function () {
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     tablerender(str, data);
+                    layer.close(listlayer)
                 } else {
                     alert(res.Message)
                 }
@@ -220,13 +260,13 @@ $(function () {
     })
 
 
-    isclick=function(){
-        if(istrue==3){
+    isclick = function () {
+        if (istrue == 3) {
             $(".checklist").trigger("click")
         }
-       
+
     }
-   
+
 
 })
 

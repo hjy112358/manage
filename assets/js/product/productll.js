@@ -298,7 +298,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         }
         tableIns.reload({
             data: oldData,
-            limit: viewObj.limit
+            limit: oldData.length
         });
     });
 

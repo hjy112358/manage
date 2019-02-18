@@ -1,79 +1,33 @@
-$(function () {
-    var url = window.location.search;
-    var fid = url.split("?")[1].split("=")[1]
-    var auditdata;
+$(function(){
+    var url=window.location.search;
+    var fid=url.split('?')[1].split("=")[1]
     $.ajax({
-        url: ajaxstockbillone + fid,
-        success: function (res) {
-            console.log(res)
-            if (res.Succeed) {
-                var data = res.Data
-                auditdata = data
-                $.each(data.Details, function (i, v) {
-                    var index = measurnick.indexOf(v.AssignEntry_Unit)
-                    if (index != '-1') {
-                        v.StockBillEntry_Unit = measureid[index]
-                        v.unit = measurnick[index]
-                    }
-                })
-                tablerender(data.Details)
-                getdepart(data.StockBill_Sender)
-                var time = data.StockBill_DateTime
-                if (time) {
-                    time = time.split(" ")[0]
-                }
-                $("#date").val(time)
+        url:ajaxstockbillone+fid,
+        success:function(res){
+            if(res.Succeed){
+                var data=res.Data;
+                getper(data.StockBill_Biller,data.StockBill_Receiver)
+                getsupper(data.StockBill_Sender)
                 $("#StockBill_Name").val(data.StockBill_Name)
-                $("#Rmark").val(data.Rmark)
-                getper(data.StockBill_Biller, data.StockBill_Receiver)
-            } else {
-                alert(res.Message)
+                $("#StockBill_DateTime").val(data.StockBill_DateTime.split(" ")[0])
+                $("#Remark").val(data.Remark)
+                tablerender(data.Details)
             }
         }
     })
 
-    var layer;
-    layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function () {
-        layer = layui.layer;
-    });
-
-    // 审核
-    $(".audit").on("click", function () {
-        var indexlay=layer.load()
-        auditdata.StockBill_Status = '11500'
-        $.ajax({
-            type: "POST",
-            url: editbill,
-            data: auditdata,
-            success: function (res) {
-                if (res.Succeed) {
-                    layer.close(indexlay);
-                    layer.msg("审核成功");
-                    setInterval(function () {
-                        window.location.reload()
-                    }, 1000)
-                } else {
-                    layer.close(indexlay);
-                    alert(res.Message)
-                }
-            }
-        })
-    })
-
-    // 变更
-    $(".change").on("click", function () {
-        var href = '/views/product/productprochange.html?fid=' + fid;
-        window.location.replace(href)
-    })
-
     // 新增
-    $(".add").on("click", function () {
-        var href = '/views/product/productpro.html';
+    $(".add").on("click",function(){
+        var href = '/views/warehouse/scaleIn.html';
         window.location.replace(href)
     })
-
+    // 变更
+    $(".changeStatus").on("click",function(){
+        var href = '/views/warehouse/scaleInchange.html?fid=' + fid;
+        window.location.replace(href)
+    })
 })
-var materid = [], maternick = [], matername = [], stockid = [], stocknick = [], measureid = [], measurnick = []
+var materid=[],maternick=[],matername=[],stockid=[],stocknick=[],measurname=[],measureid=[],measurnick=[]
 // 物料
 $.ajax({
     url: ajaxMater,
@@ -90,6 +44,20 @@ $.ajax({
         }
     }
 })
+// 仓库
+$.ajax({
+    url:ajaxstocklist,
+    success:function(res){
+        console.log(res)
+        if(res.Succeed){
+            var data=res.Data
+            for(var i=0;i<data.length;i++){
+                stockid.push(data[i].F_Id) 
+                stocknick.push(data[i].Stock_Nick)
+            }
+        }
+    }
+})
 // 计量单位
 $.ajax({
     url: ajaxMea,
@@ -99,28 +67,17 @@ $.ajax({
         console.log(data)
         if (isussecc) {
             for (var i = 0; i < data.length; i++) {
-                measureid.push(data[i].Measure_Manufacture)
+                measureid.push(data[i].Measure_Manufacture)    
                 measurnick.push(data[i].Measure_Nick)
+                measurname.push(data[i].Measure_Name)
+               
             }
         }
     }
 })
-// 仓库
-$.ajax({
-    url: ajaxstocklist,
-    success: function (res) {
-        console.log(res)
-        if (res.Succeed) {
-            var data = res.Data
-            for (var i = 0; i < data.length; i++) {
-                stockid.push(data[i].F_Id)
-                stocknick.push(data[i].Stock_Nick)
-            }
-        }
-    }
-})
+
 // 制单人/发料人
-function getper(biller, receiver) {
+function getper(biller,receive){
     $.ajax({
         type: "get",
         url: ajaxUsr,
@@ -134,10 +91,10 @@ function getper(biller, receiver) {
                     if (datanow.F_Id == biller) {
                         $("#StockBill_Billername").val(datanow.User_Nick)
                     }
-                    if (datanow.F_Id == receiver) {
+                    if(datanow.F_Id == receive){
                         $("#StockBill_Receiver").val(datanow.User_Nick)
                     }
-                }
+                }  
             } else {
                 alert(res.Message)
             }
@@ -145,21 +102,22 @@ function getper(biller, receiver) {
     })
 }
 
-// 部门
-function getdepart(id) {
+// 供应商
+function getsupper(sender){
     $.ajax({
         type: "get",
-        url: ajaxCus,
+        url: ajaxsupplist,
         success: function (res) {
+            console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
                 for (var i = 0; i < data.length; i++) {
                     var datanow = data[i]
-                    if (datanow.F_Id == id) {
-                        $("#StockBill_Sender").val(datanow.Customer_Nick)
+                    if(datanow.F_Id == sender){
+                        $("#StockBill_Sender").val(datanow.Supplier_Nick)
                     }
-                }
+                }  
             } else {
                 alert(res.Message)
             }
@@ -169,6 +127,7 @@ function getdepart(id) {
 
 // 渲染table
 function tablerender(data) {
+    console.log(data)
     layui.use(['jquery', 'table'], function () {
         var $ = layui.$,
             table = layui.table;
@@ -206,42 +165,38 @@ function tablerender(data) {
                     }
                 },
                 { field: 'StockBillEntry_Specifications', title: '规格型号' },
-                {
-                    field: 'unit', title: '计量单位', templet: function (d) {
-                        if (d.StockBillEntry_Unit) {
-                            var index2 = measureid.indexOf(d.StockBillEntry_Unit)
-                            if (index2 == '-1') {
-                                return ''
-                            } else {
-                                return measurnick[index2]
-                            }
-                        } else {
+                { field: 'StockBillEntry_Unit', title: '计量单位' ,templet:function(d){
+                    if (d.StockBillEntry_Unit) {
+                        var index2 = measureid.indexOf(d.StockBillEntry_Unit)
+                        if (index2 == '-1') {
                             return ''
+                        } else {
+                            return measurnick[index2]
                         }
+                    } else {
+                        return ''
                     }
-                },
+                }},
                 {
                     field: 'StockBillEntry_BatchNo', title: '批号'
                 },
-                { field: 'StockBillEntry_Price', title: '价格', edit: 'text' },
+                { field: 'StockBillEntry_Price', title: '价格' },
                 { field: 'quatity', title: '应发数量' },
-                { field: 'StockBillEntry_Quantity', title: '实发数量', edit: 'text' },
-                { field: 'StockBillEntry_Amount', title: '总额' },
-                {
-                    field: 'StockBillEntry_Stock', title: '仓库', templet: function (d) {
-                        if (d.StockBillEntry_Stock) {
-                            var index2 = stockid.indexOf(d.StockBillEntry_Stock)
-                            if (index2 == '-1') {
-                                return ''
-                            } else {
-                                return stocknick[index2]
-                            }
-                        } else {
+                { field: 'StockBillEntry_Quantity', title: '实发数量' },
+                { field: 'StockBillEntry_Amount', title: '总额'},
+                { field: 'StockBillEntry_Stock', title: '仓库', templet: function (d) {
+                    if (d.StockBillEntry_Stock) {
+                        var index2 = stockid.indexOf(d.StockBillEntry_Stock)
+                        if (index2 == '-1') {
                             return ''
+                        } else {
+                            return stocknick[index2]
                         }
+                    } else {
+                        return ''
                     }
-                },
-                { field: 'Rmark', title: '备注', edit: 'text' }
+                }},
+                { field: 'Rmark', title: '备注' }
                 // {
                 //     field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
                 //         return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '">删除</a>';
@@ -253,7 +208,7 @@ function tablerender(data) {
             , limits: [1000, 2000, 3000, 4000, 5000]
             , limit: 1000
             , done: function () {
-
+               
             }
         });
         return false;

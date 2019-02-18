@@ -53,7 +53,9 @@ var ajaxaddstock=ajaxURl + "/api/PSIBase/Stock/Add"
 // 修改仓库
 var ajaxeditstock=ajaxURl + "/api/PSIBase/Stock/Edit"
 // 删除仓库
-var ajaxremovestock=ajaxURl + "//api/PSIBase/Stock/Remove"
+var ajaxremovestock=ajaxURl + "/api/PSIBase/Stock/Remove"
+// 供应商列表
+var ajaxsupplist=ajaxURl + "/api/PSIBase/Supplier/GetList?keyword=&PageIndex=&PageSize="
 //-------------------- 基础信息----------------------
 
 
@@ -71,7 +73,7 @@ var salestauts=ajaxURl+'/Api/SystemManager/Dictionary/GetEntry?keyword=PSIBill_S
 var delentry= ajaxURl+'/Api/PSISales/SalesOrderEntry/Delete'
 // 销售订单单号
 var ordernum=ajaxURl+'/Api/PSIBase/BatchNo/GetNext?billType=&dateFormart='
-// 销售订单列表
+// 销售订单列表one
 var saleEntry=ajaxURl + '/Api/PSISales/SalesOrder/GetEntry?keyValue='
 // 添加销售订单
 var ajaxaddsale=ajaxURl + '/Api/PSISales/SalesOrder/Add'
@@ -172,6 +174,11 @@ var ajaxstockbionelist=ajaxURl+'/Api/PSIInventory/StockBill/GetList?'
 var removestockbill=ajaxURl+'/Api/PSIInventory/StockBill/Remove'
 // 查询出入库明细
 var ajaxstockbillone=ajaxURl+'/Api/PSIInventory/StockBill/GetEntry?key='
+// 采购订单列表
+var ajaxchaseorderlist=ajaxURl+'/api/PSIPurchase/PurchaseOrder/GetList?keyword=&PageSize=&PageIndex='
+// 采购订单子表
+var ajaxpurchaseone=ajaxURl+'/api/PSIPurchase/PurchaseOrder/GetEntity?keyValue='
+
 // -------------------生产管理----------------------
 
 

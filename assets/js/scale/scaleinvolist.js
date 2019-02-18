@@ -25,7 +25,7 @@ $.ajax({
             for (var i = 0; i < data.length; i++) {
                 var datanow = data[i]
                 userid.push(datanow.F_Id)
-                usernick.push(datanow.User_Nick)
+                // usernick.push(datanow.User_Nick)
             }  
         } else {
             alert(res.Message)
@@ -49,7 +49,7 @@ function tablerender(str, data) {
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
                     console.log(obj);
-                    // parent.getinvo(obj.data.F_Id)
+                    parent.getinvo(obj.data.F_Id)
                 });
             }
         });
@@ -108,7 +108,6 @@ $(function () {
         $.ajax({
             url: ajaxinvolist,
             success: function (res) {
-                
                 console.log(data)
                 var isussecc = res.Succeed;
                 if (isussecc) {
