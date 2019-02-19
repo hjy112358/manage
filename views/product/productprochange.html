@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../../assets/fontlist/iconfont.css">
     <link rel="stylesheet" href="../../assets/css/table.css">
     <link rel="stylesheet" href="../../assets/css/proreprot.css">
-    <title>领料单</title>
+    <title>产品入库</title>
 </head>
 
 <body class="layui-view-body produwork craftwork">
@@ -20,22 +20,24 @@
                 <div class="layui-card-body">
                     <form class="layui-form">
                         <div class="btnlist">
-                            <!-- <span class="layui-btn add">新增</span> -->
+                            <span class="layui-btn add">新增</span>
                             <span class="layui-btn sub">保存</span>
-                            <span class="layui-btn audit disclick">审核</span> 
+                            <span class="layui-btn audit">审核</span>
                         </div>
-                        <div class="layui-form layui-form-item " style="padding-top:35px">
+                        <div class="layui-form layui-form-item " style="padding-top:25px">
+
                             <div class="form-box">
                                 <div class="clearfix">
                                     <input type="hidden" name="IsEnabled" value="true">
-                                    <input type="hidden" name="StockBill_Direction" value="-1">
+                                    <input type="hidden" name="StockBill_Direction" value="1">
+                                    <input type="hidden" name="StockBill_Status" id="StockBill_Status" value="11500">
+                                    <input type="hidden" name="F_Id" value="" id="F_Id">
                                     <div class="layui-form-lsit fl">
-                                        <label class="layui-form-label">领料部门：</label>
+                                        <label class="layui-form-label">交货单位：</label>
                                         <div class="layui-input-block checkdepart" data-type="daten">
-                                            <select name="StockBill_Department" class="" id="department" lay-search=""
-                                                lay-filter="selecstyle">
+                                            <select name="StockBill_Sender" class="" id="department" lay-search=""
+                                                lay-filter="">
                                                 <option value="">请选择</option>
-                                                <option value="">加载中</option>
                                             </select>
                                         </div>
                                     </div>
@@ -52,19 +54,19 @@
                                             <input type="text" value="" id="StockBill_Name" name="StockBill_Name">
                                         </div>
                                     </div>
+                                </div>
+                                <div class="clearfix">
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">源单类型：</label>
                                         <div class="layui-input-block " data-type="daten">
                                             <select name="StockBill_Type" class="" id="StockBill_Type" lay-search=""
                                                 lay-filter="selecstyle">
-                                                <option value="400100">生产领料</option>
-                                                <!-- <option value="2">外购入库单</option> -->
+                                                <option value="400200">生产发料</option>
+
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="clearfix">
-                                    <div class="layui-form-lsit fl">
+                                    <!-- <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">选单号：</label>
                                         <div class="layui-input-block checkid" data-type="daten">
                                             <select name="" class="" id="orderid" lay-search=""
@@ -73,17 +75,19 @@
                                                 <option value="">加载中</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="layui-form-lsit fl ">
-                                        <label class="layui-form-label">领料用途：</label>
+                                        <label class="layui-form-label">备注：</label>
                                         <div class="layui-input-block disinput">
                                             <textarea name="Rmark" id="" cols="2"></textarea>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div id="tablelist" style="clear:left;padding:10px 0" class="">
                                     <section class="productworktable">
                                         <div class="layui-card">
+                                            <!-- <i class="iconfont icon-guanbi iconclose"></i> -->
                                             <div class="layui-card-body layui-text">
                                                 <div id="tableRes" class="table-overlay">
                                                     <table id="dataTable" lay-filter="dataTable" class="layui-hide">
@@ -97,15 +101,14 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">制单人：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value=""  id="StockBill_Billername" readonly>
-                                            <input type="hidden" value=""  name="StockBill_Biller"
-                                                id="StockBill_Biller">
+                                            <input type="text" value="" id="StockBill_Billername" readonly>
+                                            <input type="hidden" value="" name="StockBill_Biller" id="StockBill_Biller">
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
-                                        <label class="layui-form-label">发料人：</label>
+                                        <label class="layui-form-label">领料人：</label>
                                         <div class="layui-input-block checkper" data-type="daten">
-                                            <select name="StockBill_Sender" class="" id="StockBill_Sender"
+                                            <select name="StockBill_Receiver" class="" id="StockBill_Receiver"
                                                 lay-search="" lay-filter="">
                                             </select>
                                         </div>
@@ -125,15 +128,7 @@
         </div>
     </div>
 
-    <!-- 批号 -->
-    <!-- <script type="text/html" id="seleno">
-        <select lay-search>
-            <option value="">请选择或输入</option>
-            {{# layui.each(batchlist, function(index, item){ }}
-            <option value="{{item.Material_Name}}">{{ item.Material_Nick }}</option>
-            {{# }); }}
-        </select>
-    </script> -->
+
 
     <!-- 仓库 -->
     <script type="text/html" id="selectstock">
@@ -144,12 +139,13 @@
             {{# }); }}
         </select>
     </script> 
+
 </body>
 <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
 <script src="../../assets/layui.all.js"></script>
 <script src="../../assets/js/jquery.cookie.js"></script>
 <script src="../../main.js"></script>
-<script src="../../assets/js/product/productll.js"></script>
+<script src="../../assets/js/product/productprochange.js"></script>
 <!-- <script src="../assets/js/drop.js"></script> -->
 
 </html>

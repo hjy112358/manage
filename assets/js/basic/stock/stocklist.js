@@ -1,8 +1,10 @@
 // 渲染table
+var layer;
 function tablerender(str, data) {
     layui.use(['jquery', 'table'], function () {
         var $ = layui.$,
             table = layui.table;
+            layer=layui.layer;
         table.render({
             elem: '#dataTable'
             , toolbar: true
@@ -14,14 +16,20 @@ function tablerender(str, data) {
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
                     console.log(obj);
-                    // parent.getscale(obj.data.SalesOrder_Name, obj.data.F_Id)
+                    $(".termask").removeClass("hidden");
+                    $(".masktitle").html("修改仓库信息");
+                    $(".save").addClass("hidden")
+                    $(".editsave").removeClass("hidden")
+                    var id=obj.data.F_Id
+                    $(".editsave").attr("data-id",id)
+                    $("#Stock_Name").val(obj.data.Stock_Name)
+                    $("#Stock_Nick").val(obj.data.Stock_Nick)
                 });
             }
         });
         return false;
     })
 }
-var token = $.cookie("token");
 
 $(function () {
    
@@ -59,8 +67,66 @@ $(function () {
     $(".checklist").trigger("click")
 
     $(".add").on("click", function () {
-        // parent.newstock();
+        $(".termask").removeClass("hidden")
+        $(".masktitle").html("新增仓库信息")
+        $(".save").removeClass("hidden")
+        $(".editsave").addClass("hidden")
     })
+
+    $(".cancel").on("click",function(){
+        $(".termask").addClass("hidden")
+    })
+    // 新增
+    $(".save").on("click",function(){
+        var indexlay=layer.load();
+        $.ajax({
+            type:"POST",
+            url:ajaxaddstock,
+            data:{
+                Stock_Name:$("#Stock_Name").val(),
+                Stock_Nick:$("#Stock_Nick").val()
+            },
+            success:function(res){
+                console.log(res)
+                if(res.Succeed){
+                    layer.close(indexlay);
+                    layer.msg("新增成功");
+                    setInterval(function () {
+                        window.location.reload()
+                    }, 1000) 
+                }else{
+                    alert(res.Message)
+                }
+            }
+        })
+    })
+    // 修改
+    $(".editsave").on("click",function(){
+        var indexlay=layer.load();
+        var id=$(".editsave").attr("data-id")
+        $.ajax({
+            type:"POST",
+            url:ajaxeditstock,
+            data:{
+                Stock_Name:$("#Stock_Name").val(),
+                Stock_Nick:$("#Stock_Nick").val(),
+                F_Id:id
+            },
+            success:function(res){
+                console.log(res)
+                if(res.Succeed){
+                    layer.close(indexlay);
+                    layer.msg("修改成功");
+                    setInterval(function () {
+                        window.location.reload()
+                    }, 1000) 
+                }else{
+                    alert(res.Message)
+                }
+            }
+        })
+    })
+    
 })
 
 
@@ -72,31 +138,29 @@ function renderForm() {
 }
 
 // 删除
-// function delscale(id) {
-//     var index = layer.confirm('确认删除？', {
-//         btn: ['确定', '取消'] //按钮
-//     }, function () {
-//         var token = $.cookie("token");
-//         $.ajax({
-//             type: "POST",
-//             async: false,
-//             url: ajaxURl + "/api/PSIBase/Stock/Remove",
-//             data: {
-//                 F_Id: id
-//             },
-//             success: function (res) {
-//                 var data = res.Data;
-//                 console.log(data)
-//                 var isussecc = res.Succeed;
-//                 if (isussecc) {
-//                     layer.close(index)
-//                     $(".checklist").trigger("click");
-//                 } else {
-//                     layer.close(index)
-//                     alert(res.Message)
-//                 }
-//             }
-//         })
-//     }); 
-// }
+function delscale(id) {
+    var index = layer.confirm('确认删除？', {
+        btn: ['确定', '取消'] //按钮
+    }, function () {
+        $.ajax({
+            type: "POST",
+            url: ajaxremovestock,
+            data: {
+                F_Id: id
+            },
+            success: function (res) {
+                var data = res.Data;
+                console.log(data)
+                var isussecc = res.Succeed;
+                if (isussecc) {
+                    layer.close(index)
+                    $(".checklist").trigger("click");
+                } else {
+                    layer.close(index)
+                    alert(res.Message)
+                }
+            }
+        })
+    }); 
+}
 

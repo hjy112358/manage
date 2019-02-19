@@ -57,9 +57,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         ]],
         done: function (res, curr, count) {
             viewObj.tbData = res.data;
-           
-           
-
         }
     });
 
@@ -120,8 +117,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     //监听工具条
     table.on('tool(dataTable)', function (obj) {
         var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
-        console.log('监听工具条');
-        console.log(data);
         switch (event) {
             case "state":
                 var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
@@ -145,16 +140,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     });
     table.on('edit(dataTable)', function (obj) {
         var oldData = table.cache[layTableId];
-        // console.log(oldData)
-        // if (!$.isNumeric(obj.value)) {
-        //     for (var i = 0; i < oldData.length; i++) {
-        //         var datenow = oldData[i];
-        //         if (datenow.tempId === obj.data.tempId) {
-        //             datenow.dates = "";
-        //             layer.alert("请输入数字");
-        //         }
-        //     }
-        // }
         if (obj.data.tempId == viewObj.last) {
             activeByType("add");
         }
@@ -163,19 +148,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             limit: viewObj.limit
         });
     });
-    var isend = true;
-    var savedate;
-    var lastid;
+
     // 保存
     $(".sub.cus").on("click", function () {
-   
         return false
     })
     
-    
-   
-
-  
     renderForm=function(){
         layui.use('form', function () {
             var form = layui.form;
@@ -185,10 +163,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     }
 });
 
-
 $(function(){
-
-
     $(document).on("click", function () {
         $("#tablelist .layui-table-body").addClass("overvis");
         $("#tablelist .layui-table-box").addClass("overvis");

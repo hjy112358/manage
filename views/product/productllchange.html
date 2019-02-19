@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../../assets/fontlist/iconfont.css">
     <link rel="stylesheet" href="../../assets/css/table.css">
     <link rel="stylesheet" href="../../assets/css/proreprot.css">
-    <title>领料单</title>
+    <title>领料单-修改</title>
 </head>
 
 <body class="layui-view-body produwork craftwork">
@@ -20,15 +20,18 @@
                 <div class="layui-card-body">
                     <form class="layui-form">
                         <div class="btnlist">
-                            <!-- <span class="layui-btn add">新增</span> -->
+                            <span class="layui-btn add">新增</span>
                             <span class="layui-btn sub">保存</span>
-                            <span class="layui-btn audit disclick">审核</span> 
+                            <span class="layui-btn change disclick">变更</span>
+                            <span class="layui-btn audit">审核</span> 
                         </div>
                         <div class="layui-form layui-form-item " style="padding-top:35px">
                             <div class="form-box">
                                 <div class="clearfix">
                                     <input type="hidden" name="IsEnabled" value="true">
                                     <input type="hidden" name="StockBill_Direction" value="-1">
+                                    <!-- <input type="hidden" name="StockBill_Status" id="StockBill_Status" value="11500"> -->
+                                    <input type="hidden" name="F_Id"  id="F_Id" value="11500">
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">领料部门：</label>
                                         <div class="layui-input-block checkdepart" data-type="daten">
@@ -64,7 +67,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix">
-                                    <div class="layui-form-lsit fl">
+                                    <!-- <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">选单号：</label>
                                         <div class="layui-input-block checkid" data-type="daten">
                                             <select name="" class="" id="orderid" lay-search=""
@@ -73,7 +76,7 @@
                                                 <option value="">加载中</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">领料用途：</label>
                                         <div class="layui-input-block disinput">
@@ -149,7 +152,7 @@
 <script src="../../assets/layui.all.js"></script>
 <script src="../../assets/js/jquery.cookie.js"></script>
 <script src="../../main.js"></script>
-<script src="../../assets/js/product/productll.js"></script>
+<script src="../../assets/js/product/productllchange.js"></script>
 <!-- <script src="../assets/js/drop.js"></script> -->
 
 </html>

@@ -350,12 +350,12 @@ function newproduct(){
 }
 // 查看生产订单
 function getproduct(id){
-    var oldhref = $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(10)').attr("href");
+    var oldhref = $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(11)').attr("href");
     var href = oldhref
     href = href + '?fid='+id
-    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(10)').attr("href", href)
-    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(10)').trigger('click');
-    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(10)').attr("href", oldhref)
+    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(11)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(11)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(11)').attr("href", oldhref)
     
 }
 // 新增仓库
@@ -367,4 +367,39 @@ function newstock(){
 // 新增汇报
 function newproducthb(){
     $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(3)').trigger('click');
+}
+
+// 查看出入库
+function getstock(direc,id){
+    if(direc=='-1'){
+        // 领料
+        var oldhref = $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').attr("href");
+        var href = oldhref
+        href = href + '?fid='+id
+        $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').attr("href", href)
+        $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').trigger('click');
+        $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').attr("href", oldhref)
+    }else{
+        var oldhref = $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(14)').attr("href");
+        var href = oldhref
+        href = href + '?fid='+id
+        $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(14)').attr("href", href)
+        $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(14)').trigger('click');
+        $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(14)').attr("href", oldhref)
+    }
+}
+
+
+// 新增销售发票
+function newscaleinvo(){
+    $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').trigger('click');
+}
+// 销售发票详情
+function getinvo(id){
+    var oldhref = $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').attr("href");
+    var href = oldhref
+    href = href + '?fid='+id
+    $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').attr("href", oldhref)
 }

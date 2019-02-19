@@ -30,18 +30,19 @@
                                     <input type="hidden" name="IsEnabled" value="true">
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label"><span>*</span> 客户：</label>
-                                        <div class="layui-input-block checkcus" data-type="daten">
-                                            <select name="SalesInvoice_Customer" class="" id="checkprobegin"
+                                        <div class="layui-input-block checkcus disinput" data-type="daten">
+                                            <!-- <select name="SalesInvoice_Customer" class="" id="checkprobegin"
                                                 lay-search="" lay-filter="seleccus">
                                                 <option value="">请选择</option>
                                                 <option value="">加载中</option>
-                                            </select>
+                                            </select> -->
+                                            <input type="text" name="SalesInvoice_Customer" id="SalesInvoice_Customer">
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">单据日期：</label>
                                         <div class="layui-input-block ">
-                                            <input type="text" name="SalesInvoice_DateTime" id="date" lay-verify="date"
+                                            <input type="text" name="SalesInvoice_DateTime" id="SalesInvoice_DateTime" lay-verify="date"
                                                 autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
@@ -84,11 +85,12 @@
                                     </div> -->
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">币别：</label>
-                                        <div class="layui-input-block currency" data-type="daten">
-                                            <select name="SalesInvoice_Currency" class="" id="currency" lay-search=""
+                                        <div class="layui-input-block currency disinput" data-type="daten">
+                                            <!-- <select name="SalesInvoice_Currency" class="" id="currency" lay-search=""
                                                 lay-filter="">
                                                 <option value="">请选择币别</option>
-                                            </select>
+                                            </select> -->
+                                            <input type="text" name="SalesInvoice_Currency" id="SalesInvoice_Currency">
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
@@ -110,7 +112,7 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">收款日期：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" name="SalesInvoice_Deadline" id="datepay"
+                                            <input type="text" name="SalesInvoice_Deadline" id="SalesInvoice_Deadline"
                                                 autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
@@ -148,13 +150,13 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">审核人：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" disabled id="zd">
+                                            <input type="text" value="" readonly>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">审核日期：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" disabled id="zd">
+                                            <input type="text" value="" readonly>
                                         </div>
                                     </div>
                                     <!-- <div class="layui-form-lsit fl ">
@@ -178,7 +180,7 @@
 <script src="../../assets/layui.all.js"></script>
 <script src="../../assets/js/jquery.cookie.js"></script>
 <script src="../../main.js"></script>
-<script src="../../assets/js/scale/scaleInvo.js"></script>
+<script src="../../assets/js/scale/scaleInvodetail.js"></script>
 <!-- <script src="../assets/js/drop.js"></script> -->
 
 </html>

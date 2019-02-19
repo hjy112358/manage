@@ -66,7 +66,7 @@ $(function () {
 // 删除
 function delscale(id) {
     var index = layer.confirm('确认删除？', {
-        btn: ['确定', '取消'] //按钮
+        btn: ['确定12313', '取消'] //按钮
     }, function () {
         var token = $.cookie("token");
         $.ajax({

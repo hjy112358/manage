@@ -65,6 +65,7 @@
 .chooseterm .table-overlay .layui-table-cell {
     height: auto;
     overflow: visible;
+    text-align: center
 }
 
 

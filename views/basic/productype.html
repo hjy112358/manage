@@ -12,42 +12,55 @@
     <link rel="stylesheet" href="../../assets/css/proreprots.css">
     <title>物料类别</title>
     <style>
-        .masktitle{
-        position: absolute;
-    top: -30px;
-    left: 5px;
-    font-size: 18px;
-    color: #fff;
-    }
-    .mackbody {
-       padding: 30px 20px 0px 20px;
-    }
-    #action{
-        padding-bottom:20px;
-        text-align: center;
-    }
-    td[data-field="FamilyEntry_Datatype"] .layui-table-cell {
-        padding-left:0;
-    }
-    #tableRes .layui-table-view,
-    #tableRes1 .layui-table-view
-    {
-        max-height: 200px;
-        overflow: hidden;
-    overflow-y: auto;
-    }
-    #tableRes .layui-table-body,
-    #tableRes1 .layui-table-body{
-        height:auto !important
-    }
-    .chooseterm .layui-table-view .layui-table-body {
-    min-height: 100px;
-}
-#tableRes .layui-form-selected .layui-anim-upbit,
-#tableRes1 .layui-form-selected .layui-anim-upbit{
-animation-name:unset;
--webkit-animation-name: unset;
-}
+        .masktitle {
+            position: absolute;
+            top: -30px;
+            left: 5px;
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .mackbody {
+            padding: 30px 20px 0px 20px;
+        }
+
+        #action {
+            padding-bottom: 20px;
+            text-align: center;
+        }
+
+        td[data-field="FamilyEntry_Datatype"] .layui-table-cell {
+            padding-left: 0;
+        }
+
+        #tableRes .layui-table-view,
+        #tableRes1 .layui-table-view {
+            max-height: 200px;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+
+        #tableRes .layui-table-body,
+        #tableRes1 .layui-table-body {
+            height: auto !important
+        }
+
+        .chooseterm .layui-table-view .layui-table-body {
+            min-height: 100px;
+        }
+
+        #tableRes .layui-form-selected .layui-anim-upbit,
+        #tableRes1 .layui-form-selected .layui-anim-upbit {
+            animation-name: unset;
+            -webkit-animation-name: unset;
+        }
+
+        td[data-field="FamilyEntry_Sales"] .layui-table-cell,
+        td[data-field="FamilyEntry_Purchase"] .layui-table-cell,
+        td[data-field="FamilyEntry_Manufacture"] .layui-table-cell,
+        td[data-field="FamilyEntry_Inventory"] .layui-table-cell {
+            padding-left: 0
+        }
     </style>
 </head>
 
@@ -96,24 +109,54 @@ animation-name:unset;
                             </div>
                             <div id="toolbar">
                                 <div style="margin-bottom:10px">
-                                    <button type="button" class="layui-btn layui-btn-sm addattr addfirst" data-type="addRow"
-                                        title="添加一行">
+                                    <button type="button" class="layui-btn layui-btn-sm "
+                                        data-type="addRow" title="添加一行">
                                         <i class="layui-icon layui-icon-add-1"></i> 添加类别属性
                                     </button>
-
                                 </div>
                             </div>
-                            <div id="tableRes" class="table-overlay hidden">
+                            <div id="tableRes" class="table-overlay ">
                                 <table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+                            </div>
+                        </div>
+                        <div id="action" class="">
+                            <span class="layui-btn save">保存</span>
+                            <span class="layui-btn cancel" data-type="cancel">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form class="terform1">
+                <div class="layui-card">
+                    <div class="masktitle">修改物料类别</div>
+                    <i class="iconfont icon-guanbi iconclose"></i>
+                    <div class="layui-card-body layui-text">
+                        <div class="mackbody ">
+                            <div class="layui-form-lsit  ">
+                                <label class="layui-form-label">物料类别代码：</label>
+                                <div class="layui-input-block disinput">
+                                    <input type="text" value="" id="Family_Name" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="layui-form-lsit  ">
+                                <label class="layui-form-label">物料类别名称：</label>
+                                <div class="layui-input-block disinput">
+                                    <input type="text" value="" id="Family_Nick" autocomplete="off">
+                                </div>
+                            </div>
+                            <div id="toolbar">
+                                <div style="margin-bottom:10px">
+                                    <button type="button" class="layui-btn layui-btn-sm " data-type="add" title="添加一行">
+                                        <i class="layui-icon layui-icon-add-1"></i> 添加类别属性
+                                    </button>
+                                </div>
                             </div>
                             <div id="tableRes1" class="table-overlay" style="padding:9px 15px;">
                                 <table id="dataTable1" lay-filter="dataTable1" class="layui-hide"></table>
                             </div>
-
                         </div>
                         <div id="action" class="">
-                            <span class="layui-btn save">保存</span>
-                            <span class="layui-btn editsave hidden">保存修改</span>
+                            <span class="layui-btn editsave ">保存修改</span>
                             <span class="layui-btn cancel" data-type="cancel">取消</button>
                         </div>
                     </div>
@@ -122,16 +165,44 @@ animation-name:unset;
         </section>
     </div>
 
+    <!-- 单据类型 -->
     <script type="text/html" id="selectattr">
         <select name="datatype" lay-filter="datatype" lay-search>
-        <option value="">请选择数据类型</option>
-        <option value="NVarChar(50)">文本</option>
-        <option value="INT">整数</option>
-        <option value="Decimal(18,2)">小数</option>
-        <option value="DATETIME">时间</option>  
-    </select>
-
-</script>
+            <option value="">请选择数据类型</option>
+            <option value="NVarChar(50)">文本</option>
+            <option value="INT">整数</option>
+            <option value="Decimal(18,2)">小数</option>
+            <option value="DATETIME">时间</option>  
+        </select>
+    </script>
+    <!-- 销售 -->
+    <!-- <script type="text/html" id="checkscale">
+        <select lay-filter="checkscale">
+            <option value="true">是</option>
+            <option value="false">否</option>
+        </select>
+    </script> -->
+    <!-- 采购 -->
+    <!-- <script type="text/html" id="checkpur">
+        <select lay-filter="checkpur">
+            <option value="true">是</option>
+            <option value="false">否</option>
+        </select>
+    </script> -->
+    <!-- 生产 -->
+    <!-- <script type="text/html" id="checkfacture">
+        <select lay-filter="checkfacture">
+            <option value="true">是</option>
+            <option value="false">否</option>
+        </select>
+    </script> -->
+    <!-- 仓储 -->
+    <!-- <script type="text/html" id="checkinve">
+        <select lay-filter="checkinve">
+            <option value="true">是</option>
+            <option value="false">否</option>
+        </select>
+    </script> -->
 </body>
 <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
 <script src="../../assets/layui.all.js"></script>

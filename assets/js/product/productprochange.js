@@ -16,7 +16,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     //日期
     laydate.render({
         elem: '#date',
-        value: tody,
+        // value: tody,
         isInitValue: true,
         btns: ['now', 'confirm']
     });
@@ -59,7 +59,6 @@ $.ajax({
             for (var i = 0; i < data.length; i++) {
                 measureid.push(data[i].Measure_Manufacture)  
                 measurnick.push(data[i].Measure_Nick)
-               
             }
         }
     }
@@ -119,19 +118,24 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             }},
             { field: 'StockBillEntry_Specifications', title: '规格型号' },
             { field: 'StockBillEntry_BatchNo', title: '批号'},
-            { field: 'Unit', title: '计量单位' },
+            { field: 'unit', title: '计量单位' ,templet:function(d){
+                if (d.StockBillEntry_Unit) {
+                    var index2 = measureid.indexOf(d.StockBillEntry_Unit)
+                    if (index2 == '-1') {
+                        return ''
+                    } else {
+                        return measurnick[index2]
+                    }
+                } else {
+                    return ''
+                }
+            } },
             { field: 'StockBillEntry_Price', title: '价格', edit: 'text'  },
             { field: 'quatity', title: '应收数量'},
             { field: 'StockBillEntry_Quantity', title: '实收数量', edit: 'text' },
             { field: 'StockBillEntry_Amount', title: '总额'},
             { field: 'StockBillEntry_Stock', title: '收货仓库',templet:'#selectstock' },
             { field: 'Rmark', title: '备注', edit: 'text' }
-
-            // {
-            //     field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
-            //         return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '">删除</a>';
-            //     }
-            // }
         ]],
         done: function (res, curr, count) {
             viewObj.tbData = res.data;
@@ -144,6 +148,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 $.each(tabledata, function (index, value) {
                     if (value.LAY_TABLE_INDEX == dataindex) {
                         $cr.find('input').val(value.stock);
+                        var select = 'dd[lay-value="' + value.StockBillEntry_Stock + '"]';
+                        $cr.find('td[data-field="StockBillEntry_Stock"]').find("div.layui-form-select").find('dl').find(select).click();
                         // $cr.find('input[name="FFetchDate"]').val(value.FFetchDate);
                     }
                 });
@@ -233,7 +239,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         var elem = data.othis.parents('tr');
         var dataindex = elem.attr("data-index");
         $.each(tabledata, function (index, value) {
-            console.log(value)
+            // console.log(value)
             if (value.LAY_TABLE_INDEX == dataindex) {
                 value.StockBillEntry_Stock = data.value;
                 if (data.elem.selectedOptions) {
@@ -281,83 +287,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             limit: viewObj.limit
         });
     });
-     // 获取单据编号
-     $.ajax({
-        url: getnum,
-        success: function (res) {
-            if (res.Succeed) {
-                $("#StockBill_Name").val(res.Data)
-            } else {
-                alert(res.Message)
-            }
-        }
-    })
 
-    // 制单人
-    var mouser = $.cookie("Modify_User");
-    var username = $.cookie("User_Nick")
-    $("#StockBill_Biller").val(mouser)
-    $("#StockBill_Billername").val(username)
-
-    // 领料人
-    $.ajax({
-        type: "get",
-        url: ajaxUsr,
-        success: function (res) {
-            //console.log(res)
-            var isussecc = res.Succeed;
-            var data = res.Data;
-            if (isussecc) {
-                var html = '<option value="">全部</option>';
-                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                for (var i = 0; i < data.length; i++) {
-                    var datanow = data[i];
-                    html += '<option value="' + datanow.F_Id + '">' + datanow.User_Nick + '</option>';
-                    htmlsel += '<dd lay-value="' + datanow.F_Id + '" >' + datanow.User_Nick + '</dd>';
-                }
-                $("#StockBill_Receiver").html(html);
-                $(".checkper .layui-anim.layui-anim-upbit").html(htmlsel);
-                renderForm1()
-                var select = 'dd[lay-value="' + mouser + '"]';
-                $('#StockBill_Receiver').siblings("div.layui-form-select").find('dl').find(select).click();
-            } else {
-                alert(res.Message)
-            }
-        }
-    })
-    // 客户
-    $(".checkdepart").on("click", function () {
-        var _this = $(this);
-        var date = _this.attr("data-type");
-        if (date == 'daten') {
-            $(".checkdepart").attr("data-type", "datey");
-            $.ajax({
-                type: "get",
-                url: ajaxCus,
-                success: function (res) {
-                    console.log(res)
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        var html = '<option value="">全部</option>';
-                        var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                        for (var i = 0; i < data.length; i++) {
-                            html += '<option value="' + data[i].F_Id + '" >' + data[i].Customer_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].Customer_Nick + '</dd>'
-                        }
-                        $("#department").html(html);
-                        $(".checkdepart .layui-anim.layui-anim-upbit").html(htmlsel);
-                        renderForm1();
-                        _this.find("select").next().find('.layui-select-title input').click();
-
-                    } else {
-                        alert(res.Message)
-                    }
-
-                }
-            })
-        }
-    })
 
     // 单号
     $(".checkid").on("click", function () {
@@ -393,72 +323,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         }
     })
 
-    // 切换订单号
-    layui.form.on('select(changeorder)', function (data) {
-        var count=0
-        if (data.value != '') {
-            $.ajax({
-                type: "get",
-                url: getassone + data.value,
-                success: function (res) {
-                    console.log(res)
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        if (data.Children) {
-                            console.log(data.Children)
-                            $.each(data.Children, function (index, value) {
-                                count++;
-                                value.StockBillEntry_Specifications = value.AssignEntry_Specifications
-                                value.StockBillEntry_BatchNo = ""
-                                value.Unit = value.AssignEntry_Unit
-                                value.F_Id=null
-                                var index = measurnick.indexOf(value.AssignEntry_Unit)
-                                if (index != '-1') {
-                                    value.StockBillEntry_Unit=measureid[index]
-                                } 
-                                value.StockBillEntry_Material = value.AssignEntry_Material
-                                value.quatity = value.AssignEntry_Quantity
-                            })
-                            getbatno(data.Children,count)
-                        }
 
-                    } else {
-                        alert(res.Message)
-                    }
-                }
-            })
-        }
-    })
-
-    function getbatno(data,cout){
-        console.log(data[0])
-        for(var i=0;i<=cout-1;i++){
-            $.ajax({
-                async: false,
-                url:ordernum,
-                success:function(res){
-                    if(res.Succeed){
-                        console.log(data[i])
-                        data[i].StockBillEntry_BatchNo=res.Data
-                    }else{
-                        alert(res.Message)
-                    }
-                }
-            })
-        }
-       console.log(data)
-       
-        tableIns.reload({
-            data: data,
-            limit: data.length
-        });
-    }
-
-    function getno(){
-        
-    }
-    
     renderForm1 = function () {
         layui.use('form', function () {
             var form = layui.form;
@@ -485,12 +350,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         console.log(data)
         $.ajax({
             type:"POST",
-            url:addbill,
+            url:editbill,
             data:data,
             success:function(res){
                if(res.Succeed){
                 layer.close(indexlay);
-                layer.msg("新增成功");
+                layer.msg("修改成功");
                 setInterval(function () {
                     window.location.reload()
                 }, 1000) 
@@ -507,6 +372,42 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 });
 
 $(function(){
+    var url=window.location.search;
+    var fid=url.split("?")[1].split("=")[1]
+    $("#F_Id").val(fid)
+    $.ajax({
+        url:ajaxstockbillone+fid,
+        success:function(res){
+            console.log(res)
+            if(res.Succeed){
+                var data=res.Data
+                $.each(data.Details,function(i,v){
+                    var index = measurnick.indexOf(v.AssignEntry_Unit)
+                    if (index != '-1') {
+                        v.StockBillEntry_Unit=measureid[index]
+                        v.unit=measurnick[index]
+                    } 
+                })
+                tableIns.reload({
+                    data: data.Details,
+                    limit: data.Details.length
+                });
+                getdepart(data.StockBill_Sender)
+                var time=data.StockBill_DateTime
+                if(time){
+                    time=time.split(" ")[0]
+                }
+                // 日期
+                $("#date").val(time)
+                // 单据编号
+                $("#StockBill_Name").val(data.StockBill_Name)
+                $("#Rmark").val(data.Rmark)
+                getper(data.StockBill_Biller,data.StockBill_Receiver)
+            }else{
+                alert(res.Message)
+            }
+        }
+    })
     $(document).on("click", function () {
         $("#tableRes .layui-table-body").addClass("overvis");
         $("#tableRes .layui-table-box").addClass("overvis");
@@ -520,7 +421,65 @@ $(function(){
 })
 
 
+function getdepart(id){
+    $.ajax({
+        type: "get",
+        url: ajaxCus,
+        success: function (res) {
+            console.log(res)
+            var isussecc =res.Succeed;
+            var data =res.Data;
+            if (isussecc) {
+                var html = '<option value="">全部</option>';
+                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+                for (var i = 0; i < data.length; i++) {
+                    html += '<option value="' + data[i].F_Id + '" >' + data[i].Customer_Nick + '</option>';
+                    htmlsel += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].Customer_Nick + '</dd>'
+                }
+                $("#department").html(html);
+                $(".checkdepart .layui-anim.layui-anim-upbit").html(htmlsel);
+                renderForm1();
+                var select = 'dd[lay-value="' + id + '"]';
+                $('#department').siblings("div.layui-form-select").find('dl').find(select).click();
+            } else {
+                alert(JSON.parse(res).Message)
+            }
 
+        }
+    })
+}
+
+function getper(biller,receive){
+    $.ajax({
+        type: "get",
+        url: ajaxUsr,
+        success: function (res) {
+            // console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data;
+            if (isussecc) {
+                var html = '<option value="">全部</option>';
+                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+                for (var i = 0; i < data.length; i++) {
+                    var datanow = data[i]
+                    html += '<option value="' + datanow.F_Id + '" >' + datanow.User_Nick + '</option>';
+                    htmlsel += '<dd lay-value="' + datanow.F_Id + '" >' + datanow.User_Nick + '</dd>'
+                    if (datanow.F_Id == biller) {
+                        $("#StockBill_Billername").val(datanow.User_Nick)
+                    }
+                    $("#StockBill_Receiver").html(html);
+                    $(".checkper .layui-anim.layui-anim-upbit").html(htmlsel);
+                    renderForm1();
+                    var select = 'dd[lay-value="' + receive + '"]';
+                    $('#StockBill_Receiver').siblings("div.layui-form-select").find('dl').find(select).click();
+                   
+                }  
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
+}
 
 
 

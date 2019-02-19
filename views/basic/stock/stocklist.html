@@ -10,6 +10,39 @@
     <link rel="stylesheet" href="../../../assets/css/table.css">
     <link rel="stylesheet" href="../../../assets/css/searchlist.css">
     <title>仓库列表</title>
+    <style>
+        .masktitle{
+        position: absolute;
+    top: -30px;
+    left: 5px;
+    font-size: 18px;
+    color: #fff;
+    }
+    .mackbody {
+        padding: 45px 20px;
+    }
+    #action{
+        padding-bottom:20px;
+        text-align: center;
+    }
+    .craftwork .layui-form-item .layui-input-block{
+        width:60% !important
+    }
+    .craftwork .disinput input{
+        width:99%
+    }
+    .chooseterm .layui-form-selected .layui-anim-upbit{
+        animation-name:unset;
+        -webkit-animation-name: unset;
+    }
+    .craftwork .layui-form-select dl{
+        top:30px;
+        max-height: 100px
+    }
+    .termform .layui-form-label{
+        width:100px !important
+    }
+    </style>
 </head>
 
 <body class="layui-view-body produwork craftwork">
@@ -61,7 +94,39 @@
             </div>
         </div>
     </div>
-    
+    <div class="termask  hidden">
+        <section class=" chooseterm">
+            <form class="termform">
+                <div class="layui-card">
+                    <div class="masktitle">新增仓库信息</div>
+                    <i class="iconfont icon-guanbi iconclose"></i>
+                    <div class="layui-card-body layui-text">
+                        <div class="mackbody layui-form layui-form-item">
+                            <div class="form-box">
+                                <div class="layui-form-lsit  ">
+                                    <label class="layui-form-label">仓库编码：</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" id="Stock_Name" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="layui-form-lsit  ">
+                                    <label class="layui-form-label">仓库名称：</label>
+                                    <div class="layui-input-block disinput">
+                                        <input type="text" value="" id="Stock_Nick" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="action" class="">
+                            <span class="layui-btn save">保存</span>
+                            <span class="layui-btn editsave hidden">保存修改</span>
+                            <span class="layui-btn cancel">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
     <div class="printbody"></div>
 </body>
 <script type="text/javascript" src="../../../assets/js/jquery.min.js"></script>

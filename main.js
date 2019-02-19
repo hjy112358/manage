@@ -51,6 +51,12 @@ var remvoeMea=ajaxURl + "/api/PSIBase/Measure/Remove"
 var basicMea=ajaxURl + "/Api/SystemManager/Dictionary/GetEntry?keyword=PSIMaterial_Unit"
 // 仓库列表
 var ajaxstocklist=ajaxURl + "/api/PSIBase/Stock/GetList?keyword=&PageIndex=&PageSize="
+// 新增仓库
+var ajaxaddstock=ajaxURl + "/api/PSIBase/Stock/Add"
+// 修改仓库
+var ajaxeditstock=ajaxURl + "/api/PSIBase/Stock/Edit"
+// 删除仓库
+var ajaxremovestock=ajaxURl + "//api/PSIBase/Stock/Remove"
 //-------------------- 基础信息----------------------
 
 
@@ -70,6 +76,19 @@ var delentry= ajaxURl+'/Api/PSISales/SalesOrderEntry/Delete'
 var ordernum=ajaxURl+'/Api/PSIBase/BatchNo/GetNext?billType=&dateFormart='
 // 销售订单列表
 var saleEntry=ajaxURl + '/Api/PSISales/SalesOrder/GetEntry?keyValue='
+// 添加销售订单
+var ajaxaddsale=ajaxURl + '/Api/PSISales/SalesOrder/Add'
+// 添加销售发票
+var ajaxaddinvo=ajaxURl + '/Api/PSISales/SalesInvoice/Add'
+// 销售发票列表
+var ajaxinvolist=ajaxURl + '/Api/PSISales/SalesInvoice/GetList?keyword=&PageSize=&PageIndex='
+// 销售发票one
+var ajaxinvolistone=ajaxURl + '/Api/PSISales/SalesInvoice/GetList?'
+// 销售发票one详情
+var ajaxinvolistonedetail=ajaxURl + '/Api/PSISales/SalesInvoice/GetEntry?keyValue='
+// 删除销售发票
+var ajaxremoveinvo=ajaxURl + '/Api/PSISales/SalesInvoice/Remove'
+
 //-------------------- 销售管理---------------------
 
 
@@ -144,6 +163,18 @@ var getRepornum=ajaxURl+'/Api/Manufacture/Report/Gather?assign='
 var  getreportentrylist=ajaxURl+'/Api/Manufacture/ReportEntry/GetList?keyword='
 // 添加领料单/添加产品入库
 var addbill=ajaxURl+'/Api/PSIInventory/StockBill/Add'
+// 修改领料单/修改产品入库
+var editbill=ajaxURl+'/Api/PSIInventory/StockBill/Edit'
+// 出库批号
+var ajaxstockno=ajaxURl+'/Api/PSIInventory/StockBill/BatchNo?keyValue='
+// 出入库列表
+var ajaxstockbilist=ajaxURl+'/Api/PSIInventory/StockBill/GetList?keyword=&PageSize=&PageIndex='
+// 出入库列表one
+var ajaxstockbionelist=ajaxURl+'/Api/PSIInventory/StockBill/GetList?'
+// 删除出入库
+var removestockbill=ajaxURl+'/Api/PSIInventory/StockBill/Remove'
+// 查询出入库明细
+var ajaxstockbillone=ajaxURl+'/Api/PSIInventory/StockBill/GetEntry?key='
 // -------------------生产管理----------------------
 
 
@@ -174,7 +205,7 @@ var purchaseSub=ajaxURl + "api/PSIPurchase/PurchaseOrder/Add"
 // 添加采购发票
 var purchaseAdd=ajaxURl+'/api/PSIPurchase/PurchaseInvoice/Add'
 // 删除采购发票
-var Delpurchasa=ajaxURl+'/api/PSIPurchase/PurchaseInvoice/Remove'
+var Delpurchase=ajaxURl+'/api/PSIPurchase/PurchaseInvoice/Remove'
 
 
 // --------------采购模块---------------------------

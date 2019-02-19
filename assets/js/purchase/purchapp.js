@@ -468,11 +468,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                             console.log(data)
                             var isussecc = res.Succeed;
                             if (isussecc) {
-                                // data[i].Material_Name data[i].Material_Nick  data[i].Material_Specification
                                 for (var i = 0; i < data.length; i++) {
-                                    var datanow = data[i];
-                                    htmlterm += '<li data-name="' + (datanow.Material_Name || '') + '" data-nick="' + (datanow.Material_Nick || '') + '" data-spe="' + (datanow.Material_Specifications || '') + '" data-materme="' + (datanow.Material_Measure || '') + '" data-materid="' + (datanow.F_Id || '') + '"><p>' + (datanow.Material_Name || '') + '</p><p>' + (datanow.Material_Nick || '') + '</p><p>' + (datanow.Material_Specifications || '') + '</p></li>'
-                                    arri = { materame: (datanow.Material_Name || ''), maternick: (datanow.Material_Nick || ''), matersp: (datanow.Material_Specifications || ''), matermea: (datanow.Material_Measure || ''), materid: (datanow.F_Id || '') };
+                                    var dataNow = data[i];
+                                    htmlterm += '<li data-name="' + (dataNow.Material_Name || '') + '" data-nick="' + (dataNow.Material_Nick || '') + '" data-spe="' + (dataNow.Material_Specifications || '') + '" data-materme="' + (dataNow.Material_Measure || '') + '" data-materid="' + (dataNow.F_Id || '') + '"><p>' + (dataNow.Material_Name || '') + '</p><p>' + (dataNow.Material_Nick || '') + '</p><p>' + (dataNow.Material_Specifications || '') + '</p></li>'
+                                    arri = { materame: (dataNow.Material_Name || ''), maternick: (dataNow.Material_Nick || ''), matersp: (dataNow.Material_Specifications || ''), matermea: (dataNow.Material_Measure || ''), materid: (dataNow.F_Id || '') };
                                     arrlist.push(arri)
                                 }
                                 $(".selectlist ul").html(htmlterm);
@@ -663,31 +662,31 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         success: function (res) {
             var isussecc = res.Succeed;
             var data = res.Data;
-            var rmbid = '';
+            var fId = '';
             var rate = "";
             if (isussecc) {
                 var html = '<option value="">请选择币别</option>';
-                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">请选择币别</dd>'
+                var htmlOption = '<dd lay-value="" class="layui-select-tips layui-this">请选择币别</dd>'
                 for (var i = 0; i < data.length; i++) {
                     // Currency_Name: "M0001"
                     //Currency_Nick: "人民币"
                     dateslit.push(data[i])
-                    var datanow = data[i];
-                    if (datanow.Currency_Nick == '人民币') {
-                        rmbid = datanow.F_Id;
-                        rate = datanow.Currency_ExRate
+                    var dataNow = data[i];
+                    if (dataNow.Currency_Nick == '人民币') {
+                        fId = dataNow.F_Id;
+                        rate = dataNow.Currency_ExRate
                     }
-                    html += '<option value="' + datanow.F_Id + '" >' + datanow.Currency_Nick + '</option>';
-                    htmlsel += '<dd lay-value="' + datanow.F_Id + '">' + datanow.Currency_Nick + '</dd>'
-                    currname.push(datanow.F_Id)
-                    currnick.push(datanow.Currency_Nick)
-                    currnamshow.push(datanow.Currency_Name)
-                    ratelist.push(datanow.Currency_ExRate)
+                    html += '<option value="' + dataNow.F_Id + '" >' + dataNow.Currency_Nick + '</option>';
+                    htmlOption += '<dd lay-value="' + dataNow.F_Id + '">' + dataNow.Currency_Nick + '</dd>'
+                    currname.push(dataNow.F_Id)
+                    currnick.push(dataNow.Currency_Nick)
+                    currnamshow.push(dataNow.Currency_Name)
+                    ratelist.push(dataNow.Currency_ExRate)
                 }
                 $("#currency").html(html);
-                $(".currency .layui-anim.layui-anim-upbit").html(htmlsel);
+                $(".currency .layui-anim.layui-anim-upbit").html(htmlOption);
                 renderForm();
-                var select = 'dd[lay-value="' + rmbid + '"]';
+                var select = 'dd[lay-value="' + fId + '"]';
                 $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
                 $("#SalesOrder_ExRate").val(rate)
                 // _this.find("select").next().find('.layui-select-title input').click();
@@ -712,13 +711,13 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     var data = res.Data;
                     if (isussecc) {
                         var html = '<option value="">全部</option>';
-                        var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+                        var htmlOption = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
                         for (var i = 0; i < data.length; i++) {
                             html += '<option value="' + data[i].F_Id + '" >' + data[i].Supplier_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].Supplier_Nick + '</dd>'
+                            htmlOption += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].Supplier_Nick + '</dd>'
                         }
                         $("#SupplierMaterial_Supplier").html(html);
-                        $(".supplier .layui-anim.layui-anim-upbit").html(htmlsel);
+                        $(".supplier .layui-anim.layui-anim-upbit").html(htmlOption);
                         renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
                         // Customer_TaxRate 税率   
