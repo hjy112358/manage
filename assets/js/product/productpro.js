@@ -448,26 +448,17 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             })
         }
        console.log(data)
-       
         tableIns.reload({
             data: data,
             limit: data.length
         });
     }
 
-    function getno(){
-        
-    }
-    
     renderForm1 = function () {
         layui.use('form', function () {
             var form = layui.form;
             form.render();
-            var oldData = table.cache[layTableId];
-            tableIns.reload({
-                data: oldData,
-                limit: viewObj.limit
-            });
+           
         });
     }
 

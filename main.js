@@ -168,6 +168,8 @@ var editbill=ajaxURl+'/Api/PSIInventory/StockBill/Edit'
 var ajaxstockno=ajaxURl+'/Api/PSIInventory/StockBill/BatchNo?keyValue='
 // 出入库列表
 var ajaxstockbilist=ajaxURl+'/Api/PSIInventory/StockBill/GetList?keyword=&PageSize=&PageIndex='
+// 出入库列表+条件
+var ajaxstockbilist=ajaxURl+'/Api/PSIInventory/StockBill/GetList?PageSize=&PageIndex=&keyword='
 // 出入库列表one
 var ajaxstockbionelist=ajaxURl+'/Api/PSIInventory/StockBill/GetList?'
 // 删除出入库

@@ -25,7 +25,7 @@ $.ajax({
             for (var i = 0; i < data.length; i++) {
                 var datanow = data[i]
                 userid.push(datanow.F_Id)
-                // usernick.push(datanow.User_Nick)
+                usernick.push(datanow.User_Nick)
             }  
         } else {
             alert(res.Message)

@@ -137,8 +137,10 @@ function tablerender(str, data) {
 
 
 $(function () {
+    var listlayer=layer.load()
     $(".checklist").on("click", function () {
-        var listlayer=layer.load()
+        var stockname='';
+        stockname=$("#StockBill_Name").val()
         var str = [
             { title: '序号', type: 'numbers' },
             { field: 'StockBill_Name', title: '编号' },
@@ -243,7 +245,7 @@ $(function () {
         $.ajax({
             type: "GET",
             async: false,
-            url: ajaxstockbilist,
+            url: ajaxstockbilist+stockname,
             success: function (res) {
                 var data = res.Data;
                 //console.log(data)
@@ -252,6 +254,7 @@ $(function () {
                     tablerender(str, data);
                     layer.close(listlayer)
                 } else {
+                    layer.close(listlayer)
                     alert(res.Message)
                 }
             }
@@ -266,6 +269,10 @@ $(function () {
         }
 
     }
+
+    $(".audit").on("click",function(){
+        $("#StockBill_Name").val("")
+    })
 
 
 })

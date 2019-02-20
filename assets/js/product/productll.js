@@ -221,31 +221,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         activeByType(type);
     });
 
-     // 批号
-    function getbatno() {
-      
-        var oldData = table.cache[layTableId];
-        console.log(oldData)
-        
-        $.each(maternolist,function(i,v){
-            $.ajax({
-                url: ajaxstockno +v,
-                async: false,
-                success: function (res) {
-                    console.log(res)
-                    if(res.Succeed){
-                        oldData[i].StockBillEntry_BatchNo=res.Data[0].Inventory_BatchNo
-                    }
-                }
-            })
-        })
-        tableIns.reload({
-            data: oldData,
-            limit: viewObj.limit
-        });
-       
-    }
-
     //监听工具条
     table.on('tool(dataTable)', function (obj) {
         var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
@@ -499,11 +474,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         layui.use('form', function () {
             var form = layui.form;
             form.render();
-            var oldData = table.cache[layTableId];
-            tableIns.reload({
-                data: oldData,
-                limit: viewObj.limit
-            });
+            
         });
     }
 

@@ -393,9 +393,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                                 console.log(result)
                                 if(result.Succeed){
                                     var data=result.Data.Details
-                                    
-                                    $.each(data,function(i,value){
-                                      
+                                    $.each(data,function(i,value){                                     
                                         // 含税单价=销售单价*（1+税率/100）
                                         value.SalesInvoiceEntry_TaxPrice = parseFloat(value.StockBillEntry_Price) * (1 + parseFloat(rate) / 100)
                                         // 价税合计=数量*含税单价
@@ -418,6 +416,11 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                                     })
                                 }
                             }
+                        })
+                    }else{
+                        tableIns.reload({
+                            data:[],
+                            limit:1
                         })
                     }
                     

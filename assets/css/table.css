@@ -338,13 +338,7 @@ form .layui-form-label {
     margin-left: 0 !important;
     margin-right: 10px;
 }
-.craftwork .disinput input {
-    width: 100%;
-    line-height: 24px;
-    height: 24px;
-    padding-left: 0;
-    text-indent: 5px;
-}
+
 .disclick{
     background:#ccc !important
 }   
@@ -354,4 +348,14 @@ form .layui-form-label {
 .craftwork .layui-table-edit{
     height: 28px !important;
     line-height: 28px !important;
+}
+.craftwork .disinput input {
+    width: 100%;
+    line-height: 24px;
+    height: 24px;
+    padding-left: 0;
+    text-indent: 2px;
+}
+.layui-input{
+    padding-left:2px !important;
 }
