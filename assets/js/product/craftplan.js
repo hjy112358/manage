@@ -12,10 +12,6 @@ function tablerender(str, data) {
             , limits: [1000, 2000, 3000, 4000, 5000]
             , limit: 1000
             , done: function () {
-                // table.on('rowDouble(dataTable)', function (obj) {
-                //     console.log(obj);
-                //     parent.getproduct(obj.data.F_Id)
-                // });
             }
         });
         return false;
@@ -24,13 +20,11 @@ function tablerender(str, data) {
 
 
 $(function () {
-    var islist = false;
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers', width: '3%' },
             { field: 'AssignCraft_Name', title: '工序代码'},
-            { field: 'AssignCraft_Nick', title: '工序名称'},
-           
+            { field: 'AssignCraft_Nick', title: '工序名称'},           
             {
                 field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=delscale("' + d.F_Id + '")>删除</a>';
@@ -66,7 +60,7 @@ $(function () {
 // 删除
 function delscale(id) {
     var index = layer.confirm('确认删除？', {
-        btn: ['确定12313', '取消'] //按钮
+        btn: ['确定', '取消'] //按钮
     }, function () {
         var token = $.cookie("token");
         $.ajax({

@@ -92,91 +92,11 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             { field: 'Material_Nick', title: '客户料号', width: '200' },
             { field: 'PurchaseApplyEntry_Specifications ', title: '规格型号', width: '100', edit: 'text' },
             { field: 'PurchaseApplyEntry_Unit', title: '单位', width: '50', align: "center" },
-            // {
-            //     field: 'PurchaseApplyEntry_Quantity', title: '<span style="color:red">*  </span>数量', edit: 'text', width: '80', align: "center"
-            // },
-            // {
-            //     field: 'PurchaseApplyEntry_Quantity', title: '单价', edit: 'text', width: '100', align: "right", templet: function (d) {
-            //         if (d.PurchaseApplyEntry_Quantity) {
-            //             var num = parseFloat(d.PurchaseApplyEntry_Quantity);
-            //             num = num.toFixed(2);
-            //         } else if (d.PurchaseApplyEntry_Quantity == '0') {
-            //             num = '0.00'
-            //         } else {
-            //             num = ''
-            //         }
-            //         return num
-            //     }
-            // },
-            // {
-            //     field: 'PurchaseApplyEntry_TaxPrice', title: '含税单价', edit: 'text', width: '100', align: "right", templet: function (d) {
-            //         if (d.PurchaseApplyEntry_TaxPrice) {
-            //             var num = parseFloat(d.PurchaseApplyEntry_TaxPrice);
-            //             num = num.toFixed(2);
-            //         } else if (d.PurchaseApplyEntry_TaxPrice == '0') {
-            //             num = '0.00'
-            //         } else {
-            //             num = ''
-            //         }
-
-            //         return num
-            //     }
-            // },
-            // {
-            //     field: 'PurchaseApplyEntry_Amount', title: '金额', edit: 'text', width: '100', align: "right", templet: function (d) {
-            //         if (d.PurchaseApplyEntry_Amount) {
-            //             var num = parseFloat(d.PurchaseApplyEntry_Amount);
-            //             num = num.toFixed(2);
-            //         } else if (d.PurchaseApplyEntry_Amount == '0') {
-            //             num = '0.00'
-            //         } else {
-            //             num = ''
-            //         }
-
-            //         return num
-            //     }
-            // },
-            // { field: 'PurchaseApplyEntry_TaxRate', title: '税率(%)', edit: 'text', width: '50', align: "center" },
-
-            // {
-            //     field: 'PurchaseApplyEntry_Total', title: '税额', edit: 'text', width: '100', align: "right", templet: function (d) {
-            //         if (d.PurchaseApplyEntry_Total) {
-            //             var num = parseFloat(d.PurchaseApplyEntry_Total);
-            //             num = num.toFixed(2);
-            //         } else if (d.PurchaseApplyEntry_Total == '0') {
-            //             num = '0.00'
-            //         } else {
-            //             num = ''
-            //         }
-
-            //         return num
-            //     }
-            // },
-            // {
-            //     field: 'PurchaseApplyEntry_Tax', title: '价税合计', width: '80', align: "right", templet: function (d) {
-            //         if (d.PurchaseApplyEntry_Tax) {
-            //             var num = parseFloat(d.PurchaseApplyEntry_Tax);
-            //             num = num.toFixed(2);
-            //         } else if (d.PurchaseApplyEntry_Tax == '0') {
-            //             num = '0.00'
-            //         } else {
-            //             num = ''
-            //         }
-
-            //         return num
-            //     }
-            // },
             {
                 field: 'PurchaseApplyEntry_Deadline', title: '<span style="color:red"></span>交货日期', width: '100', align: "center", 
-                // templet: function (d) {
-                //     return '<input type="text" id="PurchaseApplyEntry_Deadline" verify lay-verify="verify" value="' + (d.PurchaseApplyEntry_Deadline || '') + '"  autocomplete="off" class="layui-input layui-input-date"/>';/* onblur="datachange('+d.PurchaseApplyEntry_Deadline+',this)" */
-                // }
             },
             {
                 field: 'PurchaseApplyEntry_Project', title: '<span style="color:red"></span>项目', width: '100', align: "center", 
-                // templet: function (d) {
-                //     return '<input type="text" id="PurchaseApplyEntry_Project" verify lay-verify="verify" value="' + (d.PurchaseApplyEntry_Project || '') + '"  autocomplete="off" class="layui-input layui-input-date"/>';/* onblur="datachange('+d.PurchaseApplyEntry_Project+',this)" */
-                // }
             },
             { field: 'Remark', title: '备注', edit: 'text', width: '200' },
             {
@@ -689,7 +609,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 var select = 'dd[lay-value="' + fId + '"]';
                 $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
                 $("#SalesOrder_ExRate").val(rate)
-                // _this.find("select").next().find('.layui-select-title input').click();
             } else {
                 alert(res.Message)
             }
@@ -735,21 +654,21 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     var username = $.cookie("User_Nick")
     $("#PurchaseApply_Biller").val(mouser)
     $("#PurchaseApply_Billername").val(username)
-    // 申请人
-    var mouser = $.cookie("Modify_User");
-    var username = $.cookie("Employee_Nick")
-    $("#PurchaseApply_Employee").val(mouser)
-    $("#PurchaseApply_Employeename").val(username)
-    // 单据日期
-    var mouser = $.cookie("Modify_User");
-    var username = $.cookie("PurchaseApply_DateTime")
-    $("#PurchaseApply_DateTime").val(mouser)
-    $("#PurchaseApply_DateTimename").val(username)
-    // 单据状态
-    var mouser = $.cookie("Modify_User");
-    var username = $.cookie("DictionaryItem_Nick")
-    $("#PurchaseApply_Status").val(mouser)
-    $("#PurchaseApply_Statusname").val(username)
+    // // 申请人
+    // var mouser = $.cookie("Modify_User");
+    // var username = $.cookie("Employee_Nick")
+    // $("#PurchaseApply_Employee").val(mouser)
+    // $("#PurchaseApply_Employeename").val(username)
+    // // 单据日期
+    // var mouser = $.cookie("Modify_User");
+    // var username = $.cookie("PurchaseApply_DateTime")
+    // $("#PurchaseApply_DateTime").val(mouser)
+    // $("#PurchaseApply_DateTimename").val(username)
+    // // 单据状态
+    // var mouser = $.cookie("Modify_User");
+    // var username = $.cookie("DictionaryItem_Nick")
+    // $("#PurchaseApply_Status").val(mouser)
+    // $("#PurchaseApply_Statusname").val(username)
 
 
     // 采购申请单号
@@ -788,14 +707,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
         }
     });
-
-    function renderForm() {
-        layui.use('form', function () {
-            var form = layui.form;
-            form.render();
-        });
-    }
-
 
     $(document).on("click", function () {
         var evt = event.srcElement ? event.srcElement : event.target;
@@ -878,58 +789,11 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             var nowname = currname[k];
             var nowk = k;
             if (value == nowname) {
-                // viewObj.currtype = nowname;
-                // viewObj.rate = ratelist[nowk]
                 $("#SalesOrder_ExRate").val(ratelist[nowk])
-                // var oldData = table.cache[layTableId];
-                // $.each(tabledata, function (index, value) {
-                //     if (value.currchange == 0) {
-                //         value.PurchaseApplyEntry_Currency = viewObj.currtype
-                //         // value.PurchaseApplyEntry_ExRate = viewObj.rate
-                //     }
-                // });
-                // tableIns.reload({
-                //     data: oldData,
-                //     limit: viewObj.limit
-                // });
             }
         }
 
     });
-
-    // form.on('select(customer)', function (data) {
-    //     console.log(data);
-    //     var rate = ''
-    //     if(data.value){
-    //         if (data.elem.selectedOptions) {
-    //             rate = data.elem.selectedOptions[0].attributes[1].value;
-    //         } else {
-    //             var elems = data.elem;
-    //             for (var i = 0; i < elems.length; i++) {
-    //                 var elemnow = elems[i];
-    //                 if (elemnow.selected) {
-    //                     rate = elemnow.attributes[1].value;
-    //                 }
-    //             }
-    
-    //         }
-    //         // 税率
-    //         // $("#SalesOrder_TaxRate").val(rate);
-    //         // $.each(tabledata, function (index, value) {
-    //         //     if (value.Material_Name) {
-    //         //         value.PurchaseApplyEntry_TaxRate = rate;
-    //         //     }
-    
-    //         // });
-    //     }
-        
-    //     var oldData = table.cache[layTableId];
-    //     tableIns.reload({
-    //         data: oldData,
-    //         limit: viewObj.limit
-    //     });
-
-    // })
 
     $(document).on("click", "td[data-field='PurchaseApplyEntry_Currency']", function () {
         var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
@@ -962,7 +826,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         }, 1000)
                     } else {
                         layer.close(index);
-                        // alert(JSON.parse(res).Message)
                     }
                 }
             })
@@ -971,7 +834,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
     //新增
     var isSend = true;
-    // $("#SalesOrder_Id").val(id)
     $(".add").on("click", function () {
         var list = $("form").serializeArray();
         var data={};
@@ -985,14 +847,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             var nowdata = oldData[j]
             console.log(newdata)
             if (nowdata.PurchaseApply_Deadline) {
-                // newdata.push(nowdata)
                 if (nowdata.PurchaseApply_Deadline == '') {
                     alert("请选择交货时间");
                     isSend = false;
                     return;
                 } else {
                     newdata.push(nowdata)
-                    // continue
                 }
             }
         }

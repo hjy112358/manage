@@ -203,7 +203,7 @@ var purchaseOrderListDel=ajaxURl+'/api/PSIPurchase/PurchaseOrder/Remove'
 // 添加采购订单
 var purchaseSub=ajaxURl + "api/PSIPurchase/PurchaseOrder/Add"
 // 添加采购发票
-var purchaseAdd=ajaxURl+'/api/PSIPurchase/PurchaseInvoice/Add'
+var purchaseAdd=ajaxURl+'/api/PSIPurchase/PurchaseInvoiceEntry/Add'
 // 删除采购发票
 var Delpurchase=ajaxURl+'/api/PSIPurchase/PurchaseInvoice/Remove'
 
