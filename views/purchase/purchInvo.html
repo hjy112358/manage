@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="../../assets/css/view.css" />
     <link rel="stylesheet" href="../../assets/css/table.css">
     <link rel="stylesheet" href="../../assets/css/scalestock.css">
-    <title>采购发票</title>
-
+    <title>销售发票</title>
 </head>
 
 <body class="layui-view-body produwork craftwork">
@@ -19,176 +18,133 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <form class="layui-form">
-                        <div class="btnlist" >
-                            <span class="layui-btn add">新增</span>
+                        <div class="layui-form-lsit fl btnlist">
+                            <!-- <span class="layui-btn add">新增</span> -->
                             <span class="layui-btn sub">保存</span>
-                            <span class="layui-btn audit">审核</span>
-                            <span class="layui-btn changeStatus">变更</span>
-                            <button type="button" class="layui-btn layui-btn-normal" id="testList">上传附件</button>
+                            <span class="layui-btn audit disclick">审核</span>
+                            <span class="layui-btn changeStatus disclick">变更</span>
                         </div>
-
                         <div class="layui-form layui-form-item " style="padding-top:25px;">
-
-                            <div class="form-box clearfix">
+                            <div class="form-box">
                                 <div class="clearfix">
-                                    <div class="layui-upload">
-
-                                        <div >
-                                            <table class="layui-table imgtable">
-                                                <thead id="tablehead">
-
-                                                </thead>
-                                                <tbody id="tablebody"></tbody>
-                                            </table>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="clearfix">
+                                    <input type="hidden" name="IsEnabled" value="true">
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label"><span>*</span> 供应商：</label>
-                                        <div class="layui-input-block " data-type="daten">
-                                            <select name="checkprobegin" class="" id="checkprobegin" lay-search=""
-                                                lay-filter="selecstyle">
-                                                <option value="">选择供应商</option>
+                                        <div class="layui-input-block supplier" data-type="daten">
+                                            <select name="PurchaseInvoice_Customer" class="" id="Supplier_Nick"
+                                                lay-search="" lay-filter="seleccus">
+                                                <option value="">请选择</option>
+                                                <option value="">加载中</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">单据日期：</label>
                                         <div class="layui-input-block ">
-                                            <input type="text" name="date" id="date" lay-verify="date" autocomplete="off"
-                                                class="layui-input">
+                                            <input type="text" name="PurchaseInvoice_DateTime" id="date" lay-verify="date"
+                                                autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
-                                    <!-- <div class="layui-form-lsit fl ">
-                                        <label class="layui-form-label">客户订单号：</label>
-                                        <div class="layui-input-block disinput">
-                                            <input type="text" value="001" id="FBillNo" autocomplete="off">
-                                        </div>
-                                    </div> -->
                                     <div class="layui-form-lsit fl ">
-                                        <label class="layui-form-label">单据编号：</label>
+                                        <label class="layui-form-label">采购发票单号：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="001" disabled id="FBillNo" autocomplete="off">
+                                            <input type="text" value="" readonly name="PurchaseInvoice_Name"
+                                                id="PurchaseInvoice_Name" autocomplete="off">
                                         </div>
                                     </div>
-
-
                                 </div>
-
-
-                                <div class="cleafix">
+                                <div class="clearfix">
                                     <div class="layui-form-lsit fl ">
-                                        <label class="layui-form-label">源单类型：</label>
-                                        <div class="layui-input-block disinput">
-                                            <input type="text" value="" id="FBillNo" autocomplete="off">
+                                        <label class="layui-form-label">开票金额：</label>
+                                        <div class="layui-input-block disinput" data-type="daten">
+                                            <input type="text" name="PurchaseInvoice_Total" id="PurchaseInvoice_Total"
+                                                autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
-                                        <label class="layui-form-label">源单单号：</label>
-                                        <div class="layui-input-block disinput">
-                                            <input type="text" value="" id="FBillNo" autocomplete="off">
+                                        <label class="layui-form-label">币别：</label>
+                                        <div class="layui-input-block currency" data-type="daten">
+                                            <select name="PurchaseInvoice_Currency" class="" id="currency" lay-search=""
+                                                lay-filter="">
+                                                <option value="">请选择币别</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
-                                        <label class="layui-form-label">付款条件：</label>
+                                        <label class="layui-form-label">增值税率(%)：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" id="FBillNo" autocomplete="off">
+                                            <input type="text" value="" id="PurchaseInvoice_TaxRate"
+                                                name="PurchaseInvoice_TaxRate" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">入库金额：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" id="PurchaseInvoiceEntry_Amount"
+                                                name="PurchaseInvoiceEntry_Amount" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">付款日期：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" name="datepay" id="datepay" autocomplete="off">
+                                            <input type="text" name="PurchaseInvoice_Deadline" id="datepay"
+                                                autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
-                                </div>
-
-
-                                <div class="clearfix">
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">备注：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" id="FBillNo" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-lsit fl ">
-                                        <label class="layui-form-label ">币别：</label>
-                                        <div class="layui-input-block currency" data-type="daten">
-                                            <select name="currency" class="" id="currency" lay-search="" lay-filter="">
-                                                <option value="">选择币别</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-lsit fl ">
-                                        <label class="layui-form-label">汇率：</label>
-                                        <div class="layui-input-block disinput">
-                                            <input type="text" value="" id="FBillNo" autocomplete="off">
+                                            <input type="text" value="" id="Remark" name="Remark" autocomplete="off">
                                         </div>
                                     </div>
                                 </div>
 
-                            </div>
-                        </div>
-                        <div id="tablelist">
-                            <section class="productworktable">
-                                <div class="layui-card">
-                                    <div class="layui-card-body layui-text">
-                                        <div id="tableRes" class="table-overlay">
-                                            <table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+                                <div id="tablelist">
+                                    <section class="productworktable">
+                                        <div class="layui-card">
+                                            <div class="layui-card-body layui-text">
+                                                <div id="tableRes" class="table-overlay">
+                                                    <table id="dataTable" lay-filter="dataTable" class="layui-hide">
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">制单人：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" readonly id="PurchaseInvoice_Billername"
+                                                autocomplete="off">
+                                            <input type="hidden" value="" readonly name="PurchaseInvoice_Biller"
+                                                id="PurchaseInvoice_Biller" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">审核人：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" disabled id="zd">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">审核日期：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" disabled id="zd">
                                         </div>
                                     </div>
                                 </div>
-                            </section>
+                            </div>
                         </div>
+
                     </form>
-                    <div class="clearfix">
-                        <div class="layui-form-lsit fl ">
-                            <label class="layui-form-label">制单人：</label>
-                            <div class="layui-input-block disinput">
-                                <input type="text" value="" disabled id="zd">
-                            </div>
-                        </div>
-                        <div class="layui-form-lsit fl ">
-                            <label class="layui-form-label">审核人：</label>
-                            <div class="layui-input-block disinput">
-                                <input type="text" value="" disabled id="zd">
-                            </div>
-                        </div>
-                        <div class="layui-form-lsit fl ">
-                            <label class="layui-form-label">审核日期：</label>
-                            <div class="layui-input-block disinput">
-                                <input type="text" value="" disabled id="zd">
-                            </div>
-                        </div>
-                        <div class="layui-form-lsit fl ">
-                            <label class="layui-form-label">业务员：</label>
-                            <div class="layui-input-block disinput">
-                                <input type="text" value="" disabled id="zd">
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
-
             </div>
         </div>
     </div>
-    </div>
-    </div>
-
-    <script type="text/html" id="selectTool">
-    <select name="term" lay-filter="term" lay-search>
-        <option value="">请选择或输入</option>
-        {{# layui.each(dateslit, function(index, item){ }}
-        <option value="{{item.Material_Name}}">{{ item.Material_Nick }}</option>
-        {{# }); }}
-    </select>
-</script>
-
-
 </body>
 <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
 <script src="../../assets/layui.all.js"></script>

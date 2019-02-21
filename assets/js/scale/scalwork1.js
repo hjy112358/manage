@@ -882,11 +882,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         layui.use('form', function () {
             var form = layui.form;
             form.render();
-            // var oldData = table.cache[layTableId];
-            // tableIns.reload({
-            //     data: oldData,
-            //     limit: viewObj.limit
-            // });
         });
     }
 
@@ -1029,33 +1024,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         $('#tableRes .layui-table-body.layui-table-main').css("height", height)
     })
 
-    // form.on('select(curr)', function (data, e) {
-    //     var elem = data.othis.parents('tr');
-    //     var dataindex = elem.attr("data-index");
-    //     $.each(tabledata, function (index, value) {
-    //         if (value.LAY_TABLE_INDEX == dataindex) {
-    //             value.SalesOrderEntry_Currency = data.value;
-    //             for (var k = 0; k < currname.length; k++) {
-    //                 var nowname = currname[k];
-    //                 var nowk = k;
-    //                 if (data.value == nowname) {
-    //                     value.SalesOrderEntry_ExRate = ratelist[nowk]
-    //                 }
-    //             }
-    //             value.currchange = 1
-    //         }
-    //     });
-    //     var oldData = table.cache[layTableId];
-    //     tableIns.reload({
-    //         data: oldData,
-    //         limit: viewObj.limit
-    //     });
-    // })
-
-    // var idnum = new Date().valueOf().toString();
-    // console.log(typeof idnum)
-    // var id = idnum.substring(0, 8) + '-' + idnum.substring(0, 4) + '-' + idnum.substring(0, 4) + '-' + idnum.substring(0, 12)
-    // $("#SalesOrder_Id").val(id)
     // 暂存
     $(".addedit").on("click", function () {
         var list = $("form").serializeArray();
@@ -1152,7 +1120,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         }
     })
 
-
+    
     $(".hignckick").on("click", function () {
         var _this = $(this)
         var type = _this.attr("data-type");

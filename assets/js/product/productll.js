@@ -277,6 +277,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         });
     });
 
+    // 下拉选择仓库
     form.on('select(StockBillEntry_Stock)', function (data, e) {
         var elem = data.othis.parents('tr');
         var dataindex = elem.attr("data-index");
@@ -495,6 +496,21 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             url: addbill,
             data: data,
             success: function (res) {
+<<<<<<< HEAD
+                console.log(res)
+                var isussecc = res.Succeed;
+                var data = res.Data;
+                if (isussecc) {
+                    layer.close(index);
+                    alert("保存成功");
+                    setInterval(function () {
+                        window.location.reload()
+                    }, 1000)
+                } else {
+                    layer.close(index);
+                    alert(JSON.parse(res).Message)
+                }
+=======
                 var isussecc = res.Succeed;
                 if(isussecc){
                     layer.close(indexlay);
@@ -506,11 +522,79 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                        alert(res.Message)
                    }
 
+>>>>>>> e4ba127605aee1f66e4f30bd968669af9a50117b
             }
         })
         return false
     })
 
+
+
+    //新增
+var isSend = true;
+// $("#SalesOrder_Id").val(id)
+$(".add").on("click", function () {
+    var list = $("form").serializeArray();
+    var data={};
+    var newdata=[];
+    for(var j=0;j<list.length;j++){
+        data[list[j].name]=list[j].value
+    }
+    var oldData = table.cache[layTableId];
+    console.log(oldData)
+    for (var j = 0; j < oldData.length; j++) {
+        var nowdata = oldData[j]
+        console.log(newdata)
+        if (nowdata.PurchaseOrder_Deadline) {
+            // newdata.push(nowdata)
+            if (nowdata.PurchaseOrder_Deadline == '') {
+                alert("请选择交货日期");
+                isSend = false;
+                return;
+            } else {
+                newdata.push(nowdata)
+                // continue
+            }
+        }
+    }
+    console.log(newdata)
+    if (!($("#SupplierMaterial_Supplier").val())) {
+        alert("请选择供应商")
+        isSend = false;
+    } else {
+        isSend = true;
+    }
+    if (!($(this).hasClass("disclick"))) {
+        if (isSend) {
+            var index = layer.load();
+
+            data.Details = newdata;
+            data.SalesOrder_Status="10000"
+            console.log(list)
+            $.ajax({
+                type: "POST",
+                url: purchaseAdd,
+                data: data,
+                success: function (res) {
+                    console.log(res)
+                    var isussecc = res.Succeed;
+                    var data = res.Data;
+                    if (isussecc) {
+                        layer.close(index);
+                        layer.msg("新增成功");
+                        setInterval(function () {
+                            window.location.reload()
+                        }, 1000)
+                    } else {
+                        layer.close(index);
+                        alert(res.Message)
+                    }
+                }
+            })
+        }
+
+    }
+})
 });
 
 
