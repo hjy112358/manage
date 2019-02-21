@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="../../assets/css/mypublic.css">
+    <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="stylesheet" href="../../assets/css/table.css">
+    <link rel="stylesheet" href="../../assets/css/searchlist.css">
+    <title>采购申请列表</title>
+</head>
+
+<body class="layui-view-body produwork craftwork">
+    <div class="layui-content">
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="btnlist">
+                            <span class="layui-btn add">新增</span>
+                            <span class="layui-btn checklist">查询</span>
+                            <span class="layui-btn audit">重置</span>
+                        </div>
+                        <div class="layui-form layui-form-item " style="padding-top:25px;">
+                            <div class="form-box">
+                                <div class="clearfix">
+                                    <!-- <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">订单号：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" id="" name="SalesOrder_Name" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">客户名称：</label>
+                                        <div class="layui-input-block checkcus" data-type="daten">
+                                            <select name="Customer_Nick" class="" id="Customer_Nick" lay-search="" lay-filter="customer">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    -->
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tablelist">
+                            <section class="productworktable">
+                                <div class="layui-card">
+                                    <!-- <i class="iconfont icon-guanbi iconclose"></i> -->
+                                    <div class="layui-card-body layui-text">
+                                        <div id="tableRes" class="table-overlay">
+                                            <table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="printbody"></div>
+</body>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/layui.all.js"></script>
+<script src="../../assets/js/jquery.cookie.js"></script>
+<script src="../../assets/js/jquery.base64.js"></script>
+<script src="../../assets/js/basic/print/jQuery.print.js"></script>
+<script src="../../main.js"></script>
+<script src="../../assets/js/purchase/purchapplist.js"></script>
+<!-- <script src="../assets/js/drop.js"></script> -->
+
+</html>

@@ -54,7 +54,7 @@ function tablerender(str, data) {
         return false;
     })
 }
-var token = $.cookie("token");
+
 
 $(function () {
 

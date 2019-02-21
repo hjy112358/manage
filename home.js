@@ -413,3 +413,17 @@ function getinvo(id){
     $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').trigger('click');
     $('#Nav li.layui-nav-item:eq(3) > dl.layui-nav-child > dd > a:eq(7)').attr("href", oldhref)
 }
+
+// 新增采购申请
+function newpurchapp(){
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(0)').trigger('click');
+}
+// 采购申请详情
+function getpurchapp(id){
+    var oldhref = $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(1)').attr("href");
+    var href = oldhref
+    href = href + '?fid='+id
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(1)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(1)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(1)').attr("href", oldhref)
+}

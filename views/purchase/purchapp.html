@@ -11,70 +11,76 @@
     <link rel="stylesheet" href="../../assets/css/scalestock.css">
     <title>采购申请</title>
     <style>
-        .layui-upload{
-        margin-left:10px;
-    }
-    .layui-input-block.checkmater{
-        margin-left:0
-    }
-    .selectlist{
-    position: absolute;
-left: 0;
-top: 35px;
-/* padding: 5px 0; */
-z-index: 899;
-min-width: 100%;
-border: 1px solid #d2d2d2;
-max-height: 300px;
-overflow-y: auto;
-background-color: #fff;
-border-radius: 2px;
-box-shadow: 0 2px 4px rgba(0,0,0,.12);
-box-sizing: border-box;
-z-index:900
-}
-.selectlist .datelist p{
-    display: inline-block;
-    max-width: 90px;
-table-layout: fixed;
-box-sizing: border-box;
-padding: 0 12px;
-text-align: left;
-border: none;
-border-right: 1px solid #e8ecf0;
-overflow: hidden;
-text-overflow: ellipsis;
-white-space: nowrap;
-height: 30px;
-line-height: 30px;
-text-align: center;
-min-width:90px;
+        .layui-upload {
+            margin-left: 10px;
+        }
 
-}
-.selectlist .datelist  ul li{
-    /* padding: 0 10px; */
-line-height: 36px;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-cursor: pointer;
-line-height: 30px;
-height: 30px;
-}
-.selectlist .datelist ul li.active{
-    background-color: #177ce3;
-    color:#fff;
-}
-.selectlist  .dateload{
-    text-align: center;
-padding: 20px 0px;
-}
-/* .produwork  td[data-field="SalesOrderEntry_Price"] .layui-table-edit,
-.produwork  td[data-field="SalesOrderEntry_Amount"] .layui-table-edit,
-.produwork  td[data-field="SalesOrderEntry_Total"] .layui-table-edit,
-.produwork  td[data-field="SalesOrderEntry_TaxPrice"] .layui-table-edit{
-    text-align:right
-} */
+        .layui-input-block.checkmater {
+            margin-left: 0
+        }
+
+        .selectlist {
+            position: absolute;
+            left: 0;
+            top: 35px;
+            /* padding: 5px 0; */
+            z-index: 899;
+            min-width: 100%;
+            border: 1px solid #d2d2d2;
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #fff;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+            box-sizing: border-box;
+            z-index: 900
+        }
+
+        .selectlist .datelist p {
+            display: inline-block;
+            max-width: 90px;
+            table-layout: fixed;
+            box-sizing: border-box;
+            padding: 0 12px;
+            text-align: left;
+            border: none;
+            border-right: 1px solid #e8ecf0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            min-width: 90px;
+
+        }
+
+        .selectlist .datelist ul li {
+            /* padding: 0 10px; */
+            line-height: 36px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            line-height: 30px;
+            height: 30px;
+        }
+
+        .selectlist .datelist ul li.active {
+            background-color: #177ce3;
+            color: #fff;
+        }
+
+        .selectlist .dateload {
+            text-align: center;
+            padding: 20px 0px;
+        }
+        .productworktable {
+             margin-top: 0px;
+        }
+        #tableRes{
+            padding:0
+        }
     </style>
 </head>
 
@@ -85,14 +91,13 @@ padding: 20px 0px;
                 <div class="layui-card-body">
                     <!-- 查询表单 -->
                     <form class="layui-form">
-                        <div class="btnlist" >
-                            <span class="layui-btn add">新增</span>
+                        <div class="btnlist">
+                            <!-- <span class="layui-btn add ">新增</span> -->
                             <span class="layui-btn sub">保存</span>
-                            <span class="layui-btn audit">审核</span>
+                            <span class="layui-btn audit disclick">审核</span>
                             <span class="layui-btn changeStatus disclick">变更</span>
                             <button type="button" class="layui-btn layui-btn-normal" id="testList">上传附件</button>
                         </div>
-
                         <div class="layui-form layui-form-item " style="padding-top:25px;">
                             <div class="form-box clearfix">
                                 <div class="clearfix">
@@ -100,7 +105,6 @@ padding: 20px 0px;
                                         <div>
                                             <table class="layui-table imgtable">
                                                 <thead id="tablehead">
-
                                                 </thead>
                                                 <tbody id="tablebody"></tbody>
                                             </table>
@@ -108,103 +112,105 @@ padding: 20px 0px;
                                     </div>
                                 </div>
                                 <div class="clearfix">
+                                    <input type="hidden" name="IsEnabled" value="true">
                                     <div class="layui-form-lsit fl">
-                                        <label class="layui-form-label">供应商：</label>
-                                        <div class="layui-input-block supplier " data-type="daten">
-                                            <select name="checkprobegin" class="" id="SupplierMaterial_Supplier" lay-search=""
-                                                lay-filter="selecstyle">
-                                                <option value="">选择供应商</option>
-                                                <option value="">加载中...</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="layui-form-lsit fl">
-                                        <label class="layui-form-label">币别：</label>
-                                        <div class="layui-input-block currency" data-type="daten">
-                                            <select name="SalesOrder_Currency" class="" id="currency" lay-search=""
-                                                lay-filter="currlist">
+                                        <label class="layui-form-label">部门：</label>
+                                        <div class="layui-input-block depart " data-type="daten">
+                                            <select name="PurchaseApply_Department" class=""
+                                                id="PurchaseApply_Department" lay-search="" lay-filter="">
                                                 <option value="">请选择</option>
                                                 <option value="">加载中...</option>
                                             </select>
                                         </div>
                                     </div>
 
-
-
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">单据编号：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" id="PurchaseApply_Name" autocomplete="off">
+                                        </div>
+                                    </div>
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">单据日期：</label>
                                         <div class="layui-input-block ">
-                                            <input type="text" name="SalesOrder_DateTime" id="date" lay-verify="date"
+                                            <input type="text" name="PurchaseApply_DateTime" id="date" lay-verify="date"
                                                 autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">交货日期：</label>
                                         <div class="layui-input-block ">
-                                            <input type="text" name="PurchaseInvoice_Deadline" id="date" lay-verify="date"
-                                                autocomplete="off" class="layui-input">
+                                            <input type="text" name="PurchaseApply_Deadline"
+                                                id="PurchaseApply_Deadline" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">申请原因：</label>
+                                        <div class="layui-input-block disinput">
+                                            <textarea name="PurchaseApply_Reason" id="PurchaseApply_Reason"
+                                                rows="2"></textarea>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
-                                            <label class="layui-form-label">采购申请单号：</label>
-                                            <div class="layui-input-block disinput">
-                                                <input type="text" value="" id="SalesOrder_Name" autocomplete="off">
-                                            </div>
-                                        </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                        <!-- 列表 -->
-                        <div id="tablelist">
-                            <section class="productworktable" data-type="daten">
-                                <div class="layui-card">
-                                    <div class="layui-card-body layui-text">
-                                        <div id="tableRes" class="table-overlay">
-                                            <table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+                                        <label class="layui-form-label">备注：</label>
+                                        <div class="layui-input-block disinput">
+                                            <textarea name="Remark" id="" rows="2"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                            </section>
+                                <!-- 列表 -->
+                                <div id="tablelist">
+                                    <section class="productworktable" data-type="daten">
+                                        <div class="layui-card">
+                                            <div class="layui-card-body layui-text">
+                                                <div id="tableRes" class="table-overlay">
+                                                    <table id="dataTable" lay-filter="dataTable" class="layui-hide">
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">制单人：</label>
+                                        <div class="layui-input-block disinput checkbiller ">
+                                            <input type="text" value="" id="PurchaseApply_Billername" readonly>
+                                            <input type="hidden" value="" id="PurchaseApply_Biller"
+                                                name="PurchaseApply_Biller">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">申请人：</label>
+                                        <div class="layui-input-block emploees">
+                                            <select name="PurchaseApply_Employee" class="" id="PurchaseApply_Employee"
+                                                lay-search="" lay-filter="">
+                                                <option value="">请选择</option>
+                                                <option value="">加载中...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="PurchaseApply_Status" value="10000">
+                                    <!-- <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">单据状态：</label>
+                                        <div class="layui-input-block disinput">
+                                            <input type="text" value="" id="PurchaseApply_Statusname" readonly>
+                                            
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
                         </div>
                     </form>
-                    <div class="clearfix">
-                        <div class="layui-form-lsit fl ">
-                            <label class="layui-form-label">制单人：</label>
-                            <div class="layui-input-block disinput checkbiller " data-type="daten">
-                                <input type="text" value="" id="PurchaseApply_Billername" readonly>
-                                <input type="hidden" value="" id="PurchaseApply_Biller" name="SalesOrder_Biller">
-                            </div>
-                        </div>
-                        <div class="layui-form-lsit fl ">
-                            <label class="layui-form-label">申请人：</label>
-                            <div class="layui-input-block disinput">
-                                <input type="text" value="" id="PurchaseApply_Employeename" readonly>
-                                <input type="hidden" value="" id="PurchaseApply_Employee" name="PurchaseApply_Employee">
-                            </div>
-                        </div>
-                        <div class="layui-form-lsit fl ">
-                            <label class="layui-form-label">单据状态：</label>
-                            <div class="layui-input-block disinput">
-                                <input type="text" value="" id="PurchaseApply_Statusname" readonly>
-                                <input type="hidden" value="" id="PurchaseApply_Status" name="PurchaseApply_Status">
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-
             </div>
         </div>
     </div>
-    </div>
-    </div>
 
-<script type="text/html" id="selectTool">
-    <div class="layui-input-block  layui-select-title layui-form-select checkmater"  id="checkmater">
+    <script type="text/html" id="selectTool">
+        <div class="layui-input-block  layui-select-title layui-form-select checkmater"  id="checkmater">
             <input type="text" placeholder="请选择" value="" class="layui-input materName">
             <i class="layui-edge"></i>
             <div class="selectlist hidden">
@@ -213,12 +219,11 @@ padding: 20px 0px;
                 </div>
                 <div class="datelist hidden">
                     <ul>
-
                     </ul>
                 </div>
             </div>
         </div>
-</script>
+    </script>
 
 
 

@@ -496,7 +496,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             url: addbill,
             data: data,
             success: function (res) {
-<<<<<<< HEAD
                 console.log(res)
                 var isussecc = res.Succeed;
                 var data = res.Data;
@@ -510,19 +509,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                     layer.close(index);
                     alert(JSON.parse(res).Message)
                 }
-=======
-                var isussecc = res.Succeed;
-                if(isussecc){
-                    layer.close(indexlay);
-                    layer.msg("新增成功");
-                    setInterval(function () {
-                        window.location.reload()
-                    }, 1000) 
-                   }else{
-                       alert(res.Message)
-                   }
-
->>>>>>> e4ba127605aee1f66e4f30bd968669af9a50117b
             }
         })
         return false

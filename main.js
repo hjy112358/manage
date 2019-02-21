@@ -198,19 +198,25 @@ var bomlistone=ajaxURl+'/api/PSIBase/BillOfMaterial/GetList?'
 
 // --------------采购模块---------------------------
 // 采购申请
-var purchaseOrder=ajaxURl + "/api/PSIBase/SupplierMaterial/GetList?keyword=&PageIndex=&PageSize="
+var purchaseOrderlist=ajaxURl + "/api/PSIPurchase/PurchaseApply/GetList?keyword=&PageIndex=&PageSize="
 // 添加采购申请
 var addPurchase=ajaxURl+"/api/PSIPurchase/PurchaseApply/Add"
 // 删除采购申请
 var purchaseDel=ajaxURl+'/api/PSIPurchase/PurchaseApply/Remove'
+// 采购申请详情
+var purchaseDetails=ajaxURl+'/api/PSIPurchase/PurchaseApply/GetEntity?keyValue='
+// 采购申请修改
+var purchaseedit=ajaxURl+'/api/PSIPurchase/PurchaseApply/Edit'
 // 采购订单
 var purchaseOrderList=ajaxURl + "/api/PSIPurchase/PurchaseOrder/GetList?keyword=&PageIndex=&PageSize="
+// 采购订单订单类型
+var ajaxchasetype=ajaxURl + "/Api/SystemManager/Dictionary/GetEntry?keyword=PSIPurchaseOrder_Type"
 // 添加采购订单
 var purchaseOrderListAdd=ajaxURl+'/api/PSIPurchase/PurchaseOrder/Add'
 // 删除采购订单
 var purchaseOrderListDel=ajaxURl+'/api/PSIPurchase/PurchaseOrder/Remove'
 // 添加采购订单
-var purchaseSub=ajaxURl + "api/PSIPurchase/PurchaseOrder/Add"
+var purchaseSub=ajaxURl + "/api/PSIPurchase/PurchaseOrder/Add"
 // 添加采购发票
 var purchaseAdd=ajaxURl+'/api/PSIPurchase/PurchaseInvoiceEntry/Add'
 // 删除采购发票

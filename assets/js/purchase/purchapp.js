@@ -1,6 +1,5 @@
 
 var dateslit = [];
-var token = $.cookie("token");
 var currname = [];
 var currnick = [];
 var ratelist = [];
@@ -24,30 +23,20 @@ for (var i = 0; i < 5; i++) {
         Material_Name: '',//物料编号
         Material_Nick: '',//物料名称
         PurchaseApplyEntry_Material: '',//物料--物料id
-        PurchaseApplyEntry_Specifications : '',//规格
-        // PurchaseApplyEntry_Quantity: '',//价格
+        PurchaseApplyEntry_Specifications: '',//规格
         PurchaseApplyEntry_Quantity: '',//数量
         PurchaseApplyEntry_Unit: '',//单位
-        // PurchaseApplyEntry_Amount: '',//总额
-        // PurchaseApplyEntry_TaxRate: '',//税率
-        // PurchaseApplyEntry_Tax: "",//税额
-        // PurchaseApplyEntry_Total: '',//合计
-        // // PurchaseApplyEntry_ExRate: '1',//汇率
         PurchaseApplyEntry_Deadline: '',//交货日期
-        PurchaseApplyEntry_Project :'', //项目
-        Remark: '',//备注
-        PurchaseApplyEntry_SalesOrder: ''
+        PurchaseApplyEntry_Project: '', //项目
+        Remark: '',//备注,
+        PurchaseApplyEntry_Purchase:''
     }
-
     tdata.push(data);
-
 }
 window.viewObj = {
     tbData: tdata,
     limit: 5,
     last: temip[4]
-    // currtype: "55C21484-9E61-4EB8-8496-3137C249130B",
-    // rate: '1'
 };
 var tableIns;
 var upload, table;
@@ -68,9 +57,16 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         laydate = layui.laydate,
         upload = layui.upload,
         element = layui.element;
-    //日期
+    //单据日期
     laydate.render({
         elem: '#date',
+        value: tody,
+        isInitValue: true,
+        btns: ['now', 'confirm']
+    });
+    //交货日期
+    laydate.render({
+        elem: '#PurchaseApply_Deadline',
         value: tody,
         isInitValue: true,
         btns: ['now', 'confirm']
@@ -85,19 +81,20 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         limit: viewObj.limit,
         page: false,
         loading: true,
-        // even: true,
+        // even: true, 
         cols: [[
             { title: '序号', type: 'numbers', width: '50' },
-            { field: 'Material_Name', title: '<span style="color:red">*  </span>物料', templet: '#selectTool', width: '120' },
-            { field: 'Material_Nick', title: '客户料号', width: '200' },
-            { field: 'PurchaseApplyEntry_Specifications ', title: '规格型号', width: '100', edit: 'text' },
+            { field: 'Material_Name', title: '<span style="color:red">*  </span>物料代码', templet: '#selectTool', width: '120' },
+            { field: 'Material_Nick', title: '物料名称', width: '200' },
+            { field: 'PurchaseApplyEntry_Specifications', title: '规格型号', width: '100'},
             { field: 'PurchaseApplyEntry_Unit', title: '单位', width: '50', align: "center" },
             {
-                field: 'PurchaseApplyEntry_Deadline', title: '<span style="color:red"></span>交货日期', width: '100', align: "center", 
+                field: 'PurchaseApplyEntry_Deadline', title: '<span style="color:red">*  </span>交货日期', width: '100', align: "center", templet: function (d) {
+                    return '<input type="text" id="PurchaseApplyEntry_Deadline" verify lay-verify="verify" value="' + (d.PurchaseApplyEntry_Deadline || '') + '"  autocomplete="off" class="layui-input layui-input-date"/>';
+                }
             },
-            {
-                field: 'PurchaseApplyEntry_Project', title: '<span style="color:red"></span>项目', width: '100', align: "center", 
-            },
+            { field: 'PurchaseApplyEntry_Quantity', title: '数量', width: '100',edit:'text'},
+            { field: 'PurchaseApplyEntry_Purchase', title: '已采购数量', width: '100'},
             { field: 'Remark', title: '备注', edit: 'text', width: '200' },
             {
                 field: 'tempId', title: '操作', align: 'center', width: '100', templet: function (d) {
@@ -106,25 +103,21 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
         ]],
         done: function (res, curr, count) {
-
-            // console.log(res.data)
             viewObj.tbData = res.data;
+            console.log(res.data)
             prolist();
-
             $(".layui-input-date").each(function (i) {
                 layui.laydate.render({
                     elem: this,
                     format: "yyyy-MM-dd",
                     done: function (value, date) {
                         if (res && res.data[i]) {
-                            console.log("up")
                             $.extend(res.data[i], { 'PurchaseApplyEntry_Deadline': value })
                         }
                     }
                 });
             });
             tabledata = res.data;
-
             $('tr').each(function (e) {
                 var $cr = $(this);
                 var dataindex = $cr.attr("data-index");
@@ -136,19 +129,14 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     }
                 });
             });
-
-
         }
     });
-
 
     //定义事件集合
     var active = {
         add: function () {	//添加一行
             viewObj.limit = viewObj.limit + 1;
             var oldData = table.cache[layTableId];
-
-            // console.log(oldData);
             var tid = new Date().valueOf();
             var newRow = {
                 tempId: tid,
@@ -156,21 +144,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 Material_Name: '',//物料代码
                 Material_Nick: '',//物料名称
                 PurchaseApplyEntry_Material: '',//物料--物料id
-                // PurchaseApplyEntry_Currency: viewObj.currtype,//币别
-                // PurchaseApplyEntry_Specifications : '',//销售规格
                 PurchaseApplyEntry_Unit: '',//单位
                 PurchaseApplyEntry_Quantity: '',//数量    数量=未税金额/销售单价
-                // PurchaseApplyEntry_Quantity: '',//销售单价
-                // PurchaseApplyEntry_Amount: '',//未税金额 数量*销售单价
-                // PurchaseApplyEntry_TaxRate: "",//税率 
-                // PurchaseApplyEntry_Tax: "",//税额  PurchaseApplyEntry_Tax=PurchaseApplyEntry_Total-PurchaseApplyEntry_Amount
-                // PurchaseApplyEntry_TaxPrice: "",//含税单价 (税率  / 100 * 销售单价) + 销售单价
-                // PurchaseApplyEntry_Total: '',//价税合计  价税合计=未税金额*(1+税率/100)
-                // PurchaseApplyEntry_ExRate: viewObj.rate,//汇率
                 PurchaseApplyEntry_Deadline: "",//交货日期
-                // PurchaseApplyEntry_Project:'',//项目
                 Remark: '',//备注
-                // currchange: '0',
                 PurchaseApplyEntry_SalesOrder: ''
             };
             oldData.push(newRow);
@@ -221,8 +198,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     });
     //监听工具条
     table.on('tool(dataTable)', function (obj) {
-        var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
-
+        var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象
         switch (event) {
             case "state":
                 var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
@@ -243,112 +219,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 break;
         }
     });
-    // table 修改
-    // table.on('edit(dataTable)', function (obj) {
-    //     console.log(obj)
-    //     var field = obj.field;
-    //     var dataindex = $(obj.tr).attr("data-index");
-    //     $.each(tabledata, function (index, value) {
-
-    //         if (value.LAY_TABLE_INDEX == dataindex) {
-    //             if (value.Material_Name == '') {
-    //                 layer.alert("请先选择物料");
-    //                 value.PurchaseApplyEntry_Quantity = '';
-    //                 value.PurchaseApplyEntry_Quantity = '';
-    //                 value.PurchaseApplyEntry_Amount = '';
-    //                 value.PurchaseApplyEntry_TaxRate = '';
-    //                 value.PurchaseApplyEntry_Tax = '';
-    //                 value.PurchaseApplyEntry_TaxPrice = '';
-    //                 value.PurchaseApplyEntry_Total = '';
-    //                 value.PurchaseApplyEntry_Deadline = '';
-    //                 value.Material_Name = '';
-    //             } else {
-    //                 if (field == 'PurchaseApplyEntry_Quantity') {//销售单价
-    //                     value.PurchaseApplyEntry_Quantity = parseFloat(value.PurchaseApplyEntry_Quantity)
-    //                     // 未税金额=数量*销售单价
-    //                     value.PurchaseApplyEntry_Amount = parseFloat(value.PurchaseApplyEntry_Quantity) * parseFloat(value.PurchaseApplyEntry_Quantity)
-    //                     // 含税单价=销售单价*（1+税率/100）
-    //                     value.PurchaseApplyEntry_TaxPrice = parseFloat(value.PurchaseApplyEntry_Quantity) * (1 + parseFloat(value.PurchaseApplyEntry_TaxRate) / 100)
-    //                     // 价税合计=数量*含税单价
-    //                     value.PurchaseApplyEntry_Total = parseFloat(value.PurchaseApplyEntry_Quantity) * parseFloat(value.PurchaseApplyEntry_TaxPrice)
-    //                     // 税额=未税金额*（税率/100）
-    //                     value.PurchaseApplyEntry_Tax = parseFloat(value.PurchaseApplyEntry_Amount) * (parseFloat(value.PurchaseApplyEntry_TaxRate) / 100)
-
-    //                 } else if (field == 'PurchaseApplyEntry_Quantity') {//数量
-    //                     value.PurchaseApplyEntry_Quantity = parseFloat(value.PurchaseApplyEntry_Quantity)
-    //                     // 未税金额=数量*销售单价
-    //                     value.PurchaseApplyEntry_Amount = parseFloat(value.PurchaseApplyEntry_Quantity) * parseFloat(value.PurchaseApplyEntry_Quantity)
-    //                     // 含税单价=销售单价*（1+税率/100）
-    //                     value.PurchaseApplyEntry_TaxPrice = parseFloat(value.PurchaseApplyEntry_Quantity) * (1 + parseFloat(value.PurchaseApplyEntry_TaxRate) / 100)
-    //                     // 价税合计=数量*含税单价
-    //                     value.PurchaseApplyEntry_Total = parseFloat(value.PurchaseApplyEntry_Quantity) * parseFloat(value.PurchaseApplyEntry_TaxPrice)
-    //                     // 税额=未税金额*（税率/100）
-    //                     value.PurchaseApplyEntry_Tax = parseFloat(value.PurchaseApplyEntry_Amount) * (parseFloat(value.PurchaseApplyEntry_TaxRate) / 100)
-    //                     // value.PurchaseApplyEntry_Quantity='0'
-
-    //                 } else if (field == 'PurchaseApplyEntry_TaxPrice') {//含税单价
-    //                     value.PurchaseApplyEntry_TaxPrice = parseFloat(value.PurchaseApplyEntry_TaxPrice)
-    //                     // 销售单价=含税单价/(1+税率/100)
-    //                     value.PurchaseApplyEntry_Quantity = parseFloat(value.PurchaseApplyEntry_TaxPrice) / (1 + parseFloat(value.PurchaseApplyEntry_TaxRate) / 100)
-    //                     // 未税金额=数量*销售单价
-    //                     value.PurchaseApplyEntry_Amount = parseFloat(value.PurchaseApplyEntry_Quantity) * parseFloat(value.PurchaseApplyEntry_Quantity)
-    //                     // 价税合计=数量*含税单价
-    //                     value.PurchaseApplyEntry_Total = parseFloat(value.PurchaseApplyEntry_Quantity) * parseFloat(value.PurchaseApplyEntry_TaxPrice)
-    //                     // 税额=未税金额*（税率/100）
-    //                     value.PurchaseApplyEntry_Tax = parseFloat(value.PurchaseApplyEntry_Amount) * (parseFloat(value.PurchaseApplyEntry_TaxRate) / 100)
 
 
-    //                 } else if (field == 'PurchaseApplyEntry_Amount') {//未税金额 
-    //                     value.PurchaseApplyEntry_Amount = parseFloat(value.PurchaseApplyEntry_Amount)
-    //                     // 销售单价=未税金额/数量
-    //                     value.PurchaseApplyEntry_Quantity = parseFloat(value.PurchaseApplyEntry_Amount) / parseFloat(value.PurchaseApplyEntry_Quantity)
-    //                     // 含税单价=销售单价*（1+税率/100）
-    //                     value.PurchaseApplyEntry_TaxPrice = parseFloat(value.PurchaseApplyEntry_Quantity) * (1 + parseFloat(value.PurchaseApplyEntry_TaxRate) / 100)
-    //                     // 价税合计=数量*含税单价
-    //                     value.PurchaseApplyEntry_Total = parseFloat(value.PurchaseApplyEntry_Quantity) * parseFloat(value.PurchaseApplyEntry_TaxPrice)
-    //                     // 税额=未税金额*（税率/100）
-    //                     value.PurchaseApplyEntry_Tax = parseFloat(value.PurchaseApplyEntry_Amount) * (parseFloat(value.PurchaseApplyEntry_TaxRate) / 100)
-
-
-    //                 } else if (field == 'PurchaseApplyEntry_Total') { //价税合计 
-    //                     value.PurchaseApplyEntry_Total = parseFloat(value.PurchaseApplyEntry_Total)
-    //                     // 含税单价=价税合计/数量
-    //                     value.PurchaseApplyEntry_TaxPrice = parseFloat(value.PurchaseApplyEntry_Total) / parseFloat(value.PurchaseApplyEntry_Quantity)
-    //                     // 销售单价=含税单价/（1+税率/100）
-    //                     value.PurchaseApplyEntry_Quantity = parseFloat(value.PurchaseApplyEntry_TaxPrice) / (1 + parseFloat(value.PurchaseApplyEntry_TaxRate) / 100)
-
-    //                     // 未税金额=数量*销售单价
-    //                     value.PurchaseApplyEntry_Amount = parseFloat(value.PurchaseApplyEntry_Quantity) * parseFloat(value.PurchaseApplyEntry_Quantity)
-    //                     // 税额=未税金额*（税率/100）
-    //                     value.PurchaseApplyEntry_Tax = parseFloat(value.PurchaseApplyEntry_Amount) * (parseFloat(value.PurchaseApplyEntry_TaxRate) / 100)
-
-    //                 } else if (field == 'PurchaseApplyEntry_TaxRate') {//税率
-    //                     value.PurchaseApplyEntry_TaxRate = parseFloat(value.PurchaseApplyEntry_TaxRate)
-    //                     // 含税单价=销售单价*（1+税率/100）
-    //                     value.PurchaseApplyEntry_TaxPrice = parseFloat(value.PurchaseApplyEntry_Quantity) * (1 + parseFloat(value.PurchaseApplyEntry_TaxRate || '0') / 100)
-    //                     // 未税金额=数量*销售单价
-    //                     value.PurchaseApplyEntry_Amount = parseFloat(value.PurchaseApplyEntry_Quantity) * parseFloat(value.PurchaseApplyEntry_Quantity)
-    //                     // 价税合计=数量*含税单价
-    //                     value.PurchaseApplyEntry_Total = parseFloat(value.PurchaseApplyEntry_Quantity) * parseFloat(value.PurchaseApplyEntry_TaxPrice)
-    //                     // 税额=未税金额*（税率/100）
-    //                     value.PurchaseApplyEntry_Tax = parseFloat(value.PurchaseApplyEntry_Amount) * (parseFloat(value.PurchaseApplyEntry_TaxRate || '0') / 100)
-    //                 }
-
-
-
-    //             }
-    //         }
-
-
-    //     });
-    //     var oldData = table.cache[layTableId];
-    //     tableIns.reload({
-    //         data: oldData,
-    //         limit: viewObj.limit
-    //     });
-    // });
-
-   // 渲染表格
+    // 渲染表格
     var htmlterm = '';
     var arrlist = [];
     var arri = {};
@@ -356,12 +229,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         $(".productworktable td[data-field='Material_Name']").each(function () {
             var curnow = $(this);
             curnow.on("click", function () {
-                // console.log(1);
                 var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
                 var height = $('#tableRes .layui-table-body.layui-table-main').height() + scrollHeight + 80;
                 $('#tableRes .layui-table-body.layui-table-main').css("height", height)
                 var _this = $(this);
-                // data-index无
                 var dataindex = _this.parents("tr").attr("data-index");
                 _this.find(".checkmater").addClass("layui-form-selected")
                 var date = $(".productworktable").attr("data-type");
@@ -381,11 +252,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     $.ajax({
                         url: ajaxMater,
                         success: function (res) {
-                            console.log(res)
                             $(".dateload").addClass("hidden")
                             $(".datelist").removeClass("hidden")
                             var data = res.Data;
-                            console.log(data)
                             var isussecc = res.Succeed;
                             if (isussecc) {
                                 for (var i = 0; i < data.length; i++) {
@@ -431,24 +300,16 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                         var measure = $(this).attr("data-materme");
                                         var marid = $(this).attr("data-materid")
                                         $(".materName").val(name || '');
-                                        // var rate = $("#SalesOrder_TaxRate").val();//税率
-                                        var sendate = $("#recdate").val();//交货日期
+                                        var sendate = $("#PurchaseApply_Deadline").val();//交货日期
                                         $.each(tabledata, function (index, value) {
                                             if (value.LAY_TABLE_INDEX == dataindex) {
                                                 value.Material_Name = name || "";
                                                 value.Material_Nick = nick || "";
-                                                value.PurchaseApplyEntry_Specifications  = specife || "";
+                                                value.PurchaseApplyEntry_Specifications = specife || "";
                                                 value.PurchaseApplyEntry_Material = marid || "";
                                                 value.PurchaseApplyEntry_Unit = measure
-                                                value.PurchaseApplyEntry_Quantity = 1;//数量
-                                                // value.PurchaseApplyEntry_Quantity = 0.00;//销售单价
-                                                // value.PurchaseApplyEntry_TaxRate = rate || '16';//税率
-                                                // value.PurchaseApplyEntry_Deadline = sendate || '';//交货日期
-                                                // value.PurchaseApplyEntry_TaxPrice = 0;//含税单价
-                                                // value.PurchaseApplyEntry_Amount = 0;//未税金额
-                                                // value.PurchaseApplyEntry_Total = 0;//价税合计
-                                                // value.PurchaseApplyEntry_Tax = 0;//税额
-                                                // value.PurchaseApplyEntry_Project=project || "";
+                                                value.PurchaseApplyEntry_Quantity = 0;//数量
+                                                value.PurchaseApplyEntry_Deadline=sendate
                                                 if (value.tempId == viewObj.last) {
                                                     activeByType("add");
                                                 } else {
@@ -465,7 +326,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                         return false
                                     })
                                 })
-                            }else{
+                            } else {
                                 alert(res.Message)
                             }
 
@@ -532,24 +393,17 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                             var marid = $(this).attr("data-materid")
                             $(".materName").val(name || '');
                             // var rate = $("#SalesOrder_TaxRate").val();//税率
-                            var sendate = $("#recdate").val();//交货日期
+                            var sendate = $("#PurchaseApply_Deadline").val();//交货日期
                             $.each(tabledata, function (index, value) {
                                 // console.log(value)
                                 if (value.LAY_TABLE_INDEX == dataindex) {
                                     value.Material_Name = name || "";
                                     value.Material_Nick = nick || "";
-                                    value.PurchaseApplyEntry_Specifications  = specife || "";
+                                    value.PurchaseApplyEntry_Specifications = specife || "";
                                     value.PurchaseApplyEntry_Material = marid || "";
                                     value.PurchaseApplyEntry_Unit = measure;
-                                    // value.PurchaseApplyEntry_Quantity = 1;//数量
-                                    // value.PurchaseApplyEntry_Quantity = 0.00;//销售单价
-                                    // value.PurchaseApplyEntry_TaxRate = rate || '16';//税率
-                                    // value.PurchaseApplyEntry_Deadline = sendate || '';//交货日期
-                                    // value.PurchaseApplyEntry_TaxPrice = 0;//含税单价
-                                    // value.PurchaseApplyEntry_Amount = 0;//未税金额
-                                    // value.PurchaseApplyEntry_Total = 0;//价税合计
-                                    // value.PurchaseApplyEntry_Tax = 0;//税额
-                                    // value.PurchaseApplyEntry_Project=project || "";
+                                    value.PurchaseApplyEntry_Quantity = 0;//数量
+                                    value.PurchaseApplyEntry_Deadline=sendate
                                     if (value.tempId == viewObj.last) {
                                         activeByType("add");
                                     } else {
@@ -573,141 +427,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
         })
     }
-
-
-    // 币别--
-    $.ajax({
-        type: "get",
-        url: ajaxCurrency,
-        success: function (res) {
-            var isussecc = res.Succeed;
-            var data = res.Data;
-            var fId = '';
-            var rate = "";
-            if (isussecc) {
-                var html = '<option value="">请选择币别</option>';
-                var htmlOption = '<dd lay-value="" class="layui-select-tips layui-this">请选择币别</dd>'
-                for (var i = 0; i < data.length; i++) {
-                    // Currency_Name: "M0001"
-                    //Currency_Nick: "人民币"
-                    dateslit.push(data[i])
-                    var dataNow = data[i];
-                    if (dataNow.Currency_Nick == '人民币') {
-                        fId = dataNow.F_Id;
-                        rate = dataNow.Currency_ExRate
-                    }
-                    html += '<option value="' + dataNow.F_Id + '" >' + dataNow.Currency_Nick + '</option>';
-                    htmlOption += '<dd lay-value="' + dataNow.F_Id + '">' + dataNow.Currency_Nick + '</dd>'
-                    currname.push(dataNow.F_Id)
-                    currnick.push(dataNow.Currency_Nick)
-                    currnamshow.push(dataNow.Currency_Name)
-                    ratelist.push(dataNow.Currency_ExRate)
-                }
-                $("#currency").html(html);
-                $(".currency .layui-anim.layui-anim-upbit").html(htmlOption);
-                renderForm();
-                var select = 'dd[lay-value="' + fId + '"]';
-                $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
-                $("#SalesOrder_ExRate").val(rate)
-            } else {
-                alert(res.Message)
-            }
-        }
-    })
-
-    // 供应商
-    $(".supplier").on("click", function () {
-        var _this = $(this);
-        var date = _this.attr("data-type");
-        if (date == 'daten') {
-            $(".supplier").attr("data-type", "datey");
-            $.ajax({
-                type: "get",
-                url:ajaxSupplier,
-                success: function (res) {
-                    // console.log(res)
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        var html = '<option value="">全部</option>';
-                        var htmlOption = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                        for (var i = 0; i < data.length; i++) {
-                            html += '<option value="' + data[i].F_Id + '" >' + data[i].Supplier_Nick + '</option>';
-                            htmlOption += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].Supplier_Nick + '</dd>'
-                        }
-                        $("#SupplierMaterial_Supplier").html(html);
-                        $(".supplier .layui-anim.layui-anim-upbit").html(htmlOption);
-                        renderForm();
-                        _this.find("select").next().find('.layui-select-title input').click();
-                        // Customer_TaxRate 税率   
-                    } else {
-                        alert(res.Message)
-                    }
-
-                }
-            })
-        }
-    })
-
-    // 制单人
-    var mouser = $.cookie("Modify_User");
-    var username = $.cookie("User_Nick")
-    $("#PurchaseApply_Biller").val(mouser)
-    $("#PurchaseApply_Billername").val(username)
-    // // 申请人
-    // var mouser = $.cookie("Modify_User");
-    // var username = $.cookie("Employee_Nick")
-    // $("#PurchaseApply_Employee").val(mouser)
-    // $("#PurchaseApply_Employeename").val(username)
-    // // 单据日期
-    // var mouser = $.cookie("Modify_User");
-    // var username = $.cookie("PurchaseApply_DateTime")
-    // $("#PurchaseApply_DateTime").val(mouser)
-    // $("#PurchaseApply_DateTimename").val(username)
-    // // 单据状态
-    // var mouser = $.cookie("Modify_User");
-    // var username = $.cookie("DictionaryItem_Nick")
-    // $("#PurchaseApply_Status").val(mouser)
-    // $("#PurchaseApply_Statusname").val(username)
-
-
-    // 采购申请单号
-    $.ajax({
-        type: "get",
-        url: ordernum,
-        success: function (res) {
-            // console.log(res)
-            var isussecc = res.Succeed;
-            var data = res.Data;
-            if (isussecc) {
-                $("#SalesOrder_Name").val(data)
-            } else {
-                alert(res.Message)
-            }
-        }
-    })
-
-    // 审核日期
-    laydate.render({
-        elem: '#shrq',
-        isInitValue: true,
-        btns: ['now', 'confirm'],
-        done: function (val) {
-            $.each(tabledata, function (index, value) {
-                if (value.PurchaseApplyEntry_Deadline == '' && value.Material_Name != '') {
-                    value.PurchaseApplyEntry_Deadline = val;
-                }
-                var oldData = table.cache[layTableId];
-                tableIns.reload({
-                    data: oldData,
-                    limit: viewObj.limit
-                });
-
-            });
-
-        }
-    });
-
     $(document).on("click", function () {
         var evt = event.srcElement ? event.srcElement : event.target;
         var seletlist = $(".selectlist");
@@ -739,6 +458,98 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
 
 
+    // 制单人
+    var mouser = $.cookie("Modify_User");
+    var username = $.cookie("User_Nick")
+    $("#PurchaseApply_Biller").val(mouser)
+    $("#PurchaseApply_Billername").val(username)
+
+    // 部门
+    $(".depart").on("click", function () {
+        var _this = $(this);
+        var date = _this.attr("data-type");
+        if (date == 'daten') {
+            $(".depart").attr("data-type", "datey");
+            $.ajax({
+                type: "get",
+                url: ajaxdepart,
+                success: function (res) {
+                    console.log(res)
+                    var isussecc = res.Succeed;
+                    var data = res.Data;
+                    if (isussecc) {
+                        var html = '<option value="">全部</option>';
+                        var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+                        for (var i = 0; i < data.length; i++) {
+                            html += '<option value="' + data[i].F_Id + '" >' + data[i].Department_Nick + '</option>';
+                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].Department_Nick + '</dd>'
+                        }
+                        $("#PurchaseApply_Department").html(html);
+                        $(".depart .layui-anim.layui-anim-upbit").html(htmlsel);
+                        renderForm();
+                        _this.find("select").next().find('.layui-select-title input').click();
+
+                    } else {
+                        alert(res.Message)
+                    }
+
+                }
+            })
+        }
+    })
+
+    // 申请人
+    $.ajax({
+        type: "get",
+        url: ajaxUsr,
+        success: function (res) {
+            //console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data;
+            if (isussecc) {
+                var html = '<option value="">全部</option>';
+                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+                for (var i = 0; i < data.length; i++) {
+                    var datanow = data[i];
+                    html += '<option value="' + datanow.F_Id + '">' + datanow.User_Nick + '</option>';
+                    htmlsel += '<dd lay-value="' + datanow.F_Id + '" >' + datanow.User_Nick + '</dd>';
+                }
+                $("#PurchaseApply_Employee").html(html);
+                $(".emploees .layui-anim.layui-anim-upbit").html(htmlsel);
+                renderForm()
+                var select = 'dd[lay-value="' + mouser + '"]';
+                $('#PurchaseApply_Employee').siblings("div.layui-form-select").find('dl').find(select).click();
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
+
+    // 采购申请单号
+    $.ajax({
+        type: "get",
+        url: getnum,
+        success: function (res) {
+            // console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data;
+            if (isussecc) {
+                $("#PurchaseApply_Name").val(data)
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
+
+    function renderForm() {
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+    }
+
+
+
     //多文件列表示例
     var tablehead = $('#tablehead');
     var tablebody = $('#tablebody');
@@ -746,7 +557,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     var headhtml = "<tr><th>文件名</th><th>大小</th><th>操作</th></tr>";
     var uploadListIns = upload.render({
         elem: '#testList',
-        url:'/Api/PSIBase/FileInput/SetFile'
+        url: '/Api/PSIBase/FileInput/SetFile'
         , accept: 'file'
         , multiple: true
         , auto: false
@@ -783,18 +594,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     });
 
 
-    form.on('select(currlist)', function (data) {
-        var value = data.value;
-        for (var k = 0; k < currname.length; k++) {
-            var nowname = currname[k];
-            var nowk = k;
-            if (value == nowname) {
-                $("#SalesOrder_ExRate").val(ratelist[nowk])
-            }
-        }
-
-    });
-
     $(document).on("click", "td[data-field='PurchaseApplyEntry_Currency']", function () {
         var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
         var height = $('#tableRes .layui-table-body.layui-table-main').height() + scrollHeight;
@@ -804,37 +603,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
 
     // 保存
-    $(".sub").on("click", function () {
-        var list = $("form").serializeArray();
-        var oldData = table.cache[layTableId];
-        list.Details = oldData;
-        if (!($(this).hasClass("audit"))) {
-            var index = layer.load();
-            $.ajax({
-                type: "POST",
-                url: addPurchase,
-                data: list,
-                success: function (res) {
-                    // console.log(res)
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        layer.close(index);
-                        layer.msg("保存成功");
-                        setInterval(function () {
-                            window.location.reload()
-                        }, 1000)
-                    } else {
-                        layer.close(index);
-                    }
-                }
-            })
-        }
-    })
-
-    //新增
     var isSend = true;
-    $(".add").on("click", function () {
+    $(".sub").on("click", function () {
         var list = $("form").serializeArray();
         var data={};
         var newdata=[];
@@ -842,45 +612,37 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             data[list[j].name]=list[j].value
         }
         var oldData = table.cache[layTableId];
-        // console.log(oldData)
         for (var j = 0; j < oldData.length; j++) {
             var nowdata = oldData[j]
-            console.log(newdata)
-            if (nowdata.PurchaseApply_Deadline) {
-                if (nowdata.PurchaseApply_Deadline == '') {
-                    alert("请选择交货时间");
+            if (nowdata.PurchaseApplyEntry_Deadline) {
+                // newdata.push(nowdata)
+                if (nowdata.PurchaseApplyEntry_Deadline == '') {
+                    alert("请选择交货日期");
                     isSend = false;
                     return;
                 } else {
                     newdata.push(nowdata)
+                   
                 }
             }
         }
-        // console.log(newdata)
-        if (!($("#SupplierMaterial_Supplier").val())) {
-            alert("请选择供应商")
-            isSend = false;
-        } else {
-            isSend = true;
-        }
-        if (!($(this).hasClass("audit"))) {
+        if (!($(this).hasClass("disclick"))) {
             if (isSend) {
                 var index = layer.load();
-
                 data.Details = newdata;
-                data.SalesOrder_Status="10000"
-                // console.log(list)
+                console.log(list)
+                console.log(data)
                 $.ajax({
                     type: "POST",
                     url: addPurchase,
                     data: data,
                     success: function (res) {
-                        // console.log(res)
+                        console.log(res)
                         var isussecc = res.Succeed;
                         var data = res.Data;
                         if (isussecc) {
                             layer.close(index);
-                            layer.msg("审核成功");
+                            layer.msg("新增成功");
                             setInterval(function () {
                                 window.location.reload()
                             }, 1000)
@@ -896,23 +658,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     })
 
 
+
 });
 
 
 
-
-function datachange(data, e) {
-    // console.log("down")
-    var dataindex = $(e).parent().parent().parent().attr("data-index");
-    var oldData = table.cache[layTableId];
-    $.each(oldData, function (index, value) {
-        if (value.LAY_TABLE_INDEX == dataindex) {
-            value.deadlinchage = 1;
-            value.PurchaseApplyEntry_Deadline = data
-        }
-    });
-    tableIns.reload({
-        data: oldData,
-        limit: viewObj.limit
-    });
-}
