@@ -1,57 +1,8 @@
-
-// 添加列表数据
-var dataList = [];
-var token = $.cookie("token");
-// 记录id号
-var currentId = [];
-// 物料集合
-var currentNike = [];
-// 税率集合
-var ratelAdd = [];
-// 号码集合
-var currentName = [];
-// var first = new Date().valueOf();
-// 数据源
-var tData = [];
-// var tempid = [];
-var temip = [];
-function getTid(i) {
-    return (new Date().valueOf()) + i
-}
-for (var i = 0; i < 5; i++) {
-    var k = i
-    temip.push(getTid(k))
-}
-
-
-// 向下添加对应表头
-for (var i = 0; i < 5; i++) {
-    var data = {
-        tempId: temip[i],
-        state: 0,
-        Material_Name: '',//物料编号
-        Material_Nick: '',//物料名称
-        PurchaseOrderEntry_Material: '',//物料id
-        PurchaseOrderEntry_Specifications : '',//销售规格
-        PurchaseOrderEntry_Unit: '',//单位
-        PurchaseOrderEntry_Quantity: '',//数量    数量=未税金额/销售单价
-        PurchaseOrderEntry_Price: '',//销售单价
-        PurchaseOrderEntry_Amount: '',//未税金额 数量*销售单价
-        PurchaseOrderEntry_TaxRate: "",//税率 
-        PurchaseOrderEntry_Tax: "",//税额 PurchaseOrderEntry_Tax=PurchaseInvoiceEntry_Total-PurchaseInvoiceEntry_Amount
-        PurchaseOrderEntry_TaxPrice: "",//含税单价 (税率  / 100 * 销售单价) + 销售单价
-        PurchaseOrderEntry_Total: '',//价税合计  价税合计=未税金额*(1+税率/100)
-        PurchaseOrderEntry_ExRate: '1',//汇率
-        PurchaseOrderEntry_Deadline: "",//交货日期
-        PurchaseOrderEntry_Project:'',//项目
-    }
-    tData.push(data);
-
-}
+var first = new Date().valueOf();
 window.viewObj = {
-    tbData: tData,
-    limit: 5,
-    last: temip[4]
+    tbData: [],
+    limit: 1,
+    last: first
 };
 var tableIns;
 var upload, table;
@@ -74,7 +25,14 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         element = layui.element;
     //日期
     laydate.render({
-        elem: '#date',
+        elem: '#PurchaseOrder_DateTime',
+        value: today,
+        isInitValue: true,
+        btns: ['now', 'confirm']
+    });
+    //日期
+    laydate.render({
+        elem: '#PurchaseOrder_Deadline',
         value: today,
         isInitValue: true,
         btns: ['now', 'confirm']
@@ -112,7 +70,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         done: function (res) {
             // console.log(res.data)
             viewObj.tbData = res.data;
-           
             $(".layui-input-date").each(function (i) {
                 layui.laydate.render({
                     elem: this,
@@ -137,12 +94,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     }
                 });
             });
-
-
         }
     });
-
-
     //定义事件集合
     var active = {
         // 更新每行数据
@@ -171,7 +124,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     //监听工具条
     table.on('tool(dataTable)', function (obj) {
         var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
-
         switch (event) {
             case "state":
                 var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
@@ -192,8 +144,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 break;
         }
     });
-
-
 
     // 获取单据编号
     // $.ajax({
@@ -300,7 +250,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         }
                         $("#order").html(html);
                         $(".checkid .layui-anim.layui-anim-upbit").html(htmlsel);
-                        renderFormNext();
+                        renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
 
                     } else {
@@ -313,7 +263,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     })
 
     // 切换订单号
-    layui.form.on('select(changeorder)', function (data) {
+    layui.form.on('select(chaseorder)', function (data) {
         if (data.value != '') {
             $.ajax({
                 type: "get",
@@ -349,8 +299,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             })
         }
     })
-    // 重选表格渲染
-    renderFormNext = function () {
+    
+    renderForm = function () {
         layui.use('form', function () {
             var form = layui.form;
             form.render();
@@ -362,56 +312,100 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         });
     }
 
-        // 制单人
+    // 制单人
     var mouser = $.cookie("Modify_User");
     var username = $.cookie("User_Nick")
-    $("#PurchaseApply_Biller").val(mouser)
-    $("#PurchaseApply_Billername").val(username)
-    // // 申请人
-    // var mouser = $.cookie("Modify_User");
-    // var username = $.cookie("Employee_Nick")
-    // $("#PurchaseApply_Employee").val(mouser)
-    // $("#PurchaseApply_Employeename").val(username)
-    // // 单据日期
-    // var mouser = $.cookie("Modify_User");
-    // var username = $.cookie("PurchaseApply_DateTime")
-    // $("#PurchaseApply_DateTime").val(mouser)
-    // $("#PurchaseApply_DateTimename").val(username)
-    // // 单据状态
-    // var mouser = $.cookie("Modify_User");
-    // var username = $.cookie("DictionaryItem_Nick")
-    // $("#PurchaseApply_Status").val(mouser)
-    // $("#PurchaseApply_Statusname").val(username)
+    $("#PurchaseOrder_Biller").val(mouser)
+    $("#PurchaseOrder_Billername").val(username)
 
+    // 业务员
+    $.ajax({
+        type: "get",
+        url: ajaxUsr,
+        success: function (res) {
+            //console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data;
+            if (isussecc) {
+                var html = '<option value="">全部</option>';
+                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+                for (var i = 0; i < data.length; i++) {
+                    var datanow = data[i];
+                    html += '<option value="' + datanow.F_Id + '">' + datanow.User_Nick + '</option>';
+                    htmlsel += '<dd lay-value="' + datanow.F_Id + '" >' + datanow.User_Nick + '</dd>';
+                }
+                $("#PurchaseOrder_Employee").html(html);
+                $(".employees .layui-anim.layui-anim-upbit").html(htmlsel);
+                renderForm()
+                var select = 'dd[lay-value="' + mouser + '"]';
+                $('#PurchaseOrder_Employee').siblings("div.layui-form-select").find('dl').find(select).click();
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
 
-    // 保存
-    $(".sub").on("click", function () {
-        var list = $("form").serializeArray();
-        var oldData = table.cache[layTableId];
-        list.Details = oldData;
-        if (!($(this).hasClass("audit"))) {
-            var index = layer.load();
+    // 供应商
+    $(".supplier").on("click", function () {
+        var _this = $(this);
+        var date = _this.attr("data-type");
+        if (date == 'daten') {
+            $(".supplier").attr("data-type", "datey");
             $.ajax({
-                type: "POST",
-                url: purchaseOrderListAdd,
-                data: list,
+                type: "get",
+                url:ajaxsupplist,
                 success: function (res) {
-                    // console.log(res)
+                    console.log(res)
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
-                        layer.close(index);
-                        layer.msg("保存成功");
-                        setInterval(function () {
-                            window.location.reload()
-                        }, 1000)
+                        var html = '<option value="">全部</option>';
+                        var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+                        for (var i = 0; i < data.length; i++) {
+                            html += '<option value="' + data[i].F_Id + '" data-rate="' + data[i].Supplier_TaxRate + '">' + data[i].Supplier_Nick + '</option>';
+                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" data-rate="' + data[i].Supplier_TaxRate + '">' + data[i].Supplier_Nick + '</dd>'
+                        }
+                        $("#PurchaseOrder_Supplier").html(html);
+                        $(".supplier .layui-anim.layui-anim-upbit").html(htmlsel);
+                        renderForm();
+                        _this.find("select").next().find('.layui-select-title input').click();
+                       
                     } else {
-                        layer.close(index);
+                        alert(res.Message)
                     }
+
                 }
             })
         }
     })
+    // 保存
+    // $(".sub").on("click", function () {
+    //     var list = $("form").serializeArray();
+    //     var oldData = table.cache[layTableId];
+    //     list.Details = oldData;
+    //     if (!($(this).hasClass("audit"))) {
+    //         var index = layer.load();
+    //         $.ajax({
+    //             type: "POST",
+    //             url: purchaseOrderListAdd,
+    //             data: list,
+    //             success: function (res) {
+    //                 // console.log(res)
+    //                 var isussecc = res.Succeed;
+    //                 var data = res.Data;
+    //                 if (isussecc) {
+    //                     layer.close(index);
+    //                     layer.msg("保存成功");
+    //                     setInterval(function () {
+    //                         window.location.reload()
+    //                     }, 1000)
+    //                 } else {
+    //                     layer.close(index);
+    //                 }
+    //             }
+    //         })
+    //     }
+    // })
 });
      //多文件上传列表示例
      var tablehead = $('#tablehead');
@@ -472,32 +466,3 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             $("#tablelist .layui-table-view").addClass("overvis");
         })
     })
-
-
-     // 删除
-     function del(id) {
-        var index = layer.confirm('确认删除这条数据？', {
-            btn: ['确定', '取消']
-        }, function () {
-            var token = $.cookie("token");
-            $.ajax({
-                type: "POST",
-                async: false,
-                url:removecraftlist,
-                data: {
-                    F_Id: id
-                },
-                success: function (res) {
-                    var data = res.Data;
-                    console.log(data)
-                    var succeed = res.Succeed;
-                    if (succeed) {
-                        layer.close(index)
-                    } else {
-                        layer.close(index)
-                        alert(res.Message)
-                    }
-                }
-            })
-        }); 
-    }
