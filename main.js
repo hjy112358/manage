@@ -179,10 +179,7 @@ var ajaxstockbionelist=ajaxURl+'/Api/PSIInventory/StockBill/GetList?'
 var removestockbill=ajaxURl+'/Api/PSIInventory/StockBill/Remove'
 // 查询出入库明细
 var ajaxstockbillone=ajaxURl+'/Api/PSIInventory/StockBill/GetEntry?key='
-// 采购订单列表
-var ajaxchaseorderlist=ajaxURl+'/api/PSIPurchase/PurchaseOrder/GetList?keyword=&PageSize=&PageIndex='
-// 采购订单子表
-var ajaxpurchaseone=ajaxURl+'/api/PSIPurchase/PurchaseOrder/GetEntity?keyValue='
+
 
 // -------------------生产管理----------------------
 
@@ -212,11 +209,14 @@ var purchaseOrderList=ajaxURl + "/api/PSIPurchase/PurchaseOrder/GetList?keyword=
 // 采购订单订单类型
 var ajaxchasetype=ajaxURl + "/Api/SystemManager/Dictionary/GetEntry?keyword=PSIPurchaseOrder_Type"
 // 添加采购订单
-var purchaseOrderListAdd=ajaxURl+'/api/PSIPurchase/PurchaseOrder/Add'
+var purchaseOrderAdd=ajaxURl+'/api/PSIPurchase/PurchaseOrder/Add'
 // 删除采购订单
 var purchaseOrderListDel=ajaxURl+'/api/PSIPurchase/PurchaseOrder/Remove'
-// 添加采购订单
-var purchaseSub=ajaxURl + "/api/PSIPurchase/PurchaseOrder/Add"
+// 采购订单列表
+var ajaxchaseorderlist=ajaxURl+'/api/PSIPurchase/PurchaseOrder/GetList?keyword=&PageSize=&PageIndex='
+// 采购订单子表
+var ajaxpurchaseone=ajaxURl+'/api/PSIPurchase/PurchaseOrder/GetEntity?keyValue='
+
 // 添加采购发票
 var purchaseAdd=ajaxURl+'/api/PSIPurchase/PurchaseInvoiceEntry/Add'
 // 删除采购发票

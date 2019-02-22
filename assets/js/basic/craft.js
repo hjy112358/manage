@@ -108,7 +108,6 @@ $(function () {
                         $.each(tabledata, function (index, value) {
                             if (value.LAY_TABLE_INDEX == dataindex) {
                                 $cr.find('input').val(value.CraftEntry_Name);
-
                             }
                         });
                     });

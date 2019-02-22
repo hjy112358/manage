@@ -109,7 +109,7 @@
                                         <label class="layui-form-label">供应商：</label>
                                         <div class="layui-input-block supplier" data-type="daten">
                                             <select name="PurchaseOrder_Supplier" class="" id="PurchaseOrder_Supplier"
-                                                lay-search="" lay-filter="">
+                                                lay-search="" lay-filter="supper">
                                                 <option value="">选择供应商</option>
                                             </select>
                                         </div>
@@ -138,6 +138,15 @@
                                 </div>
                                 <div class="clearfix">
                                     <div class="layui-form-lsit fl">
+                                        <label class="layui-form-label">单据类型：</label>
+                                        <div class="layui-input-block orderlist" data-type="daten">
+                                            <select class="" id="PurchaseOrder_Type" lay-search=""
+                                                name="PurchaseOrder_Type" lay-filter="">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">源单号：</label>
                                         <div class="layui-input-block chaselist" data-type="daten">
                                             <select class="" id="chaselist" lay-search="" lay-filter="chaseorder">
@@ -149,7 +158,7 @@
                                         <label class="layui-form-label">币别：</label>
                                         <div class="layui-input-block currey" data-type="daten">
                                             <select name="PurchaseOrder_Currency" class="" id="PurchaseOrder_Currency"
-                                                lay-search="" lay-filter="">
+                                                lay-search="" lay-filter="currlist">
                                                 <option value=""></option>
                                             </select>
                                         </div>
@@ -205,16 +214,21 @@
                                 </div>
                                 <input type="hidden" name="PurchaseOrder_Status" id="PurchaseOrder_Status"
                                     value="10000">
-
-
                             </div>
                         </div>
+                    </form>
                 </div>
-                </form>
             </div>
         </div>
     </div>
-    </div>
+    <script type="text/html" id="selectcrp">
+        <select id="Currency_Nick" lay-filter="Currency_Nick" lay-search >
+        <option value="">请选择或输入</option>
+        {{# layui.each(dateslit, function(index, item){ }}
+        <option value="{{item.F_Id}}" >{{ item.Currency_Nick}}</option>
+        {{# }); }}
+    </select>
+</script>
 
 </body>
 <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
