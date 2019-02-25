@@ -107,6 +107,21 @@
     font-size: 30px;
     cursor: pointer;
 }
+.masktitle {
+    position: absolute;
+    top: -30px;
+    left: 5px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.mackbody {
+    padding: 30px 20px 0px 20px;
+}
+#action{
+    text-align:center;
+    padding-bottom:10px
+}
 .layui-btn,.btncolor{
     background-color: #177ce3;
     background-repeat: repeat-y;
@@ -186,6 +201,7 @@
 #tablelist .layui-table-view .layui-table td[data-field="FFetchDate"],
 #tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Deadline"],
 #tablelist .layui-table-view .layui-table td[data-field="PurchaseOrderEntry_Deadline"],
+#tableRes1 .layui-table-view .layui-table td[data-field="PurchaseOrderEntry_Deadline"],
 #tablelist .layui-table-view .layui-table td[data-field="PurchaseApplyEntry_Deadline"],
 #tablelist .layui-table-view .layui-table td[data-field="datatype"],
 #tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Currency"],
@@ -211,6 +227,7 @@
 #tablelist .layui-table-view .layui-table td[data-field="FFetchDate"] .layui-table-cell,
 #tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Deadline"] .layui-table-cell,
 #tablelist .layui-table-view .layui-table td[data-field="PurchaseOrderEntry_Deadline"] .layui-table-cell,
+#tableRes1 .layui-table-view .layui-table td[data-field="PurchaseOrderEntry_Deadline"] .layui-table-cell,
 #tablelist .layui-table-view .layui-table td[data-field="PurchaseApplyEntry_Deadline"] .layui-table-cell,
 #tablelist .layui-table-view .layui-table td[data-field="datatype"] .layui-table-cell,
 #tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Currency"] .layui-table-cell,
@@ -238,6 +255,7 @@
 #tablelist .layui-table-view .layui-table td[data-field="materialName"] .layui-input,
 #tablelist .layui-table-view .layui-table td[data-field="SalesOrderEntry_Deadline"] .layui-input,
 #tablelist .layui-table-view .layui-table td[data-field="PurchaseOrderEntry_Deadline"] .layui-input,
+#tableRes1 .layui-table-view .layui-table td[data-field="PurchaseOrderEntry_Deadline"] .layui-input,
 #tablelist .layui-table-view .layui-table td[data-field="PurchaseApplyEntry_Deadline"] .layui-input{
     border-color:#fff;
     border:0 !important
@@ -367,4 +385,12 @@ form .layui-form-label {
 }
 .layui-input{
     padding-left:2px !important;
+}
+.nocheck{
+    position: absolute;
+    width: 100%;
+    height: 28px;
+    top: 0;
+    left: 0;
+    z-index: 555;
 }

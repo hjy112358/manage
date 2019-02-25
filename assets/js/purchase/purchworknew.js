@@ -1,5 +1,8 @@
 var first = new Date().valueOf();
 var dateslit = [];
+var materid = [], maternick = [], matername = []
+var measureid = [], measurnick = [], materfid = [];
+var currname = [], currnick = [], currnamshow = [], ratelist = []
 window.viewObj = {
     tbData: [],
     limit: 1,
@@ -8,6 +11,44 @@ window.viewObj = {
 var tableIns;
 var upload, table;
 var layTableId;
+// 币别--
+$.ajax({
+    type: "get",
+    url: ajaxCurrency,
+    success: function (res) {
+        var isussecc = res.Succeed;
+        var data = res.Data;
+        var rmbid = '';
+        var rate = "";
+        if (isussecc) {
+            var html = '<option value="">请选择币别</option>';
+            var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">请选择币别</dd>'
+            for (var i = 0; i < data.length; i++) {
+                dateslit.push(data[i])
+                var datanow = data[i];
+                if (datanow.Currency_Nick == '人民币') {
+                    rmbid = datanow.F_Id;
+                    rate = datanow.Currency_ExRate
+                }
+                html += '<option value="' + datanow.F_Id + '" >' + datanow.Currency_Nick + '</option>';
+                htmlsel += '<dd lay-value="' + datanow.F_Id + '">' + datanow.Currency_Nick + '</dd>'
+                currname.push(datanow.F_Id)
+                currnick.push(datanow.Currency_Nick)
+                currnamshow.push(datanow.Currency_Name)
+                ratelist.push(datanow.Currency_ExRate)
+            }
+            $("#PurchaseOrder_Currency").html(html);
+            $(".currey .layui-anim.layui-anim-upbit").html(htmlsel);
+            renderForm();
+            var select = 'dd[lay-value="' + rmbid + '"]';
+            $('#PurchaseOrder_Currency').siblings("div.layui-form-select").find('dl').find(select).click();
+            $("#PurchaseOrder_ExRate").val(rate)
+
+        } else {
+            alert(res.Message)
+        }
+    }
+})
 //layui 模块化引用
 layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], function () {
     // 获取当天日期
@@ -78,17 +119,19 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     }
                 }
             },
-            { field: 'PurchaseOrderEntry_Specifications', title: '规格' },
+            { field: 'PurchaseOrderEntry_Specifications', title: '规格', width: '100' },
             { field: 'unit', title: '单位' },
-            { field: 'PurchaseOrderEntry_Price', title: '价格', edit: 'text' , width: '100'},
+            { field: 'PurchaseOrderEntry_Price', title: '价格', edit: 'text', width: '100' },
             { field: 'PurchaseOrderEntry_Quantity', title: '数量', width: '100' },
-            { field: 'PurchaseOrderEntry_Amount', title: '总额' , width: '100',templet:function(d){
-                if(d.PurchaseOrderEntry_Amount){
-                    return d.PurchaseOrderEntry_Amount.toFixed(2)
-                }else{
-                    return ''
+            {
+                field: 'PurchaseOrderEntry_Amount', title: '总额', width: '100', templet: function (d) {
+                    if (d.PurchaseOrderEntry_Amount) {
+                        return d.PurchaseOrderEntry_Amount.toFixed(2)
+                    } else {
+                        return ''
+                    }
                 }
-            }},
+            },
             {
                 field: 'PurchaseOrderEntry_Deadline', title: '交货日期', width: '100', align: "center", templet: function (d) {
                     var deadline = ""
@@ -128,12 +171,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 var dataIndex = $cr.attr("data-index");
                 $.each(tableData, function (index, value) {
                     if (value.LAY_TABLE_INDEX == dataIndex) {
-                        // $cr.find('input').val(value.Material_Name);
                         $cr.find('input[id="PurchaseOrderEntry_Deadline"]').val(value.PurchaseOrderEntry_Deadline);
                         $cr.find('td[data-field="Currency_Nick"]').find("input").val(value.Currency_Nick);
                     }
                 });
             });
+            return false
         }
     });
     //定义事件集合
@@ -249,35 +292,37 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
     // 单号
     $(".chaselist").on("click", function () {
-        var _this = $(this);
-        var date = _this.attr("data-type");
-        if (date == 'daten') {
-            $(".chaselist").attr("data-type", "datey");
-            $.ajax({
-                type: "get",
-                url: purchaseOrderlist,
-                success: function (res) {
-                    console.log(res)
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        var html = '<option value="">全部</option>';
-                        var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                        for (var i = 0; i < data.length; i++) {
-                            html += '<option value="' + data[i].F_Id + '" >' + data[i].PurchaseApply_Name + '</option>';
-                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].PurchaseApply_Name + '</dd>'
-                        }
-                        $("#chaselist").html(html);
-                        $(".chaselist .layui-anim.layui-anim-upbit").html(htmlsel);
-                        renderForm();
-                        _this.find("select").next().find('.layui-select-title input').click();
-                    } else {
-                        alert(res.Message)
-                    }
+        $(".termask").removeClass("hidden")
+        dialogtable()
+        // var _this = $(this);
+        // var date = _this.attr("data-type");
+        // if (date == 'daten') {
+        //     $(".chaselist").attr("data-type", "datey");
+        //     $.ajax({
+        //         type: "get",
+        //         url: purchaseOrderlist,
+        //         success: function (res) {
+        //             console.log(res)
+        //             var isussecc = res.Succeed;
+        //             var data = res.Data;
+        //             if (isussecc) {
+        //                 var html = '<option value="">全部</option>';
+        //                 var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+        //                 for (var i = 0; i < data.length; i++) {
+        //                     html += '<option value="' + data[i].F_Id + '" >' + data[i].PurchaseApply_Name + '</option>';
+        //                     htmlsel += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].PurchaseApply_Name + '</dd>'
+        //                 }
+        //                 $("#chaselist").html(html);
+        //                 $(".chaselist .layui-anim.layui-anim-upbit").html(htmlsel);
+        //                 renderForm();
+        //                 _this.find("select").next().find('.layui-select-title input').click();
+        //             } else {
+        //                 alert(res.Message)
+        //             }
 
-                }
-            })
-        }
+        //         }
+        //     })
+        // }
     })
     // 物料
     $.ajax({
@@ -311,84 +356,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
         }
     })
-    var materid = [], maternick = [], matername = []
-    var measureid = [], measurnick = [], materfid = [];
 
-    // 切换单号
-    layui.form.on('select(chaseorder)', function (data) {
-        if (data.value != '') {
-            $.ajax({
-                type: "get",
-                url: purchaseDetails + data.value,
-                success: function (res) {
-                    // console.log(res)
-                    var isussecc = res.Succeed;
-
-                    if (isussecc) {
-                        var data = res.Data;
-                        console.log(data)
-                        if (data.Details) {
-                            // console.log(data.Children)
-                            // 数据对应
-                            $.each(data.Details, function (index, value) {
-                                value.PurchaseOrderEntry_Quantity = value.PurchaseApplyEntry_Quantity
-                                value.PurchaseOrderEntry_Specifications = value.PurchaseApplyEntry_Specifications
-                                value.PurchaseOrderEntry_Unit = value.PurchaseApplyEntry_Unit
-                                if (value.PurchaseApplyEntry_Deadline) {
-                                    var dealinetime = value.PurchaseApplyEntry_Deadline.split(" ")[0]
-                                    value.PurchaseOrderEntry_Deadline = dealinetime
-                                } else {
-                                    value.PurchaseOrderEntry_Deadline = $("#PurchaseOrder_Deadline").val()
-                                }
-
-                                value.PurchaseOrderEntry_Material = value.PurchaseApplyEntry_Material
-                                var index = measureid.indexOf(value.PurchaseApplyEntry_Unit)
-                                if (index != '-1') {
-                                    value.unit = measurnick[index]
-                                } else {
-                                    value.unit = value.PurchaseApplyEntry_Unit
-                                }
-
-                                var exrate = $("#PurchaseOrder_ExRate").val()
-                                var taxrate = $("#PurchaseOrder_TaxRate").val()
-                                var curr = $("#PurchaseOrder_Currency").val()
-                                if (value.PurchaseApplyEntry_TaxRate) {
-                                    value.PurchaseOrderEntry_TaxRate = value.PurchaseApplyEntry_TaxRate
-                                } else {
-                                    value.PurchaseOrderEntry_TaxRate = taxrate
-                                }
-                                if (value.PurchaseApplyEntry_ExRate) {
-                                    value.PurchaseOrderEntry_ExRate = value.PurchaseApplyEntry_ExRate
-                                } else {
-                                    value.PurchaseOrderEntry_ExRate = exrate
-                                }
-                                if (value.PurchaseApplyEntry_Currency) {
-                                    value.PurchaseOrderEntry_Currency = value.PurchaseApplyEntry_Currency
-                                    var index1 = currname.indexOf(value.PurchaseApplyEntry_Currency)
-                                    if (index1 != '-1') {
-                                        value.Currency_Nick = currnick[index1]
-                                    } 
-                                } else {
-                                    value.PurchaseOrderEntry_Currency = curr
-                                    var index2 = currname.indexOf(curr)
-                                    if (index2 != '-1') {
-                                        value.Currency_Nick = currnick[index2]
-                                    } 
-                                }
-                            })
-                            tableIns.reload({
-                                data: data.Details,
-                                limit: data.Details.length
-                            });
-                        }
-
-                    } else {
-                        alert(res.Message)
-                    }
-                }
-            })
-        }
-    })
 
     renderForm = function () {
         layui.use('form', function () {
@@ -434,45 +402,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
         }
     })
-    var currname = [], currnick = [], currnamshow = [], ratelist = []
-    // 币别--
-    $.ajax({
-        type: "get",
-        url: ajaxCurrency,
-        success: function (res) {
-            var isussecc = res.Succeed;
-            var data = res.Data;
-            var rmbid = '';
-            var rate = "";
-            if (isussecc) {
-                var html = '<option value="">请选择币别</option>';
-                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">请选择币别</dd>'
-                for (var i = 0; i < data.length; i++) {
-                    dateslit.push(data[i])
-                    var datanow = data[i];
-                    if (datanow.Currency_Nick == '人民币') {
-                        rmbid = datanow.F_Id;
-                        rate = datanow.Currency_ExRate
-                    }
-                    html += '<option value="' + datanow.F_Id + '" >' + datanow.Currency_Nick + '</option>';
-                    htmlsel += '<dd lay-value="' + datanow.F_Id + '">' + datanow.Currency_Nick + '</dd>'
-                    currname.push(datanow.F_Id)
-                    currnick.push(datanow.Currency_Nick)
-                    currnamshow.push(datanow.Currency_Name)
-                    ratelist.push(datanow.Currency_ExRate)
-                }
-                $("#PurchaseOrder_Currency").html(html);
-                $(".currey .layui-anim.layui-anim-upbit").html(htmlsel);
-                renderForm();
-                var select = 'dd[lay-value="' + rmbid + '"]';
-                $('#PurchaseOrder_Currency').siblings("div.layui-form-select").find('dl').find(select).click();
-                $("#PurchaseOrder_ExRate").val(rate)
 
-            } else {
-                alert(res.Message)
-            }
-        }
-    })
     // 切换币别
     form.on('select(currlist)', function (data) {
         var value = data.value;
@@ -605,7 +535,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         if (!($(this).hasClass("disclick"))) {
             if (isSend) {
                 var index = layer.load();
-              
+
                 var list = $("form").serializeArray();
                 for (var j = 0; j < list.length; j++) {
                     console.log(list[j])
@@ -624,9 +554,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         if (isussecc) {
                             layer.close(index);
                             layer.msg("新增成功");
-                            setInterval(function(){
+                            setInterval(function () {
                                 window.location.reload()
-                            },1000)
+                            }, 1000)
                         } else {
                             layer.close(index);
                             alert(res.Message)
@@ -641,6 +571,292 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         }
     })
 });
+
+
+
+
+
+// 弹窗
+function dialogtable() {
+    var renderForm1, tableData1
+    layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], function () {
+        var $ = layui.$;
+        table = layui.table,
+            form = layui.form,
+            layer = layui.layer,
+            laydate = layui.laydate
+
+        //数据表格实例化		
+
+        tablepop = table.render({
+            elem: '#dataTable1',
+            id: "poplist",
+            data: [],
+            limit: 1,
+            page: false,
+            loading: true,
+            cols: [[
+                { title: '序号', type: 'checkbox' },
+                {
+                    field: 'PurchaseOrderEntry_Material', title: '物料代码', width: '120', templet: function (d) {
+                        if (d.PurchaseOrderEntry_Material) {
+                            var index = materid.indexOf(d.PurchaseOrderEntry_Material)
+                            if (index == '-1') {
+                                return ''
+                            } else {
+                                return matername[index]
+                            }
+                        } else {
+                            return ''
+                        }
+                    }
+                },
+                {
+                    field: 'PurchaseOrderEntry_Material', title: '物料名称', width: '200', templet: function (d) {
+                        if (d.PurchaseOrderEntry_Material) {
+                            var index1 = materid.indexOf(d.PurchaseOrderEntry_Material)
+                            if (index1 == '-1') {
+                                return ''
+                            } else {
+                                return maternick[index1]
+                            }
+                        } else {
+                            return ''
+                        }
+                    }
+                },
+                { field: 'PurchaseOrderEntry_Specifications', title: '规格', width: '100' },
+                { field: 'unit', title: '单位' },
+                {
+                    field: 'PurchaseOrderEntry_Deadline', title: '交货日期', width: '100', align: "center", templet: function (d) {
+                        var deadline = ""
+                        if (d.PurchaseOrderEntry_Deadline) {
+                            deadline = d.PurchaseOrderEntry_Deadline.split(" ")[0]
+                        }
+                        return '<input type="text" id="PurchaseOrderEntry_Deadline" verify lay-verify="verify" value="' + deadline + '"  autocomplete="off" class="layui-input layui-input-date"/>';
+                    }
+                },
+                { field: 'Rmark', title: '备注', edit: 'text' },
+            ]],
+            done: function (res) {
+                $(".layui-input-date").each(function (i) {
+                    layui.laydate.render({
+                        elem: this,
+                        format: "yyyy-MM-dd",
+                        done: function (value, date) {
+                            if (res && res.data[i]) {
+                                $.extend(res.data[i], { 'PurchaseOrderEntry_Deadline': value })
+                            }
+                        }
+                    });
+                });
+                tableData1 = res.data;
+                $('tr').each(function (e) {
+                    var $cr = $(this);
+                    var dataIndex = $cr.attr("data-index");
+                    $.each(tableData1, function (index, value) {
+                        if (value.LAY_TABLE_INDEX == dataIndex) {
+                            // $cr.find('input').val(value.Material_Name);
+                            $cr.find('input[id="PurchaseOrderEntry_Deadline"]').val(value.PurchaseOrderEntry_Deadline);
+                            // $cr.find('td[data-field="Currency_Nick"]').find("input").val(value.Currency_Nick);
+                        }
+                    });
+                });
+            }
+        });
+        //定义事件集合
+        var active = {
+            // 更新每行数据
+            updateRow: function () {
+                var oldData = table.cache["poplist"];
+                tablepop.reload({
+                    data: oldData,
+                    limit: viewObj.limit
+                });
+            },
+            getCheckData: function () { //获取选中数据
+                var checkStatus = table.checkStatus('poplist')
+                    , data = checkStatus.data;
+                var odernum = $("#oddlist option:selected").val()
+                var select = 'dd[lay-value="' + odernum + '"]';
+                $('#chaselist').siblings("div.layui-form-select").find('dl').find(select).click();
+                closemark()
+                tableIns.reload({
+                    data: data,
+                    limit: data.length
+                });
+                return false
+
+            }
+
+        }
+        //激活事件
+        var activeByType = function (type, arg) {
+            if (arguments.length === 2) {
+                active[type] ? active[type].call(this, arg) : '';
+            } else {
+                active[type] ? active[type].call(this) : '';
+            }
+        }
+        //注册按钮事件
+        $('.layui-btn[data-type]').on('click', function () {
+            var type = $(this).data('type');
+            activeByType(type);
+        });
+        //监听工具条
+        table.on('tool(dataTable)', function (obj) {
+            var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
+            switch (event) {
+                case "state":
+                    var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
+                    $.extend(obj.data, { 'state': stateVal })
+                    activeByType('updateRow', obj.data);	//更新行记录对象
+                    break;
+            }
+        });
+
+
+        renderForm1 = function () {
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+                var oldData = table.cache["poplist"];
+                tablepop.reload({
+                    data: oldData,
+                    limit: oldData.length
+                });
+            });
+        }
+
+        $(".cancel").on("click", function () {
+            closemark()
+        })
+
+        // 单号列表
+        $(".oddlist").on("click", function () {
+            var _this = $(this);
+            var date = _this.attr("data-type");
+            if (date == 'daten') {
+                $(".oddlist").attr("data-type", "datey");
+                $.ajax({
+                    type: "get",
+                    url: purchaseOrderlist,
+                    success: function (res) {
+                        console.log(res)
+                        var isussecc = res.Succeed;
+                        var data = res.Data;
+                        if (isussecc) {
+                            var html = '<option value="">请选择</option>';
+                            var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">请选择</dd>'
+                            for (var i = 0; i < data.length; i++) {
+                                html += '<option value="' + data[i].F_Id + '" >' + data[i].PurchaseApply_Name + '</option>';
+                                htmlsel += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].PurchaseApply_Name + '</dd>'
+                            }
+                            $("#oddlist").html(html);
+                            $(".oddlist .layui-anim.layui-anim-upbit").html(htmlsel);
+                            $("#chaselist").html(html);
+                            $(".chaselistshow .layui-anim.layui-anim-upbit").html(htmlsel);
+                            renderForm1();
+                            _this.find("select").next().find('.layui-select-title input').click();
+                        } else {
+                            alert(res.Message)
+                        }
+
+                    }
+                })
+            }
+        })
+
+        // 切换单号
+        layui.form.on('select(oddchange)', function (data) {
+            if (data.value != '') {
+                $.ajax({
+                    type: "get",
+                    url: purchaseDetails + data.value,
+                    success: function (res) {
+                        // console.log(res)
+                        var isussecc = res.Succeed;
+
+                        if (isussecc) {
+                            var data = res.Data;
+                            console.log(data)
+                            if (data.Details) {
+                                // console.log(data.Children)
+                                // 数据对应
+                                $.each(data.Details, function (index, value) {
+                                    value.PurchaseOrderEntry_Quantity = value.PurchaseApplyEntry_Quantity
+                                    value.PurchaseOrderEntry_Specifications = value.PurchaseApplyEntry_Specifications
+                                    value.PurchaseOrderEntry_Unit = value.PurchaseApplyEntry_Unit
+                                    if (value.PurchaseApplyEntry_Deadline) {
+                                        var dealinetime = value.PurchaseApplyEntry_Deadline.split(" ")[0]
+                                        value.PurchaseOrderEntry_Deadline = dealinetime
+                                    } else {
+                                        value.PurchaseOrderEntry_Deadline = $("#PurchaseOrder_Deadline").val()
+                                    }
+
+                                    value.PurchaseOrderEntry_Material = value.PurchaseApplyEntry_Material
+                                    var index = measureid.indexOf(value.PurchaseApplyEntry_Unit)
+                                    if (index != '-1') {
+                                        value.unit = measurnick[index]
+                                    } else {
+                                        value.unit = value.PurchaseApplyEntry_Unit
+                                    }
+
+                                    var exrate = $("#PurchaseOrder_ExRate").val()
+                                    var taxrate = $("#PurchaseOrder_TaxRate").val()
+                                    var curr = $("#PurchaseOrder_Currency").val()
+                                    if (value.PurchaseApplyEntry_TaxRate) {
+                                        value.PurchaseOrderEntry_TaxRate = value.PurchaseApplyEntry_TaxRate
+                                    } else {
+                                        value.PurchaseOrderEntry_TaxRate = taxrate
+                                    }
+                                    if (value.PurchaseApplyEntry_ExRate) {
+                                        value.PurchaseOrderEntry_ExRate = value.PurchaseApplyEntry_ExRate
+                                    } else {
+                                        value.PurchaseOrderEntry_ExRate = exrate
+                                    }
+                                    if (value.PurchaseApplyEntry_Currency) {
+                                        value.PurchaseOrderEntry_Currency = value.PurchaseApplyEntry_Currency
+                                        var index1 = currname.indexOf(value.PurchaseApplyEntry_Currency)
+                                        if (index1 != '-1') {
+                                            value.Currency_Nick = currnick[index1]
+                                        }
+                                    } else {
+                                        value.PurchaseOrderEntry_Currency = curr
+                                        var index2 = currname.indexOf(curr)
+                                        if (index2 != '-1') {
+                                            value.Currency_Nick = currnick[index2]
+                                        }
+                                    }
+                                })
+                                tablepop.reload({
+                                    data: data.Details,
+                                    limit: data.Details.length
+                                });
+                            }
+
+                        } else {
+                            alert(res.Message)
+                        }
+                    }
+                })
+            }
+        })
+
+
+        closemark = function () {
+            $(".termask").addClass("hidden")
+            $(".terform")[0].reset();
+
+        }
+
+    });
+}
+
+
+
+
+
 //多文件上传列表示例
 var tablehead = $('#tablehead');
 var tablebody = $('#tablebody');
@@ -686,4 +902,3 @@ var uploadListIns = upload.render({
     }
 
 });
-

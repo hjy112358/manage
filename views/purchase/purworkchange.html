@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../assets/css/view.css" />
     <link rel="stylesheet" href="../../assets/css/table.css">
     <link rel="stylesheet" href="../../assets/css/scalestock.css">
-    <title>采购订单</title>
+    <title>采购订单-变更</title>
     <style>
         .layui-upload {
             margin-left: 10px;
@@ -74,25 +74,6 @@
             text-align: center;
             padding: 20px 0px;
         }
-
-        .nocheck {
-            cursor: pointer;
-        }
-
-        .mackbody .layui-form-selected .layui-anim-upbit {
-            animation-name: unset;
-            -webkit-animation-name: unset;
-        }
-        .chooseterm .table-overlay .layui-table-view,
-        .chooseterm .table-overlay .layui-table-cell,
-        .chooseterm .table-overlay .layui-table-body {
-            overflow: auto !important;
-        }
-     
-         .chooseterm .table-overlay .layui-table-box,
-         .craftwork .layui-table-box{
-            overflow:hidden !important
-         }
     </style>
 </head>
 
@@ -165,10 +146,9 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="layui-form-lsit fl position-re chaselist">
-                                        <div class="nocheck"></div>
+                                    <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">源单号：</label>
-                                        <div class="layui-input-block chaselistshow" data-type="daten">
+                                        <div class="layui-input-block chaselist" data-type="daten">
                                             <select class="" id="chaselist" lay-search="" lay-filter="chaseorder">
                                                 <option value=""></option>
                                             </select>
@@ -234,62 +214,13 @@
                                 </div>
                                 <input type="hidden" name="PurchaseOrder_Status" id="PurchaseOrder_Status"
                                     value="10000">
-
                             </div>
-
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="termask hidden">
-        <div class="layui-content ">
-            <div class="layui-row chooseterm">
-                <div class="layui-card">
-                    <div class="layui-card-body">
-                        <form class="layui-form terform">
-                            <section class="">
-                                <div class="layui-card">
-                                    <div class="masktitle">选择单号</div>
-                                    <i class="iconfont icon-guanbi iconclose"></i>
-                                    <div class="layui-card-body layui-text">
-                                        <div class="mackbody ">
-                                            <div class="clearfix">
-                                                <div class="layui-form-lsit fl">
-                                                    <label class="layui-form-label"><span>*</span> 单号：</label>
-                                                    <div class="layui-input-block oddlist fl" data-type="daten"
-                                                        style="margin-left:0">
-                                                        <select name="" class="" id="oddlist" lay-search=""
-                                                            lay-filter="oddchange" class="">
-                                                            <option value="">请选择</option>
-                                                            <option value="">加载中...</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <button type="button" class="layui-btn layui-btn-normal"
-                                                    style="margin-left:10px">查询</button>
-                                            </div>
-                                            <div id="tableRes1" class="table-overlay">
-                                                <table id="dataTable1" lay-filter="dataTable1" class="layui-hide">
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div id="action" class="">
-                                            <span class="layui-btn getcheck" data-type="getCheckData">确定</span>
-                                            <span class="layui-btn cancel">取消</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script type="text/html" id="selectcrp">
         <select id="Currency_Nick" lay-filter="Currency_Nick" lay-search >
         <option value="">请选择或输入</option>
@@ -304,6 +235,6 @@
 <script src="../../assets/layui.all.js"></script>
 <script src="../../assets/js/jquery.cookie.js"></script>
 <script src="../../main.js"></script>
-<script src="../../assets/js/purchase/purchworknew.js"></script>
+<script src="../../assets/js/purchase/purworkchange.js"></script>
 
 </html>

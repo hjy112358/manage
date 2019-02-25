@@ -14,69 +14,80 @@
 
     <title>物料管理</title>
     <style>
-    .masktitle{
-        position: absolute;
-        top: -30px;
-        left: 5px;
-        font-size: 18px;
-        color: #fff;
-    }
-    .mackbody {
-        padding: 30px 20px 0px 20px;
-    }
-    #action{
-        padding-bottom: 15px;
-        text-align: center;
-        margin-top: 15px;
-    }
-    td[data-field="FamilyEntry_Datatype"] .layui-table-cell {
-        padding-left:0;
-    }
-    #tableRes .layui-table-view,
-    #tableRes1 .layui-table-view
-    {
-        max-height: 200px;
-        overflow: hidden;
-        overflow-y: auto;
-    }
-    #tableRes .layui-table-body,
-    #tableRes1 .layui-table-body{
-        height:auto !important
-    }
-    .chooseterm .layui-table-view .layui-table-body {
-        min-height: 100px;
-    }
-    #tableRes .layui-form-selected .layui-anim-upbit,
-    #tableRes1 .layui-form-selected .layui-anim-upbit{
-        animation-name:unset;
-        -webkit-animation-name: unset;
-    }
-    .typestyle{
-        max-width: 554px !important;
-        min-height: 100px !important;
-        background: #f2f2f2;
-        border: 1px solid #ccc;
-        min-width: 212px;
-        max-height: 300px;
-        overflow: auto;
-    }
-    .layui-form-lsit label span{
-        color:#f00
-    }
-    .craftwork .layui-form-item .layui-input-block.matertype{
-        width:230px;
-    }
+        .masktitle {
+            position: absolute;
+            top: -30px;
+            left: 5px;
+            font-size: 18px;
+            color: #fff;
+        }
 
-    .chooseterm .layui-form-selected .layui-anim-upbit{
-        animation-name:unset;
-        -webkit-animation-name: unset;
-    }
-   .craftwork .layui-form-select dl{
-        max-height: 155px;
-    }
-    .craftwork .layui-form-label{
-        width:100px !important
-    }
+        .mackbody {
+            padding: 30px 20px 0px 20px;
+        }
+
+        #action {
+            padding-bottom: 15px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        td[data-field="FamilyEntry_Datatype"] .layui-table-cell {
+            padding-left: 0;
+        }
+
+        #tableRes .layui-table-view,
+        #tableRes1 .layui-table-view {
+            max-height: 200px;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+
+        #tableRes .layui-table-body,
+        #tableRes1 .layui-table-body {
+            height: auto !important
+        }
+
+        .chooseterm .layui-table-view .layui-table-body {
+            min-height: 100px;
+        }
+
+        #tableRes .layui-form-selected .layui-anim-upbit,
+        #tableRes1 .layui-form-selected .layui-anim-upbit {
+            animation-name: unset;
+            -webkit-animation-name: unset;
+        }
+
+        .typestyle {
+            max-width: 554px !important;
+            min-height: 100px !important;
+            background: #f2f2f2;
+            border: 1px solid #ccc;
+            min-width: 212px;
+            max-height: 300px;
+            overflow: auto;
+        }
+
+        .layui-form-lsit label span {
+            color: #f00
+        }
+
+        .craftwork .layui-form-item .layui-input-block.matertype {
+            width: 230px;
+        }
+
+        .chooseterm .layui-form-selected .layui-anim-upbit {
+            animation-name: unset;
+            -webkit-animation-name: unset;
+        }
+
+        .craftwork .layui-form-select dl {
+            max-height: 155px;
+        }
+
+        .craftwork .layui-form-label {
+            width: 100px !important
+        }
     </style>
 </head>
 
@@ -102,8 +113,7 @@
             </div>
         </div>
     </div>
-    </div>
-    </div>
+
     <div class="termask hidden">
         <div class="layui-content ">
             <div class="layui-row chooseterm">
@@ -139,14 +149,12 @@
                                                 <div class="layui-form-lsit fl ">
                                                     <label class="layui-form-label"><span>*</span> 代码：</label>
                                                     <div class="layui-input-block " style="width:212px;">
-                                                        <input type="text" value="" id="Material_Name" autocomplete="off"
-                                                            class="layui-input">
+                                                        <input type="text" value="" id="Material_Name"
+                                                            autocomplete="off" class="layui-input">
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="clearfix">
-
                                                 <div class="layui-form-lsit fl">
                                                     <label class="layui-form-label">型号：</label>
                                                     <div class="layui-input-block" style="width:212px;">
@@ -165,9 +173,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="clearfix">
-
                                                 <div class=" fl">
                                                     <label class="layui-form-label">类别属性：</label>
                                                     <div class="layui-input-block typestyle">
@@ -185,9 +191,7 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </section>
-
                     </div>
                     </form>
                 </div>

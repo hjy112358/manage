@@ -427,3 +427,13 @@ function getpurchapp(id){
     $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(1)').trigger('click');
     $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(1)').attr("href", oldhref)
 }
+
+// 采购订单详情
+function getpurwork(id){
+    var oldhref = $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(4)').attr("href");
+    var href = oldhref
+    href = href + '?fid='+id
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(4)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(4)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(4)').attr("href", oldhref)
+}

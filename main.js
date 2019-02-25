@@ -214,7 +214,7 @@ var purchaseOrderAdd=ajaxURl+'/api/PSIPurchase/PurchaseOrder/Add'
 var purchaseOrderListDel=ajaxURl+'/api/PSIPurchase/PurchaseOrder/Remove'
 // 采购订单列表
 var ajaxchaseorderlist=ajaxURl+'/api/PSIPurchase/PurchaseOrder/GetList?keyword=&PageSize=&PageIndex='
-// 采购订单子表
+// 采购订单主子表
 var ajaxpurchaseone=ajaxURl+'/api/PSIPurchase/PurchaseOrder/GetEntity?keyValue='
 
 // 添加采购发票

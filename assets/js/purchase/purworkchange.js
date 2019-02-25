@@ -82,13 +82,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             { field: 'unit', title: '单位' },
             { field: 'PurchaseOrderEntry_Price', title: '价格', edit: 'text' , width: '100'},
             { field: 'PurchaseOrderEntry_Quantity', title: '数量', width: '100' },
-            { field: 'PurchaseOrderEntry_Amount', title: '总额' , width: '100',templet:function(d){
-                if(d.PurchaseOrderEntry_Amount){
-                    return d.PurchaseOrderEntry_Amount.toFixed(2)
-                }else{
-                    return ''
-                }
-            }},
+            { field: 'PurchaseOrderEntry_Amount', title: '总额' , width: '100'},
             {
                 field: 'PurchaseOrderEntry_Deadline', title: '交货日期', width: '100', align: "center", templet: function (d) {
                     var deadline = ""
@@ -104,7 +98,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             { field: 'Rmark', title: '备注', edit: 'text' },
             {
                 field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
+                    // return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '">删除</a>';
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=del("' + d.F_Id + '")>删除</a>';
+
                 }
             }
         ]],
@@ -403,10 +399,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     }
 
     // 制单人
-    var mouser = $.cookie("Modify_User");
-    var username = $.cookie("User_Nick")
-    $("#PurchaseOrder_Biller").val(mouser)
-    $("#PurchaseOrder_Billername").val(username)
+ 
 
     // 业务员
     $.ajax({
@@ -600,45 +593,45 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     // 保存
     var isSend = true;
     $(".sub").on("click", function () {
-        var data = {};
-        var oldData = table.cache[layTableId];
-        if (!($(this).hasClass("disclick"))) {
-            if (isSend) {
-                var index = layer.load();
+        // var data = {};
+        // var oldData = table.cache[layTableId];
+        // if (!($(this).hasClass("disclick"))) {
+        //     if (isSend) {
+        //         var index = layer.load();
               
-                var list = $("form").serializeArray();
-                for (var j = 0; j < list.length; j++) {
-                    console.log(list[j])
-                    data[list[j].name] = list[j].value
-                }
-                data.Details = oldData;
-                console.log(data)
-                $.ajax({
-                    type: "POST",
-                    url: purchaseOrderAdd,
-                    data: data,
-                    success: function (res) {
-                        console.log(res)
-                        var isussecc = res.Succeed;
-                        var data = res.Data;
-                        if (isussecc) {
-                            layer.close(index);
-                            layer.msg("新增成功");
-                            setInterval(function(){
-                                window.location.reload()
-                            },1000)
-                        } else {
-                            layer.close(index);
-                            alert(res.Message)
-                        }
-                    },
-                    error: function (res) {
-                        layer.close(index);
-                        alert(res.Message)
-                    }
-                })
-            }
-        }
+        //         var list = $("form").serializeArray();
+        //         for (var j = 0; j < list.length; j++) {
+        //             console.log(list[j])
+        //             data[list[j].name] = list[j].value
+        //         }
+        //         data.Details = oldData;
+        //         console.log(data)
+        //         $.ajax({
+        //             type: "POST",
+        //             url: purchaseOrderAdd,
+        //             data: data,
+        //             success: function (res) {
+        //                 console.log(res)
+        //                 var isussecc = res.Succeed;
+        //                 var data = res.Data;
+        //                 if (isussecc) {
+        //                     layer.close(index);
+        //                     layer.msg("新增成功");
+        //                     setInterval(function(){
+        //                         window.location.reload()
+        //                     },1000)
+        //                 } else {
+        //                     layer.close(index);
+        //                     alert(res.Message)
+        //                 }
+        //             },
+        //             error: function (res) {
+        //                 layer.close(index);
+        //                 alert(res.Message)
+        //             }
+        //         })
+        //     }
+        // }
     })
 });
 //多文件上传列表示例
