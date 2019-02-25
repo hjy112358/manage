@@ -169,14 +169,14 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             $('tr').each(function (e) {
                 var $cr = $(this);
                 var dataIndex = $cr.attr("data-index");
-                $.each(tableData, function (index, value) {
+                $.each(res.data, function (index, value) {
                     if (value.LAY_TABLE_INDEX == dataIndex) {
                         $cr.find('input[id="PurchaseOrderEntry_Deadline"]').val(value.PurchaseOrderEntry_Deadline);
                         $cr.find('td[data-field="Currency_Nick"]').find("input").val(value.Currency_Nick);
                     }
                 });
             });
-            return false
+           return false
         }
     });
     //定义事件集合
@@ -403,6 +403,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         }
     })
 
+
     // 切换币别
     form.on('select(currlist)', function (data) {
         var value = data.value;
@@ -570,6 +571,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
         }
     })
+
+  
 });
 
 
@@ -658,7 +661,7 @@ function dialogtable() {
                         if (value.LAY_TABLE_INDEX == dataIndex) {
                             // $cr.find('input').val(value.Material_Name);
                             $cr.find('input[id="PurchaseOrderEntry_Deadline"]').val(value.PurchaseOrderEntry_Deadline);
-                            // $cr.find('td[data-field="Currency_Nick"]').find("input").val(value.Currency_Nick);
+                            $cr.find('td[data-field="Currency_Nick"]').find("input").val(value.Currency_Nick);
                         }
                     });
                 });
@@ -677,15 +680,13 @@ function dialogtable() {
             getCheckData: function () { //获取选中数据
                 var checkStatus = table.checkStatus('poplist')
                     , data = checkStatus.data;
-                var odernum = $("#oddlist option:selected").val()
-                var select = 'dd[lay-value="' + odernum + '"]';
-                $('#chaselist').siblings("div.layui-form-select").find('dl').find(select).click();
+
                 closemark()
                 tableIns.reload({
                     data: data,
                     limit: data.length
                 });
-                return false
+
 
             }
 
@@ -770,6 +771,9 @@ function dialogtable() {
         // 切换单号
         layui.form.on('select(oddchange)', function (data) {
             if (data.value != '') {
+
+                var select = 'dd[lay-value="' + data.value + '"]';
+                $('#chaselist').siblings("div.layui-form-select").find('dl').find(select).click();
                 $.ajax({
                     type: "get",
                     url: purchaseDetails + data.value,
@@ -842,7 +846,6 @@ function dialogtable() {
                 })
             }
         })
-
 
         closemark = function () {
             $(".termask").addClass("hidden")
