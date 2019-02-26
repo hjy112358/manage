@@ -52,7 +52,7 @@ $(function () {
             });
 
             // table.on('rowDouble(analy)', function (obj) {
-            //     console.log(obj)
+            //     //console.log(obj)
             //     parent.editmater(obj.data.Material_Name, obj.data.Material_Nick)
             // });
 
@@ -115,7 +115,7 @@ $(function () {
             });
 
             // table.on('rowDouble(analy)', function (obj) {
-            //     console.log(obj)
+            //     //console.log(obj)
             //     parent.editmater(obj.data.Material_Name, obj.data.Material_Nick)
             // });
 
@@ -215,7 +215,7 @@ $(function () {
                     if (value.LAY_TABLE_INDEX == dataindex) {
                         value.CraftEntry_Name = data.value;
                         var elems = data.elem;
-                        // console.log(elems)
+                        // //console.log(elems)
                         for (var i = 0; i < elems.length; i++) {
                             var elemnow = elems[i];
                             if (elemnow.selected) {
@@ -299,7 +299,7 @@ $(function () {
             });
 
             // table.on('rowDouble(analy)', function (obj) {
-            //     console.log(obj)
+            //     //console.log(obj)
             //     parent.editmater(obj.data.Material_Name, obj.data.Material_Nick)
             // });
 
@@ -379,7 +379,7 @@ $(function () {
                         if (viewObj1.limit1 == 1) {
                             alert("删除失败，至少应有一条数据")
                         } else {
-                            console.log()
+                            //console.log()
                             if (obj.data.F_Id) {
                                 delone(obj.data.F_Id)
                             } else {
@@ -405,7 +405,7 @@ $(function () {
                     if (value.LAY_TABLE_INDEX == dataindex) {
                         value.CraftEntry_Name = data.value;
                         var elems = data.elem;
-                        // console.log(elems)
+                        // //console.log(elems)
                         for (var i = 0; i < elems.length; i++) {
                             var elemnow = elems[i];
                             if (elemnow.selected) {
@@ -436,14 +436,14 @@ $(function () {
                         F_Id:id
                     },
                     success: function (res) {
-                        console.log(res)
+                        //console.log(res)
                         var isussecc = res.Succeed;
                         if (isussecc) {
                             var fid=$(".editsave").attr("data-Id")
                             $.ajax({
                                 url: craftEnty + fid,
                                 success: function (res) {
-                                    console.log(res)
+                                    //console.log(res)
                                     var isussecc = res.Succeed;
                                     var data = res.Data;
                                     if (isussecc) {
@@ -497,7 +497,7 @@ $(function () {
         type: "get",
         url: ajaxMater,
         success: function (res) {
-            console.log(res)
+            //console.log(res)
             var isussecc = res.Succeed;
             if (isussecc) {
                 var data = res.Data;
@@ -564,7 +564,7 @@ $(function () {
             async: false,
             url: craftlist,
             success: function (res) {
-                console.log(res)
+                //console.log(res)
                 tablerender(str, res.Data);
 
             }
@@ -592,14 +592,14 @@ $(function () {
             IsEnabled:IsEnabled,
             Details: newdata
         }
-        console.log(data)
+        //console.log(data)
         $.ajax({
             type: "POST",
             async: false,
             url: addCraft,
             data: data,
             success: function (res) {
-                console.log(res)
+                //console.log(res)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     $(".termask").addClass("hidden");
@@ -616,7 +616,7 @@ $(function () {
     })
 
     $(".editsave").on("click", function () {
-        console.log(11)
+        //console.log(11)
         var name = $("#Craft_Name").val();
         var nick = $("#Craft_Nick").val();
         var id = $(".editsave").attr("data-id")
@@ -644,7 +644,7 @@ $(function () {
             url: editCraft,
             data: data,
             success: function (res) {
-                console.log(res)
+                //console.log(res)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     $(".termask").addClass("hidden");
@@ -677,7 +677,7 @@ function delmeasure(id) {
             url: removeCraft,
             data: data,
             success: function (res) {
-                console.log(res)
+                //console.log(res)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(index)
@@ -688,7 +688,7 @@ function delmeasure(id) {
 
             },
             error: function (res) {
-                console.log(res)
+                //console.log(res)
             }
         })
     });
@@ -707,7 +707,7 @@ function editmeasure(id) {
     $.ajax({
         url: craftEnty + id,
         success: function (res) {
-            console.log(res)
+            //console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {

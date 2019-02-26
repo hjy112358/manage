@@ -176,7 +176,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     }
                 });
             });
-           return false
+        //    return false
         }
     });
     //定义事件集合
@@ -850,7 +850,6 @@ function dialogtable() {
         closemark = function () {
             $(".termask").addClass("hidden")
             $(".terform")[0].reset();
-
         }
 
     });

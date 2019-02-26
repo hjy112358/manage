@@ -90,8 +90,8 @@
                             <span class="layui-btn changeStatus disclick">变更</span>
                             <button type="button" class="layui-btn layui-btn-normal" id="testList">上传附件</button>
                         </div>
-
                         <div class="layui-form layui-form-item " style="padding-top:25px;">
+                            <input type="hidden" name="F_Id" id="F_Id">
                             <div class="form-box clearfix">
                                 <div class="clearfix">
                                     <div class="layui-upload">
@@ -134,7 +134,7 @@
                                             <input type="text" name="PurchaseOrder_Deadline" id="PurchaseOrder_Deadline"
                                                 autocomplete="off" class="layui-input">
                                         </div>
-                                    </div>
+                                    </div> 
                                 </div>
                                 <div class="clearfix">
                                     <div class="layui-form-lsit fl">
@@ -146,14 +146,14 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="layui-form-lsit fl">
+                                    <!-- <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">源单号：</label>
                                         <div class="layui-input-block chaselist" data-type="daten">
                                             <select class="" id="chaselist" lay-search="" lay-filter="chaseorder">
                                                 <option value=""></option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">币别：</label>
                                         <div class="layui-input-block currey" data-type="daten">
@@ -211,9 +211,16 @@
                                         </div>
 
                                     </div>
+                                    <div class="layui-form-lsit fl ">
+                                        <label class="layui-form-label">单据状态：</label>
+                                        <div class="layui-input-block disinput checkbiller " data-type="daten">
+                                            <input type="text" value="" id="PurchaseOrder_Statusname" readonly>
+                                            <input type="hidden" value="" id="PurchaseOrder_Status"
+                                                name="PurchaseOrder_Status">
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="hidden" name="PurchaseOrder_Status" id="PurchaseOrder_Status"
-                                    value="10000">
+                               
                             </div>
                         </div>
                     </form>

@@ -91,3 +91,11 @@ color:inherit;
 .position-ab{
     position: absolute;
 }
+@font-face {
+    font-family: 'barCode';
+    src: url('../fontlist/c39p24dhtt-webfont.eot'); /* IE9 Compat Modes */
+    src:  url('../fontlist/c39p24dhtt-webfont.woff') format('woff'), /* Modern Browsers */
+                 url('../fontlist/c39p24dhtt-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+                 url('../fontlist/c39p24dhtt-webfont.svg') format('svg'); /* Legacy iOS */
+       }
+    

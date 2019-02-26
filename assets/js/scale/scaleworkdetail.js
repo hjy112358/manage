@@ -106,7 +106,7 @@ $(function () {
         type: "get",
         url: ajaxURl + '/Api/PSISales/SalesOrder/GetEntry?keyValue=' + scaleid,
         success: function (res) {
-            console.log(res)
+            // console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             printdata = res.Data
@@ -117,7 +117,6 @@ $(function () {
                     if (data.SalesOrder_DateTime) {
                         $("#SalesOrder_DateTime").val(data.SalesOrder_DateTime.split(" ")[0].replace(/\//g, "-"))
                     }
-                   
                     $("#SalesOrder_ExRate").val(data.SalesOrder_ExRate)
                     $("#SalesOrder_TaxRate").val(data.SalesOrder_TaxRate)
                     $("#SalesOrder_Project").val(data.SalesOrder_Project)
@@ -136,10 +135,8 @@ $(function () {
                     germater(str,res.Data.Details)
                      setInterval(function(){
                         layer.close(layerindex)
-                    },1500)
-                    
+                    },1500) 
                 }
-
             } else {
                 alert(res.Message)
             }
@@ -172,11 +169,10 @@ $(function () {
 })
 // 物料--
 function germater(str,data){
-
     $.ajax({
         url: ajaxMater,
         success:function(res){
-            console.log(res)
+            // console.log(res)
             var isussecc=res.Succeed;
             if(isussecc){
                 for(var i=0;i<res.Data.length;i++){
@@ -216,7 +212,7 @@ function getem(id) {
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            console.log(res)
+            // console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -256,7 +252,7 @@ function gettype(id) {
 
 // 单据状态--
 function getstatus(id) {
-    console.log(id)
+    // console.log(id)
     $.ajax({
         type: "get",
         url: salestauts,
@@ -330,7 +326,7 @@ function getbii(id) {
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            console.log(res)
+            // console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -375,7 +371,7 @@ function printable() {
         type: 'GET',
         url: ajaxURl + "/Api/PSIBase/Template/GetEntity?keyValue=D9D31C3A-B476-451D-A383-424F7F61E5CF",
         success: function (res) {
-            console.log(res)
+            // console.log(res)
             var resdata = res.Data;
             // printdata=res.Data
             console.log(printdata)
@@ -493,11 +489,15 @@ function printable() {
         // console.log(infdata)
         $(".printbody").each(function (index, body) {
             var ball = body.innerHTML;
-            // console.log(body)
+            console.log(ball)
            
             $.each(printdata, function (key, val) {
-                var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
-                ball = ball.replace(reg, val);
+                if(typeof (val)!='Object'){
+                    var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
+                    ball = ball.replace(reg, val);
+                    
+                }
+               
             });
             body.innerHTML = (ball);
         });

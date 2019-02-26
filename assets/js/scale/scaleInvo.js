@@ -30,7 +30,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 });
 
 var dateslit = [];
-var materid = [], maternick = [],meaid=[],meanick=[]
+var materid = [], maternick = [], meaid = [], meanick = []
 var first = new Date().valueOf();
 window.viewObj = {
     tbData: [{
@@ -67,71 +67,83 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         even: true,
         cols: [[
             { title: '序号', type: 'numbers' },
-            { field: 'SalesInvoiceEntry_Material', title: '物料' ,templet:function(d){
-                var index = materid.indexOf(d.SalesInvoiceEntry_Material)
-                if (index == '-1') {
-                    return ''
-                } else {
-                    return maternick[index]
-                }
-            }},
-            // { field: 'StockBillEntry_Material', title: '客户料号', edit: 'text' },
-            { field: 'SalesInvoiceEntry_Specifications', title: '规格型号'},
-            { field: 'SalesInvoiceEntry_Unit', title: '单位' ,templet:function(d){
-                if(d.SalesInvoiceEntry_Unit){
-                    var index1 = meaid.indexOf(d.SalesInvoiceEntry_Unit)
-                    if (index1 == '-1') {
-                        return d.SalesInvoiceEntry_Unit
+            {
+                field: 'SalesInvoiceEntry_Material', title: '物料', templet: function (d) {
+                    var index = materid.indexOf(d.SalesInvoiceEntry_Material)
+                    if (index == '-1') {
+                        return ''
                     } else {
-                        return meanick[index1]
+                        return maternick[index]
                     }
-                }else{
-                    return ''
                 }
-                
-            }},
+            },
+            // { field: 'StockBillEntry_Material', title: '客户料号', edit: 'text' },
+            { field: 'SalesInvoiceEntry_Specifications', title: '规格型号' },
+            {
+                field: 'SalesInvoiceEntry_Unit', title: '单位', templet: function (d) {
+                    if (d.SalesInvoiceEntry_Unit) {
+                        var index1 = meaid.indexOf(d.SalesInvoiceEntry_Unit)
+                        if (index1 == '-1') {
+                            return d.SalesInvoiceEntry_Unit
+                        } else {
+                            return meanick[index1]
+                        }
+                    } else {
+                        return ''
+                    }
+
+                }
+            },
             { field: 'SalesInvoiceEntry_BatchNo', title: '批号' },
             { field: 'SalesInvoiceEntry_Quantity', title: '数量' },
             { field: 'SalesInvoiceEntry_Price', title: '单价' },
-            { field: 'SalesInvoiceEntry_TaxPrice', title: '含税单价' , templet: function (d) {
-                if (d.SalesInvoiceEntry_TaxPrice) {
-                    var num = parseFloat(d.SalesInvoiceEntry_TaxPrice);
-                    num = num.toFixed(2);
-                } else {
-                    num = ''
+            {
+                field: 'SalesInvoiceEntry_TaxPrice', title: '含税单价', templet: function (d) {
+                    if (d.SalesInvoiceEntry_TaxPrice) {
+                        var num = parseFloat(d.SalesInvoiceEntry_TaxPrice);
+                        num = num.toFixed(2);
+                    } else {
+                        num = '0.00'
+                    }
+                    return num
                 }
-                return num
-            }},
-            { field: 'SalesInvoiceEntry_Amount', title: '金额' , templet: function (d) {
-                if (d.SalesInvoiceEntry_Amount) {
-                    var num = parseFloat(d.SalesInvoiceEntry_Amount);
-                    num = num.toFixed(2);
-                } else {
-                    num = ''
+            },
+            {
+                field: 'SalesInvoiceEntry_Amount', title: '金额', templet: function (d) {
+                    if (d.SalesInvoiceEntry_Amount) {
+                        var num = parseFloat(d.SalesInvoiceEntry_Amount);
+                        num = num.toFixed(2);
+                    } else {
+                        num = '0.00'
+                    }
+                    return num
                 }
-                return num
-            }},
+            },
             { field: 'SalesInvoiceEntry_ExRate', title: '税率(%)' },
-            { field: 'SalesInvoiceEntry_Tax', title: '税额' , templet: function (d) {   
-                if (d.SalesInvoiceEntry_Tax) {
-                    var num = parseFloat(d.SalesInvoiceEntry_Tax);
-                    num = num.toFixed(2);
-                } else {
-                    num = ''
-                }
+            {
+                field: 'SalesInvoiceEntry_Tax', title: '税额', templet: function (d) {
+                    if (d.SalesInvoiceEntry_Tax) {
+                        var num = parseFloat(d.SalesInvoiceEntry_Tax);
+                        num = num.toFixed(2);
+                    } else {
+                        num = '0.00'
+                    }
 
-                return num
-            } },
-            { field: 'total', title: '价税合计' , templet: function (d) {
-                if (d.total) {
-                    var num = parseFloat(d.total);
-                    num = num.toFixed(2);
-                } else {
-                    num = ''
+                    return num
                 }
+            },
+            {
+                field: 'total', title: '价税合计', templet: function (d) {
+                    if (d.total) {
+                        var num = parseFloat(d.total);
+                        num = num.toFixed(2);
+                    } else {
+                        num = '0.00'
+                    }
 
-                return num
-            } },
+                    return num
+                }
+            },
             { field: 'SalesInvoiceEntry_Total', title: '开票金额' },
             // { field: 'FFetchDate', title: '源单单号'},
             { field: 'Remark', title: '备注', edit: 'text' },
@@ -313,7 +325,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     // 计量单位
     $.ajax({
-        type:"GET",
+        type: "GET",
         url: ajaxMea,
         success: function (res) {
             console.log(res)
@@ -321,7 +333,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             var isussecc = res.Succeed;
             if (isussecc) {
                 for (var i = 0; i < data.length; i++) {
-                    meaid.push(data[i].Measure_Manufacture)  
+                    meaid.push(data[i].Measure_Manufacture)
                     meanick.push(data[i].Measure_Nick)
                 }
             } else {
@@ -347,7 +359,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 $("#currency").html(html);
                 $(".currency .layui-anim.layui-anim-upbit").html(htmlsel);
                 renderForm();
-               
+
             } else {
                 alert(data.Message)
             }
@@ -358,11 +370,11 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     // 切换客户
     layui.form.on('select(seleccus)', function (data, e) {
         console.log(data)
-        var cusnick,curr,rate;
+        var cusnick, curr, rate;
         if (data.elem.selectedOptions) {
             cusnick = data.elem.selectedOptions[0].innerHTML;
-            curr= data.elem.selectedOptions[0].attributes[2].value;
-            rate= data.elem.selectedOptions[0].attributes[1].value;
+            curr = data.elem.selectedOptions[0].attributes[2].value;
+            rate = data.elem.selectedOptions[0].attributes[1].value;
             $("#SalesInvoice_TaxRate").val(rate)
             var select = 'dd[lay-value="' + curr + '"]';
             $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
@@ -372,8 +384,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 var elemnow = elems[i];
                 if (elemnow.selected) {
                     cusnick = elemnow.text;
-                    curr= elemnow.attributes[2].value;
-                    rate= elemnow.attributes[1].value;
+                    curr = elemnow.attributes[2].value;
+                    rate = elemnow.attributes[1].value;
                     $("#SalesInvoice_TaxRate").val(rate)
                     var select = 'dd[lay-value="' + curr + '"]';
                     $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
@@ -385,45 +397,52 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             success: function (res) {
                 console.log(res)
                 if (res.Succeed) {
-                    if(res.Data.length>=1){
+                    if (res.Data.length >= 1) {
                         $("#SalesInvoice_ExRate").val(res.Data[0].StockBill_ExRate)
                         $.ajax({
                             url: ajaxstockbillone + res.Data[0].F_Id,
                             success: function (result) {
                                 console.log(result)
-                                if(result.Succeed){
-                                    var data=result.Data.Details
-                                    $.each(data,function(i,value){                                     
+                                if (result.Succeed) {
+                                    var data = result.Data.Details
+                                    var totalprice = $("#SalesInvoice_Total").val();
+                                    $.each(data, function (i, value) {
+                                        value.SalesInvoiceEntry_Quantity = value.StockBillEntry_Quantity
+                                        value.SalesInvoiceEntry_Price = value.StockBillEntry_Price
+                                        value.SalesInvoiceEntry_Amount = value.StockBillEntry_Amount
+                                        value.SalesInvoiceEntry_ExRate = value.StockBillEntry_ExRate
+                                        value.SalesInvoiceEntry_BatchNo = value.StockBillEntry_BatchNo
+                                        value.SalesInvoiceEntry_Unit = value.StockBillEntry_Unit
+                                        value.SalesInvoiceEntry_Specifications = value.StockBillEntry_Specifications
+                                        value.SalesInvoiceEntry_Material = value.StockBillEntry_Material
+                                        value.F_Id = null
                                         // 含税单价=销售单价*（1+税率/100）
-                                        value.SalesInvoiceEntry_TaxPrice = parseFloat(value.StockBillEntry_Price) * (1 + parseFloat(rate) / 100)
+                                        value.SalesInvoiceEntry_TaxPrice = parseFloat(value.SalesInvoiceEntry_Price) * (1 + parseFloat(rate) / 100)
                                         // 价税合计=数量*含税单价
-                                        value.total = parseFloat(value.StockBillEntry_Quantity) * parseFloat(value.SalesInvoiceEntry_TaxPrice)
+                                        value.total = parseFloat(value.SalesInvoiceEntry_Quantity) * parseFloat(value.SalesInvoiceEntry_TaxPrice)
                                         // 税额=未税金额*（税率/100）
-                                        value.SalesInvoiceEntry_Tax = parseFloat(value.StockBillEntry_Amount) * (parseFloat(rate) / 100)
-                                        value.SalesInvoiceEntry_Quantity=value.StockBillEntry_Quantity
-                                        value.SalesInvoiceEntry_Price=value.StockBillEntry_Price
-                                        value.SalesInvoiceEntry_Amount=value.StockBillEntry_Amount
-                                        value.SalesInvoiceEntry_ExRate=value.StockBillEntry_ExRate  
-                                        value.SalesInvoiceEntry_BatchNo=value.StockBillEntry_BatchNo 
-                                        value.SalesInvoiceEntry_Unit=value.StockBillEntry_Unit 
-                                        value.SalesInvoiceEntry_Specifications=value.StockBillEntry_Specifications 
-                                        value.SalesInvoiceEntry_Material=value.StockBillEntry_Material 
-                                        value.F_Id=null
+                                        value.SalesInvoiceEntry_Tax = parseFloat(value.SalesInvoiceEntry_Amount) * (parseFloat(rate) / 100)
+                                        if (totalprice >= value.SalesInvoiceEntry_Amount && totalprice != 0) {
+                                            value.SalesInvoiceEntry_Total = value.SalesInvoiceEntry_Amount
+                                            totalprice = parseFloat(totalprice) - parseFloat(value.SalesInvoiceEntry_Amount)
+                                        } else {
+                                            value.SalesInvoiceEntry_Total = totalprice
+                                        }
                                     })
                                     tableIns.reload({
-                                        data:data,
-                                        limit:data.length
+                                        data: data,
+                                        limit: data.length
                                     })
                                 }
                             }
                         })
-                    }else{
+                    } else {
                         tableIns.reload({
-                            data:[],
-                            limit:1
+                            data: [],
+                            limit: 1
                         })
                     }
-                    
+
                 }
             }
         })
@@ -463,12 +482,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         }
     })
 
-       // 制单人
-       var mouser = $.cookie("Modify_User");
-       var username = $.cookie("User_Nick")
-       $("#SalesInvoice_Biller").val(mouser)
-       $("#SalesInvoice_Billername").val(username)
-   
+    // 制单人
+    var mouser = $.cookie("Modify_User");
+    var username = $.cookie("User_Nick")
+    $("#SalesInvoice_Biller").val(mouser)
+    $("#SalesInvoice_Billername").val(username)
+
 
 
     function renderForm() {
@@ -479,16 +498,16 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     }
 
 
-    $("#SalesInvoice_Total").on("blur",function(){
-        var totalprice=$(this).val();
+    $("#SalesInvoice_Total").on("blur", function () {
+        var totalprice = $(this).val();
         var oldData = table.cache[layTableId];
-        $.each(oldData,function(i,v){
-            if(v.SalesInvoiceEntry_Material){
-                if(totalprice>=v.StockBillEntry_Amount&&totalprice!=0){
-                    v.SalesInvoiceEntry_Total=v.StockBillEntry_Amount
-                    totalprice=parseFloat(totalprice)-parseFloat(v.StockBillEntry_Amount)
-                }else{
-                    v.SalesInvoiceEntry_Total=totalprice
+        $.each(oldData, function (i, v) {
+            if (v.SalesInvoiceEntry_Material) {
+                if (totalprice >= v.StockBillEntry_Amount && totalprice != 0) {
+                    v.SalesInvoiceEntry_Total = v.StockBillEntry_Amount
+                    totalprice = parseFloat(totalprice) - parseFloat(v.StockBillEntry_Amount)
+                } else {
+                    v.SalesInvoiceEntry_Total = totalprice
                 }
             }
         })
@@ -500,29 +519,29 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     // 保存
     $(".sub").on("click", function () {
-        var indexlay=layer.load();
+        var indexlay = layer.load();
         var formlist = $("form").serializeArray()
         var oldData = table.cache[layTableId];
         var data = {}
         for (var j = 0; j < formlist.length; j++) {
             data[formlist[j].name] = formlist[j].value
         }
-       
+
         data.Details = oldData
         console.log(data)
         $.ajax({
-            type:"POST",
-            url:ajaxaddinvo,
-            data:data,
-            success:function(res){
+            type: "POST",
+            url: ajaxaddinvo,
+            data: data,
+            success: function (res) {
                 console.log(res)
-                if(res.Succeed){
+                if (res.Succeed) {
                     layer.close(indexlay);
                     layer.msg("新增成功");
                     setInterval(function () {
                         window.location.reload()
-                    }, 1000) 
-                }else{
+                    }, 1000)
+                } else {
                     alert(res.Message)
                 }
             }

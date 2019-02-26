@@ -458,7 +458,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                                 value.StockBillEntry_Material = value.SalesOrderEntry_Material
                                 value.quatity = value.SalesOrderEntry_Quantity
                                 value.tockBillEntry_Amount = value.SalesOrderEntry_Amount
-                                var index = measurnick.indexOf(value.SalesOrderEntry_Unit)
+                                var index = measureid.indexOf(value.SalesOrderEntry_Unit)
                                 if (index != '-1') {
                                     value.StockBillEntry_Unit=measureid[index]
                                     value.unit=measurnick[index]
@@ -495,7 +495,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             var oldData = table.cache[layTableId];
             tableIns.reload({
                 data: oldData,
-                limit: viewObj.limit
+                limit: oldData.length
             });
         });
     }
@@ -525,6 +525,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                         window.location.reload()
                     }, 1000) 
                    }else{
+                        layer.close(indexlay);
                        alert(res.Message)
                    }
 

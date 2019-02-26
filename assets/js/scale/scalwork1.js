@@ -470,7 +470,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         }
                     });
                     $.ajax({
-                        url: ajaxURl + '/Api/PSIBase/Material/GetList?keyword=&PageIndex=&PageSize=',
+                        url: ajaxMater,
                         success: function (res) {
                             console.log(res)
                             $(".dateload").addClass("hidden")
@@ -508,7 +508,52 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                     }
                                     $(".selectlist1 ul").html("");
                                     $(".selectlist1 ul").html(searchlist);
-
+                                    $('.selectlist1 ul').find('li').each(function () {
+                                        var _this1 = $(this);
+                                        _this1.hover(function () {
+                                            $(this).addClass("active").siblings().removeClass("active")
+                                        });
+                                        _this1.on("click", function () {
+                                            var oldData = table.cache[layTableId];
+                                            var name = $(this).attr("data-name");
+                                            var nick = $(this).attr("data-nick");
+                                            var specife = $(this).attr("data-spe");
+                                            var measure = $(this).attr("data-materme");
+                                            var marid = $(this).attr("data-materid")
+                                            $(".materName").val(name || '');
+                                            var rate = $("#SalesOrder_TaxRate").val();//税率
+                                            var sendate = $("#recdate").val();//交货日期
+                                            $.each(tabledata, function (index, value) {
+                                                if (value.LAY_TABLE_INDEX == dataindex) {
+                                                    value.Material_Name = name || "";
+                                                    value.Material_Nick = nick || "";
+                                                    value.SalesOrderEntry_Specifications = specife || "";
+                                                    value.SalesOrderEntry_Material = marid || "";
+                                                    value.SalesOrderEntry_Unit = measure
+                                                    value.SalesOrderEntry_Quantity = 1;//数量
+                                                    value.SalesOrderEntry_Price = 0.00;//销售单价
+                                                    value.SalesOrderEntry_TaxRate = rate || '16';//税率
+                                                    value.SalesOrderEntry_Deadline = sendate || '';//交货日期
+                                                    value.SalesOrderEntry_TaxPrice = 0;//含税单价
+                                                    value.SalesOrderEntry_Amount = 0;//未税金额
+                                                    value.SalesOrderEntry_Total = 0;//价税合计
+                                                    value.SalesOrderEntry_Tax = 0;//税额
+                                                    if (value.tempId == viewObj.last) {
+                                                        activeByType("add");
+                                                    } else {
+                                                        var oldData = table.cache[layTableId];
+                                                        tableIns.reload({
+                                                            data: oldData,
+                                                            limit: viewObj.limit
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                            $(".selectlist1").addClass("hidden");
+                                            $(".checkmater").removeClass("layui-form-selected");
+                                            return false
+                                        })
+                                    })
                                 })
                                 $('.selectlist1 ul').find('li').each(function () {
                                     var _this1 = $(this);
@@ -596,7 +641,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         }
                         if (showList.length == 0) {
                             searchlist = '<div style="text-align:center;padding:15px 10px 15px 0; ">暂无数据</div>'
-                        }
+                        } 
                         $(".selectlist1 ul").html("");
                         $(".selectlist1 ul").html(searchlist);
                         $("#tableRes").find("tr").each(function (i, v) {
@@ -606,6 +651,54 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                 $(nowtr).find("selectlist").addClass("hidden")
                             }
                         });
+                        $('.selectlist1 ul').find('li').each(function () {
+                            var _this1 = $(this);
+                            _this1.hover(function () {
+                                $(this).addClass("active").siblings().removeClass("active")
+                            });
+                            _this1.on("click", function () {
+                                var oldData = table.cache[layTableId];
+                                // console.log(oldData)
+                                var name = $(this).attr("data-name");
+                                var nick = $(this).attr("data-nick");
+                                var specife = $(this).attr("data-spe");
+                                var measure = $(this).attr("data-materme");
+                                var marid = $(this).attr("data-materid")
+                                $(".materName").val(name || '');
+                                var rate = $("#SalesOrder_TaxRate").val();//税率
+                                var sendate = $("#recdate").val();//交货日期
+                                $.each(tabledata, function (index, value) {
+                                    // console.log(value)
+                                    if (value.LAY_TABLE_INDEX == dataindex) {
+                                        value.Material_Name = name || "";
+                                        value.Material_Nick = nick || "";
+                                        value.SalesOrderEntry_Specifications = specife || "";
+                                        value.SalesOrderEntry_Material = marid || "";
+                                        value.SalesOrderEntry_Unit = measure;
+                                        value.SalesOrderEntry_Quantity = 1;//数量
+                                        value.SalesOrderEntry_Price = 0.00;//销售单价
+                                        value.SalesOrderEntry_TaxRate = rate || '16';//税率
+                                        value.SalesOrderEntry_Deadline = sendate || '';//交货日期
+                                        value.SalesOrderEntry_TaxPrice = 0;//含税单价
+                                        value.SalesOrderEntry_Amount = 0;//未税金额
+                                        value.SalesOrderEntry_Total = 0;//价税合计
+                                        value.SalesOrderEntry_Tax = 0;//税额
+                                        if (value.tempId == viewObj.last) {
+                                            activeByType("add");
+                                        } else {
+                                            var oldData = table.cache[layTableId];
+                                            tableIns.reload({
+                                                data: oldData,
+                                                limit: viewObj.limit
+                                            });
+                                        }
+                                    }
+                                });
+                                $(".selectlist1").addClass("hidden");
+                                $(".checkmater").removeClass("layui-form-selected");
+                                return false
+                            })
+                        })
 
                     })
                     $('.selectlist1 ul').find('li').each(function () {

@@ -1,7 +1,5 @@
 
 var dateslit = [], curid = [], curnick = [], cusid = [], cusnick = [], materid = [], maternick = [], matername = [];
-
-var token = $.cookie("token");
 var url = window.location.search;
 var id = url.split("?")[1].split("&")[0].split("=")[1];
 var scaleid = url.split("?")[1].split("&")[1].split("=")[1];
@@ -14,7 +12,6 @@ $.ajax({
     type: "get",
     url: ajaxURl + '/Api/PSISales/SalesOrder/GetEntry?keyValue=' + scaleid,
     success: function (res) {
-        console.log(res)
         var isussecc = res.Succeed;
         var data = res.Data;
         if (isussecc) {
@@ -37,19 +34,15 @@ $.ajax({
                 $("#SalesOrder_Delivery").val(data.SalesOrder_Delivery)
                 $("#SalesOrder_Payment").val(data.SalesOrder_Payment)
                 $("#SalesOrder_Cycle").val(data.SalesOrder_Cycle);
-               
                 getstatus(data.SalesOrder_Status); // 单据状态
                 gettype(data.SalesOrder_Type);// 订单类型
                 getdepart(data.SalesOrder_Department)// 部门
                 getem(data.SalesOrder_Employee)// 业务员  
                 getmater(res.Data.Details)
-                // tableload(res.Data.Details)
-                // first = res.Data.Details[(res.Data.Details.length - 1).F_Id]
                 setInterval(function(){
                     layer.close(layerindex)
                 },1500)
             }
-
         } else {
             alert(JSON.parse(res).Message)
         }
@@ -64,7 +57,7 @@ var currnamshow = [];
 var ratelist = [];
 // var first;
 function tableload(tdata) {
-    var tid = new Date().valueOf();
+    // var tid = new Date().valueOf();
     // var newRow = {
     //     tempId: tid,
     //     state: 0,
@@ -230,10 +223,8 @@ function tableload(tdata) {
                 }
             ]],
             done: function (res, curr, count) {
-                // console.log(dateslit)
                 viewObj.tbData = res.data;
                 prolist();
-
                 $(".layui-input-date").each(function (i) {
                     layui.laydate.render({
                         elem: this,
@@ -260,7 +251,6 @@ function tableload(tdata) {
                                 date = date.split(" ")[0].replace(/\//g, "-");
                                 $cr.find('input[id="SalesOrderEntry_Deadline"]').val(date);
                             }
-
                             for (var i = 0; i < currname.length; i++) {
                                 var nownick = currname[i];
                                 var nowi = i;
@@ -271,15 +261,11 @@ function tableload(tdata) {
                                     $cr.find('td[data-field="SalesOrderEntry_Currency"] input').val("");
                                 }
                             }
-
                         }
                     });
                 });
-
-
             }
         });
-
 
         //定义事件集合
         var active = {
@@ -357,26 +343,13 @@ function tableload(tdata) {
         //监听工具条
         table.on('tool(dataTable)', function (obj) {
             var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
-
             switch (event) {
                 case "state":
                     var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
                     $.extend(obj.data, { 'state': stateVal })
                     activeByType('updateRow', obj.data);	//更新行记录对象
                     break;
-                // case "del":
-                //     if (viewObj.limit == 1) {
-                //         alert("删除失败，至少应有一条数据")
-                //     } else {
-                //         viewObj.limit = viewObj.limit - 1;
-                //         layer.confirm('确定删除？', function (index) {
-                //             obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                //             layer.close(index);
-                //             activeByType('removeEmptyTableCache');
-
-                //         });
-                //     }
-                //     break;
+               
             }
         });
         table.on('edit(dataTable)', function (obj) {
@@ -489,14 +462,9 @@ function tableload(tdata) {
             $(".productworktable td[data-field='Material_Name']").each(function () {
                 var curnow = $(this);
                 curnow.on("click", function () {
-                    // $("#tablelist .layui-table-body").addClass("overvis");
-                    // $("#tablelist .layui-table-box").addClass("overvis");
-                    // $("#tablelist .layui-table-view").addClass("overvis");
                     var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
                     var height = $('#tableRes .layui-table-body.layui-table-main').height() + scrollHeight + 280;
-
                     $('#tableRes .layui-table-body.layui-table-main').css("height", height)
-
                     var _this = $(this);
                     var dataindex = _this.parents("tr").attr("data-index");
                     _this.find(".checkmater").addClass("layui-form-selected")
@@ -507,14 +475,12 @@ function tableload(tdata) {
                             var nowtr = v;
                             var nowindex = $(v).attr("data-index");
                             if (dataindex != nowindex) {
-
                             } else {
                                 $(nowtr).find(".selectlist1").removeClass("hidden");
                                 $(nowtr).find(".dateload").removeClass("hidden")
                                 $(nowtr).find(".datelist").addClass("hidden")
                             }
                         });
-
                         $.ajax({
                             url: ajaxURl + '/Api/PSIBase/Material/GetList?keyword=&PageIndex=&PageSize=',
                             success: function (res) {
@@ -541,9 +507,7 @@ function tableload(tdata) {
                                         $.each(arrlist, function (index, item) {
                                             if ((item.materame && item.materame.indexOf(searchVal) != -1) || (item.maternick && item.maternick.indexOf(searchVal) != -1) || (item.matersp && item.matersp.indexOf(searchVal) != -1)) {
                                                 showList.push(item);
-                                            } else {
-
-                                            }
+                                            } 
                                         })
                                         // console.log(showList)
                                         for (var j = 0; j < showList.length; j++) {
@@ -555,7 +519,54 @@ function tableload(tdata) {
                                         }
                                         $(".selectlist1 ul").html("");
                                         $(".selectlist1 ul").html(searchlist);
-
+                                        $('.selectlist1 ul').find('li').each(function () {
+                                            var _this1 = $(this);
+                                            _this1.hover(function () {
+                                                $(this).addClass("active").siblings().removeClass("active")
+                                            });
+                                            _this1.on("click", function () {
+                                                var oldData = table.cache[layTableId];
+                                                // console.log(oldData)
+                                                var name = $(this).attr("data-name");
+                                                var nick = $(this).attr("data-nick");
+                                                var specife = $(this).attr("data-spe");
+                                                var measure = $(this).attr("data-materme");
+                                                var marid = $(this).attr("data-materid")
+                                                $(".materName").val(name || '');
+                                                var rate = $("#SalesOrder_TaxRate").val();//税率
+                                                var sendate = $("#recdate").val();//交货日期
+                                                // $(".maternick").val(nick);
+                                                // $(".materspe").val(specife);
+                                                // $("#measure").val(measure);
+                                                console.log(nick)
+                                                $.each(tabledata, function (index, value) {
+                                                    console.log(value)
+                                                    if (value.LAY_TABLE_INDEX == dataindex) {
+                                                        value.Material_Name = name || "";
+                                                        value.Material_Nick = nick || "";
+                                                        value.SalesOrderEntry_Specifications = specife || "";
+                                                        value.SalesOrderEntry_Material = marid || "";
+                                                        value.SalesOrderEntry_Unit = measure
+                                                        value.SalesOrderEntry_Quantity = 1;//数量
+                                                        value.SalesOrderEntry_Price = 0.00;//销售单价
+                                                        value.SalesOrderEntry_TaxRate = rate || '16';//税率
+                                                        value.SalesOrderEntry_Deadline = sendate || '';//交货日期
+                                                        value.SalesOrderEntry_TaxPrice = 0;//含税单价
+                                                        value.SalesOrderEntry_Amount = 0;//未税金额
+                                                        value.SalesOrderEntry_Total = 0;//价税合计
+                                                        value.SalesOrderEntry_Tax = 0;//税额
+                                                        var oldData = table.cache[layTableId];
+                                                        tableIns.reload({
+                                                            data: oldData,
+                                                            limit: viewObj.limit
+                                                        });
+                                                    }
+                                                });
+                                                $(".selectlist1").addClass("hidden");
+                                                $(".checkmater").removeClass("layui-form-selected");
+                                                return false
+                                            })
+                                        })
                                     })
                                     $('.selectlist1 ul').find('li').each(function () {
                                         var _this1 = $(this);
@@ -608,25 +619,20 @@ function tableload(tdata) {
                                 } else {
                                     alert(res.Message)
                                 }
-
                             }
                         })
                     } else {
-
-
                         $(".selectlist1 ul").html(htmlterm);
                         $("#tableRes").find("tr").each(function (i, v) {
                             var nowtr = v;
                             var nowindex = $(v).attr("data-index");
                             if (dataindex != nowindex) {
-
                             } else {
                                 $(nowtr).find(".selectlist1").removeClass("hidden");
                                 $(nowtr).find(".dateload").addClass("hidden")
                                 $(nowtr).find(".datelist").removeClass("hidden")
                             }
                         });
-
                         $(".materName").on("keyup", function () {
                             var searchVal = $(this).val();
                             var showList = [];
@@ -636,8 +642,6 @@ function tableload(tdata) {
                             $.each(arrlist, function (index, item) {
                                 if ((item.materame && item.materame.indexOf(searchVal) != -1) || (item.maternick && item.maternick.indexOf(searchVal) != -1) || (item.matersp && item.matersp.indexOf(searchVal) != -1)) {
                                     showList.push(item);
-                                } else {
-
                                 }
                             })
                             // console.log(showList)
@@ -657,7 +661,63 @@ function tableload(tdata) {
                                     $(nowtr).find("selectlist").addClass("hidden")
                                 }
                             });
-
+                            $('.selectlist1 ul').find('li').each(function () {
+                                var _this1 = $(this);
+                                _this1.hover(function () {
+                                    $(this).addClass("active").siblings().removeClass("active")
+                                });
+                                _this1.on("click", function () {
+                                    var oldData = table.cache[layTableId];
+                                    // console.log(oldData)
+                                    var name = $(this).attr("data-name");
+                                    var nick = $(this).attr("data-nick");
+                                    console.log(nick)
+                                    var specife = $(this).attr("data-spe");
+                                    var measure = $(this).attr("data-materme");
+                                    var marid = $(this).attr("data-materid")
+                                    $(".materName").val(name || '');
+                                    var rate = $("#SalesOrder_TaxRate").val();//税率
+                                    var sendate = $("#recdate").val();//交货日期
+                                    // $(".maternick").val(nick);
+                                    // $(".materspe").val(specife);
+                                    // $("#measure").val(measure);
+                                    $.each(tabledata, function (index, value) {
+                                        // console.log(value)
+                                        if (value.LAY_TABLE_INDEX == dataindex) {
+                                            value.Material_Name = name || "";
+                                            value.Material_Nick = nick || "";
+                                            value.SalesOrderEntry_Specifications = specife || "";
+                                            value.SalesOrderEntry_Material = marid || "";
+                                            value.SalesOrderEntry_Unit = measure;
+                                            value.SalesOrderEntry_Quantity = 1;//数量
+                                            value.SalesOrderEntry_Price = 0.00;//销售单价
+                                            value.SalesOrderEntry_TaxRate = rate || '16';//税率
+                                            value.SalesOrderEntry_Deadline = sendate || '';//交货日期
+                                            value.SalesOrderEntry_TaxPrice = 0;//含税单价
+                                            value.SalesOrderEntry_Amount = 0;//未税金额
+                                            value.SalesOrderEntry_Total = 0;//价税合计
+                                            value.SalesOrderEntry_Tax = 0;//税额
+                                            var oldData = table.cache[layTableId];
+                                            tableIns.reload({
+                                                data: oldData,
+                                                limit: viewObj.limit
+                                            });
+                                            // if (value.tempId == viewObj.last) {
+                                            //     // activeByType("add");
+                                            // } else {
+                                            //     var oldData = table.cache[layTableId];
+                                            //     tableIns.reload({
+                                            //         data: oldData,
+                                            //         limit: viewObj.limit
+                                            //     });
+                                            // }
+                                        }
+                                    });
+                                    $(".selectlist1").addClass("hidden");
+                                    $(".checkmater").removeClass("layui-form-selected");
+                                    return false
+                                })
+                            })
                         })
                         $('.selectlist1 ul').find('li').each(function () {
                             var _this1 = $(this);
@@ -728,11 +788,6 @@ function tableload(tdata) {
 
 
 
-        // 制单人
-        // var mouser = $.cookie("Modify_User");
-        // var username = $.cookie("User_Nick")
-        // $("#SalesOrder_Biller").val(mouser)
-        // $("#SalesOrder_Billername").val(username)
 
         form.on('select(customer)', function (data) {
             console.log(data);

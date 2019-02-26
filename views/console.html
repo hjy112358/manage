@@ -6,49 +6,7 @@
     <link rel="stylesheet" href="../assets/css/layui.css">
     <link rel="stylesheet" href="../assets/css/mypublic.css">
     <link rel="stylesheet" href="../assets/css/view.css" />
-</head>
-
-<body>
-    <div id="lct">
-        <div id="lct_link">
-                <!-- <a href="javascript:void(parent.changeLct(1,0))" class="lct_right">采购订单</a>
-                <a href="javascript:void(parent.changeLct(4,0))" style="margin-left: 325px;" class="lct_right">生产订单</a>
-                <a href="javascript:void(parent.changeLct(2,0))" style="margin-left: 650px;">销售订单</a>
-                <a href="javascript:void(0)" style="margin-top: 130px;margin-left: 445px;" class="lct_top">工程流转卡</a>
-                <a href="javascript:void(parent.changeLct(4,2))" style="margin-top: 210px;margin-left: 445px;" class="lct_top">工序汇报</a>
-                <a href="javascript:void(parent.changeLct(4,3))" style="margin-top: 290px;margin-left: 445px;" class="lct_top">产品入库</a>
-                <a href="javascript:void(parent.changeLct(4,1))" style="margin-top: 290px;margin-left: 206px;" class="lct_top">生产领料单</a>
-                <a href="javascript:void(parent.changeLct(3,0))" style="margin-top: 290px;" class="lct_top">采购入库</a>
-                <a href="javascript:void(parent.changeLct(1,1))" style="margin-top: 380px;" class="lct_top">采购发票</a>
-                <a href="javascript:void(parent.changeLct(5,1))" style="margin-top: 470px;" class="lct_top">付款</a>
-                <a href="javascript:void(parent.changeLct(3,1))" style="margin-top: 290px;margin-left: 650px;" class="lct_top">销售出库单</a>
-                <a href="javascript:void(parent.changeLct(2,1))" style="margin-top: 380px;margin-left: 650px;" class="lct_top">销售发票</a>
-                <a href="javascript:void(parent.changeLct(5,0))" style="margin-top: 470px;margin-left: 650px;" class="lct_top">收款单</a> -->
-            <a href="javascript:void(0)" class="lct_right">采购订单</a>
-            <a href="javascript:void(0)" style="margin-left: 325px;" class="lct_right">生产订单</a>
-            <a href="javascript:void(0))" style="margin-left: 650px;">销售订单</a>
-            <a href="javascript:void(0)" style="margin-top: 130px;margin-left: 445px;" class="lct_top">工程流转卡</a>
-            <a href="javascript:void(0)" style="margin-top: 210px;margin-left: 445px;" class="lct_top">工序汇报</a>
-            <a href="javascript:void(0)" style="margin-top: 290px;margin-left: 445px;" class="lct_top">产品入库</a>
-            <a href="javascript:void(0)" style="margin-top: 290px;margin-left: 206px;" class="lct_top">生产领料单</a>
-            <a href="javascript:void(0)" style="margin-top: 290px;" class="lct_top">采购入库</a>
-            <a href="javascript:void(0)" style="margin-top: 380px;" class="lct_top">采购发票</a>
-            <a href="javascript:void(0)" style="margin-top: 470px;" class="lct_top">付款</a>
-            <a href="javascript:void(0)" style="margin-top: 290px;margin-left: 650px;" class="lct_top">销售出库单</a>
-            <a href="javascript:void(0)" style="margin-top: 380px;margin-left: 650px;" class="lct_top">销售发票</a>
-            <a href="javascript:void(0)" style="margin-top: 470px;margin-left: 650px;" class="lct_top">收款单</a>
-        </div>
-        <div id="lct_line">
-            <div id="lct_line_1"></div>
-            <div id="lct_line_2"></div>
-            <div id="lct_line_3"></div>
-            <div id="lct_line_4"></div>
-            <div id="lct_line_5"></div>
-            <div id="lct_line_6"></div>
-            <div id="lct_line_7"></div>
-        </div>
-    </div>
-
+    
     <style>
         * {
             margin: 0px;
@@ -188,7 +146,53 @@
             margin-left: 519px;
             z-index: 1;
         }
+        .barcode{
+            font-family: "barCode"
+        }
     </style> 
+</head>
+
+<body>
+    <div id="lct">
+        <div id="lct_link">
+                <!-- <a href="javascript:void(parent.changeLct(1,0))" class="lct_right">采购订单</a>
+                <a href="javascript:void(parent.changeLct(4,0))" style="margin-left: 325px;" class="lct_right">生产订单</a>
+                <a href="javascript:void(parent.changeLct(2,0))" style="margin-left: 650px;">销售订单</a>
+                <a href="javascript:void(0)" style="margin-top: 130px;margin-left: 445px;" class="lct_top">工程流转卡</a>
+                <a href="javascript:void(parent.changeLct(4,2))" style="margin-top: 210px;margin-left: 445px;" class="lct_top">工序汇报</a>
+                <a href="javascript:void(parent.changeLct(4,3))" style="margin-top: 290px;margin-left: 445px;" class="lct_top">产品入库</a>
+                <a href="javascript:void(parent.changeLct(4,1))" style="margin-top: 290px;margin-left: 206px;" class="lct_top">生产领料单</a>
+                <a href="javascript:void(parent.changeLct(3,0))" style="margin-top: 290px;" class="lct_top">采购入库</a>
+                <a href="javascript:void(parent.changeLct(1,1))" style="margin-top: 380px;" class="lct_top">采购发票</a>
+                <a href="javascript:void(parent.changeLct(5,1))" style="margin-top: 470px;" class="lct_top">付款</a>
+                <a href="javascript:void(parent.changeLct(3,1))" style="margin-top: 290px;margin-left: 650px;" class="lct_top">销售出库单</a>
+                <a href="javascript:void(parent.changeLct(2,1))" style="margin-top: 380px;margin-left: 650px;" class="lct_top">销售发票</a>
+                <a href="javascript:void(parent.changeLct(5,0))" style="margin-top: 470px;margin-left: 650px;" class="lct_top">收款单</a> -->
+            <a href="javascript:void(0)" class="lct_right">采购订单</a>
+            <a href="javascript:void(0)" style="margin-left: 325px;" class="lct_right">生产订单</a>
+            <a href="javascript:void(0))" style="margin-left: 650px;">销售订单</a>
+            <a href="javascript:void(0)" style="margin-top: 130px;margin-left: 445px;" class="lct_top">工程流转卡</a>
+            <a href="javascript:void(0)" style="margin-top: 210px;margin-left: 445px;" class="lct_top">工序汇报</a>
+            <a href="javascript:void(0)" style="margin-top: 290px;margin-left: 445px;" class="lct_top">产品入库</a>
+            <a href="javascript:void(0)" style="margin-top: 290px;margin-left: 206px;" class="lct_top">生产领料单</a>
+            <a href="javascript:void(0)" style="margin-top: 290px;" class="lct_top">采购入库</a>
+            <a href="javascript:void(0)" style="margin-top: 380px;" class="lct_top">采购发票</a>
+            <a href="javascript:void(0)" style="margin-top: 470px;" class="lct_top">付款</a>
+            <a href="javascript:void(0)" style="margin-top: 290px;margin-left: 650px;" class="lct_top">销售出库单</a>
+            <a href="javascript:void(0)" style="margin-top: 380px;margin-left: 650px;" class="lct_top">销售发票</a>
+            <a href="javascript:void(0)" style="margin-top: 470px;margin-left: 650px;" class="lct_top">收款单</a>
+        </div>
+        <div id="lct_line">
+            <div id="lct_line_1"></div>
+            <div id="lct_line_2"></div>
+            <div id="lct_line_3"></div>
+            <div id="lct_line_4"></div>
+            <div id="lct_line_5"></div>
+            <div id="lct_line_6"></div>
+            <div id="lct_line_7"></div>
+        </div>
+    </div>
+
 
 
 </body>

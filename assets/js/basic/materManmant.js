@@ -43,7 +43,7 @@ $(function () {
                 });
 
                 table.on('rowDouble(analy)', function (obj) {
-                    console.log(obj)
+                    ////console.log(obj)
                     // parent.editmater(obj.data.Material_Name, obj.data.Material_Nick)
                     $(".termask").removeClass("hidden");
                     $(".termask .masktitle").html("修改物料");
@@ -79,7 +79,7 @@ $(function () {
                 url: ajaxMater,
                 // data:datas,
                 success: function (res) {
-                    console.log(res)
+                    ////console.log(res)
                     var data = res.Data;
                     var success = res.Succeed;
                     var msg = res.Message;
@@ -117,7 +117,7 @@ function delmater(id) {
             url:removeMater,
             data: data,
             success: function (res) {
-                console.log(res)
+                //////console.log(res)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(index)
@@ -260,7 +260,7 @@ function addnew(){
                     url: addMater,
                     data: data,
                     success: function (res) {
-                        console.log(res)
+                        ////console.log(res)
                         var data = res.Succeed;
                         if (data) {
                             layer.close(index);
@@ -364,7 +364,7 @@ function edit(matename,maternick,id){
                 url: editMater,
                 data: data,
                 success: function (res) {
-                    console.log(res)
+                    ////console.log(res)
                     var data =res.Succeed;
                     if (data) {
                         layer.close(index);
@@ -393,7 +393,7 @@ layui.form.on('select(selecstyle)', function (data) {
         url: materFlistone+'?keyword='+value+'&PageIndex=&PageSize=',
         success: function (res) {
             var data = res.Data;
-            console.log(data)
+            ////console.log(data)
             var isussecc = res.Succeed;
             if (isussecc) {
                 for (var i = 0; i < data.length; i++) {
@@ -408,7 +408,7 @@ layui.form.on('select(selecstyle)', function (data) {
                         '</div>';
                 }
                 $(".typestyle div").html(datehtml)
-                console.log(datalist)
+                ////console.log(datalist)
             }
         }
     })

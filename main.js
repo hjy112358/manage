@@ -210,6 +210,8 @@ var purchaseOrderList=ajaxURl + "/api/PSIPurchase/PurchaseOrder/GetList?keyword=
 var ajaxchasetype=ajaxURl + "/Api/SystemManager/Dictionary/GetEntry?keyword=PSIPurchaseOrder_Type"
 // 添加采购订单
 var purchaseOrderAdd=ajaxURl+'/api/PSIPurchase/PurchaseOrder/Add'
+// 修改采购订单
+var purchaseOrderEdit=ajaxURl+'/api/PSIPurchase/PurchaseOrder/Edit'
 // 删除采购订单
 var purchaseOrderListDel=ajaxURl+'/api/PSIPurchase/PurchaseOrder/Remove'
 // 采购订单列表

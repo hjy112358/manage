@@ -10,9 +10,6 @@ $(function () {
     $(".cancel,.iconclose").on("click",function(){
         $(".termask").addClass("hidden");
     })
-   
-
-    var token = $.cookie("token");
     function tablerender(str, data) {
         layui.use(['jquery', 'table'], function () {
             var $ = layui.$,
@@ -30,7 +27,7 @@ $(function () {
             // table.on('rowDouble(analy)', function (obj) {
             //     console.log(obj)
             //     parent.editmater(obj.data.Material_Name, obj.data.Material_Nick)
-            // });
+            // }); 
 
         })
     }

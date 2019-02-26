@@ -363,6 +363,49 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                                 }
                                 $(".selectlist1 ul").html("");
                                 $(".selectlist1 ul").html(searchlist);
+                                $('.selectlist1 ul').find('li').each(function () {
+                                    var _this1 = $(this);
+                                    _this1.hover(function () {
+                                        $(this).addClass("active").siblings().removeClass("active")
+                                    });
+                                    _this1.on("click", function () {
+                                        var oldData = table.cache[layTableId1];
+    
+                                        var name = $(this).attr("data-name");
+                                        var nick = $(this).attr("data-nick");
+                                        var specife = $(this).attr("data-spe");
+                                        var measure = $(this).attr("data-materme");
+                                        var fid = $(this).attr("data-fid");
+    
+                                        $(".materName1").val(name);
+                                        // $(".maternick").val(nick);
+                                        // $(".materspe").val(specife);
+                                        // $("#measure").val(measure);
+                                        $.each(tabledata, function (index, value) {
+    
+                                            if (value.LAY_TABLE_INDEX == dataindex) {
+                                                value.materialName = name;
+                                                value.materialNick = nick
+                                                value.AssignEntry_Specifications = specife;
+                                                value.AssignEntry_Unit = measure
+                                                value.AssignEntry_Material = fid
+                                                value.AssignEntry_ScrapRate = '0'
+                                                if (value.tempId == viewObj.last) {
+                                                    activeByType("add");
+                                                } else {
+                                                    var oldData = table.cache[layTableId1];
+                                                    tableIns.reload({
+                                                        data: oldData,
+                                                        limit: viewObj.limit
+                                                    });
+                                                }
+                                            }
+                                        });
+                                        $(".selectlist1").addClass("hidden");
+                                        $(".checkmater").removeClass("layui-form-selected");
+                                        return false
+                                    })
+                                })
                             })
                             $('.selectlist1 ul').find('li').each(function () {
                                 var _this1 = $(this);
@@ -433,7 +476,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                             } else {
                             }
                         })
-
                         for (var j = 0; j < showList.length; j++) {
                             var shownow = showList[j]
                             searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-materme="' + shownow.matermea + '" data-fid="' + shownow.materid + '" data-matertype="' + shownow.matertype + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
@@ -450,6 +492,43 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                                 $(nowtr).find("selectlist").addClass("hidden")
                             }
                         });
+                        $('.selectlist1 ul').find('li').each(function () {
+                            var _this1 = $(this);
+                            _this1.hover(function () {
+                                $(this).addClass("active").siblings().removeClass("active")
+                            });
+                            _this1.on("click", function () {
+                                var oldData = table.cache[layTableId1];
+                                var name = $(this).attr("data-name");
+                                var nick = $(this).attr("data-nick");
+                                var specife = $(this).attr("data-spe");
+                                var measure = $(this).attr("data-materme");
+                                var fid = $(this).attr("data-fid");
+                                $(".materName1").val(name);
+                                $.each(tabledata, function (index, value) {
+                                    if (value.LAY_TABLE_INDEX == dataindex) {
+                                        value.materialName = name;
+                                        value.materialNick = nick
+                                        value.AssignEntry_Specifications = specife;
+                                        value.AssignEntry_Unit = measure
+                                        value.AssignEntry_Material = fid
+                                        value.AssignEntry_ScrapRate = '0'
+                                        if (value.tempId == viewObj.last) {
+                                            activeByType("add");
+                                        } else {
+                                            var oldData = table.cache[layTableId1];
+                                            tableIns.reload({
+                                                data: oldData,
+                                                limit: viewObj.limit
+                                            });
+                                        }
+                                    }
+                                });
+                                $(".selectlist1").addClass("hidden");
+                                $(".checkmater").removeClass("layui-form-selected");
+                                return false
+                            })
+                        })
                     })
                     $('.selectlist1 ul').find('li').each(function () {
                         var _this1 = $(this);
@@ -464,13 +543,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                             var specife = $(this).attr("data-spe");
                             var measure = $(this).attr("data-materme");
                             var fid = $(this).attr("data-fid");
-
                             $(".materName1").val(name);
-                            // $(".maternick").val(nick);
-                            // $(".materspe").val(specife);
-                            // $("#measure").val(measure);
                             $.each(tabledata, function (index, value) {
-
                                 if (value.LAY_TABLE_INDEX == dataindex) {
                                     value.materialName = name;
                                     value.materialNick = nick
@@ -516,7 +590,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     // 客户订单号变更后包含的产品列表
     getpro = function (data) {
-
         $(".checkpro").on("click", function () {
             if ($("#cusOrder").val()) {
                 $(".selectlist").removeClass("hidden");
@@ -930,9 +1003,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             })
         })
     }
-
-
-
 
     getcraftdata = function () {
         var oldData = table.cache[layTableId];

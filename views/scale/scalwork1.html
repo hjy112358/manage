@@ -59,18 +59,17 @@
                                     </div>
                                 </div>
                                 <div class="clearfix">
-                                    <div class="layui-form-lsit fl ">
+                                    <div class="layui-form-lsit fl layui-inline">
                                         <label class="layui-form-label"><span>*</span>客户名称：</label>
                                         <div class="layui-input-block disinput checkcus" data-type="daten" style="width:190px !important">
                                             <!-- <input type="text" value="JIN" id="Customer_Nick" name="Customer_Nick"> -->
                                             <select name="SalesOrder_Customer" class="" id="Customer_Nick" lay-search=""
-                                                lay-filter="customer">
+                                                lay-filter="customer" lay-verify="required">                       
                                                 <option value="">请选择</option>
                                                 <option value="">加载中...</option>
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">单据日期：</label>
                                         <div class="layui-input-block ">

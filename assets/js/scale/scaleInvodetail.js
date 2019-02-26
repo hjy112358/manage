@@ -9,8 +9,16 @@ $(function () {
                 var data = res.Data;
                 $("#SalesInvoice_Currency").val(data.Currency_Nick)
                 $("#SalesInvoice_Customer").val(data.Customer_Nick)
-                $("#SalesInvoice_DateTime").val(data.SalesInvoice_DateTime.split(" ")[0])
-                $("#SalesInvoice_Deadline").val(data.SalesInvoice_Deadline.split(" ")[0])
+                var datetime=''
+                if(data.SalesInvoice_DateTime){
+                    datetime=data.SalesInvoice_DateTime.split(" ")[0]
+                }
+                $("#SalesInvoice_DateTime").val(datetime)
+                var dealtime=''
+                if(data.SalesInvoice_Deadline){
+                    dealtime=data.SalesInvoice_Deadline.split(" ")[0]
+                }
+                $("#SalesInvoice_Deadline").val(dealtime)
                 $("#SalesInvoice_ExRate").val(data.SalesInvoice_ExRate)
                 $("#SalesInvoice_Name").val(data.SalesInvoice_Name)
                 $("#SalesInvoice_TaxRate").val(data.SalesInvoice_TaxRate)
