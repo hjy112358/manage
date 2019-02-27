@@ -59,6 +59,12 @@ var ajaxeditstock=ajaxURl + "/api/PSIBase/Stock/Edit"
 var ajaxremovestock=ajaxURl + "/api/PSIBase/Stock/Remove"
 // 供应商列表
 var ajaxsupplist=ajaxURl + "/api/PSIBase/Supplier/GetList?keyword=&PageIndex=&PageSize="
+// 打印模板列表
+var templist=ajaxURl + "/Api/PSIBase/Template/GetList?keyword="
+// 删除打印模板
+var removeTemp=ajaxURl + "/Api/PSIBase/Template/Remove"
+// 打印模板详情
+var getempone=ajaxURl + "/Api/PSIBase/Template/GetEntity?keyValue="
 //-------------------- 基础信息----------------------
 
 

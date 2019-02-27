@@ -66,15 +66,21 @@
                             <em>采购管理</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="views/purchase/purchapp.html">采购申请</a></dd>
+                            <dd class="clearfix">
+                                <a href="views/purchase/purchapp.html" class="fl">采购申请</a>
+                                <a href="views/purchase/purchapplist.html" class="security fl">查询</a>
+                            </dd>
                             <dd class="hidden"><a href="views/purchase/purchappdetail.html">采购申请</a></dd>
                             <dd class="hidden"><a href="views/purchase/purchappchange.html">采购申请</a></dd>
-                            <dd><a href="views/purchase/purchwork.html">采购订单</a></dd>
+                            <dd class="clearfix">
+                                <a href="views/purchase/purchwork.html" class="fl">采购订单</a>
+                                <a href="views/purchase/purworklist.html" class="security fl">查询</a>
+                            </dd>
                             <dd class="hidden"><a href="views/purchase/purworkdetail.html">采购订单</a></dd>
                             <dd class="hidden"><a href="views/purchase/purworkchange.html">采购订单</a></dd>
                             <dd><a href="views/purchase/purchInvo.html">采购发票</a></dd>
-                            <dd><a href="views/purchase/purchapplist.html">采购申请列表</a></dd>
-                            <dd><a href="views/purchase/purworklist.html">采购订单列表</a></dd>
+                            <!-- <dd><a href="views/purchase/purchapplist.html">采购申请列表</a></dd> -->
+                            <!-- <dd><a href="views/purchase/purworklist.html">采购订单列表</a></dd> -->
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -83,15 +89,19 @@
                             <em>销售管理</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="views/scale/scalContract.html">销售合同</a></dd>
+                            <dd class="hidden"><a href="views/scale/scalContract.html">销售合同</a></dd>
                             <dd class="hidden"><a href="views/scale/scalworkdetail.html">销售订单</a></dd><!-- 查看详情 -->
                             <!-- <dd><a href="views/scalwork.html">销售订单</a></dd> -->
-                            <dd><a href="views/scale/scalwork1.html">销售订单</a></dd><!-- 新增 -->
-                            <dd><a href="views/scale/scalworklist.html">销售订单列表</a></dd>
+                            <dd class="clearfix">
+                                <a href="views/scale/scalwork1.html" class="fl">销售订单</a>
+                                <a href="views/scale/scalworklist.html" class="security fl">查询</a>
+                            </dd><!-- 新增 -->
                             <!-- <dd><a href="views/scaledetail.html">销售订单明细表</a></dd> -->
-                            <dd><a href="views/scale/scaleInvo.html">销售发票</a></dd>
+                            <dd class="clearfix">
+                                <a href="views/scale/scaleInvo.html" class="fl">销售发票</a>
+                                <a href="views/scale/scaleInvolist.html" class="security fl">查询</a>
+                            </dd>
                             <dd class="hidden"><a href="views/scale/scalworkchange.html">销售订单</a></dd><!-- 变更 -->
-                            <dd><a href="views/scale/scaleInvolist.html">销售发票列表</a></dd>
                             <dd class="hidden"><a href="views/scale/scaleInvodetail.html">销售发票</a></dd><!-- 发票详情 -->
                             <dd class="hidden"><a href="views/scale/scaleInvochange.html">销售发票</a></dd><!-- 发票变更 -->
                         </dl>
@@ -118,11 +128,15 @@
                             <em>生产管理</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="views/product/productwork.html">生产订单</a></dd>
-                            <dd><a href="views/product/productlist.html">生产订单列表</a></dd>
+                            <dd class="clearfix">
+                                <a href="views/product/productwork.html" class="fl">生产订单</a>
+                                <a href="views/product/productlist.html" class="security fl">查询</a>
+                            </dd>
                             <dd class="hidden"><a href="views/product/craftplan.html">工序计划表</a></dd>
-                            <dd><a href="views/product/producthb.html">工序汇报</a></dd>
-                            <dd><a href="views/product/producthblist.html">工序汇报列表</a></dd>
+                            <dd class="clearfix">
+                                <a href="views/product/producthb.html" class="fl">工序汇报</a>
+                                <a href="views/product/producthblist.html" class="security fl">查询</a>
+                            </dd>
                             <dd class="hidden"><a href="views/product/materplan.html">领料计划表</a></dd>
                             <dd><a href="views/product/productll.html">领料单</a></dd>
                             <dd><a href="views/product/productpro.html">产品入库</a></dd>
@@ -169,7 +183,7 @@
                             <dd><a href="views/basic/unit.html">计量单位</a></dd>
                             <dd><a href="views/basic/cusasupper/custom.html">客户管理</a></dd>
                             <dd><a href="views/basic/cusasupper/supplier.html">供应商管理</a></dd>
-                            <dd class="hidden"><a href="views/basic/cusasupper/newcustom.html">新增客户信息</a></dd>
+                            <dd class="hidden"><a href="views/basic/cusasupper/newcustom.html">客户信息</a></dd> <!--新增-->
                             <dd class="hidden"><a href="views/basic/cusasupper/newsupplier.html">新增供应商信息</a></dd>
                             <dd><a href="views/basic/print/pritempletlist.html">打印模板</a></dd>
                             <dd class="hidden"><a href="views/basic/print/newpritemplet.html">新增打印模板</a></dd>

@@ -91,6 +91,7 @@ layui.define(['element', 'layer'], function (exports) {
             event.preventDefault();
             var $this = $(this),
                 url = $this.attr('href'),
+
                 title = $.trim($this.text());
             if (url && url !== 'javascript:;') {
 
@@ -98,6 +99,9 @@ layui.define(['element', 'layer'], function (exports) {
                     tabs.change(url);
                 } else {
                     navItems.push($this);
+                    if($this.hasClass("security")){
+                        title= $.trim($this.prev().text()+'列表');
+                    }
                     tabs.add(title, url);
                 }
             }
@@ -115,6 +119,7 @@ layui.define(['element', 'layer'], function (exports) {
                 $this = navItems[i];
             if ($this && typeof $this === 'object') {
                 $('#Nav dd').removeClass('layui-this');
+                $('#Nav dd').removeClass('active');
                 $this.parent('dd').addClass('layui-this');
                 $this.closest('li.layui-nav-item')
                     .addClass('layui-nav-itemed')
@@ -127,6 +132,10 @@ layui.define(['element', 'layer'], function (exports) {
             var i = data.index;
             navItems.splice(i, 1);
         });
+
+        $(".layui-nav-child dd").hover(function(){
+            $(this).addClass("active").siblings().removeClass("active")
+        })
 
         this.slideSideBar();
     }
@@ -194,33 +203,6 @@ $(function () {
     var name = $.cookie("name") + ',你好';
 })
 
-function homejs(obj, date) {
-    console.log(obj)
-    // var FItemNumber='';
-    // for(var key in obj){    
-    //   if(key=='FItemNumber'){
-    //     FItemNumber=obj[key]
-    //   }  
-    // }    
-    // console.log(FItemNumber)
-    // var href=$('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(1)').attr("href");
-    // $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(1)').attr("href",href+"?FItemNumber="+FItemNumber+'&'+date)
-    // $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(1)').trigger('click');
-}
-
-function homejsp(obj, date) {
-    console.log(obj)
-    // var FItemNumber='';
-    // for(var key in obj){    
-    //   if(key=='FItemNumber'){
-    //     FItemNumber=obj[key]
-    //   }  
-    // }    
-    // console.log(FItemNumber)
-    // var href=$('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(3)').attr("href");
-    // $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(3)').attr("href",href+"?FItemNumber="+FItemNumber+'&'+date)
-    // $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(3)').trigger('click');
-}
 
 
 

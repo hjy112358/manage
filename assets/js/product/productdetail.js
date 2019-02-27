@@ -66,6 +66,7 @@ $(function () {
             // printdata = res
             if (isussecc) {
                 if (data) {
+                    printdata=data
                     $("#Assign_DateTime").val(data.Assign_DateTime.split(" ")[0])
                     $("#Assign_Name").val(data.Assign_Name)
                     $("#Assign_Quantity").val(data.Assign_Quantity)
@@ -90,7 +91,7 @@ $(function () {
                     getstatus(data.Assign_Status)
 
                     // 工艺加载
-                    getcraflist(data.Assign_Material)
+                    getcraflist(data.Assign_Material,fid)
                     // 产品
                     $.ajax({
                         type: "get",
@@ -309,7 +310,7 @@ function getstatus(id) {
     })
 }
 
-function getcraflist(id) {
+function getcraflist(id,fid) {
     var strgy = [
         { title: '序号', type: 'numbers' },
         { field: 'CraftEntry_Nick', title: '工艺名称' },
@@ -317,29 +318,59 @@ function getcraflist(id) {
         // { field: 'Fuser', title: '操作工', templet: "#selectuser" },
         { field: '', title: '工时' },
         { field: '', title: '接收数' },
-        { field: '', title: '实做数' },
-        { field: '', title: '合格数' },
-        { field: '', title: '报废数' },
+        { field: 'quantity', title: '实做数' },
+        { field: 'qualified', title: '合格数' },
+        { field: 'scrap', title: '报废数' },
         { field: '', title: '报废率' },
         { field: '', title: '移交数' },
         { field: '', title: '待制数' },
         { field: '', title: '待交数' },
     ]
+    var tablecraft;
     $.ajax({
         type: "get",
         url: materCraft + id,
-        success: function (res) {
-            console.log(res)
-            var isussecc = res.Succeed;
-            var data = res.Data.Details;
-
-            if (isussecc) {
-                tablerendercraft(strgy, data)
+        ansyc:false,
+        success: function (result) {
+            console.log(result)
+            var isussecc = result.Succeed;
+            if (isussecc) { 
+                tablecraft=result.Data.Details
+                $.ajax({
+                    url: getRepornum + fid,
+                    ansyc:false,
+                    success: function (res) {
+                        console.log(res)
+                        if (res.Succeed) {
+                            var data = res.Data
+                            if(data.length>=1){
+                                $.each(data, function (i, v) {
+                                    $.each(tablecraft, function (index, value) {
+                                        if (v.ReportEntry_CraftEntry == value.F_Id) {
+                                            value.qualified = v.ReportEntry_Qualified
+                                            value.quantity = v.ReportEntry_Quantity
+                                            value.scrap = v.ReportEntry_Scrap
+                                        }
+                                    })
+                                })
+                                tablerendercraft(strgy,tablecraft)
+                            }else{
+                                console.log(tablecraft)
+                                tablerendercraft(strgy,tablecraft)
+                            }
+                           
+                        }
+                    }
+                })
             } else {
-                alert(res.Message)
+                alert(result.Message)
             }
         }
     })
+
+  
+
+
 }
 
 function tablerender(str, data) {
@@ -444,4 +475,73 @@ function matertypelist(id) {
 }
 
 
+function printable() {
+    var base = new Base64();
+    $(".printbody").removeClass("hidden");
+    $.ajax({
+        type: 'GET',
+        url:getempone+"1fe9e49d-51e0-4666-93aa-6c5c5f07a500",
+        success: function (res) {
+            // console.log(res)
+            var resdata = res.Data;
+            // printdata=res.Data
+            console.log(printdata)
+            var isussecc = res.Succeed;
+            if (isussecc) {
+                var templet = resdata.Template_Html;
+                // var data = res[0].Template_DataUrl;
+                var html = base.decode(templet)
+                $(".printbody").html(html)
+                PraseTable();
+                PraseBody();
+            }
+        }
+    })
+    
+    function PraseTable() {
+        // console.log(printdata)
+        var data;
+        $('.printbody table').each(function (index, tb) {
+            var tbid = tb.id
+            var detail = printdata[tbid];
+            // var detail1=printdata;
+            if (tbid == 'Details') {
+                data = detail;
+                $.each(data, function (index, obj) {
+                    var row = $('#' + tbid).children().children("tr:last").html();
+                    var org = row;
+                    // console.log(obj);
+                    $.each(obj, function (key, val) {
+                        var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
+                        row = row.replace(reg, val);
+                    });
+                    $('#' + tbid).children().children("tr:last").replaceWith("<tr>" + row + "</tr>" + "<tr>" + org + "</tr>")
+                });
+                $('#' + tbid).children().children("tr:last").replaceWith("");
+            } 
+        
+            
+        });
+    }
+    function PraseBody() {
+        // console.log(infdata)
+        $(".printbody").each(function (index, body) {
+            var ball = body.innerHTML;
+            console.log(ball)
+           
+            $.each(printdata, function (key, val) {
+                if(typeof (val)!='Object'){
+                    var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
+                    ball = ball.replace(reg, val);
+                    
+                }
+               
+            });
+            body.innerHTML = (ball);
+        });
 
+        $(".printbody").css("padding", "0 30px")
+        $(".printbody").print();
+        $(".printbody").addClass("hidden");
+    }
+}

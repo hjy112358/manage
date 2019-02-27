@@ -27,37 +27,25 @@ function tablerender(str, data) {
         return false;
     })
 }
-var token = $.cookie("token");
-
 $(function () {
- 
     var islist = false;
- 
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers'},
             { field: 'Template_BillType', title: '单据类型'},
             { field: 'Template_Version', title: '版本' },
-          
             {
-                field: 'Template_Id', title: '操作', align: 'center', templet: function (d) {
-                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=deltempte("' + d.Template_Id + '")>移除</a>';
+                field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
+                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=deltempte("' + d.F_Id + '")>删除</a>';
                 }
             }
         ]
         var type=$("#cTemplate_BillType").val();
         var ver=$("#cTemplate_Version").val();
-        var para=''
-    //    if(type&&ver){
-            para= '?cTemplate_BillType='+type+'&cTemplate_Version='+ver
-        // }else  if(type){
-        //     para= '?cTemplate_BillType='+type
-        // }
         $.ajax({
             type: "GET",
             async: false,
-            // url: ajaxURl + "/Api/ApiService/Get/BASTemplate_Inf?token=" + token+'&cTemplate_BillType='+type+'&cTemplate_Version='+ver,
-            url: ajaxURl + "/Api/PSIBase/Template/GetList?keyword=",
+            url: templist,
             success: function (res) {
                 console.log(res)
                 var data = res.Data;
@@ -84,11 +72,11 @@ $(function () {
             $(".checkcus").attr("data-type", "datey");
             $.ajax({
                 type: "get",
-                url: ajaxURl + "/Api/ApiService/Get/BASCustomer_Inf?token=" + token,
+                url: ajaxCus,
                 success: function (res) {
-                    console.log(JSON.parse(res))
-                    var isussecc = JSON.parse(res).Succeed;
-                    var data = JSON.parse(res).Data;
+                    console.log(res)
+                    var isussecc = res.Succeed;
+                    var data = res.Data;
                     if (isussecc) {
                         var html = '<option value="">全部</option>';
                         var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
@@ -102,7 +90,7 @@ $(function () {
                         _this.find("select").next().find('.layui-select-title input').click();
                         // Customer_TaxRate 税率   
                     } else {
-                        alert(JSON.parse(res).Message)
+                        alert(res.Message)
                     }
 
                 }
@@ -165,25 +153,24 @@ function deltempte(id) {
     var index = layer.confirm('确认删除？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
-        var token = $.cookie("token");
         $.ajax({
             type: "POST",
             async: false,
-            url: ajaxURl + "/Api/ApiService/Remove/BASTemplate_Inf?token=" + token,
+            url:removeTemp,
             data: {
                 Template_Id: id
             },
             success: function (res) {
-                var data = JSON.parse(res).Data;
+                var data = res.Data;
                 console.log(data)
-                var isussecc = JSON.parse(res).Succeed;
+                var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(index)
                     $(".checklist").trigger("click")
                    
                 } else {
                     layer.close(index)
-                    alert(JSON.parse(res).Message)
+                    alert(res.Message)
                 }
             }
         })

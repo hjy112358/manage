@@ -491,7 +491,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                             if (dataindex != nowindex) {
                                 $(nowtr).find("selectlist").addClass("hidden")
                             }
-                        });
+                        }); 
                         $('.selectlist1 ul').find('li').each(function () {
                             var _this1 = $(this);
                             _this1.hover(function () {

@@ -369,7 +369,7 @@ function printable() {
     $(".printbody").removeClass("hidden");
     $.ajax({
         type: 'GET',
-        url: ajaxURl + "/Api/PSIBase/Template/GetEntity?keyValue=D9D31C3A-B476-451D-A383-424F7F61E5CF",
+        url:getempone+"D9D31C3A-B476-451D-A383-424F7F61E5CF",
         success: function (res) {
             // console.log(res)
             var resdata = res.Data;

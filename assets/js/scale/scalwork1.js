@@ -189,7 +189,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
         ]],
         done: function (res, curr, count) {
-
             console.log(res.data)
             viewObj.tbData = res.data;
             prolist();
@@ -207,7 +206,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 });
             });
             tabledata = res.data;
-
             $('tr').each(function (e) {
                 var $cr = $(this);
                 var dataindex = $cr.attr("data-index");
@@ -1169,6 +1167,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     isSend = false;
                     return;
                 } else {
+                    var exrate=$("#SalesOrder_ExRate").val()
+                    var curr=$("#currency option:selected").val()
+                    nowdata.SalesOrderEntry_Currency=curr
+                    nowdata.SalesOrderEntry_ExRate=exrate
                     newdata.push(nowdata)
                     // continue
                 }

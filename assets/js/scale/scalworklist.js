@@ -210,7 +210,7 @@ $(function () {
             },
             {
                 field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
-                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=delscale("' + d.F_Id + '")>移除</a>';
+                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=delscale("' + d.F_Id + '")>删除</a>';
                 }
             }
         ]

@@ -42,16 +42,14 @@
 
 .layui-layout-admin .layui-side,
 .layui-nav,
-.custom-admin .layui-nav-tree .layui-nav-item.layui-nav-itemed > a,
-.layui-nav-tree .layui-nav-item a:hover{
+.custom-admin .layui-nav-tree .layui-nav-item.layui-nav-itemed > a{
     background-color: #001529;
 }
 
-.custom-admin .layui-nav-child,
-.custom-admin .layui-nav-child a{
+.custom-admin .layui-nav-child{
     background-color: #000c17!important;
 }
-.custom-admin .layui-nav-child dd.layui-this a{
+.custom-admin .layui-nav-child dd.layui-this {
     background-color: #177ce3;
     background-repeat: repeat-y;
     background-image: -moz-linear-gradient(left,#29adeb,#177ce3);
@@ -73,8 +71,39 @@
 .custom-admin .layui-nav-tree .layui-nav-item a:hover .layui-nav-more:before,
 .custom-admin .layui-nav-tree .layui-nav-itemed  > a .layui-nav-more:before{
     color: #fff;
+   
 }
-
+.custom-admin .layui-nav-tree .layui-nav-item .layui-nav-child dd{
+    height: 40px;
+}
+.custom-admin .layui-nav-tree .layui-nav-item .layui-nav-child dd.active:hover{
+    background-color: #177ce3;
+    background-repeat: repeat-y;
+    background-image: -moz-linear-gradient(left,#29adeb,#177ce3);
+    background-image: -webkit-linear-gradient(left,#29adeb,#177ce3);
+    background-image: -o-linear-gradient(left,#29adeb,#177ce3);
+    background-image: linear-gradient(left,#29adeb,#177ce3);
+}
+.custom-admin .layui-nav-tree .layui-nav-item .layui-nav-child dd .security{
+    display: none
+}
+.custom-admin .layui-nav-tree .layui-nav-item .layui-nav-child dd.active:hover .security,
+.custom-admin .layui-nav-tree .layui-nav-item .layui-nav-child dd.layui-this .security{
+    display: block
+}
+.custom-admin .layui-nav-tree .layui-nav-item .layui-nav-child dd .security{
+    padding:0 10px;
+    height: 20px;
+    line-height:20px;
+    border:1px solid rgba(255,255,255,.7);
+    border-radius: 10px;
+    margin-top:10px;
+    font-size:12px
+}
+.custom-admin .layui-nav-tree .layui-nav-item .layui-nav-child dd .security:hover,
+.custom-admin .layui-nav-tree .layui-nav-item .layui-nav-child dd.layui-this .security{
+    border-color:#fff
+}
 .custom-admin .layui-nav-tree .layui-nav-item a > i{
     margin-right: 5px;
 }
@@ -212,8 +241,8 @@ html, body , .app-container{
     top: 55px;
 }
 
-.custom-admin .layui-nav-itemed .layui-nav-child dd a{
-    padding-left: 43px;
+.custom-admin .layui-nav-itemed .layui-nav-child dd{
+    padding-left: 25px;
 }
 
 .layui-layout-admin .layui-body{
