@@ -271,6 +271,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         $(".chaselist .layui-anim.layui-anim-upbit").html(htmlsel);
                         renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
+                        _this.find("select").next().find('.layui-select-title input').focus()
                     } else {
                         alert(res.Message)
                     }
@@ -523,6 +524,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         $(".orderlist .layui-anim.layui-anim-upbit").html(htmlsel);
                         renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
+                        _this.find("select").next().find('.layui-select-title input').focus()
                     } else {
                         alert(res.Message)
                     }
@@ -556,7 +558,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         $(".supplier .layui-anim.layui-anim-upbit").html(htmlsel);
                         renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
-
+                        _this.find("select").next().find('.layui-select-title input').focus()
                     } else {
                         alert(res.Message)
                     }

@@ -120,7 +120,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             { field: 'Rmark', title: '备注', edit: 'text' },
             {
                 field: 'tempId', title: '操作', align: 'center', templet: function (d) {
-                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '"><i class="layui-icon layui-icon-delete"></i>删除</a>';
+                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '">删除</a>';
                 }
             }
             ]
@@ -758,7 +758,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 // { field: 'Fuser', title: '操作工', templet: "#selectuser" },
                 {
                     field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
-                        return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '"><i class="layui-icon layui-icon-delete"></i>刪除</a>';
+                        return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '">刪除</a>';
                     }
                 }
             ]
@@ -1345,7 +1345,7 @@ $(function () {
                             $(".checkcus .layui-anim.layui-anim-upbit").html(htmlsel);
                             reloadform();
                             _this.find("select").next().find('.layui-select-title input').click();
-
+                            _this.find("select").next().find('.layui-select-title input').focus()
                         } else {
                             alert(res.Message)
                         }
@@ -1414,7 +1414,7 @@ $(function () {
                         $(".cusOrder .layui-anim.layui-anim-upbit").html(htmlsel);
                         reloadform();
                         _this.find("select").next().find('.layui-select-title input').click();
-
+                        _this.find("select").next().find('.layui-select-title input').focus()
                     } else {
                         alert(res.Message)
                     }

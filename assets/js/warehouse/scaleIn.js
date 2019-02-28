@@ -373,6 +373,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                         $(".checkid .layui-anim.layui-anim-upbit").html(htmlsel);
                         renderForm1();
                         _this.find("select").next().find('.layui-select-title input').click();
+                        _this.find("select").next().find('.layui-select-title input').focus()
 
                     } else {
                         alert(res.Message)

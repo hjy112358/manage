@@ -30,12 +30,13 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 });
 
 
-
+var layer
 // 渲染table
 function tablerender(str, data) {
     layui.use(['jquery', 'table'], function () {
         var $ = layui.$,
             table = layui.table;
+            layer=layui.layer
         table.render({
             elem: '#dataTable'
             , toolbar: true
@@ -57,7 +58,8 @@ function tablerender(str, data) {
 
 
 $(function () {
-
+    var subindex = layer.load();
+    var islist = 0;
     var currid = [],currname = [],currnick = [],ratelist = [];
     var currnamshow = [], userid = [], usernick = [];
     var customid=[],customnick=[];
@@ -88,10 +90,12 @@ $(function () {
                 $("#currency").html(html);
                 $(".currency .layui-anim.layui-anim-upbit").html(htmlsel);
                 renderForm();
-                islist = true
+                islist++;
+                isclick()
             } else {
                 alert(data.Message);
-                islist = false;
+                islist++;
+                isclick()
             }
         }
     })
@@ -116,10 +120,12 @@ $(function () {
                 $("#SalesOrder_Biller").html(html);
                 $(".checkbiller .layui-anim.layui-anim-upbit").html(htmlsel);
                 renderForm();
-                islist = true
+                islist++;
+                isclick()
             } else {
-                islist = false;
-                alert(JSON.parse(res).Message)
+                islist++;
+                isclick()
+                alert(res.Message)
             }
 
         }
@@ -130,6 +136,16 @@ $(function () {
             { title: '序号', type: 'numbers', width: '3%' },
             { field: 'SalesOrder_Project', title: '项目号', width: '5%' },
             { field: 'SalesOrder_Name', title: '订单编号', width: '12%' },
+            {
+                field: 'SalesOrder_DateTime', title: '单据日期', width: "12%", align: "center", templet: function (d) {
+                    if (d.SalesOrder_DateTime) {
+                        return (d.SalesOrder_DateTime).split(" ")[0]
+                    } else {
+                        return ''
+                    }
+
+                }
+            },
             { field: 'SalesOrder_Customer', title: '客户', width: '15%' ,templet:function(d){
                 var index1 = customid.indexOf(d.SalesOrder_Customer)
                 if (index1 == '-1') {
@@ -168,7 +184,7 @@ $(function () {
             },
             { field: 'SalesOrder_ExRate', title: '汇率', width: "5%", align: "right" },
             { field: 'SalesOrder_TaxRate', title: '税率(%)', width: "5%", align: "right" },
-            { field: 'Remark', title: '备注', width: "10%" },
+           
             { field: 'SalesOrder_Status', title: '单据状态', width: "5%", templet: function (d) {
                 var index3 = statuvalu.indexOf(d.SalesOrder_Status)
                 if (index3 == '-1') {
@@ -188,16 +204,7 @@ $(function () {
 
                 }
             },
-            {
-                field: 'SalesOrder_DateTime', title: '单据日期', width: "12%", align: "center", templet: function (d) {
-                    if (d.SalesOrder_DateTime) {
-                        return (d.SalesOrder_DateTime).split(" ")[0]
-                    } else {
-                        return ''
-                    }
-
-                }
-            },
+            
             {
                 field: 'IsEnabled', title: '启用', align: 'center', width: "5%", templet: function (d) {
                     if (d.IsEnabled) {
@@ -208,6 +215,7 @@ $(function () {
 
                 }
             },
+            { field: 'Remark', title: '备注', width: "10%" },
             {
                 field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=delscale("' + d.F_Id + '")>删除</a>';
@@ -256,16 +264,18 @@ $(function () {
                 $("#Customer_Nick").html(html);
                 $(".checkcus .layui-anim.layui-anim-upbit").html(htmlsel);
                 renderForm();
-              
+                islist++;
+                isclick()
             } else {
-                alert(JSON.parse(res).Message)
+                alert(res.Message)
+                islist++;
+                isclick()
             }
 
         }
     })
 
     //单据状态--
-  
     $.ajax({
         type: "get",
         url: salestauts,
@@ -284,10 +294,12 @@ $(function () {
                 $("#SalesOrder_Status").html(html);
                 $(".orderstau .layui-anim.layui-anim-upbit").html(htmlsel);
                 renderForm();
-                // _this.find("select").next().find('.layui-select-title input').click();
-                // Customer_TaxRate 税率   
+                islist++;
+                isclick()
             } else {
-                alert(JSON.parse(res).Message)
+                islist++;
+                isclick()
+                alert(res.Message)
             }
 
         }
@@ -315,10 +327,12 @@ $(function () {
                 $("#SalesOrder_Type").html(html);
                 $(".ordertype .layui-anim.layui-anim-upbit").html(htmlsel);
                 renderForm();
-                // _this.find("select").next().find('.layui-select-title input').click();
-                // Customer_TaxRate 税率   
+                islist++;
+                isclick()
             } else {
-                alert(JSON.parse(res).Message)
+                islist++;
+                isclick()
+                alert(res.Message)
             }
 
         }
@@ -350,6 +364,7 @@ $(function () {
                         $(".checkdepart .layui-anim.layui-anim-upbit").html(htmlsel);
                         renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
+                        _this.find("select").next().find('.layui-select-title input').focus()
                         // Customer_TaxRate 税率   
                     } else {
                         alert(JSON.parse(res).Message)
@@ -399,6 +414,13 @@ $(function () {
 
     });
 
+
+    function isclick() {
+        if (islist == 5) {
+            layer.close(subindex);
+            $(".checklist").trigger("click")
+        }
+    }
 
 
 })

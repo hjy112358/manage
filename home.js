@@ -419,3 +419,13 @@ function getpurwork(id){
     $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(4)').trigger('click');
     $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(4)').attr("href", oldhref)
 }
+
+// 客户详情
+function getcustom(id){
+    var oldhref = $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(15)').attr("href");
+    var href = oldhref
+    href = href + '?fid='+id
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(15)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(15)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(15)').attr("href", oldhref)
+}

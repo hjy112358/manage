@@ -5,7 +5,11 @@ var ajaxURl='http://47.104.8.75:4824';
 // 币别
 var ajaxCurrency=ajaxURl+"/Api/PSIBase/Currency/GetList?keyword=&PageSize=&PageIndex="
 // 客户
-var ajaxCus=ajaxURl+"/Api/PSIBase/Customer/GetList?keyword=&PageSize=&PageIndex="
+var ajaxCus=ajaxURl+"/Api/PSIBase/Customer/GetList?PageSize=&PageIndex=&keyword="
+// 新增客户
+var ajaxCusadd=ajaxURl+"/Api/PSIBase/Customer/Add"
+// 删除客户
+var ajaxCusremove=ajaxURl+"/Api/PSIBase/Customer/Delete"
 // 部门
 var ajaxdepart=ajaxURl+'/Api/SystemManager/Department/GetList?keyword='
 // 供应商
@@ -28,7 +32,7 @@ var addmater=ajaxURl+'/Api/PSIBase/Family/Add'
 //物料类别修改
 var editmater=ajaxURl+'/Api/PSIBase/Family/Edit'
 //物料类别删除
-var removemater=ajaxURl+'/Api/PSIBase/Family/Rmove'
+var removemater=ajaxURl+'/Api/PSIBase/Family/Remove'
 // 物料类别种属
 var materFlistone=ajaxURl+'/Api/PSIBase/FamilyEntry/GetList'
 //物料类别添加

@@ -62,7 +62,7 @@ function tablerender(str, data) {
     })
 }
 
-var islist = 0;
+var islist = 0; 
 $(function () {
     var subindex = layer.load();
     //物料

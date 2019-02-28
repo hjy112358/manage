@@ -324,6 +324,7 @@ var token = $.cookie("token");
                         $(".currency .layui-anim.layui-anim-upbit").html(htmlsel);
                         renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
+                        _this.find("select").next().find('.layui-select-title input').focus()
                     } else {
                         alert(data.Message)
                     }

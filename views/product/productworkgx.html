@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../assets/css/layui.css">
+    <link rel="stylesheet" href="../../assets/css/mypublic.css">
+    <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/fontlist/iconfont.css">
+    <link rel="stylesheet" href="../../assets/css/table.css">
+    <link rel="stylesheet" href="../../assets/css/product.css">
+    <title>工序执行</title>
+
+</head>
+
+<body class="layui-view-body produwork craftwork">
+    <div class="layui-content">
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <div class="layui-form layui-form-item " style="padding-top:25px;">
+                            <div class="form-box" style="padding-bottom:0">
+                                <div class="clearfix">
+                                    <div class="layui-form-lsit fl " style="margin-bottom:0">
+                                        <label class="layui-form-label">生产任务单号：</label>
+                                        <div class="layui-input-block  checkorder" data-type="daten">
+                                            <select name="" class="" id="ordernum" lay-search=""
+                                                lay-filter="num">
+                                                <option value="">请选择</option>
+                                                <option value="">加载中...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tablelist1" style="clear:left">
+                                <section class="cpmtable">
+                                    <div class="layui-card">
+                                        <!-- <i class="iconfont icon-guanbi iconclose"></i> -->
+                                        <div class="layui-card-body layui-text">
+                                            <div id="tablecpm" class="table-overlay">
+                                                <table id="dataTable1" lay-filter="dataTable1" class="layui-hide"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+<script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/layui.all.js"></script>
+<script src="../../assets/js/jquery.cookie.js"></script>
+<script src="../../main.js"></script>
+<script src="../../assets/js/product/productworkgx.js"></script>
+<!-- <script src="../assets/js/drop.js"></script> -->
+
+</html>

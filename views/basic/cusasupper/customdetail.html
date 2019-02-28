@@ -21,7 +21,9 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <div class="btnlist">
-                        <span class="layui-btn sub">保存</span>
+                        <span class="layui-btn add ">新增</span>
+                        <span class="layui-btn sub disclick">保存</span>
+                        <span class="layui-btn checkstatus">变更</span>
                     </div>
                     <div class="layui-form layui-form-item " style="padding-top:25px">
                         <div class="form-box">
@@ -33,28 +35,28 @@
                                             <label class="layui-form-label"><span>*</span> 名称：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Nick" id="Customer_Nick" lay-verify=""
-                                                    autocomplete="off" class="layui-input">
+                                                    autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label"><span>*</span> 代码：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Name" id="Customer_Name" lay-verify=""
-                                                    autocomplete="off" class="layui-input">
+                                                    autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">地区：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Area" id="Customer_Area" lay-verify=""
-                                                    autocomplete="off" class="layui-input">
+                                                    autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">类型：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Type" id="Customer_Type" lay-verify=""
-                                                    autocomplete="off" class="layui-input">
+                                                    autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -63,28 +65,28 @@
                                             <label class="layui-form-label">币别 ：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Currency" id="Customer_Currency"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">税务登记号：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_TaxNo" id="Customer_TaxNo"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">增值税率(%)：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_TaxRate" id="Customer_TaxRate"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">行业：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Industry" id="Customer_Industry"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -93,7 +95,7 @@
                                             <label class="layui-form-label">规模 ：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Scale" id="Customer_Scale"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
@@ -101,21 +103,21 @@
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Registration"
                                                     id="Customer_Registration" lay-verify="" autocomplete="off"
-                                                    class="layui-input">
+                                                    class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">法人：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Corporation" id="Customer_Corporation"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">关系态度：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Amity" id="Customer_Amity"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -124,28 +126,28 @@
                                             <label class="layui-form-label">付款周期 ：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Cycle" id="Customer_Cycle"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">对账日期：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Verify" id="Customer_Verify"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">付款日期：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_PayOff" id="Customer_PayOff"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">业务员：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="" id="" lay-verify="" autocomplete="off"
-                                                    class="layui-input">
+                                                    class="layui-input" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -154,20 +156,20 @@
                                             <label class="layui-form-label"> 网址：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="" id="" lay-verify="" autocomplete="off"
-                                                    class="layui-input">
+                                                    class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">地址：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Customer_Area" id="Customer_Area" lay-verify=""
-                                                    autocomplete="off" class="layui-input">
+                                                    autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label"> 备注：</label>
                                             <div class="layui-input-block " style="width:295px">
-                                                <textarea name="Rmark" id="Rmark" rows='2'></textarea>
+                                                <textarea name="Rmark" id="Rmark" rows='2' readonly></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -181,21 +183,21 @@
                                             <label class="layui-form-label"> 区域：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Address_Area" id="Address_Area" lay-verify=""
-                                                    autocomplete="off" class="layui-input">
+                                                    autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label"> 联系人：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Address_Contact" id="Address_Contact"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label"> 电话：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Address_Mobile" id="Address_Mobile"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
 
@@ -204,7 +206,7 @@
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label"> 备注：</label>
                                             <div class="layui-input-block " style="width:295px">
-                                                <textarea name="Rmark" id="Rmark" rows='2'></textarea>
+                                                <textarea name="Rmark" id="Rmark" rows='2' readonly></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -218,21 +220,21 @@
                                             <label class="layui-form-label"> 开户银行：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Finance_Bank" id="Finance_Bank" lay-verify=""
-                                                    autocomplete="off" class="layui-input">
+                                                    autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label"> 银行账号：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Finance_Account" id="Finance_Account"
-                                                    lay-verify="" autocomplete="off" class="layui-input">
+                                                    lay-verify="" autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label"> 户主：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="Finance_Owner" id="Finance_Owner" lay-verify=""
-                                                    autocomplete="off" class="layui-input">
+                                                    autocomplete="off" class="layui-input" readonly>
                                             </div>
                                         </div>
 
@@ -240,7 +242,7 @@
                                             <label class="layui-form-label"> 付款方式：</label>
                                             <div class="layui-input-block " style="width:295px">
                                                 <input type="text" name="" id="" lay-verify="" autocomplete="off"
-                                                    class="layui-input">
+                                                    class="layui-input" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -248,7 +250,7 @@
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label"> 备注：</label>
                                             <div class="layui-input-block " style="width:295px">
-                                                <textarea name="Rmark" id="Rmark" rows='2'></textarea>
+                                                <textarea name="Rmark" id="Rmark" rows='2' readonly></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -258,43 +260,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- 客户 -->
-                <!-- <div id="tablelist" style="clear:left" class="">
-                    <section class="productworktable">
-                        <div class="layui-card">
-                            <div class="layui-card-body layui-text">
-
-                                <div id="tableRes" class="table-overlay" style="padding:5px ">
-                                    <span class="classifyTitle">联系人</span>
-                                    <div id="">
-                                        <div style="margin-bottom:10px">
-                                            <button type="button" class="layui-btn layui-btn-sm " data-type="add"
-                                                title="添加一行">
-                                                <i class="layui-icon layui-icon-add-1"></i> 添加联系人
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div> -->
+               
                 <div class="layui-tab" lay-filter="filter">
                     <ul class="layui-tab-title">
                         <li class="layui-this">联系人</li>
                         <li>客户物料</li>
-
                     </ul>
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show">
-                            <div id="">
-                                <div >
-                                    <button type="button" class="layui-btn layui-btn-sm " data-type="add" title="添加一行">
-                                        <i class="layui-icon layui-icon-add-1"></i> 添加联系人
-                                    </button>
-                                </div>
-                            </div>
                             <div id="tablelist" style="clear:left;" class="">
                                 <section class="productworktable" data-type="daten">
                                     <div class="layui-card">
@@ -308,14 +281,6 @@
                             </div>
                         </div>
                         <div class="layui-tab-item">
-                            <div id="">
-                                <div >
-                                    <button type="button" class="layui-btn layui-btn-sm " data-type="addrow"
-                                        title="添加一行">
-                                        <i class="layui-icon layui-icon-add-1"></i> 添加物料
-                                    </button>
-                                </div>
-                            </div>
                             <div id="tablelist1" style="clear:left" class="">
                                 <section class="cpmtable" data-type="daten">
                                     <div class="layui-card">
@@ -334,27 +299,12 @@
             </div>
         </div>
     </div>
-    <script type="text/html" id="selectTool">
-        <div class="layui-input-block  layui-select-title layui-form-select checkmater" data-type="daten" id="checkmater">
-                <input type="text" value="" class="layui-input materName" autocomplete="off">
-                <!-- <i class="layui-edge"></i> -->
-                <div class="selectlist1 hidden">
-                    <div class="dateload hidden">
-                        <span>加载中...</span>
-                    </div>
-                    <div class="datelist hidden">
-                        <ul>
     
-                        </ul>
-                    </div>
-                </div>
-            </div>
-    </script>
 </body>
 <script type="text/javascript" src="../../../assets/js/jquery.min.js"></script>
 <script src="../../../assets/layui.all.js"></script>
 <script src="../../../main.js"></script>
-<script src="../../../assets/js/basic/cusasup/productkh.js"></script>
+<script src="../../../assets/js/basic/cusasup/customdetail.js"></script>
 <!-- <script src="../assets/js/drop.js"></script> -->
 
 </html>

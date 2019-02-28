@@ -16,6 +16,7 @@ $(function () {
     })
     $(".cancel,.iconclose").on("click", function () {
         $(".termask").addClass("hidden");
+        window.location.reload();
     })
 
     function renderForm() {
@@ -176,8 +177,8 @@ $(function () {
                     if (isussecc) {
                         $(".termask").addClass("hidden");
                         tablelist();
-                        $(".checklist").trigger("click");
-                        // window.location.reload()
+                        // $(".checklist").trigger("click");
+                        window.location.reload()
                     } else {
                         alert(res.Message);
                     }

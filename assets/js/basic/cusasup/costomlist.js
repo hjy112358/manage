@@ -14,7 +14,7 @@ function tablerender(str, data) {
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
                     console.log(obj);
-                    // parent.getscale(obj.data.SalesOrder_Name, obj.data.F_Id)
+                    // parent.getcustom( obj.data.Customer_Name)
                 });
             }
         });
@@ -30,8 +30,11 @@ $(function () {
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers' },
-            { field: 'Customer_Nick', title: '客户名称'},
-            { field: 'Customer_Name', title: '客户代码'},
+            { field: 'Customer_Nick', title: '客户名称',align:'center'},
+            { field: 'Customer_Name', title: '客户代码',align:'center'},
+            { field: 'Currency_Nick', title: '币别',align:'center'},
+            { field: 'Customer_TaxNo', title: '	税务登记号',align:'center'},
+            { field: 'Customer_TaxRate', title: '增值税率',align:'center'},
             {
                 field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=delscale("' + d.F_Id + '")>删除</a>';
@@ -72,31 +75,30 @@ function renderForm() {
 }
 
 // 删除
-// function delscale(id) {
-//     var index = layer.confirm('确认删除？', {
-//         btn: ['确定', '取消'] //按钮
-//     }, function () {
-//         var token = $.cookie("token");
-//         $.ajax({
-//             type: "POST",
-//             async: false,
-//             url: ajaxURl + "/Api/PSIBase/Customer/Delete",
-//             data: {
-//                 F_Id: id
-//             },
-//             success: function (res) {
-//                 var data = res.Data;
-//                 console.log(data)
-//                 var isussecc = res.Succeed;
-//                 if (isussecc) {
-//                     layer.close(index)
-//                     $(".checklist").trigger("click");
-//                 } else {
-//                     layer.close(index)
-//                     alert(res.Message)
-//                 }
-//             }
-//         })
-//     }); 
-// }
+function delscale(id) {
+    var index = layer.confirm('确认删除？', {
+        btn: ['确定', '取消'] //按钮
+    }, function () {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: ajaxCusremove,
+            data: {
+                F_Id: id
+            },
+            success: function (res) {
+                var data = res.Data;
+                console.log(data)
+                var isussecc = res.Succeed;
+                if (isussecc) {
+                    layer.close(index)
+                    $(".checklist").trigger("click");
+                } else {
+                    layer.close(index)
+                    alert(res.Message)
+                }
+            }
+        })
+    }); 
+}
 

@@ -1,5 +1,6 @@
 var token = $.cookie("token");
-var currname = [], currnick = [], cusid = [], cusnick = [], printdata, materid=[],maternick=[],matername=[];
+var currname = [], currnick = [], cusid = [], cusnick = [], printdata,
+materid=[],maternick=[],matername=[],customid=[],customnick=[];
 var layer;
 layui.use(['layer'], function () {
     layer = layui.layer
@@ -7,9 +8,9 @@ layui.use(['layer'], function () {
 var layerindex= layer.load()
 $(function () {
     var str = [
-        { title: '序号', type: 'numbers' },
+        { title: '序号', type: 'numbers',width:'60'},
         { field: 'SalesOrderEntry_Project', title: '项目号' },
-        { field: 'Material_Name', title: '<span style="color:red">*  </span>物料代码',templet:function(d){
+        { field: 'Material_Name', title: '<span style="color:red">*  </span>物料代码',width:'150',templet:function(d){
             var index1 = materid.indexOf(d.SalesOrderEntry_Material)
             if (index1 == '-1') {
                 return ''
@@ -18,7 +19,7 @@ $(function () {
             } 
         }
         },
-        { field: 'Material_Nick', title: '物料名称',templet:function(d){
+        { field: 'Material_Nick', title: '物料名称',width:'150',templet:function(d){
             var index= materid.indexOf(d.SalesOrderEntry_Material)
             if (index == '-1') {
                 return ''
@@ -26,11 +27,11 @@ $(function () {
                 return maternick[index]
             } 
         } },
-        { field: 'SalesOrderEntry_Specifications', title: '销售规格' },
-        { field: 'SalesOrderEntry_Unit', title: '单位', align: "center" },
-        { field: 'SalesOrderEntry_Quantity', title: '<span style="color:red">*  </span>数量', align: "center" },
+        { field: 'SalesOrderEntry_Specifications', title: '销售规格',width:'100' },
+        { field: 'SalesOrderEntry_Unit', title: '单位', align: "center",width:'100' },
+        { field: 'SalesOrderEntry_Quantity', title: '<span style="color:red">*  </span>数量',width:'100', align: "center" },
         {
-            field: 'SalesOrderEntry_Price', title: '销售单价', align: "right", templet: function (d) {
+            field: 'SalesOrderEntry_Price', title: '销售单价',width:'100', align: "right", templet: function (d) {
                 if (d.SalesOrderEntry_Price || d.SalesOrderEntry_Price == '0') {
                     var num = parseFloat(d.SalesOrderEntry_Price);
                     num = num.toFixed(2);
@@ -41,7 +42,7 @@ $(function () {
             }
         },
         {
-            field: 'SalesOrderEntry_TaxPrice', title: '含税单价', align: "right", templet: function (d) {
+            field: 'SalesOrderEntry_TaxPrice', title: '含税单价',width:'100', align: "right", templet: function (d) {
                 if (d.SalesOrderEntry_TaxPrice || d.SalesOrderEntry_TaxPrice == '0') {
                     var num = parseFloat(d.SalesOrderEntry_TaxPrice);
                     num = num.toFixed(2);
@@ -53,7 +54,7 @@ $(function () {
             }
         },
         {
-            field: 'SalesOrderEntry_Amount', title: '未税金额', align: "right", templet: function (d) {
+            field: 'SalesOrderEntry_Amount', title: '未税金额',width:'100', align: "right", templet: function (d) {
                 if (d.SalesOrderEntry_Amount || d.SalesOrderEntry_Amount == '0') {
                     var num = parseFloat(d.SalesOrderEntry_Amount);
                     num = num.toFixed(2);
@@ -64,10 +65,10 @@ $(function () {
                 return num
             }
         },
-        { field: 'SalesOrderEntry_TaxRate', title: '税率(%)', align: "center" },
+        { field: 'SalesOrderEntry_TaxRate', title: '税率(%)',width:'80', align: "center" },
 
         {
-            field: 'SalesOrderEntry_Total', title: '价税合计', align: "right", templet: function (d) {
+            field: 'SalesOrderEntry_Total', title: '价税合计',width:'100', align: "right", templet: function (d) {
                 if (d.SalesOrderEntry_Total || d.SalesOrderEntry_Total == '0') {
                     var num = parseFloat(d.SalesOrderEntry_Total);
                     num = num.toFixed(2);
@@ -79,7 +80,7 @@ $(function () {
             }
         },
         {
-            field: 'SalesOrderEntry_Tax', title: '税额', align: "right", templet: function (d) {
+            field: 'SalesOrderEntry_Tax', title: '税额',width:'100', align: "right", templet: function (d) {
                 if (d.SalesOrderEntry_Tax || d.SalesOrderEntry_Tax == '0') {
                     var num = parseFloat(d.SalesOrderEntry_Tax);
                     num = num.toFixed(2);
@@ -91,13 +92,13 @@ $(function () {
             }
         },
         {
-            field: 'SalesOrderEntry_Deadline', title: '<span style="color:red">*  </span>交货日期', templet: function (d) {
+            field: 'SalesOrderEntry_Deadline', title: '<span style="color:red">*  </span>交货日期',width:'100', templet: function (d) {
                 var deadline = (d.SalesOrderEntry_Deadline).split(" ")[0];
                 // console.log(deadline)
                 return deadline
             }
         },
-        { field: 'Remark', title: '备注' }
+        { field: 'Remark', title: '备注' ,width:'200'}
     ];
     var url = window.location.search;
     var id = url.split("?")[1].split("&")[0].split("=")[1];
@@ -109,7 +110,7 @@ $(function () {
             // console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
-            printdata = res.Data
+           
             if (isussecc) {
                 if (data) {
                     $("#SalesOrder_Name").val(data.SalesOrder_Name)
@@ -136,15 +137,13 @@ $(function () {
                      setInterval(function(){
                         layer.close(layerindex)
                     },1500) 
+                    editprintdata(res.Data)
                 }
             } else {
                 alert(res.Message)
             }
         }
     })
-
-
-    
 
     $(".audit").on("click", function () {
         var href = '/views/scale/scalworkchange.html?scaleorder=' + id + '&scaleid=' + scaleid;
@@ -310,6 +309,8 @@ function getcustom(id){
             if (isussecc) {
                 for (var i = 0; i < data.length; i++) {
                     var datanow = data[i]
+                    customid.push(datanow.F_Id) 
+                    customnick.push(datanow.Customer_Nick)
                     if (datanow.F_Id == id) {
                         $("#Customer_Nick").val(datanow.Customer_Nick)
                     }
@@ -364,7 +365,27 @@ function tablerender(str, data) {
     })
 }
 
+function editprintdata(data){
+    printdata = data
+    $.each(printdata,function(i,v){
+        if(i=='SalesOrder_Customer'){
+            var index= customid.indexOf(v)
+            if (index != '-1') {
+                printdata.Customer_Nick=customnick[index]
+            } 
+        }
+    })
+    $.each(printdata.Details,function(i,v){
+        var index1= materid.indexOf(v.SalesOrderEntry_Material)
+        if (index1 != '-1') {
+            v.Material_Nick=maternick[index1]
+        } 
+    })
+    console.log(printdata)
+}
+
 function printable() {
+
     var base = new Base64();
     $(".printbody").removeClass("hidden");
     $.ajax({
@@ -386,6 +407,55 @@ function printable() {
             }
         }
     })
+
+    function PraseTable() {
+        // console.log(printdata)
+        var data;
+        $('.printbody table').each(function (index, tb) {
+            var tbid = tb.id
+            var detail = printdata[tbid];
+            // var detail1=printdata;
+            if (tbid == 'Details') {
+                data = detail;
+                $.each(data, function (index, obj) {
+                    var row = $('#' + tbid).children().children("tr:last").html();
+                    var org = row;
+                    // console.log(obj);
+                    $.each(obj, function (key, val) {
+                        var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
+                        row = row.replace(reg, val);
+                    });
+                    $('#' + tbid).children().children("tr:last").replaceWith("<tr>" + row + "</tr>" + "<tr>" + org + "</tr>")
+                });
+                $('#' + tbid).children().children("tr:last").replaceWith("");
+            } 
+        
+            
+        });
+    }
+    function PraseBody() {
+        // console.log(infdata)
+        $(".printbody").each(function (index, body) {
+            var ball = body.innerHTML;
+            console.log(ball)
+           
+            $.each(printdata, function (key, val) {
+                if(typeof (val)!='Object'){
+                    var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
+                    ball = ball.replace(reg, val);
+                    
+                }
+               
+            });
+            body.innerHTML = (ball);
+        });
+
+        $(".printbody").css("padding", "0 30px")
+        $(".printbody").print();
+        $(".printbody").addClass("hidden");
+    }
+}
+
 
 
     // function PraseTable() {
@@ -457,53 +527,3 @@ function printable() {
     //         $('#' + tbid).children().children("tr:last").replaceWith("");
     //     });
     // }
-
-
-    
-    function PraseTable() {
-        // console.log(printdata)
-        var data;
-        $('.printbody table').each(function (index, tb) {
-            var tbid = tb.id
-            var detail = printdata[tbid];
-            // var detail1=printdata;
-            if (tbid == 'Details') {
-                data = detail;
-                $.each(data, function (index, obj) {
-                    var row = $('#' + tbid).children().children("tr:last").html();
-                    var org = row;
-                    // console.log(obj);
-                    $.each(obj, function (key, val) {
-                        var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
-                        row = row.replace(reg, val);
-                    });
-                    $('#' + tbid).children().children("tr:last").replaceWith("<tr>" + row + "</tr>" + "<tr>" + org + "</tr>")
-                });
-                $('#' + tbid).children().children("tr:last").replaceWith("");
-            } 
-        
-            
-        });
-    }
-    function PraseBody() {
-        // console.log(infdata)
-        $(".printbody").each(function (index, body) {
-            var ball = body.innerHTML;
-            console.log(ball)
-           
-            $.each(printdata, function (key, val) {
-                if(typeof (val)!='Object'){
-                    var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
-                    ball = ball.replace(reg, val);
-                    
-                }
-               
-            });
-            body.innerHTML = (ball);
-        });
-
-        $(".printbody").css("padding", "0 30px")
-        $(".printbody").print();
-        $(".printbody").addClass("hidden");
-    }
-}

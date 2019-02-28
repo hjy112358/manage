@@ -971,9 +971,7 @@ $(function () {
                             var datamater = result.Data;
                             materdata = result.Data;
                             if (isussecc1) {
-
                                 for (var i = 0; i < datamater.length; i++) {
-
                                     var datanow = datamater[i]
                                     materid.push(datanow.F_Id)
                                     matername.push(datanow.Material_Name)
@@ -1533,13 +1531,30 @@ sendfacture = function () {
             cradata.push(nowdata1)
         }
     }
-    //console.log(cradata)
+    var attrdatalist=[]
+    // console.log($(".isAttribute").html())
+    $(".attrhide form").html($(".isAttribute").html())
+    var attrdata = $(".attrform").serializeArray();
+    $.each(attrdata, function (i, v) {
+        $.each(list, function (index, value) {
+            if (v.name == value.name) {
+                v.value = value.value
+            }
+        })
+    })
+    var newattrdata = {}
+    $.each(attrdata, function (i, v) {
+        newattrdata[v.name] = v.value
+    })
+    attrdatalist.push(newattrdata)
+    console.log(attrdatalist)
     subindex = layer.load();
     if (isSend) {
-        data1.Details = newdata;
+        data1.Details = attrdatalist
+        data1.Children = newdata;
         data1.Crafts = cradata
         craftdata.Crafts = cradata
-       console.log(data1)
+        console.log(data1)
         $.ajax({
             type: "POST",
             url: editAssign,
@@ -1575,7 +1590,7 @@ sendfacture = function () {
                         layer.close(subindex);
                         layer.msg("修改成功");
                         setInterval(function () {
-                            window.location.reload()
+                            // window.location.reload()
                         }, 1000)
                     }
                 } else {
@@ -1822,7 +1837,7 @@ function matertypelist(id) {
                                     html += '<div class="layui-form-lsit fl ">' +
                                         '<label class="layui-form-label">' + data[i].FamilyEntry_Nick + '：</label>' +
                                         '<div class="layui-input-block disinput">' +
-                                        '<input type="text" value="" id="" autocomplete="off">' +
+                                        '<input type="text" value="" id="" autocomplete="off" name="' + data[i].FamilyEntry_Name + '">' +
                                         '</div>' +
                                         '</div>';
                                 }

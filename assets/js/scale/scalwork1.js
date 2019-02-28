@@ -470,7 +470,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     $.ajax({
                         url: ajaxMater,
                         success: function (res) {
-                            console.log(res)
                             $(".dateload").addClass("hidden")
                             $(".datelist").removeClass("hidden")
                             var data = res.Data;
@@ -814,13 +813,20 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         var html = '<option value="">全部</option>';
                         var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
                         for (var i = 0; i < data.length; i++) {
-                            html += '<option value="' + data[i].F_Id + '" data-rate="' + data[i].Customer_TaxRate + '">' + data[i].Customer_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" data-rate="' + data[i].Customer_TaxRate + '">' + data[i].Customer_Nick + '</dd>'
+                            var datanow=data[i]
+                            if(datanow.Customer_TaxRate){
+                                var rate=datanow.Customer_TaxRate
+                            }else{
+                                var rate=0
+                            }
+                            html += '<option value="' + datanow.F_Id + '" data-rate="' + rate + '">' + datanow.Customer_Nick + '</option>';
+                            htmlsel += '<dd lay-value="' + datanow.F_Id + '" data-rate="' + rate + '">' + datanow.Customer_Nick + '</dd>'
                         }
                         $("#Customer_Nick").html(html);
                         $(".checkcus .layui-anim.layui-anim-upbit").html(htmlsel);
                         renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
+                        _this.find("select").next().find('.layui-select-title input').focus()
                         // Customer_TaxRate 税率   
                     } else {
                         alert(res.Message)
@@ -855,6 +861,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         $(".checkdepart .layui-anim.layui-anim-upbit").html(htmlsel);
                         renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
+                        _this.find("select").next().find('.layui-select-title input').focus()
                         // Customer_TaxRate 税率   
                     } else {
                         alert(res.Message)
@@ -889,6 +896,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         $(".scalelists .layui-anim.layui-anim-upbit").html(htmlsel);
                         renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
+                        _this.find("select").next().find('.layui-select-title input').focus()
                     } else {
                         alert(res.Message)
                     }
