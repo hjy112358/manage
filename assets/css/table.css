@@ -397,3 +397,8 @@ form .layui-form-label {
     left: 0;
     z-index: 555;
 }
+.layui-btn.addelbtn{
+    padding:0 !important;
+    width:35%;
+    font-size: 18px;
+}

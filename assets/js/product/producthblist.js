@@ -74,13 +74,13 @@ function tablerender(data) {
             , limits: [1000, 2000, 3000, 4000, 5000]
             , limit: 1000
             , done: function () {
-                table.on('rowDouble(dataTable)', function (obj) {
+                // table.on('rowDouble(dataTable)', function (obj) {
 
-                    $(".termask").removeClass("hidden");
-                    var select = 'dd[lay-value="' + checkbgtype + '"]';
-                    $('#ReportEntry_Type').siblings("div.layui-form-select").find('dl').find(select).click();
-                    gethbdata(obj.data.F_Id, obj.data.ReportEntry_Assign)
-                });
+                //     $(".termask").removeClass("hidden");
+                //     var select = 'dd[lay-value="' + checkbgtype + '"]';
+                //     $('#ReportEntry_Type').siblings("div.layui-form-select").find('dl').find(select).click();
+                //     gethbdata(obj.data.F_Id, obj.data.ReportEntry_Assign)
+                // });
             }
         });
         return false;

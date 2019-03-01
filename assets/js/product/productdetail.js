@@ -1,11 +1,8 @@
-var token = $.cookie("token");
 var currname = [], currnick = [], cusid = [], cusnick = [], printdata;
 var materid = [], matername = [], maternick = [], subindex, layer;
-var fid;
-
+var fid,userid=[],usernick=[];
 layui.use(['layer'], function () {
     layer = layui.layer;
-
 });
 $(function () {
     var strwl = [
@@ -60,13 +57,11 @@ $(function () {
         url: getassone + fid,
         success: function (res) {
             subindex = layer.load();
-            //console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
-            // printdata = res
             if (isussecc) {
                 if (data) {
-                    printdata=data
+                    
                     $("#Assign_DateTime").val(data.Assign_DateTime.split(" ")[0])
                     $("#Assign_Name").val(data.Assign_Name)
                     $("#Assign_Quantity").val(data.Assign_Quantity)
@@ -85,13 +80,10 @@ $(function () {
                     getcraft(data.Assign_Craft)
                     // 客户
                     getcustom(data.Assign_Customer)
-                    // 制单人
-                    getbil(data.Assign_Biller)
+                   
                     // 单据状态
                     getstatus(data.Assign_Status)
-
-                    // 工艺加载
-                    getcraflist(data.Assign_Material,fid)
+                  
                     // 产品
                     $.ajax({
                         type: "get",
@@ -117,17 +109,16 @@ $(function () {
                                 // 物料加载
                                 //console.log(data.Details)
                                 tablerender(strwl, data.Children)
+                                editableData(data,fid)
                             } else {
                                 alert(result.Message)
                             }
                         }
                     })
-
                     // 查询产品种属
                     getfamily(data.Assign_Material)
-
+                    editableData(data)
                 }
-
             } else {
                 alert(res.Message)
             }
@@ -151,7 +142,6 @@ $(function () {
             $(".checkorder").removeClass("active");
             $(".ordernext").addClass("hidden");
             $(".gynext").removeClass("hidden");
-
         } else {
             $(".taplist").attr("data-staut", "2")
             $("#tablelist").removeClass("hidden");
@@ -160,11 +150,8 @@ $(function () {
             $(".checkgy").removeClass("active");
             $(".ordernext").removeClass("hidden");
             $(".gynext").addClass("hidden");
-
         }
     })
-
-
 })
 // 工单类型
 function gettype(id) {
@@ -234,7 +221,6 @@ function getcustom(id) {
         }
     })
 }
-
 // 工艺路线
 function getcraft(id) {
     $.ajax({
@@ -255,29 +241,6 @@ function getcraft(id) {
                             nick = datanow.Craft_Name
                         }
                         $("#Assign_Craft").val(nick)
-                    }
-                }
-            } else {
-                alert(res.Message)
-            }
-        }
-    })
-}
-
-//制单人
-function getbil(id) {
-    $.ajax({
-        type: "get",
-        url: ajaxUsr,
-        success: function (res) {
-            //console.log(res)
-            var isussecc = res.Succeed;
-            var data = res.Data;
-            if (isussecc) {
-                for (var i = 0; i < data.length; i++) {
-                    var datanow = data[i]
-                    if (datanow.F_Id == id) {
-                        $("#Assign_Biller").val(datanow.User_Nick)
                     }
                 }
             } else {
@@ -310,7 +273,25 @@ function getstatus(id) {
     })
 }
 
-function getcraflist(id,fid) {
+
+function tablerender(str, data) {
+    layui.use(['jquery', 'table'], function () {
+        var $ = layui.$,
+            table = layui.table;
+        table.render({
+            elem: '#dataTable'
+            , toolbar: true
+            , cols: [str]
+            , data: data
+            , page: true
+            , limits: [1000, 2000, 3000, 4000, 5000]
+            , limit: 1000
+        });
+        return false;
+    })
+}
+
+function editableData(data,fid){
     var strgy = [
         { title: '序号', type: 'numbers' },
         { field: 'CraftEntry_Nick', title: '工艺名称' },
@@ -329,7 +310,7 @@ function getcraflist(id,fid) {
     var tablecraft;
     $.ajax({
         type: "get",
-        url: materCraft + id,
+        url: materCraft + data.Assign_Material,
         ansyc:false,
         success: function (result) {
             console.log(result)
@@ -358,7 +339,6 @@ function getcraflist(id,fid) {
                                 console.log(tablecraft)
                                 tablerendercraft(strgy,tablecraft)
                             }
-                           
                         }
                     }
                 })
@@ -367,29 +347,55 @@ function getcraflist(id,fid) {
             }
         }
     })
-
-  
-
-
-}
-
-function tablerender(str, data) {
-    layui.use(['jquery', 'table'], function () {
-        var $ = layui.$,
-            table = layui.table;
-        table.render({
-            elem: '#dataTable'
-            , toolbar: true
-            , cols: [str]
-            , data: data
-            , page: true
-            , limits: [1000, 2000, 3000, 4000, 5000]
-            , limit: 1000
-        });
-        return false;
+    $.ajax({
+        type: "get",
+        url: ajaxUsr,
+        ansyc:false,
+        success: function (res) {
+            var isussecc = res.Succeed;
+            var data1 = res.Data;
+            if (isussecc) {
+                for (var i = 0; i < data1.length; i++) {
+                    var datanow = data1[i]
+                    userid.push(datanow.F_Id) 
+                    usernick.push(datanow.User_Nick)
+                    if (datanow.F_Id == data.Assign_Material) {
+                        $("#Assign_Biller").val(datanow.User_Nick)
+                    }
+                }
+                $.each(data,function(i,v){
+                    if(i=='Assign_Material'){
+                        var index = materid.indexOf(v)
+                        if (index != '-1') {
+                            data.Material_Name=matername[index]
+                            data.Material_Nick=maternick[index]
+                        } 
+                    }else if(i=='Assign_Biller'){
+                        var index1 = userid.indexOf(v)
+                        if (index1 != '-1') {
+                            data.Assign_BillerName=usernick[index1]
+                        } 
+                    }else if(v==null){
+                        data[i]=""
+                    }
+                })
+                printdata=data
+                $.each(tablecraft,function(i,value){
+                    $.each(value,function(index3,value1){
+                        if(value1==null){
+                            value[index3]=""
+                        }
+                    })
+                })
+                printdata.Details=tablecraft
+                console.log(printdata)
+            } else {
+                alert(res.Message)
+            }
+        }
     })
+  
 }
-
 function tablerendercraft(str, data) {
     var layTableId = "layTable1";
     layui.use(['jquery', 'table'], function () {
@@ -423,6 +429,7 @@ function getfamily(id) {
         }
     })
 }
+
 // 物料种属
 function matertypelist(id) {
     //console.log(id)
@@ -474,22 +481,17 @@ function matertypelist(id) {
 
 }
 
-
-function printable() {
+$(".print").on("click",function(){
     var base = new Base64();
     $(".printbody").removeClass("hidden");
     $.ajax({
         type: 'GET',
         url:getempone+"1fe9e49d-51e0-4666-93aa-6c5c5f07a500",
         success: function (res) {
-            // console.log(res)
             var resdata = res.Data;
-            // printdata=res.Data
-            console.log(printdata)
             var isussecc = res.Succeed;
             if (isussecc) {
                 var templet = resdata.Template_Html;
-                // var data = res[0].Template_DataUrl;
                 var html = base.decode(templet)
                 $(".printbody").html(html)
                 PraseTable();
@@ -497,20 +499,16 @@ function printable() {
             }
         }
     })
-    
     function PraseTable() {
-        // console.log(printdata)
         var data;
         $('.printbody table').each(function (index, tb) {
             var tbid = tb.id
             var detail = printdata[tbid];
-            // var detail1=printdata;
             if (tbid == 'Details') {
                 data = detail;
                 $.each(data, function (index, obj) {
                     var row = $('#' + tbid).children().children("tr:last").html();
                     var org = row;
-                    // console.log(obj);
                     $.each(obj, function (key, val) {
                         var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
                         row = row.replace(reg, val);
@@ -519,29 +517,23 @@ function printable() {
                 });
                 $('#' + tbid).children().children("tr:last").replaceWith("");
             } 
-        
-            
         });
     }
     function PraseBody() {
-        // console.log(infdata)
         $(".printbody").each(function (index, body) {
             var ball = body.innerHTML;
-            console.log(ball)
-           
             $.each(printdata, function (key, val) {
                 if(typeof (val)!='Object'){
                     var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
                     ball = ball.replace(reg, val);
-                    
                 }
-               
             });
             body.innerHTML = (ball);
         });
-
         $(".printbody").css("padding", "0 30px")
         $(".printbody").print();
         $(".printbody").addClass("hidden");
     }
-}
+})
+
+

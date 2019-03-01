@@ -269,19 +269,7 @@ function changeLct(nav, navl) {
     $('#Nav li.layui-nav-item:eq(' + nav + ') > dl.layui-nav-child > dd > a:eq(' + navl + ')').trigger('click');
 }
 
-// 导出excel
-function printable() {
-    console.log(1)
-    $(".tablelist").table2excel({
-        exclude: ".noExl",
-        name: "Excel Document Name",
-        filename: "表格" + new Date().toISOString().replace(/[\-\:\.]/g, ""),
-        fileext: ".xlxs",
-        exclude_img: true,
-        exclude_links: true,
-        exclude_inputs: true
-    });
-}
+
 
 
 // 销售订单明细
@@ -402,22 +390,26 @@ function newpurchapp(){
 }
 // 采购申请详情
 function getpurchapp(id){
-    var oldhref = $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(1)').attr("href");
+    var oldhref = $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(2)').attr("href");
     var href = oldhref
     href = href + '?fid='+id
-    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(1)').attr("href", href)
-    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(1)').trigger('click');
-    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(1)').attr("href", oldhref)
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(2)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(2)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(2)').attr("href", oldhref)
 }
 
 // 采购订单详情
 function getpurwork(id){
-    var oldhref = $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(4)').attr("href");
+    var oldhref = $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').attr("href");
     var href = oldhref
     href = href + '?fid='+id
-    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(4)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').attr("href", oldhref)
+}
+// 新增采购订单
+function newpurwork(){
     $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(4)').trigger('click');
-    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(4)').attr("href", oldhref)
 }
 
 // 客户详情

@@ -537,7 +537,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                         });
                         _this1.on("click", function () {
                             var oldData = table.cache[layTableId1];
-
                             var name = $(this).attr("data-name");
                             var nick = $(this).attr("data-nick");
                             var specife = $(this).attr("data-spe");
@@ -573,7 +572,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             })
         })
     }
-
     $(document).on("click", function () {
         var evt = event.srcElement ? event.srcElement : event.target;
         var seletlist = $(".selectlist1");
@@ -587,7 +585,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             }
         }
     })
-
     // 客户订单号变更后包含的产品列表
     getpro = function (data) {
         $(".checkpro").on("click", function () {

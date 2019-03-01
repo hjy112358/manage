@@ -13,13 +13,7 @@ var upload, table;
 var layTableId;
 //layui 模块化引用
 layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], function () {
-    // 获取当天日期
-    var myDate = new Date();
-    var nowY = myDate.getFullYear();
-    var nowM = myDate.getMonth() + 1;
-    var nowD = myDate.getDate();
-    var today = nowY + "-" + (nowM < 10 ? "0" + nowM : nowM) + "-" + (nowD < 10 ? "0" + nowD : nowD);
-
+  
     var $ = layui.$;
     table = layui.table,
         form = layui.form,
@@ -30,14 +24,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     //日期
     laydate.render({
         elem: '#PurchaseOrder_DateTime',
-        // value: today,
         isInitValue: true,
         btns: ['now', 'confirm']
     });
     //日期
     laydate.render({
         elem: '#PurchaseOrder_Deadline',
-        // value: today,
         isInitValue: true,
         btns: ['now', 'confirm']
     });
@@ -204,17 +196,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             limit: oldData.length
         });
     });
-    // 获取单据编号
-    // $.ajax({
-    //     url: getnum,
-    //     success: function (res) {
-    //         if (res.Succeed) {
-    //             $("#PurchaseOrder_Name").val(res.Data)
-    //         } else {
-    //             alert(res.Message)
-    //         }
-    //     }
-    // })
+    
 
     $(document).on("click", "td[data-field='Currency_Nick']", function () {
         var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
@@ -246,7 +228,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             limit: oldData.length
         });
     })
-
 
     renderForm = function () {
         layui.use('form', function () {
@@ -373,7 +354,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
         })
     }
-
 
     // 状态
     function getstatus(id) {
@@ -502,6 +482,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     var data = res.Data;
                     for (var i = 0; i < data.length; i++) {
                         var currnow = data[i]
+                        dateslit.push(currnow)
                         currfid.push(currnow.F_Id)
                         currnick.push(currnow.Currency_Nick)
                         html += '<option value="' + currnow.F_Id + '" >' + currnow.Currency_Nick + '</option>';

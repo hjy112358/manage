@@ -54,6 +54,7 @@
                             <span class="layui-btn checklist">审核</span>
                             <span class="layui-btn audit">变更</span>
                             <button type="button" class="layui-btn layui-btn-normal  disclick">附件</button>
+                            <span class="layui-btn print">打印</span>
                         </div>
 
                         <div class="layui-form layui-form-item " style="padding-top:35px;">
@@ -136,7 +137,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="tablelist">
+                            <div id="tablelist" class="tablelist">
                                 <section class="productworktable" data-type="daten">
                                     <div class="layui-card">
                                         <!-- <i class="iconfont icon-guanbi iconclose"></i> -->
@@ -186,7 +187,7 @@
                                         <label class="layui-form-label">交货天数：</label>
                                         <div class="layui-input-block disinput">
                                             <input type="text" value="" id="SalesOrder_Cycle" name="SalesOrder_Cycle"
-                                                autocomplete="off">
+                                                autocomplete="off" readonly>
                                         </div>
                                     </div>
 
@@ -194,7 +195,7 @@
                                         <label class="layui-form-label">付款方式：</label>
                                         <div class="layui-input-block disinput">
                                             <input type="text" value="" id="SalesOrder_Payment" name="SalesOrder_Payment"
-                                                autocomplete="off">
+                                                autocomplete="off" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -203,7 +204,7 @@
                                         <label class="layui-form-label">交货地址：</label>
                                         <div class="layui-input-block disinput" style="width:451px !important">
                                             <input type="text" value="" id="SalesOrder_Delivery" name="SalesOrder_Delivery"
-                                                autocomplete="off">
+                                                autocomplete="off" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -211,7 +212,7 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">备注：</label>
                                         <div class="layui-input-block disinput" style="width:500px !important">
-                                            <textarea name="Remark" id="Remark" rows="2"></textarea>
+                                            <textarea name="Remark" id="Remark" rows="2" readonly></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -231,6 +232,7 @@
 <script src="../../assets/js/jquery.cookie.js"></script>
 <script src="../../main.js"></script>
 <script src="../../assets/js/basic/print/jQuery.print.js"></script>
+<script  src="../../assets/js/jquery.table2excel.min.js"></script>
 <script src="../../assets/js/jquery.base64.js"></script>
 <script src="../../assets/js/scale/scaleworkdetail.js"></script>
 <!-- <script src="../assets/js/drop.js"></script> -->

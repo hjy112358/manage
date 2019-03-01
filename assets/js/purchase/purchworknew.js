@@ -57,7 +57,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     var nowM = myDate.getMonth() + 1;
     var nowD = myDate.getDate();
     var today = nowY + "-" + (nowM < 10 ? "0" + nowM : nowM) + "-" + (nowD < 10 ? "0" + nowD : nowD);
-
     var $ = layui.$;
     table = layui.table,
         form = layui.form,
@@ -79,7 +78,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         isInitValue: true,
         btns: ['now', 'confirm']
     });
-
     //数据表格实例化		
     layTableId = "layTable";
     tableIns = table.render({
@@ -227,7 +225,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 break;
         }
     });
-
     table.on('edit(dataTable)', function (obj) {
         console.log(obj)
         var dataindex = $(obj.tr).attr("data-index");
@@ -258,7 +255,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     //         }
     //     }
     // })
-
     $(document).on("click", "td[data-field='Currency_Nick']", function () {
         var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
         var height = $('#tableRes .layui-table-body.layui-table-main').height() + scrollHeight;
@@ -289,7 +285,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             limit: oldData.length
         });
     })
-
     // 单号
     $(".chaselist").on("click", function () {
         $(".termask").removeClass("hidden")
@@ -356,8 +351,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
         }
     })
-
-
     renderForm = function () {
         layui.use('form', function () {
             var form = layui.form;
@@ -369,7 +362,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             });
         });
     }
-
     // 制单人
     var mouser = $.cookie("Modify_User");
     var username = $.cookie("User_Nick")
@@ -402,8 +394,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
         }
     })
-
-
     // 切换币别
     form.on('select(currlist)', function (data) {
         var value = data.value;
@@ -429,7 +419,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         }
 
     });
-
     // 单据类型
     $(".orderlist").on("click", function () {
         var _this = $(this);
@@ -463,7 +452,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             })
         }
     })
-
     // 供应商
     $(".supplier").on("click", function () {
         var _this = $(this);
@@ -572,12 +560,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
         }
     })
-
-  
 });
-
-
-
 
 
 // 弹窗
@@ -589,9 +572,7 @@ function dialogtable() {
             form = layui.form,
             layer = layui.layer,
             laydate = layui.laydate
-
         //数据表格实例化		
-
         tablepop = table.render({
             elem: '#dataTable1',
             id: "poplist",
@@ -660,7 +641,6 @@ function dialogtable() {
                     var dataIndex = $cr.attr("data-index");
                     $.each(tableData1, function (index, value) {
                         if (value.LAY_TABLE_INDEX == dataIndex) {
-                            // $cr.find('input').val(value.Material_Name);
                             $cr.find('input[id="PurchaseOrderEntry_Deadline"]').val(value.PurchaseOrderEntry_Deadline);
                             $cr.find('td[data-field="Currency_Nick"]').find("input").val(value.Currency_Nick);
                         }
@@ -681,16 +661,12 @@ function dialogtable() {
             getCheckData: function () { //获取选中数据
                 var checkStatus = table.checkStatus('poplist')
                     , data = checkStatus.data;
-
                 closemark()
                 tableIns.reload({
                     data: data,
                     limit: data.length
                 });
-
-
             }
-
         }
         //激活事件
         var activeByType = function (type, arg) {
@@ -773,16 +749,13 @@ function dialogtable() {
         // 切换单号
         layui.form.on('select(oddchange)', function (data) {
             if (data.value != '') {
-
                 var select = 'dd[lay-value="' + data.value + '"]';
                 $('#chaselist').siblings("div.layui-form-select").find('dl').find(select).click();
                 $.ajax({
                     type: "get",
                     url: purchaseDetails + data.value,
                     success: function (res) {
-                        // console.log(res)
                         var isussecc = res.Succeed;
-
                         if (isussecc) {
                             var data = res.Data;
                             console.log(data)

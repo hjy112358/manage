@@ -1,4 +1,3 @@
-var token = $.cookie("token");
 var currname = [], currnick = [], cusid = [], cusnick = [], printdata,
 materid=[],maternick=[],matername=[],customid=[],customnick=[];
 var layer;
@@ -6,6 +5,7 @@ layui.use(['layer'], function () {
     layer = layui.layer
 });
 var layerindex= layer.load()
+var ischange=0
 $(function () {
     var str = [
         { title: '序号', type: 'numbers',width:'60'},
@@ -133,11 +133,11 @@ $(function () {
                     getdepart(data.SalesOrder_Department)
                     getem(data.SalesOrder_Employee)
                     getcustom(data.SalesOrder_Customer)
-                    germater(str,res.Data.Details)
+                    germater(str,res.Data)
                      setInterval(function(){
                         layer.close(layerindex)
                     },1500) 
-                    editprintdata(res.Data)
+                    
                 }
             } else {
                 alert(res.Message)
@@ -174,12 +174,17 @@ function germater(str,data){
             // console.log(res)
             var isussecc=res.Succeed;
             if(isussecc){
+                ischange++
                 for(var i=0;i<res.Data.length;i++){
                     materid.push(res.Data[i].F_Id)
                     maternick.push(res.Data[i].Material_Nick)
                     matername.push(res.Data[i].Material_Name)
                 }
-                tablerender(str,data)
+                editprintdata(data)
+                tablerender(str,data.Details)
+            }else{
+                ischange++
+                editprintdata(data)
             }
         }
     })
@@ -307,6 +312,7 @@ function getcustom(id){
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
+            
                 for (var i = 0; i < data.length; i++) {
                     var datanow = data[i]
                     customid.push(datanow.F_Id) 
@@ -315,7 +321,11 @@ function getcustom(id){
                         $("#Customer_Nick").val(datanow.Customer_Nick)
                     }
                 }
+                ischange++
+                editprintdata(data)
             } else {
+                ischange++
+                editprintdata(data)
                 alert(res.Message)
             }
         }
@@ -366,40 +376,40 @@ function tablerender(str, data) {
 }
 
 function editprintdata(data){
-    printdata = data
-    $.each(printdata,function(i,v){
-        if(i=='SalesOrder_Customer'){
-            var index= customid.indexOf(v)
-            if (index != '-1') {
-                printdata.Customer_Nick=customnick[index]
+    if(ischange==2){
+        printdata = data
+        $.each(printdata,function(i,v){
+            if(i=='SalesOrder_Customer'){
+                var index= customid.indexOf(v)
+                if (index != '-1') {
+                    printdata.Customer_Nick=customnick[index]
+                } 
+            }
+            if(v==null){
+                printdata[i]=''
+            }
+        })
+        $.each(printdata.Details,function(i,v){
+            var index1= materid.indexOf(v.SalesOrderEntry_Material)
+            if (index1 != '-1') {
+                v.Material_Nick=maternick[index1]
             } 
-        }
-    })
-    $.each(printdata.Details,function(i,v){
-        var index1= materid.indexOf(v.SalesOrderEntry_Material)
-        if (index1 != '-1') {
-            v.Material_Nick=maternick[index1]
-        } 
-    })
+        })
+    }
     console.log(printdata)
 }
 
-function printable() {
-
+$(".print").on("click",function(){
     var base = new Base64();
     $(".printbody").removeClass("hidden");
     $.ajax({
         type: 'GET',
         url:getempone+"D9D31C3A-B476-451D-A383-424F7F61E5CF",
         success: function (res) {
-            // console.log(res)
             var resdata = res.Data;
-            // printdata=res.Data
-            console.log(printdata)
             var isussecc = res.Succeed;
             if (isussecc) {
                 var templet = resdata.Template_Html;
-                // var data = res[0].Template_DataUrl;
                 var html = base.decode(templet)
                 $(".printbody").html(html)
                 PraseTable();
@@ -409,43 +419,33 @@ function printable() {
     })
 
     function PraseTable() {
-        // console.log(printdata)
         var data;
         $('.printbody table').each(function (index, tb) {
             var tbid = tb.id
             var detail = printdata[tbid];
-            // var detail1=printdata;
             if (tbid == 'Details') {
                 data = detail;
                 $.each(data, function (index, obj) {
                     var row = $('#' + tbid).children().children("tr:last").html();
                     var org = row;
-                    // console.log(obj);
                     $.each(obj, function (key, val) {
-                        var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
+                        var reg = new RegExp("\{" + key + '\}', "g");//g,表示全部替换。
                         row = row.replace(reg, val);
                     });
                     $('#' + tbid).children().children("tr:last").replaceWith("<tr>" + row + "</tr>" + "<tr>" + org + "</tr>")
                 });
                 $('#' + tbid).children().children("tr:last").replaceWith("");
             } 
-        
-            
         });
     }
     function PraseBody() {
-        // console.log(infdata)
         $(".printbody").each(function (index, body) {
             var ball = body.innerHTML;
-            console.log(ball)
-           
             $.each(printdata, function (key, val) {
                 if(typeof (val)!='Object'){
                     var reg = new RegExp("{" + key + '}', "g");//g,表示全部替换。
                     ball = ball.replace(reg, val);
-                    
                 }
-               
             });
             body.innerHTML = (ball);
         });
@@ -454,9 +454,23 @@ function printable() {
         $(".printbody").print();
         $(".printbody").addClass("hidden");
     }
+})
+
+
+
+
+// 导出excel
+function printablexcel() {
+    $(".tablelist").table2excel({
+        exclude: ".noExl",
+        name: "Excel Document Name",
+        filename: "表格" + new Date().toISOString().replace(/[\-\:\.]/g, ""),
+        fileext: ".xlx",
+        exclude_img: true,
+        exclude_links: true,
+        exclude_inputs: true
+    });
 }
-
-
 
     // function PraseTable() {
     //     // console.log(printdata)

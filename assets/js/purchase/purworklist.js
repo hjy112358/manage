@@ -237,9 +237,9 @@ $(function () {
     }
 
 
-    // $(".add").on("click", function () {
-    //     parent.newpurchapp()
-    // })
+    $(".add").on("click", function () {
+        parent.newpurwork()
+    })
 
 
 })
