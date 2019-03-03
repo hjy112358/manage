@@ -82,8 +82,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     //     isInitValue: true,
     //     btns: ['now', 'confirm']
     // });
-
-
     //数据表格实例化		
     layTableId = "layTable";
     tableIns = table.render({
@@ -227,11 +225,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     }
                 });
             });
-
-
         }
     });
-
 
     //定义事件集合
     var active = {
@@ -753,8 +748,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
         })
     }
-
-
     // 币别--
     $.ajax({
         type: "get",
@@ -806,7 +799,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 type: "get",
                 url:ajaxCus,
                 success: function (res) {
-
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
@@ -814,13 +806,17 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
                         for (var i = 0; i < data.length; i++) {
                             var datanow=data[i]
+                            var area=""
                             if(datanow.Customer_TaxRate){
                                 var rate=datanow.Customer_TaxRate
                             }else{
                                 var rate=0
                             }
-                            html += '<option value="' + datanow.F_Id + '" data-rate="' + rate + '">' + datanow.Customer_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' + datanow.F_Id + '" data-rate="' + rate + '">' + datanow.Customer_Nick + '</dd>'
+                            if(datanow.Customer_Area){
+                                area=datanow.Customer_Area
+                            }
+                            html += '<option value="' + datanow.F_Id + '" data-rate="' + rate + '" data-area="'+area+'">' + datanow.Customer_Nick + '</option>';
+                            htmlsel += '<dd lay-value="' + datanow.F_Id + '" data-rate="' + rate + '" data-area="'+area+'">' + datanow.Customer_Nick + '</dd>'
                         }
                         $("#Customer_Nick").html(html);
                         $(".checkcus .layui-anim.layui-anim-upbit").html(htmlsel);
@@ -1084,28 +1080,30 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
     });
 
+    // 切换客户
     form.on('select(customer)', function (data) {
         console.log(data);
-        var rate = ''
+        var rate = '',area=""
         if(data.value){
             if (data.elem.selectedOptions) {
                 rate = data.elem.selectedOptions[0].attributes[1].value;
+                area = data.elem.selectedOptions[0].attributes[2].value; 
             } else {
                 var elems = data.elem;
                 for (var i = 0; i < elems.length; i++) {
                     var elemnow = elems[i];
                     if (elemnow.selected) {
                         rate = elemnow.attributes[1].value;
+                        area = elemnow.attributes[2].value;
                     }
                 }
-    
             }
             $("#SalesOrder_TaxRate").val(rate);
+            $("#SalesOrder_Delivery").val(area);
             $.each(tabledata, function (index, value) {
                 if (value.Material_Name) {
                     value.SalesOrderEntry_TaxRate = rate;
                 }
-    
             });
         }
         

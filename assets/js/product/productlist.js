@@ -202,7 +202,7 @@ $(function () {
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers', width: '80' },
-            { field: 'Assign_Name', title: '单据编号', width: "150", align: "right" },
+            { field: 'Assign_Name', title: '单据编号', width: "150", align: "left" },
             {
                 field: 'Assign_DateTime', title: '单据日期', width: "150", align: 'center', templet: function (d) {
                     if (d.Assign_DateTime) {
@@ -211,7 +211,7 @@ $(function () {
                 }
             },
             {
-                field: 'Assign_Material', title: '物料代码', width: "200", align: "right", templet: function (d) {
+                field: 'Assign_Material', title: '物料代码', width: "200", align: "left", templet: function (d) {
                     var index = materid.indexOf(d.Assign_Material)
                     if (index == '-1') {
                         return ''
@@ -221,7 +221,7 @@ $(function () {
                 }
             },
             {
-                field: 'Assign_Material', title: '物料名称', width: "200", align: "right", templet: function (d) {
+                field: 'Assign_Material', title: '物料名称', width: "200", align: "left", templet: function (d) {
                     var index1 = materid.indexOf(d.Assign_Material)
                     if (index1 == '-1') {
                         return ''
@@ -230,7 +230,7 @@ $(function () {
                     }
                 }
             },
-            { field: 'Assign_Specifications', title: '规格', align: 'center', width: "150" },
+            { field: 'Assign_Specifications', title: '规格', align: 'left', width: "150" },
             {
                 field: 'Assign_Unit', title: '单位', align: 'center', width: "100", templet: function (d) {
                     if (d.Assign_Unit == "null") {
@@ -240,7 +240,7 @@ $(function () {
                     }
                 }
             },
-            { field: 'Assign_Quantity', title: '数量', width: "150" },
+            { field: 'Assign_Quantity', title: '数量', width: "150" ,align:"right"},
             {
                 field: 'Assign_Deadline', title: '计划完工日期', width: '150', align: 'center', templet: function (d) {
                     if (d.Assign_Deadline) {

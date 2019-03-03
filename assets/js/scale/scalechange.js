@@ -7,7 +7,7 @@ var layer;
 layui.use(['layer'], function () {
     layer = layui.layer
 });
-var layerindex= layer.load()
+var layerindex = layer.load()
 $.ajax({
     type: "get",
     url: ajaxURl + '/Api/PSISales/SalesOrder/GetEntry?keyValue=' + scaleid,
@@ -39,9 +39,9 @@ $.ajax({
                 getdepart(data.SalesOrder_Department)// 部门
                 getem(data.SalesOrder_Employee)// 业务员  
                 getmater(res.Data.Details)
-                setInterval(function(){
+                setInterval(function () {
                     layer.close(layerindex)
-                },1500)
+                }, 1500)
             }
         } else {
             alert(JSON.parse(res).Message)
@@ -203,7 +203,6 @@ function tableload(tdata) {
                 },
                 // { field: 'SalesOrderEntry_Currency', title: '币别', templet: '#selectcur',width:'100' },
                 // { field: 'SalesOrderEntry_ExRate', title: '汇率', edit: 'text' ,width:'100'},
-
                 {
                     field: 'SalesOrderEntry_Deadline', title: '<span style="color:red">*  </span>交货日期', width: '100', templet: function (d) {
                         var date = ''
@@ -349,7 +348,6 @@ function tableload(tdata) {
                     $.extend(obj.data, { 'state': stateVal })
                     activeByType('updateRow', obj.data);	//更新行记录对象
                     break;
-               
             }
         });
         table.on('edit(dataTable)', function (obj) {
@@ -507,7 +505,7 @@ function tableload(tdata) {
                                         $.each(arrlist, function (index, item) {
                                             if ((item.materame && item.materame.indexOf(searchVal) != -1) || (item.maternick && item.maternick.indexOf(searchVal) != -1) || (item.matersp && item.matersp.indexOf(searchVal) != -1)) {
                                                 showList.push(item);
-                                            } 
+                                            }
                                         })
                                         // console.log(showList)
                                         for (var j = 0; j < showList.length; j++) {
@@ -779,50 +777,40 @@ function tableload(tdata) {
                     }
                     return false;
                 })
-
-
             })
         }
-
-       
-
-
-
-
         form.on('select(customer)', function (data) {
             console.log(data);
             var rate = ''
-            if(data.value){
+            if (data.value) {
                 if (data.elem.selectedOptions) {
                     rate = data.elem.selectedOptions[0].attributes[1].value;
-    
+                    area = data.elem.selectedOptions[0].attributes[2].value;
                 } else {
                     var elems = data.elem;
                     for (var i = 0; i < elems.length; i++) {
                         var elemnow = elems[i];
                         if (elemnow.selected) {
                             rate = elemnow.attributes[1].value;
+                            area = elemnow.attributes[2].value;
                         }
                     }
-    
                 }
                 $("#SalesOrder_TaxRate").val(rate);
+                $("#SalesOrder_Delivery").val(area);
                 $.each(tabledata, function (index, value) {
                     if (value.Material_Name) {
                         value.SalesOrderEntry_TaxRate = rate;
                     }
-    
                 });
-                
             }
             var oldData = table.cache[layTableId];
-                tableIns.reload({
-                    data: oldData,
-                    limit: viewObj.limit
-                });
-            
-        })
+            tableIns.reload({
+                data: oldData,
+                limit: viewObj.limit
+            });
 
+        })
         function renderForm() {
             layui.use('form', function () {
                 var form = layui.form;
@@ -851,9 +839,7 @@ function tableload(tdata) {
                         data: oldData,
                         limit: viewObj.limit
                     });
-
                 });
-
             }
         });
 
@@ -881,10 +867,7 @@ function tableload(tdata) {
                     return
                 }
             }
-
-
         })
-
 
         $(".hignckick").on("click", function () {
             // data-type="daten"
@@ -901,13 +884,10 @@ function tableload(tdata) {
             }
         })
         // $(document).on("click", function () {
-
         //     $("#tablelist .layui-table-body").addClass("overvis");
         //     $("#tablelist .layui-table-box").addClass("overvis");
         //     $("#tablelist .layui-table-view").addClass("overvis");
         // })
-
-
         //多文件列表示例
         var tablehead = $('#tablehead');
         var tablebody = $('#tablebody');
@@ -949,9 +929,7 @@ function tableload(tdata) {
             }
 
         });
-
-
-        //撤换币别
+        //切换币别
         form.on('select(currlist)', function (data) {
             var value = data.value;
             for (var k = 0; k < currname.length; k++) {
@@ -961,14 +939,12 @@ function tableload(tdata) {
                     $("#SalesOrder_ExRate").val(ratelist[nowk])
                 }
             }
-
         });
         $(document).on("click", "td[data-field='SalesOrderEntry_Currency']", function () {
             var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
             var height = $('#tableRes .layui-table-body.layui-table-main').height() + scrollHeight;
             $('#tableRes .layui-table-body.layui-table-main').css("height", height)
         })
-
         // 保存
         var isSend = true;
         $(".add").on("click", function () {
@@ -997,7 +973,7 @@ function tableload(tdata) {
             if (!($(this).hasClass("disclick"))) {
                 if (isSend) {
                     var index = layer.load();
-                  
+
                     var list = $("form").serializeArray();
                     for (var j = 0; j < list.length; j++) {
                         console.log(list[j])
@@ -1029,14 +1005,11 @@ function tableload(tdata) {
                 }
             }
         })
-
     });
-
-
 }
 
- // 删除子表
- function del(id){
+// 删除子表
+function del(id) {
     var index = layer.confirm('确认删除？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
@@ -1054,32 +1027,31 @@ function tableload(tdata) {
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(index)
-                   window.location.reload()
+                    window.location.reload()
                 } else {
                     layer.close(index)
                     alert(res.Message)
                 }
             },
-            error:function(res){
+            error: function (res) {
                 console.log(res)
             }
         })
-    }); 
-   
+    });
 }
-//物料-
+//物料
 function getmater(data) {
     $.ajax({
-        url:ajaxMater,
+        url: ajaxMater,
         success: function (res) {
             console.log(res)
             var isussecc = res.Succeed;
             if (isussecc) {
-                for(var j=0;j<data.length;j++){
+                for (var j = 0; j < data.length; j++) {
                     for (var i = 0; i < res.Data.length; i++) {
-                        if(data[j].SalesOrderEntry_Material==res.Data[i].F_Id){
-                            data[j].Material_Nick=res.Data[i].Material_Nick
-                            data[j].Material_Name=res.Data[i].Material_Name
+                        if (data[j].SalesOrderEntry_Material == res.Data[i].F_Id) {
+                            data[j].Material_Nick = res.Data[i].Material_Nick
+                            data[j].Material_Name = res.Data[i].Material_Name
                         }
                         // materid.push(res.Data[i].F_Id)
                         // maternick.push(res.Data[i].Material_Nick)
@@ -1090,10 +1062,8 @@ function getmater(data) {
             }
         }
     })
-
 }
-
-// 客户--
+// 客户
 function getcusnick(id) {
     $.ajax({
         type: "get",
@@ -1108,33 +1078,33 @@ function getcusnick(id) {
                 var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
                 for (var i = 0; i < data.length; i++) {
                     var datanow = data[i];
-                    html += '<option value="' + datanow.F_Id + '" data-rate="' + datanow.Customer_TaxRate + '">' + datanow.Customer_Nick + '</option>';
-                    htmlsel += '<dd lay-value="' + datanow.F_Id + '" data-rate="' + datanow.Customer_TaxRate + '">' + datanow.Customer_Nick + '</dd>';
+                    var area = ""
+                    if (datanow.Customer_Area) {
+                        area = datanow.Customer_Area
+                    }
+                    html += '<option value="' + datanow.F_Id + '" data-rate="' + datanow.Customer_TaxRate + '" data-area="' + area + '">' + datanow.Customer_Nick + '</option>';
+                    htmlsel += '<dd lay-value="' + datanow.F_Id + '" data-rate="' + datanow.Customer_TaxRate + '" data-area="' + area + '">' + datanow.Customer_Nick + '</dd>';
                     curid.push(datanow.F_Id)
                     curnick.push(datanow.Customer_Nick)
                     if (id == datanow.F_Id) {
                         checid = datanow.F_Id
                     }
-
                 }
                 $("#Customer_Nick").html(html);
                 $(".checkcus .layui-anim.layui-anim-upbit").html(htmlsel);
-
                 layui.use('form', function () {
                     var form = layui.form;
                     form.render();
-
                 });
                 var select = 'dd[lay-value="' + checid + '"]';
                 $('#Customer_Nick').siblings("div.layui-form-select").find('dl').find(select).click();
             } else {
                 alert(res.Message)
             }
-
         }
     })
 }
-//订单类型--
+//订单类型
 function gettype(id) {
     $.ajax({
         type: "get",
@@ -1170,7 +1140,7 @@ function gettype(id) {
         }
     })
 }
-// 单据状态--
+// 单据状态
 function getstatus(id) {
     $.ajax({
         type: "get",
@@ -1192,7 +1162,7 @@ function getstatus(id) {
         }
     })
 }
-//部门--
+//部门
 function getdepart(id) {
     $.ajax({
         type: "get",
@@ -1229,7 +1199,7 @@ function getdepart(id) {
         }
     })
 }
-//业务员--
+//业务员
 function getem(id) {
     $.ajax({
         type: "get",
@@ -1265,8 +1235,7 @@ function getem(id) {
         }
     })
 }
-
-//币别--
+//币别
 function getcurr(id) {
     // 币别
     $.ajax({
@@ -1317,8 +1286,7 @@ function getcurr(id) {
     })
 
 }
-
-// 制单人--
+// 制单人
 function getbii(id) {
     $.ajax({
         type: "get",
