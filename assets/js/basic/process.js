@@ -36,8 +36,8 @@ $(function () {
             { type: 'numbers', title: '序号', width: "5%" },
             //  {field:'id', title:'ID',   unresize: true, sort: true, totalRowText: '合计'}
             // {field:'FCheck', title:'类别',align:'center'},
-            { field: 'Process_Name', title: '工序代码', align: 'center' },
-            { field: 'Process_Nick', title: '工序名称', align: 'center' },
+            { field: 'Process_Name', title: '工序代码', align: 'left' },
+            { field: 'Process_Nick', title: '工序名称', align: 'left' },
             {
                 field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '" onclick=editmeasure("' + d.F_Id + '")>修改</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '" onclick=delmeasure("' + d.F_Id + '")>删除</a>';

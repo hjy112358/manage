@@ -64,13 +64,13 @@ $(function () {
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers' },
-            { field: 'SalesInvoice_Name', title: '编号' },
-            { field: 'Customer_Nick', title: '客户' },
-            { field: 'Currency_Nick', title: '币别' },
-            { field: 'SalesInvoice_ExRate', title: '汇率' },
-            { field: 'SalesInvoice_TaxRate', title: '税率' },
+            { field: 'SalesInvoice_Name', title: '编号',align:"left" },
+            { field: 'Customer_Nick', title: '客户' ,align:"left"},
+            { field: 'Currency_Nick', title: '币别' ,align:"center"},
+            { field: 'SalesInvoice_ExRate', title: '汇率' ,align:"right"},
+            { field: 'SalesInvoice_TaxRate', title: '税率',align:"left" },
             {
-                field: 'SalesInvoice_Biller', title: '制单人',  templet: function (d) {
+                field: 'SalesInvoice_Biller', title: '制单人',align:"left",  templet: function (d) {
                     var nowi = userid.indexOf(d.SalesInvoice_Biller)
                     if (nowi == '-1') {
                         return ''
@@ -81,7 +81,7 @@ $(function () {
                 }
             },
             {
-                field: 'SalesInvoice_DateTime', title: '单据日期',  templet: function (d) {
+                field: 'SalesInvoice_DateTime', title: '单据日期',align:"center",  templet: function (d) {
                     if (d.SalesInvoice_DateTime) {
                         return (d.SalesInvoice_DateTime).split(" ")[0]
                     } else {
@@ -91,7 +91,7 @@ $(function () {
                 }
             },
             {
-                field: 'SalesInvoice_Deadline', title: '收款日期',  templet: function (d) {
+                field: 'SalesInvoice_Deadline', title: '收款日期',align:"center",  templet: function (d) {
                     if (d.SalesInvoice_Deadline) {
                         return (d.SalesInvoice_Deadline).split(" ")[0]
                     } else {

@@ -61,10 +61,10 @@ $(function () {
                 { type: 'numbers', title: '序号', width: "5%" },
                 //  {field:'id', title:'ID',   unresize: true, sort: true, totalRowText: '合计'}
                 // {field:'FCheck', title:'类别',align:'center'},
-                { field: 'Material_Name', title: '代码', align: 'center' },
-                { field: 'Material_Nick', title: '宝贝名称', align: 'center' },
-                { field: 'Material_Specifications', title: '型号', align: 'center' },
-                { field: 'Material_Type', title: '类别', align: 'center' },
+                { field: 'Material_Name', title: '代码', align: 'left' },
+                { field: 'Material_Nick', title: '宝贝名称', align: 'left' },
+                { field: 'Material_Specifications', title: '型号', align: 'left' },
+                { field: 'Material_Type', title: '类别', align: 'left' },
                 { field: 'Material_Measure', title: '计量单位', align: 'center' },
                 {
                     field: 'F_Id', title: '操作', align: 'center', templet: function (d) {

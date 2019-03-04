@@ -205,16 +205,16 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         });
     });
     // 获取单据编号
-    // $.ajax({
-    //     url: getnum,
-    //     success: function (res) {
-    //         if (res.Succeed) {
-    //             $("#PurchaseOrder_Name").val(res.Data)
-    //         } else {
-    //             alert(res.Message)
-    //         }
-    //     }
-    // })
+    $.ajax({
+        url: getnum,
+        success: function (res) {
+            if (res.Succeed) {
+                $("#PurchaseOrder_Name").val(res.Data)
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
 
     $(document).on("click", "td[data-field='Currency_Nick']", function () {
         var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
@@ -255,7 +255,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             $(".chaselist").attr("data-type", "datey");
             $.ajax({
                 type: "get",
-                url: purchaseOrderlist,
+                url: ajaxchaseorderlist,
                 success: function (res) {
                     console.log(res)
                     var isussecc = res.Succeed;

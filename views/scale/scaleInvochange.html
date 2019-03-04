@@ -20,14 +20,15 @@
                     <form class="layui-form">
                         <div class="layui-form-lsit fl btnlist">
                             <!-- <span class="layui-btn add">新增</span> -->
-                            <span class="layui-btn sub">保存</span>
-                            <span class="layui-btn audit disclick">审核</span>
+                            <span class="layui-btn sub">保存修改</span>
+                            <span class="layui-btn audit ">审核</span>
                             <span class="layui-btn changeStatus disclick">变更</span>
                         </div>
                         <div class="layui-form layui-form-item " style="padding-top:25px;">
                             <div class="form-box">
                                 <div class="clearfix">
                                     <input type="hidden" name="IsEnabled" value="true">
+                                    <input type="hidden" name="F_Id" value="" id="F_Id">
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label"><span>*</span> 客户：</label>
                                         <div class="layui-input-block checkcus" data-type="daten">
@@ -41,7 +42,7 @@
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">单据日期：</label>
                                         <div class="layui-input-block ">
-                                            <input type="text" name="SalesInvoice_DateTime" id="date" lay-verify="date"
+                                            <input type="text" name="SalesInvoice_DateTime" id="SalesInvoice_DateTime" lay-verify="date"
                                                 autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
@@ -110,7 +111,7 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">收款日期：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" name="SalesInvoice_Deadline" id="datepay"
+                                            <input type="text" name="SalesInvoice_Deadline" id="SalesInvoice_Deadline"
                                                 autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
@@ -148,13 +149,13 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">审核人：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" disabled id="zd">
+                                            <input type="text" value="" readonly>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">审核日期：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" disabled id="zd">
+                                            <input type="text" value="" readonly>
                                         </div>
                                     </div>
                                    

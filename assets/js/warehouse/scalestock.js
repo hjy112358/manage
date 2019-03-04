@@ -273,33 +273,32 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         }
     });
     table.on('edit(dataTable)', function (obj) {
-        var oldData = table.cache[layTableId];
-        console.log(oldData)
-        for (var i = 0; i < oldData.length; i++) {
-            var datenow = oldData[i];
-            if (datenow.F_Id === obj.data.F_Id) {
+        console.log(obj)
+        var elem = obj.tr;
+        var dataindex = elem.attr("data-index");
+        $.each(tabledata, function (index, value) {
+            console.log(value)
+            if (value.LAY_TABLE_INDEX == dataindex) {
                 if(obj.field=='StockBillEntry_Quantity'){
                     if (!$.isNumeric(obj.value)){
-                        datenow.StockBillEntry_Quantity = parseInt(obj.value)||"";
+                        value.StockBillEntry_Quantity = parseInt(obj.value)||"";
                     }else{
-                        if(datenow.StockBillEntry_Price){
-                            datenow.StockBillEntry_Amount=parseFloat(datenow.StockBillEntry_Quantity)*parseFloat(datenow.StockBillEntry_Price)
-                            datenow.StockBillEntry_Amount=datenow.StockBillEntry_Amount.toFixed(2)
+                        if(value.StockBillEntry_Price){
+                            value.StockBillEntry_Amount=parseFloat(value.StockBillEntry_Quantity)*parseFloat(value.StockBillEntry_Price)
+                            value.StockBillEntry_Amount=value.StockBillEntry_Amount.toFixed(2)
                         }
                     }
                 }else if(obj.field=='StockBillEntry_Price'){
-                    if(datenow.StockBillEntry_Quantity){
-                        datenow.StockBillEntry_Amount=parseFloat(datenow.StockBillEntry_Quantity)*parseFloat(datenow.StockBillEntry_Price)
-                        datenow.StockBillEntry_Amount=datenow.StockBillEntry_Amount.toFixed(2)
+                    if(value.StockBillEntry_Quantity){
+                        value.StockBillEntry_Amount=parseFloat(value.StockBillEntry_Quantity)*parseFloat(value.StockBillEntry_Price)
+                        value.StockBillEntry_Amount=value.StockBillEntry_Amount.toFixed(2)
                     }
                 }
-                
             }
-        }
-        console.log(oldData)
+        });
         tableIns.reload({
-            data: oldData,
-            limit: oldData.length
+            data: tabledata,
+            limit: tabledata.length
         });
     });
 
@@ -329,16 +328,16 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     
 
     // 获取单据编号
-    // $.ajax({
-    //     url: getnum,
-    //     success: function (res) {
-    //         if (res.Succeed) {
-    //             $("#StockBill_Name").val(res.Data)
-    //         } else {
-    //             alert(res.Message)
-    //         }
-    //     }
-    // })
+    $.ajax({
+        url: getnum,
+        success: function (res) {
+            if (res.Succeed) {
+                $("#StockBill_Name").val(res.Data)
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
 
     // 制单人
     var mouser = $.cookie("Modify_User");
@@ -463,7 +462,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                                 if (index != '-1') {
                                     value.StockBillEntry_Unit=measureid[index]
                                     value.unit=measurnick[index]
-                                } 
+                                }else{
+                                    value.StockBillEntry_Unit=value.SalesOrderEntry_Unit
+                                    value.unit=value.SalesOrderEntry_Unit
+                                }
                                 $.ajax({
                                     url: ajaxstockno +value.SalesOrderEntry_Material,
                                     async: false,

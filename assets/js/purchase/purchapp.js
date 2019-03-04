@@ -427,7 +427,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
         })
     }
-    $(document).on("click", function () {
+    $(document).on("click", function (event) {
         var evt = event.srcElement ? event.srcElement : event.target;
         var seletlist = $(".selectlist");
         for (var i = 0; i < seletlist.length; i++) {

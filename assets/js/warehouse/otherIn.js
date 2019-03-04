@@ -279,16 +279,16 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         });
     });
     // 获取单据编号
-    //  $.ajax({
-    //     url: getnum,
-    //     success: function (res) {
-    //         if (res.Succeed) {
-    //             $("#StockBill_Name").val(res.Data)
-    //         } else {
-    //             alert(res.Message)
-    //         }
-    //     }
-    // })
+     $.ajax({
+        url: getnum,
+        success: function (res) {
+            if (res.Succeed) {
+                $("#StockBill_Name").val(res.Data)
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
 
     // 制单人
     var mouser = $.cookie("Modify_User");

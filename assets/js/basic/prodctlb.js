@@ -86,8 +86,8 @@ $(function () {
             { type: 'numbers', title: '序号', width: "5%" },
             //  {field:'id', title:'ID',   unresize: true, sort: true, totalRowText: '合计'}
             // {field:'FCheck', title:'类别',align:'center'},
-            { field: 'Family_Name', title: '物料类别代码', align: 'center' },
-            { field: 'Family_Nick', title: '物料类别名称', align: 'center' },
+            { field: 'Family_Name', title: '物料类别代码', align: 'left' },
+            { field: 'Family_Nick', title: '物料类别名称', align: 'left' },
             {
                 field: 'Measure_Id', title: '操作', align: 'center', templet: function (d) {
                     // return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.Family_Id + '" onclick=editmeasure("' + d.Family_Name + '","' + d.Family_Nick + '")><i class="layui-icon layui-icon-delete"></i>修改</a><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.Family_Id + '" onclick=delmeasure("' + d.Family_Id + '")><i class="layui-icon layui-icon-delete"></i>移除</a>';

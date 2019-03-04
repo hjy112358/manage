@@ -14,14 +14,14 @@ function tablerender(str, data) {
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
                     console.log(obj);
-                    // parent.getcustom( obj.data.Customer_Name)
+                    parent.getcustom( obj.data.Customer_Name)
                 });
             }
         });
         return false;
     })
 }
-var token = $.cookie("token");
+
 
 $(function () {
    
@@ -30,11 +30,11 @@ $(function () {
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers' },
-            { field: 'Customer_Nick', title: '客户名称',align:'center'},
-            { field: 'Customer_Name', title: '客户代码',align:'center'},
-            { field: 'Currency_Nick', title: '币别',align:'center'},
-            { field: 'Customer_TaxNo', title: '	税务登记号',align:'center'},
-            { field: 'Customer_TaxRate', title: '增值税率',align:'center'},
+            { field: 'Customer_Nick', title: '客户名称',align:'left'},
+            { field: 'Customer_Name', title: '客户代码',align:'left'},
+            { field: 'Currency_Nick', title: '币别',align:'left'},
+            { field: 'Customer_TaxNo', title: '	税务登记号',align:'left'},
+            { field: 'Customer_TaxRate', title: '增值税率',align:'right'},
             {
                 field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=delscale("' + d.F_Id + '")>删除</a>';
@@ -55,7 +55,7 @@ $(function () {
                     alert(res.Message)
                 }
             }
-        })
+        }) 
 
     })
 

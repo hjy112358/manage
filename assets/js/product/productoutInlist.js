@@ -143,20 +143,20 @@ $(function () {
         stockname=$("#StockBill_Name").val()
         var str = [
             { title: '序号', type: 'numbers' },
-            { field: 'StockBill_Name', title: '编号' },
+            { field: 'StockBill_Name', title: '编号',align:'left' },
             // { field: 'StockBill_Project', title: '项目号'},
-            { field: 'Currency_Nick', title: '币别' },
-            { field: 'Direction_Nick', title: '方向' },
+            { field: 'Currency_Nick', title: '币别' ,align:'left' },
+            { field: 'Direction_Nick', title: '方向' ,align:'left' },
             {
-                field: 'StockBill_DateTime', title: '日期', templet: function (d) {
+                field: 'StockBill_DateTime', title: '日期',align:'center' , templet: function (d) {
                     if (d.StockBill_DateTime) {
                         return d.StockBill_DateTime.split(" ")[0]
                     }
                 }
             },
-            { field: 'Status_Nick', title: '状态' },
+            { field: 'Status_Nick', title: '状态' ,align:'left' },
             {
-                field: 'StockBill_Biller', title: '制单人', templet: function (d) {
+                field: 'StockBill_Biller', title: '制单人',align:'left' , templet: function (d) {
                     var index = userid.indexOf(d.StockBill_Biller)
                     if (index == '-1') {
                         return ''
@@ -166,7 +166,7 @@ $(function () {
                 }
             },
             {
-                field: 'StockBill_Receiver', title: '收货方', templet: function (d) {
+                field: 'StockBill_Receiver', title: '收货方',align:'left' , templet: function (d) {
                     if (d.StockBill_Direction == 1) {//入库
                         var index3 = userid.indexOf(d.StockBill_Receiver)
                         if (index3 == '-1') {
@@ -185,7 +185,7 @@ $(function () {
                 }
             },
             {
-                field: 'StockBill_Sender', title: '发货方', templet: function (d) {
+                field: 'StockBill_Sender', title: '发货方',align:'left' , templet: function (d) {
                     if (d.StockBill_Direction == 1) {//入库
                         if (d.StockBill_Type == '400200') {
                             var index4 = cusid.indexOf(d.StockBill_Sender)
@@ -214,7 +214,7 @@ $(function () {
                 }
             },
             {
-                field: 'StockBill_Type', title: '单据类型', templet: function (d) {
+                field: 'StockBill_Type', title: '单据类型',align:'left' , templet: function (d) {
                     if (d.StockBill_Type == '400200') {
                         return "生产发料"
                     } else if (d.StockBill_Type == "400100") {
@@ -227,7 +227,7 @@ $(function () {
                 }
             },
             {
-                field: 'IsEnabled', title: '启用', templet: function (d) {
+                field: 'IsEnabled', title: '启用',align:'center' , templet: function (d) {
                     if (d.IsEnabled) {
                         return "是"
                     } else {
@@ -235,7 +235,7 @@ $(function () {
                     }
                 }
             },
-            { field: 'Remark', title: '备注' },
+            { field: 'Remark', title: '备注' ,align:'left' },
             {
                 field: 'F_Id', title: '操作', templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=delscale("' + d.F_Id + '")>删除</a>';

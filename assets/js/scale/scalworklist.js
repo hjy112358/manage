@@ -134,8 +134,8 @@ $(function () {
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers', width: '3%' },
-            { field: 'SalesOrder_Project', title: '项目号', width: '5%' },
-            { field: 'SalesOrder_Name', title: '订单编号', width: '12%' },
+            { field: 'SalesOrder_Project', title: '项目号', width: '5%',align:"left" },
+            { field: 'SalesOrder_Name', title: '订单编号', width: '12%',align:"left" },
             {
                 field: 'SalesOrder_DateTime', title: '单据日期', width: "12%", align: "center", templet: function (d) {
                     if (d.SalesOrder_DateTime) {
@@ -146,7 +146,7 @@ $(function () {
 
                 }
             },
-            { field: 'SalesOrder_Customer', title: '客户', width: '15%' ,templet:function(d){
+            { field: 'SalesOrder_Customer', title: '客户', width: '15%' ,align:"left",templet:function(d){
                 var index1 = customid.indexOf(d.SalesOrder_Customer)
                 if (index1 == '-1') {
                     return ''
@@ -154,7 +154,7 @@ $(function () {
                     return customnick[index1]
                 }
             }},
-            { field: 'SalesOrder_Type', title: '订单类型', width: "8%",templet:function(d){
+            { field: 'SalesOrder_Type', title: '订单类型', width: "8%",align:"center",templet:function(d){
                 var index2 = ordertype.indexOf(d.SalesOrder_Type)
                 if (index2 == '-1') {
                     return ''
@@ -173,7 +173,7 @@ $(function () {
             //     }
             // },
             {
-                field: 'SalesOrder_Currency', title: '币别', width: '5%', templet: function (d) {
+                field: 'SalesOrder_Currency', title: '币别', width: '5%',align:"left", templet: function (d) {
                     var index = currname.indexOf(d.SalesOrder_Currency)
                     if (index == '-1') {
                         return ''
@@ -185,7 +185,7 @@ $(function () {
             { field: 'SalesOrder_ExRate', title: '汇率', width: "5%", align: "right" },
             { field: 'SalesOrder_TaxRate', title: '税率(%)', width: "5%", align: "right" },
            
-            { field: 'SalesOrder_Status', title: '单据状态', width: "5%", templet: function (d) {
+            { field: 'SalesOrder_Status', title: '单据状态', width: "5%",align:"center", templet: function (d) {
                 var index3 = statuvalu.indexOf(d.SalesOrder_Status)
                 if (index3 == '-1') {
                     return ''
@@ -194,7 +194,7 @@ $(function () {
                 }
             }},
             {
-                field: 'SalesOrder_Biller', title: '制单人', width: "5%", templet: function (d) {
+                field: 'SalesOrder_Biller', title: '制单人', width: "5%",align:"left", templet: function (d) {
                     var nowi = userid.indexOf(d.SalesOrder_Biller)
                     if (nowi == '-1') {
                         return ''
@@ -215,7 +215,7 @@ $(function () {
 
                 }
             },
-            { field: 'Remark', title: '备注', width: "10%" },
+            { field: 'Remark', title: '备注', width: "10%",align:"left" },
             {
                 field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=delscale("' + d.F_Id + '")>删除</a>';

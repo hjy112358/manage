@@ -8,9 +8,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit"], function () {
             tempId: first,
             state: 0,
             Address_Area: '',
-            Address_Contact:'',
-            Address_Mobile:'',
-            Remark:''
+            Address_Contact: '',
+            Address_Mobile: '',
+            Remark: ''
         }],
         limit: 1,
         last: first
@@ -33,16 +33,16 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit"], function () {
         cols: [[
             { title: '序号', type: 'numbers', width: "60" },
             {
-                width: '60',align:"center", templet: function (d) {
+                width: '60', align: "center", templet: function (d) {
                     return '<a class="layui-btn addelbtn layui-btn-xs layui-btn-danger" lay-event="address" lay-id="' + d.tempId + '">+</a><a class="addelbtn layui-btn layui-btn-xs layui-btn-danger" lay-event="deladdress" lay-id="' + d.tempId + '">-</a>'
                 }
             },
             { field: 'Address_Sort', title: '默认地址', type: 'radio', width: "80" },
-            { field: 'Address_Area', title: '区域', width: "80" , edit: 'text'},
-            { field: 'Address_Contact', title: '联系人', edit: 'text', width: "100"},
-            { field: 'Address_Mobile', title: '电话', edit: 'text', width: "100"},
-            { field: 'Remark', title: '备注', edit: 'text', width: "200"}
-         
+            { field: 'Address_Area', title: '区域', width: "80", edit: 'text' },
+            { field: 'Address_Contact', title: '联系人', edit: 'text', width: "100" },
+            { field: 'Address_Mobile', title: '电话', edit: 'text', width: "100" },
+            { field: 'Remark', title: '备注', edit: 'text', width: "200" }
+
         ]],
         done: function (res, curr, count) {
             viewObj.tbData = res.data;
@@ -56,7 +56,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit"], function () {
             var oldData = table.cache["tableAdd"];
             // console.log(oldData);
             var tid = new Date().valueOf();
-            var newRow = { tempId: tid,  state: 0,Address_Area: '',Address_Contact:'',Address_Mobile:'',Remark:'' };
+            var newRow = { tempId: tid, state: 0, Address_Area: '', Address_Contact: '', Address_Mobile: '', Remark: '' };
             oldData.push(newRow);
             viewObj.last = tid;
             addAress.reload({
@@ -126,8 +126,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit"], function () {
                 }
                 break;
             case "address":
-            activeByType('addAdress');
-            break;
+                activeByType('addAdress');
+                break;
         }
     });
 
@@ -137,17 +137,17 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit"], function () {
             form.render();
         });
     }
-    getaddress=function(){
+    getaddress = function () {
         var addresslitst = table.cache["tableAdd"];
-        var upData=[]
-        $.each(addresslitst,function(i,v){
-            if(v.Address_Area!=''&&v.Address_Contact!=''&&v.Address_Mobile!=''){
+        var upData = []
+        $.each(addresslitst, function (i, v) {
+            if (v.Address_Area != '' && v.Address_Contact != '' && v.Address_Mobile != '') {
                 if (value.LAY_CHECKED) {
                     value.Address_Sort = 1
                 }
                 upData.push(v)
             }
-            
+
         })
         return upData
     }
@@ -195,7 +195,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         cols: [[
             { title: '序号', type: 'numbers', width: "60" },
             {
-                width: '60',align:"center", templet: function (d) {
+                width: '60', align: "center", templet: function (d) {
                     return '<a class="layui-btn addelbtn layui-btn-xs layui-btn-danger" lay-event="adds" lay-id="' + d.tempId + '">+</a><a class="addelbtn layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '">-</a>'
                 }
             },
@@ -212,7 +212,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             { field: 'term10', title: '部门', edit: 'text', width: "150" },
             { field: 'Contact_Position', title: '职位', edit: 'text', width: "150" },
             { field: 'Remark', title: '备注', edit: 'text', width: "200" }
-         
+
         ]],
         done: function (res, curr, count) {
             viewObj.tbData = res.data;
@@ -295,8 +295,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 }
                 break;
             case "adds":
-            activeByType('add');
-            break;
+                activeByType('add');
+                break;
         }
     });
     table.on('edit(dataTable)', function (obj) {
@@ -321,15 +321,15 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     getcontract = function () {
         var contact = table.cache[layTableId];
-        var upData=[]
+        var upData = []
         $.each(contact, function (i, value) {
-            if(value.Contact_Nick){
+            if (value.Contact_Nick) {
                 if (value.LAY_CHECKED) {
                     value.Contact_Sort = 1
                 }
                 upData.push(value)
             }
-           
+
         })
         return upData
     }
@@ -375,15 +375,15 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         cols: [[
             { title: '序号', type: 'numbers', width: '60' },
             {
-                width: '60',align:"center", templet: function (d) {
+                width: '60', align: "center", templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger addelbtn" lay-event="addrows" lay-id="' + d.tempId + '">+</a><a class="layui-btn addelbtn layui-btn-xs layui-btn-danger" lay-event="delrow" lay-id="' + d.tempId + '">-</a>'
                 }
             },
             { field: 'Material_Name', title: '物料代码', templet: '#selectTool', width: '200' },
             { field: 'Material_Nick', title: '物料名称', edit: 'text', width: '200' },
-            { field: 'CustomerMaterial_Name', title: '客户物料代码', width: '200'  ,edit: 'text'},
+            { field: 'CustomerMaterial_Name', title: '客户物料代码', width: '200', edit: 'text' },
             { field: 'CustomerMaterial_Nick', title: '客户物料名称', edit: 'text', width: '200' }
-           
+
         ]],
         done: function (res, curr, count) {
             viewObj.tbData = res.data;
@@ -408,7 +408,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             var oldData = table.cache[layTableId1];
             // console.log(oldData);
             var tid = new Date().valueOf();
-            var newRow = { tempId: tid, state: 0, CustomerMaterial_Name: '', CustomerMaterial_Nick: '', CustomerMaterial_Material: '' ,Material_Name: '', Material_Nick: ''};
+            var newRow = { tempId: tid, state: 0, CustomerMaterial_Name: '', CustomerMaterial_Nick: '', CustomerMaterial_Material: '', Material_Name: '', Material_Nick: '' };
             oldData.push(newRow);
             viewObj.last = tid;
             tableIns.reload({
@@ -741,7 +741,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         }
     });
 
-    $(document).on("click", function () {
+    $(document).on("click", function (event) {
         var evt = event.srcElement ? event.srcElement : event.target;
         var seletlist = $(".selectlist1");
         for (var i = 0; i < seletlist.length; i++) {
@@ -770,21 +770,31 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     })
 
-
+    // 获取单据编号
+    $.ajax({
+        url: getnum,
+        success: function (res) {
+            if (res.Succeed) {
+                $("#Customer_Name").val(res.Data)
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
     getmater = function () {
         var materlist = table.cache[layTableId1]
-        var upData=[]
+        var upData = []
         $.each(materlist, function (i, value) {
-            if(value.Material_Name){
+            if (value.Material_Name) {
                 upData.push(value)
             }
-           
+
         })
         return upData
     }
 });
 
-var getmater, getcontract,getfince,getaddress;
+var getmater, getcontract, getfince, getaddress;
 $(function () {
     // 业务员
     $(".custom").on("click", function () {
@@ -832,7 +842,7 @@ $(function () {
                 var html = '<option value="">全部</option>';
                 var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
                 for (var i = 0; i < data.length; i++) {
-                    var datanow=data[i]
+                    var datanow = data[i]
                     if (datanow.Currency_Nick == '人民币') {
                         rmbid = datanow.F_Id;
                     }
@@ -844,33 +854,33 @@ $(function () {
                 renderForm();
                 var select = 'dd[lay-value="' + rmbid + '"]';
                 $('#Customer_Currency').siblings("div.layui-form-select").find('dl').find(select).click();
-            
+
             } else {
                 alert(res.Message)
             }
 
         }
     })
-    
+
     // 保存
     $(".sub").on("click", function () {
         var cuslist = $("#customMsg").serializeArray()
         var data = {};
-        var customnick=$("#Customer_Nick").val()
-        var customname=$("#Customer_Name").val()
+        var customnick = $("#Customer_Nick").val()
+        var customname = $("#Customer_Name").val()
         for (var j = 0; j < cuslist.length; j++) {
             data[cuslist[j].name] = cuslist[j].value
         }
-        data.Customer_Nick=customnick
-        data.Customer_Name=customname
+        data.Customer_Nick = customnick
+        data.Customer_Name = customname
         var contact = getcontract()
         var materList = getmater()
-        var addresslist=getaddress()
-        var financelist=[]
-        var fincenum=$("#Finance_Account").val()
-        var finalist=$("#finaceMsg").serializeArray()
-        if(fincenum!=''){
-            var findata={}
+        var addresslist = getaddress()
+        var financelist = []
+        var fincenum = $("#Finance_Account").val()
+        var finalist = $("#finaceMsg").serializeArray()
+        if (fincenum != '') {
+            var findata = {}
             for (var i = 0; i < finalist.length; i++) {
                 findata[finalist[i].name] = finalist[i].value
             }

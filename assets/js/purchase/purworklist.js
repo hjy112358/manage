@@ -34,8 +34,6 @@ function tablerender(str, data) {
         return false;
     })
 }
-
-
 var istrue = 0, isclick
 $(function () {
     var subindex = layer.load();
@@ -60,9 +58,8 @@ $(function () {
             }
         }
     })
-   
-     // 币别
-     $.ajax({
+    // 币别
+    $.ajax({
         type: "get",
         url: ajaxCurrency,
         success: function (res) {
@@ -98,14 +95,12 @@ $(function () {
             } else {
                 alert(res.Message)
             }
-
         }
     })
-
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers', width: '80' },
-            { field: 'PurchaseOrder_Name', title: '单据编号', width: "150", align: "center" },
+            { field: 'PurchaseOrder_Name', title: '单据编号', width: "150", align: "left" },
             {
                 field: 'PurchaseOrder_DateTime', title: '单据日期', width: "100", align: 'center', templet: function (d) {
                     if (d.PurchaseOrder_DateTime) {
@@ -139,15 +134,7 @@ $(function () {
                 }
             },
 
-            {
-                field: 'IsEnabled', title: '启用', align: 'center', width: "80", templet: function (d) {
-                    if (d.IsEnabled) {
-                        return "是"
-                    } else {
-                        return "否"
-                    }
-                }
-            },
+           
             {
                 field: 'PurchaseOrder_Currency', title: '币别', width: '150', align: 'center',templet:function(d){
                     if (d.PurchaseOrder_Currency) {
@@ -161,10 +148,10 @@ $(function () {
                         return ''
                     }
             }},
-            { field: 'PurchaseOrder_TaxRate', title: '税率', width: '80', align: 'center'},
-            { field: 'PurchaseOrder_ExRate', title: '汇率', width: '80', align: 'center'},
+            { field: 'PurchaseOrder_TaxRate', title: '税率', width: '80', align: 'right'},
+            { field: 'PurchaseOrder_ExRate', title: '汇率', width: '80', align: 'right'},
             {
-                field: 'PurchaseOrder_Biller', title: '制单人', width: '150', align: 'center',templet:function(d){
+                field: 'PurchaseOrder_Biller', title: '制单人', width: '150', align: 'left',templet:function(d){
                     if (d.PurchaseOrder_Biller) {
                         var index1 = billid.indexOf(d.PurchaseOrder_Biller)
                         if (index1 == '-1') {
@@ -177,7 +164,7 @@ $(function () {
                     }
             }},
             {
-                field: 'PurchaseOrder_Employee', title: '业务员', width: '150', align: 'center',templet:function(d){
+                field: 'PurchaseOrder_Employee', title: '业务员', width: '150', align: 'left',templet:function(d){
                     if (d.PurchaseOrder_Employee) {
                         var index2 = billid.indexOf(d.PurchaseOrder_Employee)
                         if (index2 == '-1') {
@@ -190,7 +177,7 @@ $(function () {
                     }
             }},
             {
-                field: 'PurchaseOrder_Supplier', title: '供应商', width: '180', align: 'center',templet:function(d){
+                field: 'PurchaseOrder_Supplier', title: '供应商', width: '180', align: 'left',templet:function(d){
                     if (d.PurchaseOrder_Supplier) {
                         var index3 = suppid.indexOf(d.PurchaseOrder_Supplier)
                         if (index3 == '-1') {
@@ -202,7 +189,16 @@ $(function () {
                         return ''
                     }
             }},
-            { field: 'Remark', title: '备注', align: 'center', width: "200" },
+            {
+                field: 'IsEnabled', title: '启用', align: 'center', width: "80", templet: function (d) {
+                    if (d.IsEnabled) {
+                        return "是"
+                    } else {
+                        return "否"
+                    }
+                }
+            },
+            { field: 'Remark', title: '备注', align: 'left', width: "200" },
             {
                 field: 'F_Id', title: '操作', align: 'center', width: '100', templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=delscale("' + d.F_Id + '")>删除</a>';
@@ -227,32 +223,21 @@ $(function () {
         })
 
     })
-
-
     isclick = function () {
         if (istrue == 3) {
             $(".checklist").trigger("click")
         }
-
     }
-
-
     $(".add").on("click", function () {
         parent.newpurwork()
     })
-
-
 })
-
-
-
 function renderForm() {
     layui.use('form', function () {
         var form = layui.form;
         form.render()
     });
 }
-
 // 删除
 function delscale(id) {
     var index = layer.confirm('确认删除？', {

@@ -29,8 +29,8 @@ function tablerender(data) {
             , toolbar: true
             , cols: [[
                 { title: '序号', type: 'numbers' },
-                { field: 'Assign_Name', title: '工单单号' },
-                { field: 'ReportEntry_Report', title: '报工单号',templet:function(d){
+                { field: 'Assign_Name', title: '工单单号',align:"left" },
+                { field: 'ReportEntry_Report', title: '报工单号',align:"left",templet:function(d){
                 
                     var index= reportid.indexOf(d.ReportEntry_Report)
                     if (index == '-1') {
@@ -39,15 +39,15 @@ function tablerender(data) {
                         return reportname[index]
                     } 
                 } },
-                { field: 'CraftEntry_Name', title: '工序名称' },
-                { field: 'CraftEntry_Nick', title: '工序编号' },
+                { field: 'CraftEntry_Name', title: '工序名称' ,align:"left"},
+                { field: 'CraftEntry_Nick', title: '工序编号',align:"left" },
                 // { field: '', title: '工时' },
                 // { field: '', title: '接收数' },
-                { field: 'ReportEntry_Quantity', title: '实做数' },
-                { field: 'ReportEntry_Qualified', title: '合格数' },//实做数-报废数
-                { field: 'ReportEntry_Scrap', title: '报废数' },
+                { field: 'ReportEntry_Quantity', title: '实做数',align:"right" },
+                { field: 'ReportEntry_Qualified', title: '合格数' ,align:"right"},//实做数-报废数
+                { field: 'ReportEntry_Scrap', title: '报废数' ,align:"right"},
                 {
-                    field: '', title: '报废率(%)', templet: function (d) {
+                    field: '', title: '报废率(%)',align:"right", templet: function (d) {
                         var scrappage = '';
                         if (d.ReportEntry_Quantity && d.ReportEntry_Scrap) {
                             scrappage = parseFloat(d.ReportEntry_Scrap) / parseFloat(d.ReportEntry_Quantity) * 100
@@ -59,10 +59,22 @@ function tablerender(data) {
                     }
                 },
 
-                { field: 'ReportStatus_StartTime', title: '开工时间' },
-                { field: 'ReportStatus_EndTime', title: '结束时间' },
-                { field: 'User_Nick', title: '操作人'},
-                { field: 'Rmark', title: '备注' },
+                { field: 'ReportStatus_StartTime', title: '开工时间',align:"center" ,templet:function(d){
+                    var startime=''
+                    if(d.ReportStatus_StartTime){
+                        startime=d.ReportStatus_StartTime.split(" ")[0]
+                    }
+                    return startime
+                }},
+                { field: 'ReportStatus_EndTime', title: '结束时间',align:"center",templet:function(d){
+                    var endtime=''
+                    if(d.ReportStatus_EndTime){
+                        endtime=d.ReportStatus_EndTime.split(" ")[0]
+                    }
+                    return endtime
+                } },
+                { field: 'User_Nick', title: '操作人',align:"left"},
+                { field: 'Rmark', title: '备注' ,align:"left"},
                 {
                     field: 'FNumber', title: '操作', align: 'center', templet: function (d) {
                         return '<a class="layui-btn layui-btn-xs layui-btn-danger btn-hb" href="javascript:void(0)" onclick=delreport("' + d.F_Id + '")>删除</a>';

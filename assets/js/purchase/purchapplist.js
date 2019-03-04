@@ -72,7 +72,7 @@ $(function () {
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers', width: '80' },
-            { field: 'PurchaseApply_Name', title: '单据编号', width: "150", align: "center" },
+            { field: 'PurchaseApply_Name', title: '单据编号', width: "150", align: "left" },
             {
                 field: 'PurchaseApply_DateTime', title: '单据日期', width: "100", align: 'center', templet: function (d) {
                     if (d.PurchaseApply_DateTime) {
@@ -102,17 +102,9 @@ $(function () {
                 }
             },
             
+            
             {
-                field: 'IsEnabled', title: '启用', align: 'center', width: "80", templet: function (d) {
-                    if (d.IsEnabled) {
-                        return "是"
-                    } else {
-                        return "否"
-                    }
-                }
-            },
-            {
-                field: 'PurchaseApply_Biller', title: '制单人', width: '150', align: 'center', templet: function (d) {
+                field: 'PurchaseApply_Biller', title: '制单人', width: '150', align: 'left', templet: function (d) {
 
                     var index1 = billid.indexOf(d.PurchaseApply_Biller)
                     if (index1 == '-1') {
@@ -123,7 +115,7 @@ $(function () {
                 }
             },
             {
-                field: 'PurchaseApply_Employee', title: '申请人', width: '150', align: 'center', templet: function (d) {
+                field: 'PurchaseApply_Employee', title: '申请人', width: '150', align: 'left', templet: function (d) {
 
                     var index3 = billid.indexOf(d.PurchaseApply_Employee)
                     if (index3 == '-1') {
@@ -134,7 +126,7 @@ $(function () {
                 }
             },
             {
-                field: 'PurchaseApply_Department', title: '部门', width: '180', align: 'center', templet: function (d) {
+                field: 'PurchaseApply_Department', title: '部门', width: '180', align: 'left', templet: function (d) {
 
                     var index2 = departid.indexOf(d.PurchaseApply_Department)
                     if (index2 == '-1') {
@@ -144,7 +136,16 @@ $(function () {
                     }
                 }
             },
-            { field: 'Remark', title: '备注', align: 'center', width: "200" },
+            {
+                field: 'IsEnabled', title: '启用', align: 'center', width: "80", templet: function (d) {
+                    if (d.IsEnabled) {
+                        return "是"
+                    } else {
+                        return "否"
+                    }
+                }
+            },
+            { field: 'Remark', title: '备注', align: 'left', width: "200" },
             {
                 field: 'F_Id', title: '操作', align: 'center', width: '100', templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" onclick=delscale("' + d.F_Id + '")>删除</a>';
@@ -154,7 +155,7 @@ $(function () {
         $.ajax({
             type: "GET",
             async: false,
-            url: purchaseOrderlist,
+            url: purchaseapplylist,
             success: function (res) {
                 var data = res.Data;
                 console.log(data)

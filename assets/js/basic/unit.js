@@ -85,8 +85,8 @@ $(function () {
             { type: 'numbers', title: '序号', width: "5%" },
             //  {field:'id', title:'ID',   unresize: true, sort: true, totalRowText: '合计'}
             // {field:'FCheck', title:'类别',align:'center'},
-            { field: 'Measure_Name', title: '计量单位代码', align: 'center' },
-            { field: 'Measure_Nick', title: '计量单位名称', align: 'center' },
+            { field: 'Measure_Name', title: '计量单位代码', align: 'left' },
+            { field: 'Measure_Nick', title: '计量单位名称', align: 'left' },
             {
                 field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger"  onclick=editmeasure("' + d.F_Id + '")>修改</a><a class="layui-btn layui-btn-xs layui-btn-danger"  onclick=delmeasure("' + d.F_Id + '")>删除</a>';

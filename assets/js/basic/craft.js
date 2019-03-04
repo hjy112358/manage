@@ -533,9 +533,9 @@ $(function () {
             { type: 'numbers', title: '序号', width: "5%" },
             //  {field:'id', title:'ID',   unresize: true, sort: true, totalRowText: '合计'}
             // {field:'FCheck', title:'类别',align:'center'},
-            { field: 'Craft_Name', title: '工艺代码', align: 'center' },
-            { field: 'Craft_Nick', title: '工艺名称', align: 'center' },
-            { field: 'Craft_Material', title: '产品名称', align: 'center',templet:function(d){
+            { field: 'Craft_Name', title: '工艺代码', align: 'left' },
+            { field: 'Craft_Nick', title: '工艺名称', align: 'left' },
+            { field: 'Craft_Material', title: '产品名称', align: 'left',templet:function(d){
                 
                 var index= materid.indexOf(d.Craft_Material)
                 if (index == '-1') {

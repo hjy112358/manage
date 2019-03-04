@@ -31,6 +31,10 @@ $(function () {
         }
     })
 
+    $(".changeStatus").on("click", function () {
+        var href = '/views/scale/scaleInvochange.html?fid=' + fid ;
+        window.location.replace(href)
+    })
 
      // 物料
      $.ajax({
@@ -66,6 +70,8 @@ $(function () {
             }
         }
     })
+
+
 })
 var materid = [], maternick = [],meaid=[],meanick=[]
 function tablerender( data) {
