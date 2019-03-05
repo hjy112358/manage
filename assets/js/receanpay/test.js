@@ -321,7 +321,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             var requestMsg = $(this).val()
             console.log(isenter)
             if (isenter) {
-
                 var changethis = $(this)
                 // var html = '<li class="active">123</li>' +
                 //     '<li>123456</li>' +
@@ -444,7 +443,7 @@ function checkselect(event) {
     isenter = true;
     var list = $(event.target).siblings(".changeinputlist").find("li")
     var i = 0;
-    var length = list.length
+    var length = list.length 
     $.each(list, function (index, v) {
         if ($(v).hasClass("active")) {
             var activeindex = $(v).index()
