@@ -49,6 +49,8 @@ $.ajax({
         }
     }
 })
+var isBox = false; // 定义一个触发焦点事件的开关，默认为不开启状态 || 也可以给input设置一个属性，来判断
+var isenter = true;//是否是点击事件
 //layui 模块化引用
 layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], function () {
     // 获取当天日期
@@ -310,46 +312,57 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
 
 
-    var isBox = false; // 定义一个触发焦点事件的开关，默认为不开启状态 || 也可以给input设置一个属性，来判断
+
     $(".changeinputlist").hide();
     $(".changeinput").focus(function () { // input绑定焦点事件，触发时打开焦点开关
         isBox = true;
         var _this = $(this)
         _this.bind("propertychange change  input paste", function () {
             var requestMsg = $(this).val()
-            var changethis = $(this)
+            console.log(isenter)
+            if (isenter) {
 
-            var html = '<li>123</li>' +
-                '<li>123456</li>' +
-                '<li>123456789</li>' +
-                '<li>1234567890</li>';
+                var changethis = $(this)
+                // var html = '<li class="active">123</li>' +
+                //     '<li>123456</li>' +
+                //     '<li>123456789</li>' +
+                //     '<li>1234567890</li>';
+                // changethis.siblings(".changeinputlist").show();
+                // changethis.siblings(".changeinputlist ").html(html);
+                // getdata()
+                $.ajax({
+                    type: "get",
+                    url: ajaxCus + requestMsg,
+                    success: function (res) {
+                        console.log(res)
+                        var isussecc = res.Succeed;
+                        if (isussecc) {
+                            var data = res.Data;
+                            if (data.length == 0) {
+                                changethis.siblings(".changeinputlist ").html("<span class='noData'>无匹配项</span>");
+                            } else {
+                                var html = ''
+                                for (var i = 0; i < data.length; i++) {
+                                    var datanow = data[i]
+                                    if (i == 0) {
+                                        html += '<li data-id="' + datanow.F_Id + '" class="active">' + datanow.Customer_Nick + '</option>';
+                                    } else {
+                                        html += '<li data-id="' + datanow.F_Id + '" >' + datanow.Customer_Nick + '</option>';
+                                    }
+                                }
+                                // html += '</ul>'
+                                changethis.siblings(".changeinputlist ").html(html);
+                            }
 
-            changethis.siblings(".changeinputlist").show();
-            changethis.siblings(".changeinputlist ").html(html);
-            getdata()
-            // $.ajax({
-            //     type: "get",
-            //     url: ajaxCus + requestMsg,
-            //     success: function (res) {
-            //         console.log(res)
-            //         var isussecc = res.Succeed;
-            //         var data = res.Data;
-            //         if (isussecc) {
-            //             var html = ' <ul>'
-            //             for (var i = 0; i < data.length; i++) {
-            //                 var datanow = data[i]
-            //                 html += '<li data-id="' + datanow.F_Id + '" >' + datanow.Customer_Nick + '</option>';
-            //             }
-            //             html += '</ul>'
-            //             changethis.siblings(".changeinputlist ").html(html);
-            //             changethis.siblings(".changeinputlist").show();
-            //         } else {
-            //             $(".changeinputlist ").html("");
-            //             changethis.siblings(".changeinputlist").show();
-            //             alert(res.Message)
-            //         }
-            //     }
-            // })
+                            changethis.siblings(".changeinputlist").show();
+                        } else {
+                            $(".changeinputlist ").html("");
+                            changethis.siblings(".changeinputlist").show();
+                            alert(res.Message)
+                        }
+                    }
+                })
+            }
         });
     });
     $(".checkcus").mousemove(function () { // 鼠标进入input-box区域内打开焦点开关
@@ -359,6 +372,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         isBox = false;
     });
     $(".changeinput").blur(function () { // input失去焦点时通过焦点开关状态判断鼠标所在区域
+        console.log("blur")
         if (isBox == true) return false;
         $(this).siblings(".changeinputlist").hide();
     });
@@ -386,6 +400,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         else if (event.keyCode == 40) {//down
             moveSelect(event, 1);
         } else if (event.keyCode == 13) {
+            isenter = false
             checkselect(event)
         }
     });
@@ -426,6 +441,7 @@ function moveSelect(event, step) {
 
 
 function checkselect(event) {
+    isenter = true;
     var list = $(event.target).siblings(".changeinputlist").find("li")
     var i = 0;
     var length = list.length
@@ -441,7 +457,6 @@ function checkselect(event) {
                 console.log('隐藏')
                 var text = $(event.target).siblings(".changeinputlist").find("li").eq(0).text();
                 $(v).parent().siblings(".changeinput").val(text);
-
                 $(v).parent().hide()
                 return false;
             }
@@ -452,38 +467,38 @@ function getdata() {
     console.log("获取数据")
 }
 
-function getablelist(url,type,tableTitle,clickElem) {
+function getablelist(url, type, tableTitle, clickElem) {
     console.log(tableTitle)
     var str;
     $(".termask").removeClass("hidden")
-        var title="选择"+tableTitle
-        $(".masktitle").html(title)
-        $.ajax({
-            url:url,
-            success:function(res){
-                console.log(res)
-                if(res.Succeed){
-                    if(type=='custom'){
-                        str = [
-                            { title: '序号', type: 'radio' },
-                            { field: 'Customer_Nick', title: '客户名称',align:'left'},
-                            { field: 'Customer_Name', title: '客户代码',align:'left'},
-                            { field: 'Currency_Nick', title: '币别',align:'left'},
-                            { field: 'Customer_TaxNo', title: '	税务登记号',align:'left'},
-                            { field: 'Customer_TaxRate', title: '增值税率',align:'right'},
-                        ]
-                    }
-                    dialogtable(str,res.Data,clickElem,type)
+    var title = "选择" + tableTitle
+    $(".masktitle").html(title)
+    $.ajax({
+        url: url,
+        success: function (res) {
+            console.log(res)
+            if (res.Succeed) {
+                if (type == 'custom') {
+                    str = [
+                        { title: '序号', type: 'radio' },
+                        { field: 'Customer_Nick', title: '客户名称', align: 'left' },
+                        { field: 'Customer_Name', title: '客户代码', align: 'left' },
+                        { field: 'Currency_Nick', title: '币别', align: 'left' },
+                        { field: 'Customer_TaxNo', title: '	税务登记号', align: 'left' },
+                        { field: 'Customer_TaxRate', title: '增值税率', align: 'right' },
+                    ]
                 }
+                dialogtable(str, res.Data, clickElem, type)
             }
-        })
-        
-    
+        }
+    })
+
+
 }
 
 
 // 弹窗
-function dialogtable(str,datalist,clickElem,type) {
+function dialogtable(str, datalist, clickElem, type) {
     var renderForm1, tableData1
     layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], function () {
         var $ = layui.$;
@@ -496,7 +511,7 @@ function dialogtable(str,datalist,clickElem,type) {
             elem: '#dataTable1',
             id: "poplist",
             data: datalist,
-            limit:10,
+            limit: 10,
             page: true,
             loading: true,
             cols: [str],
@@ -518,8 +533,8 @@ function dialogtable(str,datalist,clickElem,type) {
                 var checkStatus = table.checkStatus('poplist')
                     , data = checkStatus.data;
                 console.log(data)
-                if(type=='custom'){
-                    $("#"+clickElem).val(data[0].Customer_Nick)
+                if (type == 'custom') {
+                    $("#" + clickElem).val(data[0].Customer_Nick)
                 }
                 closemark()
             }
