@@ -276,42 +276,39 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     })
 
     // 客户--
-    $(".checkcus").on("click", function () {
-        var _this = $(this);
-        var date = _this.attr("data-type");
-        if (date == 'daten') {
-            $(".checkcus").attr("data-type", "datey");
-            $.ajax({
-                type: "get",
-                url: ajaxCus,
-                success: function (res) {
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        var html = '<option value="">全部</option>';
-                        var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                        for (var i = 0; i < data.length; i++) {
-                            var datanow = data[i]
-                            html += '<option value="' + datanow.F_Id + '" >' + datanow.Customer_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' + datanow.F_Id + '" >' + datanow.Customer_Nick + '</dd>'
-                        }
-                        $("#Customer_Nick").html(html);
-                        $(".checkcus .layui-anim.layui-anim-upbit").html(htmlsel);
-                        renderForm();
-                        _this.find("select").next().find('.layui-select-title input').click();
-                        _this.find("select").next().find('.layui-select-title input').focus()
-                        // Customer_TaxRate 税率   
-                    } else {
-                        alert(res.Message)
-                    }
+    // $(".checkcus").on("click", function () {
+    //     var _this = $(this);
+    //     var date = _this.attr("data-type");
+    //     if (date == 'daten') {
+    //         $(".checkcus").attr("data-type", "datey");
+    //         $.ajax({
+    //             type: "get",
+    //             url: ajaxCus,
+    //             success: function (res) {
+    //                 var isussecc = res.Succeed;
+    //                 var data = res.Data;
+    //                 if (isussecc) {
+    //                     var html = '<option value="">全部</option>';
+    //                     var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+    //                     for (var i = 0; i < data.length; i++) {
+    //                         var datanow = data[i]
+    //                         html += '<option value="' + datanow.F_Id + '" >' + datanow.Customer_Nick + '</option>';
+    //                         htmlsel += '<dd lay-value="' + datanow.F_Id + '" >' + datanow.Customer_Nick + '</dd>'
+    //                     }
+    //                     $("#Customer_Nick").html(html);
+    //                     $(".checkcus .layui-anim.layui-anim-upbit").html(htmlsel);
+    //                     renderForm();
+    //                     _this.find("select").next().find('.layui-select-title input').click();
+    //                     _this.find("select").next().find('.layui-select-title input').focus()
+    //                     // Customer_TaxRate 税率   
+    //                 } else {
+    //                     alert(res.Message)
+    //                 }
 
-                }
-            })
-        }
-    })
-
-
-
+    //             }
+    //         })
+    //     }
+    // })
 
     $(".changeinputlist").hide();
     $(".changeinput").focus(function () { // input绑定焦点事件，触发时打开焦点开关
@@ -361,6 +358,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         }
                     }
                 })
+            }else{
+                isenter=true;
             }
         });
     });
@@ -375,8 +374,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         if (isBox == true) return false;
         $(this).siblings(".changeinputlist").hide();
     });
-
-
     $(".craftwork").on("mousedown", ".changeinputlist li", function () { //点击事件
         var _this = $(this)
         isBox = false;
@@ -384,13 +381,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         _this.parent().siblings(".changeinput").val(text);
         _this.parent().hide()
     })
-
     $(".craftwork").on("hover", '.changeinputlist li', function () {
         $(this).addClass("active");
         $(this).siblings().removeClass("active");
     })
-
-
     $(".changeinput").keydown(function (event) {//键盘上下键以及回车键
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == 38) {  //up
@@ -407,6 +401,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 });
 
 
+// 上下键
 function moveSelect(event, step) {
     var list = $(event.target).siblings(".changeinputlist").find("li")
     var i = 0;
@@ -438,12 +433,11 @@ function moveSelect(event, step) {
     })
 }
 
-
+// enter
 function checkselect(event) {
-    isenter = true;
     var list = $(event.target).siblings(".changeinputlist").find("li")
     var i = 0;
-    var length = list.length 
+    var length = list.length
     $.each(list, function (index, v) {
         if ($(v).hasClass("active")) {
             var activeindex = $(v).index()
@@ -461,13 +455,19 @@ function checkselect(event) {
             }
         }
     })
+    return false
 }
 function getdata() {
     console.log("获取数据")
 }
 
+// 弹窗数据
 function getablelist(url, type, tableTitle, clickElem) {
     console.log(tableTitle)
+    $(".searchupdata").attr("data-elem",clickElem)
+    $(".searchupdata").attr("data-type",type)
+    $(".searchupdata").attr("data-url",url)
+    $(".searchupdata").attr("data-tableTitle",tableTitle)
     var str;
     $(".termask").removeClass("hidden")
     var title = "选择" + tableTitle
@@ -491,9 +491,18 @@ function getablelist(url, type, tableTitle, clickElem) {
             }
         }
     })
-
-
 }
+
+$(".searchupdata").on("click",function(){
+    var param=$("#param").val()
+    var clickelem=$(".searchupdata").attr("data-elem")
+    var type=$(".searchupdata").attr("data-type")
+    var title=$(".searchupdata").attr("data-tableTitle")
+    var url=$(".searchupdata").attr("data-url")+param
+    getablelist(url,type,title,clickelem)
+
+})
+
 
 
 // 弹窗
@@ -533,7 +542,10 @@ function dialogtable(str, datalist, clickElem, type) {
                     , data = checkStatus.data;
                 console.log(data)
                 if (type == 'custom') {
-                    $("#" + clickElem).val(data[0].Customer_Nick)
+                    if (data.length >= 1) {
+                        $("#" + clickElem).val(data[0].Customer_Nick)
+                    }
+
                 }
                 closemark()
             }
