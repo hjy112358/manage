@@ -1,4 +1,3 @@
-
 var dateslit = [];
 var token = $.cookie("token");
 var currname = [];
@@ -9,6 +8,8 @@ var first = new Date().valueOf();
 var tdata = [];
 var tempid = [];
 var temip = [];
+var getablelist;
+
 function getTid(i) {
     return (new Date().valueOf()) + i
 }
@@ -21,21 +22,21 @@ for (var i = 0; i < 5; i++) {
     var data = {
         tempId: temip[i],
         state: 0,
-        Material_Name: '',//物料代码
-        Material_Nick: '',//物料名称
-        SalesOrderEntry_Material: '',//物料--物料id
+        Material_Name: '', //物料代码
+        Material_Nick: '', //物料名称
+        SalesOrderEntry_Material: '', //物料--物料id
         // SalesOrderEntry_Currency: "55C21484-9E61-4EB8-8496-3137C249130B",//币别
-        SalesOrderEntry_Specifications: '',//销售规格
-        SalesOrderEntry_Price: '',//价格
-        SalesOrderEntry_Quantity: '',//数量
-        SalesOrderEntry_Unit: '',//单位
-        SalesOrderEntry_Amount: '',//总额
-        SalesOrderEntry_TaxRate: '',//税率
-        SalesOrderEntry_Tax: "",//税额
-        SalesOrderEntry_Total: '',//合计
+        SalesOrderEntry_Specifications: '', //销售规格
+        SalesOrderEntry_Price: '', //价格
+        SalesOrderEntry_Quantity: '', //数量
+        SalesOrderEntry_Unit: '', //单位
+        SalesOrderEntry_Amount: '', //总额
+        SalesOrderEntry_TaxRate: '', //税率
+        SalesOrderEntry_Tax: "", //税额
+        SalesOrderEntry_Total: '', //合计
         // SalesOrderEntry_ExRate: '1',//汇率
-        SalesOrderEntry_Deadline: '',//交货日期
-        Remark: '',//备注
+        SalesOrderEntry_Deadline: '', //交货日期
+        Remark: '', //备注
         // currchange: '0',
         SalesOrderEntry_SalesOrder: ''
     }
@@ -92,100 +93,171 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         page: false,
         loading: true,
         // even: true,
-        cols: [[
-            { title: '序号', type: 'numbers', width: '50' },
-            { field: 'Material_Name', title: '<span style="color:red">*  </span>物料代码', templet: '#selectTool', width: '120' },
-            { field: 'Material_Nick', title: '物料名称', width: '200' },
-            { field: 'SalesOrderEntry_Specifications', title: '规格', width: '100', edit: 'text' },
-            { field: 'SalesOrderEntry_Unit', title: '单位', width: '50', align: "center" },
-            {
-                field: 'SalesOrderEntry_Quantity', title: '<span style="color:red">*  </span>数量', edit: 'text', width: '80', align: "center"
-            },
-            {
-                field: 'SalesOrderEntry_Price', title: '销售单价', edit: 'text', width: '100', align: "right", templet: function (d) {
-                    if (d.SalesOrderEntry_Price) {
-                        var num = parseFloat(d.SalesOrderEntry_Price);
-                        num = num.toFixed(2);
-                    } else if (d.SalesOrderEntry_Price == '0') {
-                        num = '0.00'
-                    } else {
-                        num = ''
+        cols: [
+            [{
+                    title: '序号',
+                    type: 'numbers',
+                    width: '50'
+                },
+                {
+                    field: 'Material_Name',
+                    title: '<span style="color:red">*  </span>物料代码',
+                    templet: '#selectTool',
+                    width: '120'
+                },
+                {
+                    field: 'Material_Nick',
+                    title: '物料名称',
+                    width: '200'
+                },
+                {
+                    field: 'SalesOrderEntry_Specifications',
+                    title: '规格',
+                    width: '100',
+                    edit: 'text'
+                },
+                {
+                    field: 'SalesOrderEntry_Unit',
+                    title: '单位',
+                    width: '50',
+                    align: "center"
+                },
+                {
+                    field: 'SalesOrderEntry_Quantity',
+                    title: '<span style="color:red">*  </span>数量',
+                    edit: 'text',
+                    width: '80',
+                    align: "center"
+                },
+                {
+                    field: 'SalesOrderEntry_Price',
+                    title: '销售单价',
+                    edit: 'text',
+                    width: '100',
+                    align: "right",
+                    templet: function (d) {
+                        if (d.SalesOrderEntry_Price) {
+                            var num = parseFloat(d.SalesOrderEntry_Price);
+                            num = num.toFixed(2);
+                        } else if (d.SalesOrderEntry_Price == '0') {
+                            num = '0.00'
+                        } else {
+                            num = ''
+                        }
+                        return num
                     }
-                    return num
-                }
-            },
-            {
-                field: 'SalesOrderEntry_TaxPrice', title: '含税单价', edit: 'text', width: '100', align: "right", templet: function (d) {
-                    if (d.SalesOrderEntry_TaxPrice) {
-                        var num = parseFloat(d.SalesOrderEntry_TaxPrice);
-                        num = num.toFixed(2);
-                    } else if (d.SalesOrderEntry_TaxPrice == '0') {
-                        num = '0.00'
-                    } else {
-                        num = ''
+                },
+                {
+                    field: 'SalesOrderEntry_TaxPrice',
+                    title: '含税单价',
+                    edit: 'text',
+                    width: '100',
+                    align: "right",
+                    templet: function (d) {
+                        if (d.SalesOrderEntry_TaxPrice) {
+                            var num = parseFloat(d.SalesOrderEntry_TaxPrice);
+                            num = num.toFixed(2);
+                        } else if (d.SalesOrderEntry_TaxPrice == '0') {
+                            num = '0.00'
+                        } else {
+                            num = ''
+                        }
+
+                        return num
                     }
+                },
+                {
+                    field: 'SalesOrderEntry_Amount',
+                    title: '未税金额',
+                    edit: 'text',
+                    width: '100',
+                    align: "right",
+                    templet: function (d) {
+                        if (d.SalesOrderEntry_Amount) {
+                            var num = parseFloat(d.SalesOrderEntry_Amount);
+                            num = num.toFixed(2);
+                        } else if (d.SalesOrderEntry_Amount == '0') {
+                            num = '0.00'
+                        } else {
+                            num = ''
+                        }
 
-                    return num
-                }
-            },
-            {
-                field: 'SalesOrderEntry_Amount', title: '未税金额', edit: 'text', width: '100', align: "right", templet: function (d) {
-                    if (d.SalesOrderEntry_Amount) {
-                        var num = parseFloat(d.SalesOrderEntry_Amount);
-                        num = num.toFixed(2);
-                    } else if (d.SalesOrderEntry_Amount == '0') {
-                        num = '0.00'
-                    } else {
-                        num = ''
+                        return num
                     }
+                },
+                {
+                    field: 'SalesOrderEntry_TaxRate',
+                    title: '税率(%)',
+                    edit: 'text',
+                    width: '50',
+                    align: "center"
+                },
 
-                    return num
-                }
-            },
-            { field: 'SalesOrderEntry_TaxRate', title: '税率(%)', edit: 'text', width: '50', align: "center" },
+                {
+                    field: 'SalesOrderEntry_Total',
+                    title: '价税合计',
+                    edit: 'text',
+                    width: '100',
+                    align: "right",
+                    templet: function (d) {
+                        if (d.SalesOrderEntry_Total) {
+                            var num = parseFloat(d.SalesOrderEntry_Total);
+                            num = num.toFixed(2);
+                        } else if (d.SalesOrderEntry_Total == '0') {
+                            num = '0.00'
+                        } else {
+                            num = ''
+                        }
 
-            {
-                field: 'SalesOrderEntry_Total', title: '价税合计', edit: 'text', width: '100', align: "right", templet: function (d) {
-                    if (d.SalesOrderEntry_Total) {
-                        var num = parseFloat(d.SalesOrderEntry_Total);
-                        num = num.toFixed(2);
-                    } else if (d.SalesOrderEntry_Total == '0') {
-                        num = '0.00'
-                    } else {
-                        num = ''
+                        return num
                     }
+                },
+                {
+                    field: 'SalesOrderEntry_Tax',
+                    title: '税额',
+                    width: '80',
+                    align: "right",
+                    templet: function (d) {
+                        if (d.SalesOrderEntry_Tax) {
+                            var num = parseFloat(d.SalesOrderEntry_Tax);
+                            num = num.toFixed(2);
+                        } else if (d.SalesOrderEntry_Tax == '0') {
+                            num = '0.00'
+                        } else {
+                            num = ''
+                        }
 
-                    return num
-                }
-            },
-            {
-                field: 'SalesOrderEntry_Tax', title: '税额', width: '80', align: "right", templet: function (d) {
-                    if (d.SalesOrderEntry_Tax) {
-                        var num = parseFloat(d.SalesOrderEntry_Tax);
-                        num = num.toFixed(2);
-                    } else if (d.SalesOrderEntry_Tax == '0') {
-                        num = '0.00'
-                    } else {
-                        num = ''
+                        return num
                     }
-
-                    return num
+                },
+                // { field: 'SalesOrderEntry_Currency', title: '币别', templet: '#selectcur', width: '100' },
+                // { field: 'SalesOrderEntry_ExRate', title: '汇率', width: '100' },
+                {
+                    field: 'SalesOrderEntry_Deadline',
+                    title: '<span style="color:red">*  </span>交货日期',
+                    width: '100',
+                    align: "center",
+                    templet: function (d) {
+                        return '<input type="text" id="SalesOrderEntry_Deadline" verify lay-verify="verify" value="' + (d.SalesOrderEntry_Deadline || '') + '"  autocomplete="off" class="layui-input layui-input-date"/>'; /* onblur="datachange('+d.SalesOrderEntry_Deadline+',this)" */
+                    }
+                },
+                {
+                    field: 'Remark',
+                    title: '备注',
+                    edit: 'text',
+                    width: '200'
+                },
+                {
+                    field: 'tempId',
+                    title: '操作',
+                    align: 'center',
+                    width: '100',
+                    templet: function (d) {
+                        return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '">删除</a>';
+                    }
                 }
-            },
-            // { field: 'SalesOrderEntry_Currency', title: '币别', templet: '#selectcur', width: '100' },
-            // { field: 'SalesOrderEntry_ExRate', title: '汇率', width: '100' },
-            {
-                field: 'SalesOrderEntry_Deadline', title: '<span style="color:red">*  </span>交货日期', width: '100', align: "center", templet: function (d) {
-                    return '<input type="text" id="SalesOrderEntry_Deadline" verify lay-verify="verify" value="' + (d.SalesOrderEntry_Deadline || '') + '"  autocomplete="off" class="layui-input layui-input-date"/>';/* onblur="datachange('+d.SalesOrderEntry_Deadline+',this)" */
-                }
-            },
-            { field: 'Remark', title: '备注', edit: 'text', width: '200' },
-            {
-                field: 'tempId', title: '操作', align: 'center', width: '100', templet: function (d) {
-                    return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '">删除</a>';
-                }
-            }
-        ]],
+            ]
+        ],
         done: function (res, curr, count) {
             console.log(res.data)
             viewObj.tbData = res.data;
@@ -198,7 +270,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     done: function (value, date) {
                         if (res && res.data[i]) {
                             console.log("up")
-                            $.extend(res.data[i], { 'SalesOrderEntry_Deadline': value })
+                            $.extend(res.data[i], {
+                                'SalesOrderEntry_Deadline': value
+                            })
                         }
                     }
                 });
@@ -230,7 +304,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
     //定义事件集合
     var active = {
-        add: function () {	//添加一行
+        add: function () { //添加一行
             viewObj.limit = viewObj.limit + 1;
             var oldData = table.cache[layTableId];
 
@@ -239,22 +313,22 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             var newRow = {
                 tempId: tid,
                 state: 0,
-                Material_Name: '',//物料代码
-                Material_Nick: '',//物料名称
-                SalesOrderEntry_Material: '',//物料--物料id
+                Material_Name: '', //物料代码
+                Material_Nick: '', //物料名称
+                SalesOrderEntry_Material: '', //物料--物料id
                 // SalesOrderEntry_Currency: viewObj.currtype,//币别
-                SalesOrderEntry_Specifications: '',//销售规格
-                SalesOrderEntry_Unit: '',//单位
-                SalesOrderEntry_Quantity: '',//数量    数量=未税金额/销售单价
-                SalesOrderEntry_Price: '',//销售单价
-                SalesOrderEntry_Amount: '',//未税金额 数量*销售单价
-                SalesOrderEntry_TaxRate: "",//税率 
-                SalesOrderEntry_Tax: "",//税额  SalesOrderEntry_Tax=SalesOrderEntry_Total-SalesOrderEntry_Amount
-                SalesOrderEntry_TaxPrice: "",//含税单价 (税率  / 100 * 销售单价) + 销售单价
-                SalesOrderEntry_Total: '',//价税合计  价税合计=未税金额*(1+税率/100)
+                SalesOrderEntry_Specifications: '', //销售规格
+                SalesOrderEntry_Unit: '', //单位
+                SalesOrderEntry_Quantity: '', //数量    数量=未税金额/销售单价
+                SalesOrderEntry_Price: '', //销售单价
+                SalesOrderEntry_Amount: '', //未税金额 数量*销售单价
+                SalesOrderEntry_TaxRate: "", //税率 
+                SalesOrderEntry_Tax: "", //税额  SalesOrderEntry_Tax=SalesOrderEntry_Total-SalesOrderEntry_Amount
+                SalesOrderEntry_TaxPrice: "", //含税单价 (税率  / 100 * 销售单价) + 销售单价
+                SalesOrderEntry_Total: '', //价税合计  价税合计=未税金额*(1+税率/100)
                 // SalesOrderEntry_ExRate: viewObj.rate,//汇率
-                SalesOrderEntry_Deadline: "",//交货日期
-                Remark: '',//备注
+                SalesOrderEntry_Deadline: "", //交货日期
+                Remark: '', //备注
                 // currchange: '0',
                 SalesOrderEntry_SalesOrder: ''
             };
@@ -279,7 +353,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             for (var i = 0, row; i < oldData.length; i++) {
                 row = oldData[i];
                 if (!row || !row.tempId) {
-                    oldData.splice(i, 1);    //删除一项
+                    oldData.splice(i, 1); //删除一项
                 }
                 continue;
             }
@@ -306,13 +380,17 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     });
     //监听工具条
     table.on('tool(dataTable)', function (obj) {
-        var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
+        var data = obj.data,
+            event = obj.event,
+            tr = obj.tr; //获得当前行 tr 的DOM对象;
 
         switch (event) {
             case "state":
                 var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
-                $.extend(obj.data, { 'state': stateVal })
-                activeByType('updateRow', obj.data);	//更新行记录对象
+                $.extend(obj.data, {
+                    'state': stateVal
+                })
+                activeByType('updateRow', obj.data); //更新行记录对象
                 break;
             case "del":
                 if (viewObj.limit == 1) {
@@ -348,7 +426,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     value.SalesOrderEntry_Deadline = '';
                     value.Remark = '';
                 } else {
-                    if (field == 'SalesOrderEntry_Price') {//销售单价
+                    if (field == 'SalesOrderEntry_Price') { //销售单价
                         value.SalesOrderEntry_Price = parseFloat(value.SalesOrderEntry_Price)
                         // 未税金额=数量*销售单价
                         value.SalesOrderEntry_Amount = parseFloat(value.SalesOrderEntry_Quantity) * parseFloat(value.SalesOrderEntry_Price)
@@ -359,7 +437,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         // 税额=未税金额*（税率/100）
                         value.SalesOrderEntry_Tax = parseFloat(value.SalesOrderEntry_Amount) * (parseFloat(value.SalesOrderEntry_TaxRate) / 100)
 
-                    } else if (field == 'SalesOrderEntry_Quantity') {//数量
+                    } else if (field == 'SalesOrderEntry_Quantity') { //数量
                         value.SalesOrderEntry_Quantity = parseFloat(value.SalesOrderEntry_Quantity)
                         // 未税金额=数量*销售单价
                         value.SalesOrderEntry_Amount = parseFloat(value.SalesOrderEntry_Quantity) * parseFloat(value.SalesOrderEntry_Price)
@@ -371,7 +449,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         value.SalesOrderEntry_Tax = parseFloat(value.SalesOrderEntry_Amount) * (parseFloat(value.SalesOrderEntry_TaxRate) / 100)
                         // value.SalesOrderEntry_Price='0'
 
-                    } else if (field == 'SalesOrderEntry_TaxPrice') {//含税单价
+                    } else if (field == 'SalesOrderEntry_TaxPrice') { //含税单价
                         value.SalesOrderEntry_TaxPrice = parseFloat(value.SalesOrderEntry_TaxPrice)
                         // 销售单价=含税单价/(1+税率/100)
                         value.SalesOrderEntry_Price = parseFloat(value.SalesOrderEntry_TaxPrice) / (1 + parseFloat(value.SalesOrderEntry_TaxRate) / 100)
@@ -383,7 +461,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         value.SalesOrderEntry_Tax = parseFloat(value.SalesOrderEntry_Amount) * (parseFloat(value.SalesOrderEntry_TaxRate) / 100)
 
 
-                    } else if (field == 'SalesOrderEntry_Amount') {//未税金额 
+                    } else if (field == 'SalesOrderEntry_Amount') { //未税金额 
                         value.SalesOrderEntry_Amount = parseFloat(value.SalesOrderEntry_Amount)
                         // 销售单价=未税金额/数量
                         value.SalesOrderEntry_Price = parseFloat(value.SalesOrderEntry_Amount) / parseFloat(value.SalesOrderEntry_Quantity)
@@ -407,7 +485,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         // 税额=未税金额*（税率/100）
                         value.SalesOrderEntry_Tax = parseFloat(value.SalesOrderEntry_Amount) * (parseFloat(value.SalesOrderEntry_TaxRate) / 100)
 
-                    } else if (field == 'SalesOrderEntry_TaxRate') {//税率
+                    } else if (field == 'SalesOrderEntry_TaxRate') { //税率
                         value.SalesOrderEntry_TaxRate = parseFloat(value.SalesOrderEntry_TaxRate)
                         // 含税单价=销售单价*（1+税率/100）
                         value.SalesOrderEntry_TaxPrice = parseFloat(value.SalesOrderEntry_Price) * (1 + parseFloat(value.SalesOrderEntry_TaxRate || '0') / 100)
@@ -437,6 +515,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     var htmlterm = '';
     var arrlist = [];
     var arri = {};
+
     function prolist() {
         $(".productworktable td[data-field='Material_Name']").each(function () {
             var curnow = $(this);
@@ -474,7 +553,13 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                 for (var i = 0; i < data.length; i++) {
                                     var datanow = data[i];
                                     htmlterm += '<li data-name="' + (datanow.Material_Name || '') + '" data-nick="' + (datanow.Material_Nick || '') + '" data-spe="' + (datanow.Material_Specifications || '') + '" data-materme="' + (datanow.Material_Measure || '') + '" data-materid="' + (datanow.F_Id || '') + '"><p>' + (datanow.Material_Name || '') + '</p><p>' + (datanow.Material_Nick || '') + '</p><p>' + (datanow.Material_Specifications || '') + '</p></li>'
-                                    arri = { materame: (datanow.Material_Name || ''), maternick: (datanow.Material_Nick || ''), matersp: (datanow.Material_Specifications || ''), matermea: (datanow.Material_Measure || ''), materid: (datanow.F_Id || '') };
+                                    arri = {
+                                        materame: (datanow.Material_Name || ''),
+                                        maternick: (datanow.Material_Nick || ''),
+                                        matersp: (datanow.Material_Specifications || ''),
+                                        matermea: (datanow.Material_Measure || ''),
+                                        materid: (datanow.F_Id || '')
+                                    };
                                     arrlist.push(arri)
                                 }
                                 $(".selectlist1 ul").html(htmlterm);
@@ -513,8 +598,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                             var measure = $(this).attr("data-materme");
                                             var marid = $(this).attr("data-materid")
                                             $(".materName").val(name || '');
-                                            var rate = $("#SalesOrder_TaxRate").val();//税率
-                                            var sendate = $("#recdate").val();//交货日期
+                                            var rate = $("#SalesOrder_TaxRate").val(); //税率
+                                            var sendate = $("#recdate").val(); //交货日期
                                             $.each(tabledata, function (index, value) {
                                                 if (value.LAY_TABLE_INDEX == dataindex) {
                                                     value.Material_Name = name || "";
@@ -522,14 +607,14 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                                     value.SalesOrderEntry_Specifications = specife || "";
                                                     value.SalesOrderEntry_Material = marid || "";
                                                     value.SalesOrderEntry_Unit = measure
-                                                    value.SalesOrderEntry_Quantity = 1;//数量
-                                                    value.SalesOrderEntry_Price = 0.00;//销售单价
-                                                    value.SalesOrderEntry_TaxRate = rate || '16';//税率
-                                                    value.SalesOrderEntry_Deadline = sendate || '';//交货日期
-                                                    value.SalesOrderEntry_TaxPrice = 0;//含税单价
-                                                    value.SalesOrderEntry_Amount = 0;//未税金额
-                                                    value.SalesOrderEntry_Total = 0;//价税合计
-                                                    value.SalesOrderEntry_Tax = 0;//税额
+                                                    value.SalesOrderEntry_Quantity = 1; //数量
+                                                    value.SalesOrderEntry_Price = 0.00; //销售单价
+                                                    value.SalesOrderEntry_TaxRate = rate || '16'; //税率
+                                                    value.SalesOrderEntry_Deadline = sendate || ''; //交货日期
+                                                    value.SalesOrderEntry_TaxPrice = 0; //含税单价
+                                                    value.SalesOrderEntry_Amount = 0; //未税金额
+                                                    value.SalesOrderEntry_Total = 0; //价税合计
+                                                    value.SalesOrderEntry_Tax = 0; //税额
                                                     if (value.tempId == viewObj.last) {
                                                         activeByType("add");
                                                     } else {
@@ -560,8 +645,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                         var measure = $(this).attr("data-materme");
                                         var marid = $(this).attr("data-materid")
                                         $(".materName").val(name || '');
-                                        var rate = $("#SalesOrder_TaxRate").val();//税率
-                                        var sendate = $("#recdate").val();//交货日期
+                                        var rate = $("#SalesOrder_TaxRate").val(); //税率
+                                        var sendate = $("#recdate").val(); //交货日期
                                         $.each(tabledata, function (index, value) {
                                             if (value.LAY_TABLE_INDEX == dataindex) {
                                                 value.Material_Name = name || "";
@@ -569,14 +654,14 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                                 value.SalesOrderEntry_Specifications = specife || "";
                                                 value.SalesOrderEntry_Material = marid || "";
                                                 value.SalesOrderEntry_Unit = measure
-                                                value.SalesOrderEntry_Quantity = 1;//数量
-                                                value.SalesOrderEntry_Price = 0.00;//销售单价
-                                                value.SalesOrderEntry_TaxRate = rate || '16';//税率
-                                                value.SalesOrderEntry_Deadline = sendate || '';//交货日期
-                                                value.SalesOrderEntry_TaxPrice = 0;//含税单价
-                                                value.SalesOrderEntry_Amount = 0;//未税金额
-                                                value.SalesOrderEntry_Total = 0;//价税合计
-                                                value.SalesOrderEntry_Tax = 0;//税额
+                                                value.SalesOrderEntry_Quantity = 1; //数量
+                                                value.SalesOrderEntry_Price = 0.00; //销售单价
+                                                value.SalesOrderEntry_TaxRate = rate || '16'; //税率
+                                                value.SalesOrderEntry_Deadline = sendate || ''; //交货日期
+                                                value.SalesOrderEntry_TaxPrice = 0; //含税单价
+                                                value.SalesOrderEntry_Amount = 0; //未税金额
+                                                value.SalesOrderEntry_Total = 0; //价税合计
+                                                value.SalesOrderEntry_Tax = 0; //税额
                                                 if (value.tempId == viewObj.last) {
                                                     activeByType("add");
                                                 } else {
@@ -593,7 +678,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                         return false
                                     })
                                 })
-                            }else{
+                            } else {
                                 alert(res.Message)
                             }
 
@@ -633,7 +718,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         }
                         if (showList.length == 0) {
                             searchlist = '<div style="text-align:center;padding:15px 10px 15px 0; ">暂无数据</div>'
-                        } 
+                        }
                         $(".selectlist1 ul").html("");
                         $(".selectlist1 ul").html(searchlist);
                         $("#tableRes").find("tr").each(function (i, v) {
@@ -657,8 +742,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                 var measure = $(this).attr("data-materme");
                                 var marid = $(this).attr("data-materid")
                                 $(".materName").val(name || '');
-                                var rate = $("#SalesOrder_TaxRate").val();//税率
-                                var sendate = $("#recdate").val();//交货日期
+                                var rate = $("#SalesOrder_TaxRate").val(); //税率
+                                var sendate = $("#recdate").val(); //交货日期
                                 $.each(tabledata, function (index, value) {
                                     // console.log(value)
                                     if (value.LAY_TABLE_INDEX == dataindex) {
@@ -667,14 +752,14 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                         value.SalesOrderEntry_Specifications = specife || "";
                                         value.SalesOrderEntry_Material = marid || "";
                                         value.SalesOrderEntry_Unit = measure;
-                                        value.SalesOrderEntry_Quantity = 1;//数量
-                                        value.SalesOrderEntry_Price = 0.00;//销售单价
-                                        value.SalesOrderEntry_TaxRate = rate || '16';//税率
-                                        value.SalesOrderEntry_Deadline = sendate || '';//交货日期
-                                        value.SalesOrderEntry_TaxPrice = 0;//含税单价
-                                        value.SalesOrderEntry_Amount = 0;//未税金额
-                                        value.SalesOrderEntry_Total = 0;//价税合计
-                                        value.SalesOrderEntry_Tax = 0;//税额
+                                        value.SalesOrderEntry_Quantity = 1; //数量
+                                        value.SalesOrderEntry_Price = 0.00; //销售单价
+                                        value.SalesOrderEntry_TaxRate = rate || '16'; //税率
+                                        value.SalesOrderEntry_Deadline = sendate || ''; //交货日期
+                                        value.SalesOrderEntry_TaxPrice = 0; //含税单价
+                                        value.SalesOrderEntry_Amount = 0; //未税金额
+                                        value.SalesOrderEntry_Total = 0; //价税合计
+                                        value.SalesOrderEntry_Tax = 0; //税额
                                         if (value.tempId == viewObj.last) {
                                             activeByType("add");
                                         } else {
@@ -707,8 +792,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                             var measure = $(this).attr("data-materme");
                             var marid = $(this).attr("data-materid")
                             $(".materName").val(name || '');
-                            var rate = $("#SalesOrder_TaxRate").val();//税率
-                            var sendate = $("#recdate").val();//交货日期
+                            var rate = $("#SalesOrder_TaxRate").val(); //税率
+                            var sendate = $("#recdate").val(); //交货日期
                             $.each(tabledata, function (index, value) {
                                 // console.log(value)
                                 if (value.LAY_TABLE_INDEX == dataindex) {
@@ -717,14 +802,14 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                     value.SalesOrderEntry_Specifications = specife || "";
                                     value.SalesOrderEntry_Material = marid || "";
                                     value.SalesOrderEntry_Unit = measure;
-                                    value.SalesOrderEntry_Quantity = 1;//数量
-                                    value.SalesOrderEntry_Price = 0.00;//销售单价
-                                    value.SalesOrderEntry_TaxRate = rate || '16';//税率
-                                    value.SalesOrderEntry_Deadline = sendate || '';//交货日期
-                                    value.SalesOrderEntry_TaxPrice = 0;//含税单价
-                                    value.SalesOrderEntry_Amount = 0;//未税金额
-                                    value.SalesOrderEntry_Total = 0;//价税合计
-                                    value.SalesOrderEntry_Tax = 0;//税额
+                                    value.SalesOrderEntry_Quantity = 1; //数量
+                                    value.SalesOrderEntry_Price = 0.00; //销售单价
+                                    value.SalesOrderEntry_TaxRate = rate || '16'; //税率
+                                    value.SalesOrderEntry_Deadline = sendate || ''; //交货日期
+                                    value.SalesOrderEntry_TaxPrice = 0; //含税单价
+                                    value.SalesOrderEntry_Amount = 0; //未税金额
+                                    value.SalesOrderEntry_Total = 0; //价税合计
+                                    value.SalesOrderEntry_Tax = 0; //税额
                                     if (value.tempId == viewObj.last) {
                                         activeByType("add");
                                     } else {
@@ -797,7 +882,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             $(".checkcus").attr("data-type", "datey");
             $.ajax({
                 type: "get",
-                url:ajaxCus,
+                url: ajaxCus,
                 success: function (res) {
                     var isussecc = res.Succeed;
                     var data = res.Data;
@@ -805,18 +890,18 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         var html = '<option value="">全部</option>';
                         var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
                         for (var i = 0; i < data.length; i++) {
-                            var datanow=data[i]
-                            var area=""
-                            if(datanow.Customer_TaxRate){
-                                var rate=datanow.Customer_TaxRate
-                            }else{
-                                var rate=0
+                            var datanow = data[i]
+                            var area = ""
+                            if (datanow.Customer_TaxRate) {
+                                var rate = datanow.Customer_TaxRate
+                            } else {
+                                var rate = 0
                             }
-                            if(datanow.Customer_Area){
-                                area=datanow.Customer_Area
+                            if (datanow.Customer_Area) {
+                                area = datanow.Customer_Area
                             }
-                            html += '<option value="' + datanow.F_Id + '" data-rate="' + rate + '" data-area="'+area+'">' + datanow.Customer_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' + datanow.F_Id + '" data-rate="' + rate + '" data-area="'+area+'">' + datanow.Customer_Nick + '</dd>'
+                            html += '<option value="' + datanow.F_Id + '" data-rate="' + rate + '" data-area="' + area + '">' + datanow.Customer_Nick + '</option>';
+                            htmlsel += '<dd lay-value="' + datanow.F_Id + '" data-rate="' + rate + '" data-area="' + area + '">' + datanow.Customer_Nick + '</dd>'
                         }
                         $("#Customer_Nick").html(html);
                         $(".checkcus .layui-anim.layui-anim-upbit").html(htmlsel);
@@ -841,7 +926,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             $(".checkdepart").attr("data-type", "datey");
             $.ajax({
                 type: "get",
-                url:ajaxdepart,
+                url: ajaxdepart,
                 success: function (res) {
                     console.log(res)
                     var isussecc = res.Succeed;
@@ -927,7 +1012,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
 
         }
-    }) 
+    })
 
     // 制单人
     var mouser = $.cookie("Modify_User");
@@ -993,9 +1078,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         limit: viewObj.limit
                     });
                     return;
-                }
-
-                else {
+                } else {
                     $(".selectlist1").addClass("hidden");
                     var oldData = table.cache[layTableId];
                     tableIns.reload({
@@ -1006,8 +1089,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 return
             }
         }
-
-
     })
 
 
@@ -1018,24 +1099,18 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     var imgcount = 0;
     var headhtml = "<tr><th>文件名</th><th>大小</th><th>操作</th></tr>";
     var uploadListIns = upload.render({
-        elem: '#testList'
-        , accept: 'file'
-        , multiple: true
-        , auto: false
-        , bindAction: '#testListAction'
-        , choose: function (obj) {
+        elem: '#testList',
+        accept: 'file',
+        multiple: true,
+        auto: false,
+        bindAction: '#testListAction',
+        choose: function (obj) {
             var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
             tablehead.html(headhtml)
             //读取本地文件
             obj.preview(function (index, file, result) {
                 imgcount++;
-                var tr = $(['<tr id="upload-' + index + '">'
-                    , '<td>' + file.name + '</td>'
-                    , '<td class="textc">' + (file.size / 1014).toFixed(1) + 'kb</td>'
-                    , '<td class="textc">'
-                    , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
-                    , '</td>'
-                    , '</tr>'].join(''));
+                var tr = $(['<tr id="upload-' + index + '">', '<td>' + file.name + '</td>', '<td class="textc">' + (file.size / 1014).toFixed(1) + 'kb</td>', '<td class="textc">', '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>', '</td>', '</tr>'].join(''));
                 //删除
                 tr.find('.demo-delete').on('click', function () {
                     delete files[index]; //删除对应的文件
@@ -1083,11 +1158,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     // 切换客户
     form.on('select(customer)', function (data) {
         console.log(data);
-        var rate = '',area=""
-        if(data.value){
+        var rate = '',
+            area = ""
+        if (data.value) {
             if (data.elem.selectedOptions) {
                 rate = data.elem.selectedOptions[0].attributes[1].value;
-                area = data.elem.selectedOptions[0].attributes[2].value; 
+                area = data.elem.selectedOptions[0].attributes[2].value;
             } else {
                 var elems = data.elem;
                 for (var i = 0; i < elems.length; i++) {
@@ -1106,7 +1182,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 }
             });
         }
-        
+
         var oldData = table.cache[layTableId];
         tableIns.reload({
             data: oldData,
@@ -1156,10 +1232,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     // $("#SalesOrder_Id").val(id)
     $(".add").on("click", function () {
         var list = $("form").serializeArray();
-        var data={};
-        var newdata=[];
-        for(var j=0;j<list.length;j++){
-            data[list[j].name]=list[j].value
+        var data = {};
+        var newdata = [];
+        for (var j = 0; j < list.length; j++) {
+            data[list[j].name] = list[j].value
         }
         var oldData = table.cache[layTableId];
         console.log(oldData)
@@ -1173,10 +1249,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     isSend = false;
                     return;
                 } else {
-                    var exrate=$("#SalesOrder_ExRate").val()
-                    var curr=$("#currency option:selected").val()
-                    nowdata.SalesOrderEntry_Currency=curr
-                    nowdata.SalesOrderEntry_ExRate=exrate
+                    var exrate = $("#SalesOrder_ExRate").val()
+                    var curr = $("#currency option:selected").val()
+                    nowdata.SalesOrderEntry_Currency = curr
+                    nowdata.SalesOrderEntry_ExRate = exrate
                     newdata.push(nowdata)
                     // continue
                 }
@@ -1194,7 +1270,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 var index = layer.load();
 
                 data.Details = newdata;
-                data.SalesOrder_Status="10000"
+                data.SalesOrder_Status = "10000"
                 console.log(list)
                 $.ajax({
                     type: "POST",
@@ -1221,7 +1297,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         }
     })
 
-    
+
     $(".hignckick").on("click", function () {
         var _this = $(this)
         var type = _this.attr("data-type");
@@ -1235,6 +1311,313 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             $(".hignckick").html("更多")
         }
     })
+    var isBox = false; // 定义一个触发焦点事件的开关，默认为不开启状态 || 也可以给input设置一个属性，来判断
+    var isenter = true;
+
+    $(".changeinput").focus(function () { // input绑定焦点事件，触发时打开焦点开关
+        isBox = true;
+        var _this = $(this)
+        _this.bind("propertychange change  input paste", function () {
+            var requestMsg = $(this).val()
+            console.log(isenter)
+            if (isenter) {
+                var changethis = $(this)
+                $.ajax({
+                    type: "get",
+                    url: ajaxCus + requestMsg,
+                    success: function (res) {
+                        console.log(res)
+                        var isussecc = res.Succeed;
+                        if (isussecc) {
+                            var data = res.Data;
+                            if (data.length == 0) {
+                                changethis.siblings(".changeinputlist ").html("<span class='noData'>无匹配项</span>");
+                            } else {
+                                var html = ''
+                                for (var i = 0; i < data.length; i++) {
+                                    var datanow = data[i]
+                                    var area = ""
+                                    var rate=0
+                                    if (datanow.Customer_TaxRate) {
+                                         rate = datanow.Customer_TaxRate
+                                    }
+                                    if (datanow.Customer_Area) {
+                                        area = datanow.Customer_Area
+                                    }
+                                    if (i == 0) {
+                                        html += '<li data-id="' + datanow.F_Id + '" class="active" data-area="'+area+'" data-rate="'+rate+'">' + datanow.Customer_Nick + '</option>';
+                                    } else {
+                                        html += '<li data-id="' + datanow.F_Id + '" data-area="'+area+'" data-rate="'+rate+'">' + datanow.Customer_Nick + '</option>';
+                                    }
+                                }
+                                changethis.siblings(".changeinputlist ").html(html);
+                            }
+                            changethis.siblings(".changeinputlist").removeClass("hidden");
+                        } else {
+                            $(".changeinputlist ").html("");
+                            changethis.siblings(".changeinputlist").removeClass("hidden");
+                            alert(res.Message)
+                        }
+                    }
+                })
+            } else {
+                isenter = true;
+            }
+        });
+    });
+    $(".checkcus").mousemove(function () { // 鼠标进入input-box区域内打开焦点开关
+        isBox = true;
+    });
+    $(".checkcus").mouseout(function () { // 鼠标离开input-box区域内关闭焦点开关
+        isBox = false;
+    });
+    $(".changeinput").blur(function () { // input失去焦点时通过焦点开关状态判断鼠标所在区域
+        if (isBox == true) return false;
+        $(this).siblings(".changeinputlist").addClass("hidden");
+    });
+    $(".craftwork").on("mousedown", ".changeinputlist li", function () { //点击事件
+        var _this = $(this)
+        isBox = false;
+        var text = $(_this).text();
+        _this.parent().siblings(".changeinput").val(text);
+        _this.parent().hide()
+    })
+    $(".craftwork").on("hover", '.changeinputlist li', function () {
+        $(this).addClass("active");
+        $(this).siblings().removeClass("active");
+    })
+    $(".changeinput").keydown(function (event) { //键盘上下键以及回车键
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == 38) { //up
+            moveSelect(event, -1);
+        } else if (event.keyCode == 40) { //down
+            moveSelect(event, 1);
+        } else if (event.keyCode == 13) {
+            isenter = false
+            checkselect(event)
+        }
+    });
+
+    // 上下键
+    function moveSelect(event, step) {
+        var list = $(event.target).siblings(".changeinputlist").find("li")
+        var i = 0;
+        var length = list.length
+        $.each(list, function (index, v) {
+            if ($(v).hasClass("active")) {
+                var activeindex = $(v).index()
+                if (step == -1) {
+                    if (activeindex <= 0) {
+                        activeindex = 0
+                    } else {
+                        activeindex = activeindex * 1 - 1
+                    }
+                } else {
+                    if (activeindex >= length) {
+                        activeindex = length
+                    } else {
+                        activeindex = activeindex * 1 + 1
+                    }
+                }
+                $(event.target).siblings(".changeinputlist").find("li").eq(activeindex).addClass("active").siblings().removeClass("active");
+                return false
+            } else {
+                if (++i == length) {
+                    $(event.target).siblings(".changeinputlist").find("li").eq(0).addClass("active").siblings().removeClass("active");
+                    return false;
+                }
+            }
+        })
+    }
+
+    // enter
+    function checkselect(event) {
+        var list = $(event.target).siblings(".changeinputlist").find("li")
+        var i = 0;
+        var length = list.length
+        $.each(list, function (index, v) {
+            if ($(v).hasClass("active")) {
+                var activeindex = $(v).index()
+                var text = $(event.target).siblings(".changeinputlist").find("li").eq(activeindex).text();
+                $(v).parent().siblings(".changeinput").val(text);
+                $(v).parent().hide()
+                return false
+            } else {
+                if (++i == length) {
+                    console.log('隐藏')
+                    var text = $(event.target).siblings(".changeinputlist").find("li").eq(0).text();
+                    $(v).parent().siblings(".changeinput").val(text);
+                    $(v).parent().hide()
+                    return false;
+                }
+            }
+        })
+        return false
+    }
+
+
+    // 弹窗数据
+    getablelist = function (url, type, tableTitle, clickElem) {
+        console.log(tableTitle)
+        $(".searchupdata").attr("data-elem", clickElem)
+        $(".searchupdata").attr("data-type", type)
+        $(".searchupdata").attr("data-url", url)
+        $(".searchupdata").attr("data-tableTitle", tableTitle)
+        var str;
+        $(".termask").removeClass("hidden")
+        var title = "选择" + tableTitle
+        $(".masktitle").html(title)
+        $(".termask #param").focus()
+        $.ajax({
+            url: url,
+            success: function (res) {
+                console.log(res)
+                if (res.Succeed) {
+                    if (type == 'custom') {
+                        str = [{
+                                title: '序号',
+                                type: 'radio'
+                            },
+                            {
+                                field: 'Customer_Nick',
+                                title: '客户名称',
+                                align: 'left'
+                            },
+                            {
+                                field: 'Customer_Name',
+                                title: '客户代码',
+                                align: 'left'
+                            },
+                            {
+                                field: 'Currency_Nick',
+                                title: '币别',
+                                align: 'left'
+                            },
+                            {
+                                field: 'Customer_TaxNo',
+                                title: '	税务登记号',
+                                align: 'left'
+                            },
+                            {
+                                field: 'Customer_TaxRate',
+                                title: '增值税率',
+                                align: 'right'
+                            },
+                        ]
+                    }
+                    dialogtable(str, res.Data, clickElem, type)
+                }
+            }
+        })
+    }
+    $(".searchupdata").on("click", function () {
+        var param = $("#param").val()
+        var clickelem = $(".searchupdata").attr("data-elem")
+        var type = $(".searchupdata").attr("data-type")
+        var title = $(".searchupdata").attr("data-tableTitle")
+        var url = $(".searchupdata").attr("data-url") + param
+        getablelist(url, type, title, clickelem)
+    })
+
+    // 弹窗
+    function dialogtable(str, datalist, clickElem, type) {
+        var renderForm1, tableData1
+        layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], function () {
+            var $ = layui.$;
+            table = layui.table,
+                form = layui.form,
+                layer = layui.layer,
+                laydate = layui.laydate
+            //数据表格实例化		
+            tablepop = table.render({
+                elem: '#dataTable1',
+                id: "poplist",
+                data: datalist,
+                limit: 10,
+                page: true,
+                loading: true,
+                cols: [str],
+                done: function (res) {
+                    console.log(res)
+                }
+            });
+            //定义事件集合
+            var active = {
+                // 更新每行数据
+                updateRow: function () {
+                    var oldData = table.cache["poplist"];
+                    tablepop.reload({
+                        data: oldData,
+                        limit: viewObj.limit
+                    });
+                },
+                getCheckData: function () { //获取选中数据
+                    var checkStatus = table.checkStatus('poplist'),
+                        data = checkStatus.data;
+                    console.log(data)
+                    if (type == 'custom') {
+                        if (data.length >= 1) {
+                            $("#" + clickElem).val(data[0].Customer_Nick)
+                        }
+
+                    }
+                    closemark()
+                }
+            }
+            //激活事件
+            var activeByType = function (type, arg) {
+                if (arguments.length === 2) {
+                    active[type] ? active[type].call(this, arg) : '';
+                } else {
+                    active[type] ? active[type].call(this) : '';
+                }
+            }
+            //注册按钮事件
+            $('.layui-btn[data-type]').on('click', function () {
+                var type = $(this).data('type');
+                activeByType(type);
+            });
+            //监听工具条
+            table.on('tool(dataTable)', function (obj) {
+                var data = obj.data,
+                    event = obj.event,
+                    tr = obj.tr; //获得当前行 tr 的DOM对象;
+                switch (event) {
+                    case "state":
+                        var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
+                        $.extend(obj.data, {
+                            'state': stateVal
+                        })
+                        activeByType('updateRow', obj.data); //更新行记录对象
+                        break;
+                }
+            });
+
+
+            renderForm1 = function () {
+                layui.use('form', function () {
+                    var form = layui.form;
+                    form.render();
+                    var oldData = table.cache["poplist"];
+                    tablepop.reload({
+                        data: oldData,
+                        limit: oldData.length
+                    });
+                });
+            }
+
+            $(".cancel").on("click", function () {
+                closemark()
+            })
+
+            closemark = function () {
+                $(".termask").addClass("hidden")
+                $(".terform")[0].reset();
+            }
+
+        });
+    }
+
 
 });
 

@@ -310,7 +310,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     //     }
     // })
 
-    $(".changeinputlist").hide();
+    // $(".changeinputlist").hide();
     $(".changeinput").focus(function () { // input绑定焦点事件，触发时打开焦点开关
         isBox = true;
         var _this = $(this)
@@ -319,13 +319,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             console.log(isenter)
             if (isenter) {
                 var changethis = $(this)
-                // var html = '<li class="active">123</li>' +
-                //     '<li>123456</li>' +
-                //     '<li>123456789</li>' +
-                //     '<li>1234567890</li>';
-                // changethis.siblings(".changeinputlist").show();
-                // changethis.siblings(".changeinputlist ").html(html);
-                // getdata()
                 $.ajax({
                     type: "get",
                     url: ajaxCus + requestMsg,
@@ -346,14 +339,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                         html += '<li data-id="' + datanow.F_Id + '" >' + datanow.Customer_Nick + '</option>';
                                     }
                                 }
-                                // html += '</ul>'
                                 changethis.siblings(".changeinputlist ").html(html);
                             }
-
-                            changethis.siblings(".changeinputlist").show();
+                            changethis.siblings(".changeinputlist").removeClass("hidden");
                         } else {
                             $(".changeinputlist ").html("");
-                            changethis.siblings(".changeinputlist").show();
+                            changethis.siblings(".changeinputlist").removeClass("hidden");
                             alert(res.Message)
                         }
                     }
@@ -370,9 +361,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         isBox = false;
     });
     $(".changeinput").blur(function () { // input失去焦点时通过焦点开关状态判断鼠标所在区域
-        console.log("blur")
         if (isBox == true) return false;
-        $(this).siblings(".changeinputlist").hide();
+        $(this).siblings(".changeinputlist").addClass("hidden");
     });
     $(".craftwork").on("mousedown", ".changeinputlist li", function () { //点击事件
         var _this = $(this)
@@ -389,10 +379,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == 38) {  //up
             moveSelect(event, -1);
-        }
-        else if (event.keyCode == 40) {//down
+        }else if (event.keyCode == 40) {//down
             moveSelect(event, 1);
-        } else if (event.keyCode == 13) {
+        }else if (event.keyCode == 13) {
             isenter = false
             checkselect(event)
         }
@@ -457,9 +446,7 @@ function checkselect(event) {
     })
     return false
 }
-function getdata() {
-    console.log("获取数据")
-}
+
 
 // 弹窗数据
 function getablelist(url, type, tableTitle, clickElem) {
@@ -492,7 +479,6 @@ function getablelist(url, type, tableTitle, clickElem) {
         }
     })
 }
-
 $(".searchupdata").on("click",function(){
     var param=$("#param").val()
     var clickelem=$(".searchupdata").attr("data-elem")
@@ -500,10 +486,7 @@ $(".searchupdata").on("click",function(){
     var title=$(".searchupdata").attr("data-tableTitle")
     var url=$(".searchupdata").attr("data-url")+param
     getablelist(url,type,title,clickelem)
-
 })
-
-
 
 // 弹窗
 function dialogtable(str, datalist, clickElem, type) {

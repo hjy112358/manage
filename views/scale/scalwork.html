@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../assets/css/layui.css">
     <link rel="stylesheet" href="../../assets/css/mypublic.css">
     <link rel="stylesheet" href="../../assets/css/view.css" />
+    <link rel="stylesheet" href="../../assets/fontlist/iconfont.css">
     <link rel="stylesheet" href="../../assets/css/table.css">
     <link rel="stylesheet" href="../../assets/css/scalework1.css">
     <title>销售订单</title>
@@ -14,19 +15,20 @@
         .craftwork .layui-btn.layui-btn-danger {
         padding: 0 5px !important;
     }
-    /* .produwork .layui-table-header{
-        overflow:auto;
-    } */
-    
     .produwork .layui-table-edit{
         padding-left:4px;
-        
     }
     .produwork  td[data-field="SalesOrderEntry_Price"] .layui-table-edit,
     .produwork  td[data-field="SalesOrderEntry_Amount"] .layui-table-edit,
     .produwork  td[data-field="SalesOrderEntry_Total"] .layui-table-edit,
     .produwork  td[data-field="SalesOrderEntry_TaxPrice"] .layui-table-edit{
         text-align:right
+    }
+    .craftwork .disinput input{
+        width:100%
+    }
+    .chooseterm .table-overlay .layui-table-cell{
+        overflow: hidden;
     }
     </style>
 </head>
@@ -61,15 +63,17 @@
                                 <div class="clearfix">
                                     <div class="layui-form-lsit fl layui-inline">
                                         <label class="layui-form-label"><span>*</span>客户名称：</label>
-                                        <div class="layui-input-block disinput checkcus" data-type="daten" style="width:190px !important">
-                                            <!-- <input type="text" value="JIN" id="Customer_Nick" name="Customer_Nick"> -->
-                                            <select name="SalesOrder_Customer" class="" id="Customer_Nick" lay-search=""
-                                                lay-filter="customer" lay-verify="required">                       
-                                                <option value="">请选择</option>
-                                                <option value="">加载中...</option>
-                                            </select>
+                                        <div class="layui-input-inline disinput checkcus position-re" data-type="daten">
+                                            <span class="selectinput clearfix">
+                                                <i class="iconfont icon-gengduo moreBtn" onclick="getablelist(ajaxCus,'custom','客户','SalesOrder_Customer')"></i>
+                                                <input type="text" name="SalesOrder_Customer" class="fl changeinput" id="SalesOrder_Customer"
+                                                    autocomplete="off" >
+                                                <div class="changeinputlist position-ab hidden">
+                                                </div>
+                                            </span>
                                         </div>
                                     </div>
+
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">单据日期：</label>
                                         <div class="layui-input-block ">
@@ -79,7 +83,7 @@
                                     </div>
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">交货日期：</label>
-                                        <div class="layui-input-block "> 
+                                        <div class="layui-input-block ">
                                             <input type="text" name="SalesOrder_Deadline" id="recdate" autocomplete="off"
                                                 class="layui-input">
                                         </div>
@@ -213,14 +217,16 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">交货天数：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" id="SalesOrder_Cycle" name="SalesOrder_Cycle" autocomplete="off">
+                                            <input type="text" value="" id="SalesOrder_Cycle" name="SalesOrder_Cycle"
+                                                autocomplete="off">
                                         </div>
                                     </div>
 
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">付款方式：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" id="SalesOrder_Payment" name="SalesOrder_Payment" autocomplete="off">
+                                            <input type="text" value="" id="SalesOrder_Payment" name="SalesOrder_Payment"
+                                                autocomplete="off">
                                         </div>
                                     </div>
 
@@ -230,7 +236,8 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">交货地址：</label>
                                         <div class="layui-input-block disinput" style="width:451px !important">
-                                            <input type="text" value="" id="SalesOrder_Delivery" name="SalesOrder_Delivery" autocomplete="off">
+                                            <input type="text" value="" id="SalesOrder_Delivery" name="SalesOrder_Delivery"
+                                                autocomplete="off">
                                         </div>
                                     </div>
                                 </div>
@@ -274,7 +281,7 @@
 
 
     <script type="text/html" id="selectcur">
-    <select name="SalesOrderEntry_Currency" lay-filter="curr" lay-search id="currlist">
+        <select name="SalesOrderEntry_Currency" lay-filter="curr" lay-search id="currlist">
         <option value=""></option>
         {{# layui.each(dateslit, function(index, item){ }}
         <option value="{{item.Currency_Id}}">{{ item.Currency_Nick }}</option>
@@ -282,13 +289,51 @@
     </select>
 </script>
 
-
+<div class="termask hidden">
+        <div class="layui-content ">
+            <div class="layui-row chooseterm">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <form class="layui-form terform">
+                            <section class="">
+                                <div class="layui-card">
+                                    <div class="masktitle"></div>
+                                    <div class="layui-card-body layui-text">
+                                        <div class="mackbody ">
+                                            <div class="clearfix">
+                                                <div class="layui-form-lsit fl">
+                                                    <div class="layui-input-block disinput fl" data-type="daten"
+                                                        style="margin-left:0">
+                                                        <input type="text" value="" id="param" placeholder="" >
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="layui-btn layui-btn-normal searchupdata"
+                                                    style="margin-left:10px">查询</button>
+                                            </div>
+                                            <div id="tableRes1" class="table-overlay">
+                                                <table id="dataTable1" lay-filter="dataTable1" class="layui-hide">
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div id="action" class="">
+                                            <span class="layui-btn getcheck" data-type="getCheckData">确定</span>
+                                            <span class="layui-btn cancel">取消</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script type="text/javascript" src="../../assets/js/jquery.min.js"></script>
 <script src="../../main.js"></script>
 <script src="../../assets/layui.all.js"></script>
 <script src="../../assets/js/jquery.cookie.js"></script>
-<script src="../../assets/js/scale/scalwork1.js"></script>
+<script src="../../assets/js/scale/scalwork.js"></script>
 <!-- <script src="../assets/js/drop.js"></script> -->
 
 </html>

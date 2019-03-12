@@ -402,3 +402,47 @@ form .layui-form-label {
     width:35%;
     font-size: 18px;
 }
+
+
+
+/* select下拉选项 */
+.selectinput {
+    display: block;
+    width: 180px;
+    height: 26px;
+    line-height: 26px;
+}
+
+.selectinput .moreBtn {
+    position: absolute;
+    right: -10px;
+    background: #fff;
+    height: 22px;
+    line-height: 22px;
+    top: 2px;
+    font-size: 16px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.changeinputlist {
+    position: absolute;
+    top: 3-px;
+    top: 30px;
+    border: 1px solid #e6e6e6;
+    width: 180px;
+    z-index: 999;
+
+    max-height: 175px;
+    overflow-y: auto;
+}
+
+.changeinputlist li {
+    padding: 5px;
+    background: #fff;
+}
+
+.changeinputlist li.active:hover,
+.changeinputlist li.active {
+    background: #f2f2f2
+}
