@@ -67,7 +67,7 @@
                                             <span class="selectinput clearfix">
                                                 <i class="iconfont icon-gengduo moreBtn" onclick="getablelist(ajaxCus,'custom','客户','SalesOrder_Customer')"></i>
                                                 <input type="text" name="SalesOrder_Customer" class="fl changeinput" id="SalesOrder_Customer"
-                                                    autocomplete="off" >
+                                                    autocomplete="off">
                                                 <div class="changeinputlist position-ab hidden">
                                                 </div>
                                             </span>
@@ -102,7 +102,6 @@
                                 </div>
                                 <div class="hignrank hidden">
                                     <div class="clearfix">
-
                                         <div class="layui-form-lsit fl">
                                             <label class="layui-form-label">币别：</label>
                                             <div class="layui-input-block currency" data-type="daten">
@@ -179,8 +178,8 @@
                                         <div class="layui-input-block checkdepart" data-type="daten">
                                             <select name="SalesOrder_Department" class="" id="SalesOrder_Department"
                                                 lay-search="" lay-filter="">
-                                                <option value="">请选择</option>
-                                                <option value="">加载中...</option>
+                                                <!-- <option value="">请选择</option>
+                                                <option value="">加载中...</option> -->
                                             </select>
                                         </div>
                                     </div>
@@ -289,42 +288,36 @@
     </select>
 </script>
 
-<div class="termask hidden">
+    <div class="termask hidden">
         <div class="layui-content ">
             <div class="layui-row chooseterm">
-                <div class="layui-card">
-                    <div class="layui-card-body">
-                        <form class="layui-form terform">
-                            <section class="">
-                                <div class="layui-card">
-                                    <div class="masktitle"></div>
-                                    <div class="layui-card-body layui-text">
-                                        <div class="mackbody ">
-                                            <div class="clearfix">
-                                                <div class="layui-form-lsit fl">
-                                                    <div class="layui-input-block disinput fl" data-type="daten"
-                                                        style="margin-left:0">
-                                                        <input type="text" value="" id="param" placeholder="" >
-                                                    </div>
-                                                </div>
-                                                <button type="button" class="layui-btn layui-btn-normal searchupdata"
-                                                    style="margin-left:10px">查询</button>
-                                            </div>
-                                            <div id="tableRes1" class="table-overlay">
-                                                <table id="dataTable1" lay-filter="dataTable1" class="layui-hide">
-                                                </table>
+                <form class="layui-form terform">
+                    <section class="">
+                        <div class="layui-card">
+                            <div class="masktitle"></div>
+                            <div class="layui-card-body layui-text">
+                                <div class="mackbody ">
+                                    <div class="clearfix">
+                                        <div class="layui-form-lsit fl">
+                                            <div class="layui-input-block disinput fl" data-type="daten" style="margin-left:0">
+                                                <input type="text" value="" id="param" placeholder="">
                                             </div>
                                         </div>
-                                        <div id="action" class="">
-                                            <span class="layui-btn getcheck" data-type="getCheckData">确定</span>
-                                            <span class="layui-btn cancel">取消</button>
-                                        </div>
+                                        <button type="button" class="layui-btn layui-btn-normal searchupdata" style="margin-left:10px">查询</button>
+                                    </div>
+                                    <div id="tableRes1" class="table-overlay">
+                                        <table id="dataTable1" lay-filter="dataTable1" class="layui-hide">
+                                        </table>
                                     </div>
                                 </div>
-                            </section>
-                        </form>
-                    </div>
-                </div>
+                                <div id="action" class="">
+                                    <span class="layui-btn getcheck" data-type="getCheckData">确定</span>
+                                    <span class="layui-btn cancel">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </form>
             </div>
         </div>
     </div>

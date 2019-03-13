@@ -64,8 +64,8 @@
 
 .chooseterm .table-overlay .layui-table-cell {
     height: auto;
-    overflow: visible;
-    text-align: center
+    /* overflow: visible; */
+    /* text-align: center */
 }
 
 
@@ -83,14 +83,19 @@
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    background-color: #177ce3;
+    /* background-color: #177ce3;
     background-repeat: repeat-y;
     background-image: -moz-linear-gradient(left,#29adeb,#177ce3);
     background-image: -webkit-linear-gradient(left,#29adeb,#177ce3);
     background-image: -o-linear-gradient(left,#29adeb,#177ce3);
     background-image: linear-gradient(left,#29adeb,#177ce3);
     padding:40px 10px 10px 10px;
-    border-radius: 10px;
+    border-radius: 10px; */
+    padding: 32px 0px 0px 0px;
+    border-radius: 5px;
+    background: #fafafa;
+
+    box-shadow: 0 3px 18px rgba(0,0,0,.3);
 }
 .termask .layui-btn:hover{
     opacity: 1;
@@ -109,18 +114,23 @@
 }
 .masktitle {
     position: absolute;
-    top: -30px;
+    top: -27px;
     left: 5px;
-    font-size: 18px;
-    color: #fff;
+    font-size: 16px;
+    color: #505050;
 }
 
 .mackbody {
-    padding: 30px 20px 0px 20px;
+    padding: 20px 20px 0px 20px;
 }
 #action{
-    text-align:center;
-    padding-bottom:10px
+    /* text-align:center;
+    padding-bottom:10px */
+    text-align: right;
+    padding:5px 0;
+    padding-right: 20px;
+    background: #fafafa;
+    border-top:1px solid #ddd
 }
 .layui-btn,.btncolor{
     background-color: #177ce3;
@@ -237,7 +247,7 @@
 #tablelist .layui-table-view .layui-table td[data-field="materialName"] .layui-table-cell,
 #tablelist .layui-table-view .layui-table td[data-field="FMaterialName"] .layui-table-cell
 {
-    padding:0;
+    padding:0 !important;
     height:auto;
     overflow:visible;
 }
@@ -406,6 +416,12 @@ form .layui-form-label {
 
 
 /* select下拉选项 */
+.termask .layui-table td,.termask .layui-table th{
+    font-size: 12px;
+}
+.termask .layui-card{
+    border-top: 1px solid #ddd;
+}
 .selectinput {
     display: block;
     width: 180px;
@@ -438,11 +454,40 @@ form .layui-form-label {
 }
 
 .changeinputlist li {
-    padding: 5px;
+    /* padding: 5px; */
+    height: 30px;
+    line-height:30px;
     background: #fff;
 }
 
 .changeinputlist li.active:hover,
 .changeinputlist li.active {
     background: #f2f2f2
+}
+.changeinputlist li:hover{
+    cursor: pointer;
+}
+.noData {
+    padding: 10px;
+    text-align: center;
+    display: block;
+    background: #fff;
+}
+.changeinputlist li p{
+    display: inline-block;
+    max-width: 90px;
+    table-layout: fixed;
+    box-sizing: border-box;
+    padding: 0 12px;
+    text-align: left;
+    border: none;
+    border-right: 1px solid #e8ecf0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    line-height: 30px;
+ 
+    min-width:90px;
+
 }

@@ -874,51 +874,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         }
     })
 
-    // 客户--
-    $(".checkcus").on("click", function () {
-        var _this = $(this);
-        var date = _this.attr("data-type");
-        if (date == 'daten') {
-            $(".checkcus").attr("data-type", "datey");
-            $.ajax({
-                type: "get",
-                url: ajaxCus,
-                success: function (res) {
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        var html = '<option value="">全部</option>';
-                        var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                        for (var i = 0; i < data.length; i++) {
-                            var datanow = data[i]
-                            var area = ""
-                            if (datanow.Customer_TaxRate) {
-                                var rate = datanow.Customer_TaxRate
-                            } else {
-                                var rate = 0
-                            }
-                            if (datanow.Customer_Area) {
-                                area = datanow.Customer_Area
-                            }
-                            html += '<option value="' + datanow.F_Id + '" data-rate="' + rate + '" data-area="' + area + '">' + datanow.Customer_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' + datanow.F_Id + '" data-rate="' + rate + '" data-area="' + area + '">' + datanow.Customer_Nick + '</dd>'
-                        }
-                        $("#Customer_Nick").html(html);
-                        $(".checkcus .layui-anim.layui-anim-upbit").html(htmlsel);
-                        renderForm();
-                        _this.find("select").next().find('.layui-select-title input').click();
-                        _this.find("select").next().find('.layui-select-title input').focus()
-                        // Customer_TaxRate 税率   
-                    } else {
-                        alert(res.Message)
-                    }
-
-                }
-            })
-        }
-    })
-
-    // 部门--
+    // // 部门--
     $(".checkdepart").on("click", function () {
         var _this = $(this);
         var date = _this.attr("data-type");
@@ -952,41 +908,39 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             })
         }
     })
+     // 制单人
+     var mouser = $.cookie("Modify_User");
+     var username = $.cookie("User_Nick")
+     $("#SalesOrder_Biller").val(mouser)
+     $("#SalesOrder_Billername").val(username)
+ 
 
     // 业务员--
-    $(".scalelists").on("click", function () {
-        var _this = $(this);
-        var date = _this.attr("data-type");
-        if (date == 'daten') {
-            $(".scalelists").attr("data-type", "datey");
-            $.ajax({
-                type: "get",
-                url: ajaxUsr,
-                success: function (res) {
-                    console.log(res)
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        var html = '<option value="">全部</option>';
-                        var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                        for (var i = 0; i < data.length; i++) {
-                            html += '<option value="' + data[i].F_Id + '">' + data[i].User_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' + data[i].F_Id + '">' + data[i].User_Nick + '</dd>'
-                        }
-                        $("#SalesOrder_Employee").html(html);
-                        $(".scalelists .layui-anim.layui-anim-upbit").html(htmlsel);
-                        renderForm();
-                        _this.find("select").next().find('.layui-select-title input').click();
-                        _this.find("select").next().find('.layui-select-title input').focus()
-                    } else {
-                        alert(res.Message)
-                    }
-
+    $.ajax({
+        type: "get",
+        url: ajaxUsr,
+        success: function (res) {
+            console.log(res)
+            var isussecc = res.Succeed;
+            var data = res.Data;
+            if (isussecc) {
+                var html = '<option value="">全部</option>';
+                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
+                for (var i = 0; i < data.length; i++) {
+                    html += '<option value="' + data[i].F_Id + '">' + data[i].User_Nick + '</option>';
+                    htmlsel += '<dd lay-value="' + data[i].F_Id + '">' + data[i].User_Nick + '</dd>'
                 }
-            })
+                $("#SalesOrder_Employee").html(html);
+                $(".scalelists .layui-anim.layui-anim-upbit").html(htmlsel);
+                renderForm();
+                var select = 'dd[lay-value="' + mouser + '"]';
+                $('#SalesOrder_Employee').siblings("div.layui-form-select").find('dl').find(select).click();
+            } else {
+                alert(res.Message)
+            }
         }
     })
-
+   
     // 订单类型--
     $.ajax({
         type: "get",
@@ -1014,13 +968,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         }
     })
 
-    // 制单人
-    var mouser = $.cookie("Modify_User");
-    var username = $.cookie("User_Nick")
-    $("#SalesOrder_Biller").val(mouser)
-    $("#SalesOrder_Billername").val(username)
-
-
+   
     // 订单编号
     $.ajax({
         type: "get",
@@ -1155,42 +1103,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
     });
 
-    // 切换客户
-    form.on('select(customer)', function (data) {
-        console.log(data);
-        var rate = '',
-            area = ""
-        if (data.value) {
-            if (data.elem.selectedOptions) {
-                rate = data.elem.selectedOptions[0].attributes[1].value;
-                area = data.elem.selectedOptions[0].attributes[2].value;
-            } else {
-                var elems = data.elem;
-                for (var i = 0; i < elems.length; i++) {
-                    var elemnow = elems[i];
-                    if (elemnow.selected) {
-                        rate = elemnow.attributes[1].value;
-                        area = elemnow.attributes[2].value;
-                    }
-                }
-            }
-            $("#SalesOrder_TaxRate").val(rate);
-            $("#SalesOrder_Delivery").val(area);
-            $.each(tabledata, function (index, value) {
-                if (value.Material_Name) {
-                    value.SalesOrderEntry_TaxRate = rate;
-                }
-            });
-        }
-
-        var oldData = table.cache[layTableId];
-        tableIns.reload({
-            data: oldData,
-            limit: viewObj.limit
-        });
-
-    })
-
+  
     $(document).on("click", "td[data-field='SalesOrderEntry_Currency']", function () {
         var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
         var height = $('#tableRes .layui-table-body.layui-table-main').height() + scrollHeight;
@@ -1311,16 +1224,16 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             $(".hignckick").html("更多")
         }
     })
-    var isBox = false; // 定义一个触发焦点事件的开关，默认为不开启状态 || 也可以给input设置一个属性，来判断
+    var isBox = false; 
     var isenter = true;
-
-    $(".changeinput").focus(function () { // input绑定焦点事件，触发时打开焦点开关
+    // 客户
+    $(".changeinput").focus(function () { 
         isBox = true;
         var _this = $(this)
         _this.bind("propertychange change  input paste", function () {
             var requestMsg = $(this).val()
             console.log(isenter)
-            if (isenter) {
+            if (isenter&&isBox) {
                 var changethis = $(this)
                 $.ajax({
                     type: "get",
@@ -1365,24 +1278,29 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
         });
     });
-    $(".checkcus").mousemove(function () { // 鼠标进入input-box区域内打开焦点开关
+    $(".checkcus").mousemove(function () { 
         isBox = true;
     });
-    $(".checkcus").mouseout(function () { // 鼠标离开input-box区域内关闭焦点开关
+    $(".checkcus").mouseout(function () {
         isBox = false;
     });
-    $(".changeinput").blur(function () { // input失去焦点时通过焦点开关状态判断鼠标所在区域
-        if (isBox == true) return false;
+    $(".changeinput").blur(function () {
+        // if (isBox == true) return false;
+        isBox=true
         $(this).siblings(".changeinputlist").addClass("hidden");
     });
-    $(".craftwork").on("mousedown", ".changeinputlist li", function () { //点击事件
+    $(".craftwork").on("mousedown", ".changeinputlist li", function () { 
         var _this = $(this)
         isBox = false;
         var text = $(_this).text();
+        var area=$(_this).attr("data-area")
+        var rate=$(_this).attr("data-rate")
+        $("#SalesOrder_TaxRate").val(rate);
+        $("#SalesOrder_Delivery").val(area);
         _this.parent().siblings(".changeinput").val(text);
-        _this.parent().hide()
+        _this.parent().addClass("hidden")
     })
-    $(".craftwork").on("hover", '.changeinputlist li', function () {
+    $(".craftwork").on("mouseover", 'li', function () {
         $(this).addClass("active");
         $(this).siblings().removeClass("active");
     })
@@ -1397,7 +1315,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             checkselect(event)
         }
     });
-
     // 上下键
     function moveSelect(event, step) {
         var list = $(event.target).siblings(".changeinputlist").find("li")
@@ -1405,31 +1322,48 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         var length = list.length
         $.each(list, function (index, v) {
             if ($(v).hasClass("active")) {
+                var $bigAutocompleteContent = $(event.target).siblings(".changeinputlist")
+                var $nextSiblingTr = $bigAutocompleteContent.find(".active");
+                console.log($nextSiblingTr)
                 var activeindex = $(v).index()
                 if (step == -1) {
+                    var $previousSiblingTr = $bigAutocompleteContent.find(".active");
                     if (activeindex <= 0) {
                         activeindex = 0
                     } else {
                         activeindex = activeindex * 1 - 1
                     }
+                    $previousSiblingTr = $previousSiblingTr.prev();
+                    if($nextSiblingTr.length > 0){//有下一行时（不是最后一行）
+                        $(event.target).siblings(".changeinputlist").find("li").eq(activeindex).addClass("active").siblings().removeClass("active");
+                        $bigAutocompleteContent.scrollTop($previousSiblingTr[0].offsetTop - $bigAutocompleteContent.height() + $previousSiblingTr.height()+10);
+                    }
                 } else {
+                    var $nextSiblingTr = $bigAutocompleteContent.find(".active");
                     if (activeindex >= length) {
                         activeindex = length
                     } else {
                         activeindex = activeindex * 1 + 1
                     }
+                    $nextSiblingTr = $nextSiblingTr.next();
+                    if($nextSiblingTr.length > 0){//有下一行时（不是最后一行）
+                        $(event.target).siblings(".changeinputlist").find("li").eq(activeindex).addClass("active").siblings().removeClass("active");
+                        $bigAutocompleteContent.scrollTop($nextSiblingTr[0].offsetTop - $bigAutocompleteContent.height()  +$nextSiblingTr.height()*2-15);
+                    }
                 }
-                $(event.target).siblings(".changeinputlist").find("li").eq(activeindex).addClass("active").siblings().removeClass("active");
+                
+               
+               
                 return false
             } else {
                 if (++i == length) {
                     $(event.target).siblings(".changeinputlist").find("li").eq(0).addClass("active").siblings().removeClass("active");
+                    
                     return false;
                 }
             }
         })
     }
-
     // enter
     function checkselect(event) {
         var list = $(event.target).siblings(".changeinputlist").find("li")
@@ -1438,24 +1372,32 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         $.each(list, function (index, v) {
             if ($(v).hasClass("active")) {
                 var activeindex = $(v).index()
-                var text = $(event.target).siblings(".changeinputlist").find("li").eq(activeindex).text();
+                var nowli=$(event.target).siblings(".changeinputlist").find("li").eq(activeindex)
+                var text =nowli.text();
+                var area=nowli.attr("data-area")
+                var rate=nowli.attr("data-rate")
                 $(v).parent().siblings(".changeinput").val(text);
-                $(v).parent().hide()
+                $(v).parent().addClass("hidden")
+                $("#SalesOrder_TaxRate").val(rate);
+                $("#SalesOrder_Delivery").val(area);
                 return false
             } else {
                 if (++i == length) {
                     console.log('隐藏')
-                    var text = $(event.target).siblings(".changeinputlist").find("li").eq(0).text();
+                    var nowli=$(event.target).siblings(".changeinputlist").find("li").eq(0)
+                    var text = nowli.text();
+                    var area=nowli.attr("data-area")
+                    var rate=nowli.attr("data-rate")
                     $(v).parent().siblings(".changeinput").val(text);
-                    $(v).parent().hide()
+                    $(v).parent().addClass("hidden")
+                    $("#SalesOrder_TaxRate").val(rate);
+                    $("#SalesOrder_Delivery").val(area);
                     return false;
                 }
             }
         })
         return false
     }
-
-
     // 弹窗数据
     getablelist = function (url, type, tableTitle, clickElem) {
         console.log(tableTitle)
@@ -1517,8 +1459,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         var title = $(".searchupdata").attr("data-tableTitle")
         var url = $(".searchupdata").attr("data-url") + param
         getablelist(url, type, title, clickelem)
+        $("#param").val("")
     })
-
     // 弹窗
     function dialogtable(str, datalist, clickElem, type) {
         var renderForm1, tableData1
@@ -1617,7 +1559,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
         });
     }
-
 
 });
 
