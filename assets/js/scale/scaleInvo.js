@@ -393,7 +393,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             }
         }
         $.ajax({
-            url: ajaxstockbionelist + 'keyword=' + cusnick + '&PageSize=&PageIndex=',
+            url: ajaxstockbionelist +  cusnick ,
             success: function (res) {
                 console.log(res)
                 if (res.Succeed) {

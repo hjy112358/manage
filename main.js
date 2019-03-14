@@ -185,7 +185,7 @@ var ajaxstockno=ajaxURl+'/Api/PSIInventory/StockBill/BatchNo?keyValue='
 // 出入库列表
 var ajaxstockbilist=ajaxURl+'/Api/PSIInventory/StockBill/GetList?PageSize=&PageIndex=&keyword='
 // 出入库列表one
-var ajaxstockbionelist=ajaxURl+'/Api/PSIInventory/StockBill/GetList?'
+var ajaxstockbionelist=ajaxURl+'/Api/PSIInventory/StockBill/GetList?PageSize=&PageIndex=&keyword='
 // 删除出入库
 var removestockbill=ajaxURl+'/Api/PSIInventory/StockBill/Remove'
 // 查询出入库明细
@@ -230,9 +230,15 @@ var ajaxchaseorderlist=ajaxURl+'/api/PSIPurchase/PurchaseOrder/GetList?PageIndex
 var ajaxpurchaseone=ajaxURl+'/api/PSIPurchase/PurchaseOrder/GetEntity?keyValue='
 
 // 添加采购发票
-var purchaseAdd=ajaxURl+'/api/PSIPurchase/PurchaseInvoiceEntry/Add'
+var purchaseAdd=ajaxURl+'/api/PSIPurchase/PurchaseInvoice/Add'
+// 修改采购发票
+var purchaseedit=ajaxURl+'/api/PSIPurchase/PurchaseInvoice/Edit'
 // 删除采购发票
 var Delpurchase=ajaxURl+'/api/PSIPurchase/PurchaseInvoice/Remove'
+// 采购发票列表
+var purchaselist=ajaxURl+'/api/PSIPurchase/PurchaseInvoice/GetList?PageIndex=&PageSize=&keyword='
+//采购发票详情
+var purchasedetail=ajaxURl+'/api/PSIPurchase/PurchaseInvoice/GetEntity?keyValue='
 
 
 // --------------采购模块---------------------------

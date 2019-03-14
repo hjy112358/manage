@@ -403,7 +403,7 @@ function getpurwork(id){
     var oldhref = $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').attr("href");
     var href = oldhref
     href = href + '?fid='+id
-    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-3 > dd > a:eq(6)').attr("href", href)
     $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').trigger('click');
     $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').attr("href", oldhref)
 }
@@ -420,4 +420,17 @@ function getcustom(id){
     $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(15)').attr("href", href)
     $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(15)').trigger('click');
     $('#Nav li.layui-nav-item:eq(8) > dl.layui-nav-child > dd > a:eq(15)').attr("href", oldhref)
+}
+// 新增采购发票
+function newpurchaseinvo(){
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(8)').trigger('click');
+}
+//采购发票详情
+function getpurchaseinvo(id){
+    var oldhref = $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(10)').attr("href");
+    var href = oldhref
+    href = href + '?fid='+id
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(10)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(10)').trigger('click');
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(10)').attr("href", oldhref)
 }

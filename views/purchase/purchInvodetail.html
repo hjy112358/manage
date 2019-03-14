@@ -19,10 +19,10 @@
                 <div class="layui-card-body">
                     <form class="layui-form">
                         <div class="layui-form-lsit fl btnlist">
-                            <!-- <span class="layui-btn add">新增</span> -->
-                            <span class="layui-btn sub">保存</span>
-                            <span class="layui-btn audit disclick">审核</span>
-                            <span class="layui-btn changeStatus disclick">变更</span>
+                            <span class="layui-btn add">新增</span>
+                            <span class="layui-btn sub disclick">保存</span>
+                            <span class="layui-btn audit ">审核</span>
+                            <span class="layui-btn changeStatus ">变更</span>
                         </div>
                         <div class="layui-form layui-form-item " style="padding-top:25px;">
                             <div class="form-box">
@@ -31,26 +31,27 @@
                                     <input type="hidden" id="PurchaseInvoice_TaxRate" >
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label"><span>*</span> 供应商：</label>
-                                        <div class="layui-input-block supplier" data-type="daten">
-                                            <select name="PurchaseInvoice_Supplier" class="" id="Supplier_Nick"
+                                        <div class="layui-input-block supplier disinput" data-type="daten">
+                                            <!-- <select name="PurchaseInvoice_Supplier" class="" id="Supplier_Nick"
                                                 lay-search="" lay-filter="seleccus">
                                                 <option value="">请选择</option>
                                                 <option value="">加载中</option>
-                                            </select>
+                                            </select> -->
+                                            <input type="text" name="PurchaseInvoice_Supplier" id="PurchaseInvoice_Supplier" readonly>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">单据日期：</label>
                                         <div class="layui-input-block ">
-                                            <input type="text" name="PurchaseInvoice_DateTime" id="date" lay-verify="date"
-                                                autocomplete="off" class="layui-input">
+                                            <input type="text" name="PurchaseInvoice_DateTime" id="PurchaseInvoice_DateTime" lay-verify="date"
+                                                autocomplete="off" class="layui-input" readonly>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">采购发票单号：</label>
                                         <div class="layui-input-block disinput">
                                             <input type="text" value="" readonly name="PurchaseInvoice_Name"
-                                                id="PurchaseInvoice_Name" autocomplete="off">
+                                                id="PurchaseInvoice_Name" autocomplete="off" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -59,23 +60,24 @@
                                         <label class="layui-form-label">开票金额：</label>
                                         <div class="layui-input-block disinput" data-type="daten">
                                             <input type="text" name="PurchaseInvoice_Total" id="PurchaseInvoice_Total"
-                                                autocomplete="off">
+                                                autocomplete="off" readonly>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">币别：</label>
-                                        <div class="layui-input-block currency" data-type="daten">
-                                            <select name="PurchaseInvoice_Currency" class="" id="currency" lay-search=""
+                                        <div class="layui-input-block currency disinput" data-type="daten">
+                                            <!-- <select name="PurchaseInvoice_Currency" class="" id="currency" lay-search=""
                                                 lay-filter="currency">
                                                 <option value="">请选择币别</option>
-                                            </select>
+                                            </select> -->
+                                            <input type="text" name="PurchaseInvoice_Currency" id="PurchaseInvoice_Currency" readonly>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">汇率：</label>
                                         <div class="layui-input-block disinput">
                                             <input type="text" value="" id="PurchaseInvoice_ExRate"
-                                                name="PurchaseInvoice_ExRate" autocomplete="off">
+                                                name="PurchaseInvoice_ExRate" autocomplete="off" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -90,14 +92,14 @@
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">付款日期：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" name="PurchaseInvoice_Deadline" id="datepay"
-                                                autocomplete="off" class="layui-input">
+                                            <input type="text" name="PurchaseInvoice_Deadline" id="PurchaseInvoice_Deadline"
+                                                autocomplete="off" class="layui-input" readonly>
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
                                         <label class="layui-form-label">备注：</label>
                                         <div class="layui-input-block disinput">
-                                            <input type="text" value="" id="Remark" name="Remark" autocomplete="off">
+                                            <input type="text" value="" id="Remark" name="Remark" autocomplete="off" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -120,8 +122,7 @@
                                         <div class="layui-input-block disinput">
                                             <input type="text" value="" readonly id="PurchaseInvoice_Billername"
                                                 autocomplete="off">
-                                            <input type="hidden" value="" readonly name="PurchaseInvoice_Biller"
-                                                id="PurchaseInvoice_Biller" autocomplete="off">
+                                           
                                         </div>
                                     </div>
                                     <div class="layui-form-lsit fl ">
@@ -151,7 +152,7 @@
 <script src="../../assets/layui.all.js"></script>
 <script src="../../assets/js/jquery.cookie.js"></script>
 <script src="../../main.js"></script>
-<script src="../../assets/js/purchase/purchInvo.js"></script>
+<script src="../../assets/js/purchase/purchInvodetail.js"></script>
 <!-- <script src="../assets/js/drop.js"></script> -->
 
 </html> 

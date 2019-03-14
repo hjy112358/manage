@@ -20,17 +20,18 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         isInitValue: true,
         btns: ['now', 'confirm']
     });
-    // 收款日期
     laydate.render({
         elem: '#datepay',
         value: tody,
         isInitValue: true,
         btns: ['now', 'confirm']
     });
+    
 });
 
 var dateslit = [];
 var materid = [], maternick = [],meaid=[],meanick=[]
+var currname=[],currnick=[],currnamshow=[],ratelist=[]
 var first = new Date().valueOf();
 window.viewObj = {
     tbData: [{
@@ -67,7 +68,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         even: true,
         cols: [[
             { title: '序号', type: 'numbers' },
-            { field: 'PurchaseInvoiceEntry_Material', title: '物料' ,templet:function(d){
+            { field: 'PurchaseInvoiceEntry_Material', title: '物料',width:150,align:"left",templet:function(d){
                 var index = materid.indexOf(d.PurchaseInvoiceEntry_Material)
                 if (index == '-1') {
                     return ''
@@ -75,8 +76,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                     return maternick[index]
                 }
             }},
-            { field: 'PurchaseInvoiceEntry_Specifications', title: '规格型号'},
-            { field: 'PurchaseInvoiceEntry_Unit', title: '单位' ,templet:function(d){
+            { field: 'PurchaseInvoiceEntry_Specifications', title: '规格型号',align:"left",width:100},
+            { field: 'PurchaseInvoiceEntry_Unit', title: '单位' ,align:"center",width:100,templet:function(d){
                 if(d.PurchaseInvoiceEntry_Unit){
                     var index1 = meaid.indexOf(d.PurchaseInvoiceEntry_Unit)
                     if (index1 == '-1') {
@@ -89,10 +90,18 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 }
                 
             }},
-            { field: 'PurchaseInvoiceEntry_BatchNo', title: '批号' },
-            { field: 'PurchaseInvoiceEntry_Quantity', title: '数量' },
-            { field: 'PurchaseInvoiceEntry_Price', title: '单价' },
-            { field: 'PurchaseInvoiceEntry_TaxPrice', title: '含税单价' , templet: function (d) {
+            { field: 'PurchaseInvoiceEntry_Currency', title: '币别' ,width:100,align:"center",templet:function(d){
+                var index = currname.indexOf(d.PurchaseInvoiceEntry_Currency)
+                if (index == '-1') {
+                    return ''
+                } else {
+                    return currnick[index]
+                }
+            }},
+            { field: 'PurchaseInvoiceEntry_BatchNo', title: '批号',width:100,align:"left" },
+            { field: 'PurchaseInvoiceEntry_Quantity', title: '数量' ,width:100,align:"right"},
+            { field: 'PurchaseInvoiceEntry_Price', title: '单价' ,width:100,align:"right"},
+            { field: 'PurchaseInvoiceEntry_TaxPrice', title: '含税单价',width:100 ,align:"right", templet: function (d) {
                 if (d.PurchaseInvoiceEntry_TaxPrice) {
                     var num = parseFloat(d.PurchaseInvoiceEntry_TaxPrice);
                     num = num.toFixed(2);
@@ -101,7 +110,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 }
                 return num
             }},
-            { field: 'PurchaseInvoiceEntry_Amount', title: '入库金额' , templet: function (d) {
+            { field: 'PurchaseInvoiceEntry_Amount', title: '入库金额',width:100 ,align:"right", templet: function (d) {
                 if (d.PurchaseInvoiceEntry_Amount) {
                     var num = parseFloat(d.PurchaseInvoiceEntry_Amount);
                     num = num.toFixed(2);
@@ -110,9 +119,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 }
                 return num
             }},
-            { field: 'PurchaseInvoiceEntry_ExRate', title: '税率(%)' },
-            { field: 'PurchaseInvoiceEntry_TaxRate', title: '增值税率(%)'},
-            { field: 'PurchaseInvoiceEntry_Tax', title: '税额' , templet: function (d) {   
+            { field: 'PurchaseInvoiceEntry_ExRate', title: '汇率(%)',width:80 ,align:"right"},
+            { field: 'PurchaseInvoiceEntry_TaxRate', title: '增值税率',width:80,align:"right"},
+            { field: 'PurchaseInvoiceEntry_Tax', title: '税额',width:100 ,align:"right", templet: function (d) {   
                 if (d.PurchaseInvoiceEntry_Tax) {
                     var num = parseFloat(d.PurchaseInvoiceEntry_Tax);
                     num = num.toFixed(2);
@@ -122,7 +131,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
                 return num
             } },
-            { field: 'total', title: '价税合计' , templet: function (d) {
+            { field: 'total', title: '价税合计' ,width:100,align:"right", templet: function (d) {
                 if (d.total) {
                     var num = parseFloat(d.total);
                     num = num.toFixed(2);
@@ -132,11 +141,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
                 return num
             } },
-            { field: 'PurchaseInvoiceEntry_Total', title: '开票金额' },
-            // { field: 'FFetchDate', title: '源单单号'},
-            { field: 'Remark', title: '备注', edit: 'text' },
+            { field: 'PurchaseInvoiceEntry_Total', title: '实际开票',width:100 ,align:"right"},
+            { field: 'Remark', title: '备注', edit: 'text',width:150 ,align:"left"},
             {
-                field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
+                field: 'F_Id', title: '操作', align: 'center',width:80, templet: function (d) {
                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '">删除</a>';
                 }
             }
@@ -267,6 +275,21 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     $(".add").on("click", function () {
         window.location.reload()
     })
+      // 物料
+      $.ajax({
+        url: ajaxMater,
+        success: function (res) {
+            var data = res.Data;
+            var isussecc = res.Succeed;
+            if (isussecc) {
+                for (var i = 0; i < data.length; i++) {
+                    materid.push(data[i].F_Id)
+                    maternick.push(data[i].Material_Nick)
+                }
+
+            }
+        }
+    })
 
     // 	采购发票单号
     $.ajax({
@@ -286,95 +309,134 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         url: ajaxCurrency,
         success: function (res) {
             var isussecc = res.Succeed;
-            var data = res.Data;
+            var rmbid,rate;
             if (isussecc) {
+                var data = res.Data;
                 var html = '<option value="">请选择币别</option>';
                 var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">请选择币别</dd>'
                 for (var i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i].F_Id + '">' + data[i].Currency_Nick + '</option>';
-                    htmlsel += '<dd lay-value="' + data[i].F_Id + '">' + data[i].Currency_Nick + '</dd>'
+                    var datanow=data[i]
+                    if (datanow.Currency_Nick == '人民币') {
+                        rmbid = datanow.F_Id;
+                        rate = datanow.Currency_ExRate
+                    }
+                    currname.push(datanow.F_Id)  
+                    currnick.push(datanow.Currency_Nick)
+                    currnamshow.push(datanow.Currency_Name)
+                    ratelist.push(datanow.Currency_ExRate)
+                    html += '<option value="' + datanow.F_Id + '">' + datanow.Currency_Nick + '</option>';
+                    htmlsel += '<dd lay-value="' + datanow.F_Id + '">' + datanow.Currency_Nick + '</dd>'
                 }
                 $("#currency").html(html);
                 $(".currency .layui-anim.layui-anim-upbit").html(htmlsel);
                 renderForm();
-               
+                var select = 'dd[lay-value="' + rmbid + '"]';
+                $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
+                $("#PurchaseInvoice_ExRate").val(rate)
             } else {
                 alert(data.Message)
             }
         }
     })
 
-
-    // 采购入库明细
-    layui.form.on('select(seleccus)', function (data) {
-        var cusnick,curr,rate;
-        if (data.elem.selectedOptions) {
-            cusnick = data.elem.selectedOptions[0].innerHTML;
-            curr= data.elem.selectedOptions[0].attributes[2].value;
-            rate= data.elem.selectedOptions[0].attributes[1].value;
-            // 税率
-            $("#PurchaseInvoice_TaxRate").val(rate)
-            var select = 'dd[lay-value="' + curr + '"]';
-            $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
-        } else {
-            var elems = data.elem;
-            for (var i = 0; i < elems.length; i++) {
-                var elemnow = elems[i];
-                if (elemnow.selected) {
-                    cusnick = elemnow.text;
-                    curr= elemnow.attributes[2].value;
-                    rate= elemnow.attributes[1].value;
-                    $("#PurchaseInvoice_TaxRate").val(rate)
-                    var select = 'dd[lay-value="' + curr + '"]';
-                    $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
-                }
+    form.on('select(currency)', function (data) {
+        var value = data.value;
+        for (var k = 0; k < currname.length; k++) {
+            var nowname = currname[k];
+            var nowk = k;
+            if (value == nowname) {
+                $("#PurchaseInvoice_ExRate").val(ratelist[nowk])
             }
         }
-        $.ajax({
-            url: ajaxstockbionelist + 'keyword=' + cusnick + '&PageSize=&PageIndex=',
-            success: function (res) {
-                console.log(res)
-                if (res.Succeed) {
-                    if(res.Data.length>=1){
-                        $("#PurchaseInvoiceEntry_Amount").val(res.Data[0].StockBillEntry_Amount)
-                        $("#PurchaseInvoice_TaxRate").val(res.Data[0].StockBillEntry_TaxRate)
-                        $.ajax({
-                            url: ajaxstockbillone + res.Data[0].F_Id,
-                            success: function (result) {
-                                console.log(result)
-                                if(result.Succeed){
-                                    var data=result.Data.Details                                   
-                                    $.each(data,function(i,value){                                     
-                                        // 含税单价=销售单价*（1+税率/100）
-                                        value.PurchaseInvoiceEntry_TaxPrice = parseFloat(value.StockBillEntry_Price) * (1 + parseFloat(rate) / 100)
-                                        // 价税合计=数量*含税单价
-                                        value.total = parseFloat(value.StockBillEntry_Quantity) * parseFloat(value.PurchaseInvoiceEntry_TaxPrice)
-                                        // 税额=未税金额*（税率/100）
-                                        value.PurchaseInvoiceEntry_Tax = parseFloat(value.StockBillEntry_Amount) * (parseFloat(rate) / 100)
-                                        value.PurchaseInvoiceEntry_Quantity=value.StockBillEntry_Quantity
-                                        value.PurchaseInvoiceEntry_Price=value.StockBillEntry_Price
-                                        value.PurchaseInvoiceEntry_Amount=value.StockBillEntry_Amount
-                                        value.PurchaseInvoiceEntry_ExRate=value.StockBillEntry_ExRate  
-                                        value.PurchaseInvoiceEntry_BatchNo=value.StockBillEntry_BatchNo 
-                                        value.PurchaseInvoiceEntry_Unit=value.StockBillEntry_Unit 
-                                        value.PurchaseInvoiceEntry_Specifications=value.StockBillEntry_Specifications 
-                                        value.PurchaseInvoiceEntry_Material=value.StockBillEntry_Material
-                                        value.PurchaseInvoiceEntry_TaxRate=value.StockBillEntry_TaxRate
-                                        value.F_Id=null
-                                    })
-                                    tableIns.reload({
-                                        data:data,
-                                        limit:data.length
-                                    })
-                                }
-                            }
-                        })
-                    }
-                    
-                }
+
+    });
+
+   // 切换客户
+   layui.form.on('select(seleccus)', function (data, e) {
+    console.log(data)
+    var cusnick, curr, rate;
+    if (data.elem.selectedOptions) {
+        cusnick = data.elem.selectedOptions[0].innerHTML;
+        curr = data.elem.selectedOptions[0].attributes[2].value;
+        rate = data.elem.selectedOptions[0].attributes[1].value;
+        $("#PurchaseInvoice_TaxRate").val(rate)
+        var select = 'dd[lay-value="' + curr + '"]';
+        $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
+    } else {
+        var elems = data.elem;
+        for (var i = 0; i < elems.length; i++) {
+            var elemnow = elems[i];
+            if (elemnow.selected) {
+                cusnick = elemnow.text;
+                curr = elemnow.attributes[2].value;
+                rate = elemnow.attributes[1].value;
+                $("#PurchaseInvoice_TaxRate").val(rate)
+                var select = 'dd[lay-value="' + curr + '"]';
+                $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
             }
-        })
+        }
+    }
+    $.ajax({
+        url: ajaxstockbionelist + cusnick ,
+        success: function (res) {
+            console.log(res)
+            if (res.Succeed) {
+                if (res.Data.length >= 1) {
+                    $("#PurchaseInvoice_ExRate").val(res.Data[0].StockBill_ExRate)
+                    $.ajax({
+                        url: ajaxstockbillone + res.Data[0].F_Id,
+                        success: function (result) {
+                            console.log(result)
+                            if (result.Succeed) {
+                                var data = result.Data.Details
+                                var stockbill=result.Data.F_Id
+                                var totalprice = $("#PurchaseInvoice_Total").val();
+                                var taxrate = $("#PurchaseInvoice_TaxRate").val();
+                                $.each(data, function (i, value) {
+                                   value.PurchaseInvoiceEntry_Quantity = value.StockBillEntry_Quantity 
+                                   value.PurchaseInvoiceEntry_Price=value.StockBillEntry_Price
+                                   value.PurchaseInvoiceEntry_Amount = value.StockBillEntry_Amount 
+                                   value.PurchaseInvoiceEntry_ExRate= value.StockBillEntry_ExRate
+                                   value.PurchaseInvoiceEntry_BatchNo =value.StockBillEntry_BatchNo 
+                                   value.PurchaseInvoiceEntry_Unit= value.StockBillEntry_Unit
+                                   value.PurchaseInvoiceEntry_Specifications =value.StockBillEntry_Specifications 
+                                   value.PurchaseInvoiceEntry_Material =value.StockBillEntry_Material 
+                                   value.PurchaseInvoiceEntry_Currency =value.StockBillEntry_Currency
+                                   value.PurchaseInvoiceEntry_StockBill=stockbill
+                                   value.F_Id = null
+                                   value.PurchaseInvoiceEntry_TaxRate = taxrate
+                                    // 含税单价=销售单价*（1+税率/100）
+                                    value.PurchaseInvoiceEntry_TaxPrice = parseFloat(value.PurchaseInvoiceEntry_Price) * (1 + parseFloat(rate) / 100)
+                                    // 价税合计=数量*含税单价
+                                    value.total = parseFloat(value.PurchaseInvoiceEntry_Quantity) * parseFloat(value.PurchaseInvoiceEntry_TaxPrice)
+                                    // 税额=未税金额*（税率/100）
+                                    value.PurchaseInvoiceEntry_Tax = parseFloat(value.PurchaseInvoiceEntry_Amount) * (parseFloat(rate) / 100)
+                                    if (totalprice >= value.PurchaseInvoiceEntry_Amount && totalprice != 0) {
+                                        value.PurchaseInvoiceEntry_Total = value.PurchaseInvoiceEntry_Amount
+                                        totalprice = parseFloat(totalprice) - parseFloat(value.PurchaseInvoiceEntry_Amount)
+                                    } else {
+                                        value.PurchaseInvoiceEntry_Total = totalprice
+                                    }
+                                })
+                                console.log(data)
+                                tableIns.reload({
+                                    data: data,
+                                    limit: data.length
+                                })
+                            }
+                        }
+                    })
+                } else {
+                    tableIns.reload({
+                        data: [],
+                        limit: 1
+                    })
+                }
+
+            }
+        }
     })
+})
 
     // 供应商
     $(".supplier").on("click", function () {
@@ -416,16 +478,25 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     $("#PurchaseInvoice_Billername").val(username)
 
 
-    $("#PurchaseInvoice_Total").on("blur",function(){
-        var totalprice=$(this).val();
+   
+    function renderForm() {
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+    }
+
+    
+    $("#PurchaseInvoice_Total").on("blur", function () {
+        var totalprice = $(this).val();
         var oldData = table.cache[layTableId];
-        $.each(oldData,function(v){
-            if(v.PurchaseInvoiceEntry_Material){
-                if(totalprice>=v.StockBillEntry_Amount&&totalprice!=0){
-                    v.PurchaseInvoiceEntry_Total=v.StockBillEntry_Amount
-                    totalprice=parseFloat(totalprice)-parseFloat(v.StockBillEntry_Amount)
-                }else{
-                    v.PurchaseInvoiceEntry_Total=totalprice
+        $.each(oldData, function (i, v) {
+            if (v.PurchaseInvoiceEntry_Material) {
+                if (totalprice >= v.PurchaseInvoiceEntry_Amount && totalprice != 0) {
+                    v.PurchaseInvoiceEntry_Total = v.PurchaseInvoiceEntry_Amount
+                    totalprice = parseFloat(totalprice) - parseFloat(v.PurchaseInvoiceEntry_Amount)
+                } else {
+                    v.PurchaseInvoiceEntry_Total = totalprice
                 }
             }
         })
@@ -437,7 +508,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     // 保存
     $(".sub").on("click", function () {
-        // var indexlay=layer.load();
+         var indexlay=layer.load();
         var formlist = $("form").serializeArray()
         var oldData = table.cache[layTableId];
         var data = {}
@@ -452,9 +523,13 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             success:function(res){
                 console.log(res)
                 if(res.Succeed){
-                    layer.close(index);
+                    layer.close(indexlay);
                     layer.msg("新增成功");
+                    setInterval(function () {
+                        window.location.reload()
+                    }, 1000)
                 }else{
+                    layer.close(indexlay);
                     alert(res.Message)
                 }
             }
