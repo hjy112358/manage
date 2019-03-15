@@ -69,7 +69,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             {field: 'StockBillEntry_BatchNo',title: '批号',width:80 },
             {field: 'Unit',title: '计量单位',width:80,align:'center'},
             {field: 'StockBillEntry_Price',title: '价格',edit: 'text',width:100},
-            {field: 'quatity',title: '应收数量' ,width:100,edit: 'text'},
             {field: 'StockBillEntry_Quantity',title: '实收数量',edit: 'text',width:100},
             {field: 'StockBillEntry_Amount',title: '总额',width:100},
             {field: 'StockBillEntry_Stock', title: '发货仓库',templet: '#selectstock',width:100},
@@ -663,16 +662,16 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     })
 
     // 获取单据编号
-    //  $.ajax({
-    //     url: getnum,
-    //     success: function (res) {
-    //         if (res.Succeed) {
-    //             $("#StockBill_Name").val(res.Data)
-    //         } else {
-    //             alert(res.Message)
-    //         }
-    //     }
-    // })
+     $.ajax({
+        url: getnum,
+        success: function (res) {
+            if (res.Succeed) {
+                $("#StockBill_Name").val(res.Data)
+            } else {
+                alert(res.Message)
+            }
+        }
+    })
     // 制单人
     var mouser = $.cookie("Modify_User");
     var username = $.cookie("User_Nick")
@@ -746,8 +745,14 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         for (var j = 0; j < formlist.length; j++) {
             data[formlist[j].name] = formlist[j].value
         }
+        var newdata=[]
+        $.each(oldData,function(i,v){
+            if(v.StockBillEntry_Material){
+                newdata.push(v)
+            }
+        })
         // data.StockBill_Sender=$("#department option:selected").val()
-        data.Details=oldData
+        data.Details=newdata
         console.log(data)
         $.ajax({
             type:"POST",

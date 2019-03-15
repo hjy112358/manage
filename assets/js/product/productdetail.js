@@ -56,6 +56,7 @@ $(function () {
         type: "get",
         url: getassone + fid,
         success: function (res) {
+            console.log(res)
             subindex = layer.load();
             var isussecc = res.Succeed;
             var data = res.Data;
@@ -307,46 +308,78 @@ function editableData(data,fid){
         { field: '', title: '待制数' },
         { field: '', title: '待交数' },
     ]
-    var tablecraft;
+    var tablecraft=data.Crafts;
+    
     $.ajax({
-        type: "get",
-        url: materCraft + data.Assign_Material,
+        url: getRepornum +fid,
         ansyc:false,
-        success: function (result) {
-            console.log(result)
-            var isussecc = result.Succeed;
-            if (isussecc) { 
-                tablecraft=result.Data.Details
-                $.ajax({
-                    url: getRepornum + fid,
-                    ansyc:false,
-                    success: function (res) {
-                        console.log(res)
-                        if (res.Succeed) {
-                            var data = res.Data
-                            if(data.length>=1){
-                                $.each(data, function (i, v) {
-                                    $.each(tablecraft, function (index, value) {
-                                        if (v.ReportEntry_CraftEntry == value.F_Id) {
-                                            value.qualified = v.ReportEntry_Qualified
-                                            value.quantity = v.ReportEntry_Quantity
-                                            value.scrap = v.ReportEntry_Scrap
-                                        }
-                                    })
-                                })
-                                tablerendercraft(strgy,tablecraft)
-                            }else{
-                                console.log(tablecraft)
-                                tablerendercraft(strgy,tablecraft)
+        success: function (res) {
+            console.log(res)
+            if (res.Succeed) {
+                var data = res.Data
+                if(data.length>=1){
+                    $.each(data, function (i, v) {
+                        $.each(tablecraft, function (index, value) {
+                            value.CraftEntry_Nick=value.AssignCraft_Nick
+                            if (v.ReportEntry_CraftEntry == value.F_Id) {
+                                value.qualified = v.ReportEntry_Qualified
+                                value.quantity = v.ReportEntry_Quantity
+                                value.scrap = v.ReportEntry_Scrap
                             }
-                        }
-                    }
-                })
-            } else {
-                alert(result.Message)
+                        })
+                    })
+                    tablerendercraft(strgy,tablecraft)
+                }else{
+                    $.each(tablecraft, function (index, value) {
+                        value.CraftEntry_Nick=value.AssignCraft_Nick
+                       
+                    })
+                    console.log(tablecraft)
+                    tablerendercraft(strgy,tablecraft)
+                }
             }
         }
     })
+
+    // $.ajax({
+    //     type: "get",
+    //     url: materCraft + data.Assign_Material,
+    //     ansyc:false,
+    //     success: function (result) {
+    //         console.log(result)
+    //         var isussecc = result.Succeed;
+    //         if (isussecc) { 
+    //             tablecraft=result.Data.Details
+    //             $.ajax({
+    //                 url: getRepornum + fid,
+    //                 ansyc:false,
+    //                 success: function (res) {
+    //                     console.log(res)
+    //                     if (res.Succeed) {
+    //                         var data = res.Data
+    //                         if(data.length>=1){
+    //                             $.each(data, function (i, v) {
+    //                                 $.each(tablecraft, function (index, value) {
+    //                                     if (v.ReportEntry_CraftEntry == value.F_Id) {
+    //                                         value.qualified = v.ReportEntry_Qualified
+    //                                         value.quantity = v.ReportEntry_Quantity
+    //                                         value.scrap = v.ReportEntry_Scrap
+    //                                     }
+    //                                 })
+    //                             })
+                                
+    //                         }else{
+    //                             console.log(tablecraft)
+    //                             tablerendercraft(strgy,tablecraft)
+    //                         }
+    //                     }
+    //                 }
+    //             })
+    //         } else {
+    //             alert(result.Message)
+    //         }
+    //     }
+    // })
     $.ajax({
         type: "get",
         url: ajaxUsr,

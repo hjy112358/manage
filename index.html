@@ -27,7 +27,6 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" id="username"></a>
                     <dl class="layui-nav-child">
-                        <!-- <dd><a href="">帮助中心</a></dd> -->
                         <dd><a href="login.html">退出</a></dd>
                     </dl>
                 </li>
@@ -92,21 +91,18 @@
                         </a>
                         <dl class="layui-nav-child">
                             <dd class="hidden"><a href="views/scale/scalContract.html">销售合同</a></dd>
-                            <dd class="hidden"><a href="views/scale/scalworkdetail.html">销售订单</a></dd><!-- 查看详情 -->
-                            <!-- <dd><a href="views/scalwork.html">销售订单</a></dd> -->
+                            <dd class="hidden"><a href="views/scale/scalworkdetail.html">销售订单</a></dd>
                             <dd class="clearfix">
                                 <a href="views/scale/scalwork.html" class="fl">销售订单</a>
                                 <a href="views/scale/scalworklist.html" class="security fl">查询</a>
-                            </dd><!-- 新增 -->
-                            <!-- <dd><a href="views/scaledetail.html">销售订单明细表</a></dd> -->
-                            <dd class="clearfix">
+                            </dd><dd class="clearfix">
                                 <a href="views/scale/scaleInvo.html" class="fl">销售发票</a>
                                 <a href="views/scale/scaleInvolist.html" class="security fl">查询</a>
                             </dd>
-                            <dd class="hidden"><a href="views/scale/scalworkchange.html">销售订单</a></dd><!-- 变更 -->
-                            <dd class="hidden"><a href="views/scale/scaleInvodetail.html">销售发票</a></dd><!-- 发票详情 -->
-                            <dd class="hidden"><a href="views/scale/scaleInvochange.html">销售发票</a></dd><!-- 发票变更 -->
-                            <dd class=""><a href="views/scale/scalworkcus.html">客户订单</a></dd><!-- 变更 -->
+                            <dd class="hidden"><a href="views/scale/scalworkchange.html">销售订单</a></dd>
+                            <dd class="hidden"><a href="views/scale/scaleInvodetail.html">销售发票</a></dd>
+                            <dd class="hidden"><a href="views/scale/scaleInvochange.html">销售发票</a></dd>
+                            <dd class=""><a href="views/scale/scalworkcus.html">客户订单</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -121,17 +117,23 @@
                             <dd class=""><a href="views/warehouse/otherStock.html">其他出库</a></dd>
                             <dd class="hidden"><a href="views/warehouse/outIn.html">委外入库</a></dd>
                             <dd class="hidden"><a href="views/warehouse/outstock.html">委外出库</a></dd>
-                            <dd class="hidden"><a href="views/warehouse/scaleIndetail.html">采购入库</a></dd>  <!--采购入库详情  -->
-                            <dd class="hidden"><a href="views/warehouse/scaleInchange.html">采购入库</a></dd><!--采购入库变更  -->
-                        </dl> 
+                            <dd class="hidden"><a href="views/warehouse/scaleIndetail.html">采购入库</a></dd>
+                            <dd class="hidden"><a href="views/warehouse/scaleInchange.html">采购入库</a></dd>
+                            <dd class="hidden"><a href="views/warehouse/otherIndetail.html">其他入库</a></dd>
+                            <dd class="hidden"><a href="views/warehouse/otherInchange.html">其他入库</a></dd>
+                            <dd class="hidden"><a href="views/warehouse/otherStockdetail.html">其他出库</a></dd>
+                            <dd class="hidden"><a href="views/warehouse/otherStockchange.html">其他出库</a></dd>
+                            <dd class="hidden"><a href="views/warehouse/scalestockdetail.html">销售出库</a></dd>
+                            <dd class="hidden"><a href="views/warehouse/scalestockchange.html">销售出库</a></dd>
+                        </dl>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;">   
+                        <a href="javascript:;">
                             <i class="iconfont icon-shengchanguanli"></i>
                             <em>生产管理</em>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd class="clearfix"> 
+                            <dd class="clearfix">
                                 <a href="views/product/productwork.html" class="fl">生产订单</a>
                                 <a href="views/product/productlist.html" class="security fl">查询</a>
                             </dd>
@@ -146,23 +148,23 @@
                             <dd><a href="views/product/productoutInlist.html">出入库单列表</a></dd>
                             <dd><a href="views/product/productworkgx.html">生产报表-工序执行</a></dd>
                             <dd><a href="views/product/productworkll.html">生产报表-领料分析</a></dd>
-                            <dd class="hidden"><a href="views/product/productdetail.html">生产订单</a></dd>   <!--查看 -->
-                            <dd class="hidden"><a href="views/product/productchange.html">生产订单</a></dd><!--修改 -->
-                            <dd class="hidden"><a href="views/product/productlldetail.html">领料单</a></dd>   <!--查看 -->
-                            <dd class="hidden"><a href="views/product/productprodetail.html">产品入库</a></dd>   <!--查看 -->
-                            <dd class="hidden"><a href="views/product/productllchange.html">领料单</a></dd>   <!--修改 -->
-                            <dd class="hidden"><a href="views/product/productprochange.html">产品入库</a></dd>   <!--查看 -->
+                            <dd class="hidden"><a href="views/product/productdetail.html">生产订单</a></dd>
+                            <dd class="hidden"><a href="views/product/productchange.html">生产订单</a></dd>
+                            <dd class="hidden"><a href="views/product/productlldetail.html">领料单</a></dd>
+                            <dd class="hidden"><a href="views/product/productprodetail.html">产品入库</a></dd>
+                            <dd class="hidden"><a href="views/product/productllchange.html">领料单</a></dd>
+                            <dd class="hidden"><a href="views/product/productprochange.html">产品入库</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
-                            <a href="javascript:;">
-                                <i class="iconfont icon-digital "></i>
-                                <em>生产数据</em>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd><a href="views/productdata/bomlist.html">BOM</a></dd>
-                            </dl>
-                        </li>
+                        <a href="javascript:;">
+                            <i class="iconfont icon-digital "></i>
+                            <em>生产数据</em>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="views/productdata/bomlist.html">BOM</a></dd>
+                        </dl>
+                    </li>
                     <li class="layui-nav-item">
                         <a href="javascript:;">
                             <i class="iconfont icon-yingshouyingfu-"></i>
@@ -182,12 +184,11 @@
                         <dl class="layui-nav-child">
                             <dd><a href="views/basic/basicSet.html">公司信息</a></dd>
                             <dd><a href="views/basic/productype.html">物料类别</a></dd>
-                            <!-- <dd><a href="views/producs.html">物料</a></dd> -->
                             <dd><a href="views/basic/materManmant.html">物料管理</a></dd>
                             <dd><a href="views/basic/unit.html">计量单位</a></dd>
                             <dd><a href="views/basic/cusasupper/custom.html">客户管理</a></dd>
                             <dd class="hidden"><a href="views/basic/cusasupper/supplier.html">供应商管理</a></dd>
-                            <dd class="hidden"><a href="views/basic/cusasupper/newcustom.html">客户信息</a></dd> <!--新增-->
+                            <dd class="hidden"><a href="views/basic/cusasupper/newcustom.html">客户信息</a></dd>
                             <dd class="hidden"><a href="views/basic/cusasupper/newsupplier.html">新增供应商信息</a></dd>
                             <dd><a href="views/basic/print/pritempletlist.html">打印模板</a></dd>
                             <dd class="hidden"><a href="views/basic/print/newpritemplet.html">新增打印模板</a></dd>
@@ -196,25 +197,9 @@
                             <dd class="hidden"><a href="views/basic/stock/newstock.html">新增仓库信息</a></dd>
                             <dd><a href="views/basic/craft.html">工艺管理</a></dd>
                             <dd><a href="views/basic/process.html">工序名称</a></dd>
-                            <dd class="hidden"><a href="views/basic/cusasupper/customdetail.html">客户信息</a></dd> <!--详情-->
-                            
+                            <dd class="hidden"><a href="views/basic/cusasupper/customdetail.html">客户信息</a></dd>
                         </dl>
                     </li>
-                    <!-- <li class="layui-nav-item">
-                        <a href="javascript:;">
-                            <i class="iconfont icon-shengchanguanli"></i>
-                            <em>金蝶软件</em>
-                        </a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="views/productwork1.html?status=0">生产订单</a></dd>
-                            <dd><a href="views/productworklist.html">生产订单汇总表</a></dd>
-                            <dd><a href="views/scalremoval.html">销售出库明细表</a></dd>
-                            <dd><a href="views/chronoentry.html">销售订单序时簿</a></dd>
-                            <dd><a href="views/recollect.html">应收账款汇总表</a></dd>
-                            <dd><a href="views/redetail.html">应收账款明细表</a></dd>
-                        </dl>
-                    </li> -->
-
                 </ul>
             </div>
         </div>
@@ -232,9 +217,8 @@
     <script src="assets/layui.js"></script>
     <script type="text/javascript" src="assets/js/jquery.min.js"></script>
     <script src="assets/js/jquery.cookie.js"></script>
-    <script  src="assets/js/jquery.table2excel.min.js"></script>
+    <script src="assets/js/jquery.table2excel.min.js"></script>
     <script src="index.js" data-main="home"></script>
 </body>
 
 </html>
- 

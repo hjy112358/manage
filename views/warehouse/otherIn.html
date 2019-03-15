@@ -34,6 +34,7 @@
                             <div class="form-box">
                                 <div class="clearfix">
                                     <input type="hidden" name="IsEnabled" value="true">
+                                    <input type="hidden" name="StockBill_Type" value="300200">
                                     <input type="hidden" name="StockBill_Direction" value="1">
                                     <div class="layui-form-lsit fl">
                                         <label class="layui-form-label">入库部门：</label>
@@ -48,7 +49,7 @@
                                         <label class="layui-form-label">入库供应商：</label>
                                         <div class="layui-input-block stockbill" data-type="daten">
                                             <select name="StockBill_Sender" class="" id="StockBill_Supper" lay-search=""
-                                                lay-filter="selecstyle">
+                                                lay-filter="selecstyle" disabled>
                                                 <option value="">请选择</option>
                                             </select>
                                         </div>
@@ -57,7 +58,7 @@
                                         <label class="layui-form-label">入库客户：</label>
                                         <div class="layui-input-block stockcus" data-type="daten">
                                             <select name="StockBill_Sender" class="" id="StockBill_custom" lay-search=""
-                                                lay-filter="selecstyle">
+                                                lay-filter="selecstyle" disabled>
                                                 <option value="">请选择</option>
                                             </select>
                                         </div>

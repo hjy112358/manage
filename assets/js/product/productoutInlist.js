@@ -145,8 +145,8 @@ $(function () {
             { title: '序号', type: 'numbers' },
             { field: 'StockBill_Name', title: '编号',align:'left' },
             // { field: 'StockBill_Project', title: '项目号'},
-            { field: 'Currency_Nick', title: '币别' ,align:'left' },
-            { field: 'Direction_Nick', title: '方向' ,align:'left' },
+            { field: 'Currency_Nick', title: '币别' ,align:'center' },
+            { field: 'Direction_Nick', title: '方向' ,align:'center' },
             {
                 field: 'StockBill_DateTime', title: '日期',align:'center' , templet: function (d) {
                     if (d.StockBill_DateTime) {
@@ -154,7 +154,7 @@ $(function () {
                     }
                 }
             },
-            { field: 'Status_Nick', title: '状态' ,align:'left' },
+            { field: 'Status_Nick', title: '状态' ,align:'center' },
             {
                 field: 'StockBill_Biller', title: '制单人',align:'left' , templet: function (d) {
                     var index = userid.indexOf(d.StockBill_Biller)
@@ -165,62 +165,68 @@ $(function () {
                     }
                 }
             },
-            {
-                field: 'StockBill_Receiver', title: '收货方',align:'left' , templet: function (d) {
-                    if (d.StockBill_Direction == 1) {//入库
-                        var index3 = userid.indexOf(d.StockBill_Receiver)
-                        if (index3 == '-1') {
-                            return ''
-                        } else {
-                            return usernick[index3]
-                        }
-                    } else {
-                        var index2 = departid.indexOf(d.StockBill_Receiver)
-                        if (index2 == '-1') {
-                            return ''
-                        } else {
-                            return departnick[index2]
-                        }
-                    }
-                }
-            },
-            {
-                field: 'StockBill_Sender', title: '发货方',align:'left' , templet: function (d) {
-                    if (d.StockBill_Direction == 1) {//入库
-                        if (d.StockBill_Type == '400200') {
-                            var index4 = cusid.indexOf(d.StockBill_Sender)
-                            if (index4 == '-1') {
-                                return ''
-                            } else {
-                                return cusnick[index4]
-                            }
-                        } else if (d.StockBill_Type == "200200") {
-                            var index5 = supperid.indexOf(d.StockBill_Sender)
-                            if (index5 == '-1') {
-                                return ''
-                            } else {
-                                return suppernick[index5]
-                            }
-                        } 
+            // {
+            //     field: 'StockBill_Receiver', title: '收货方',align:'left' , templet: function (d) {
+            //         if (d.StockBill_Direction == 1) {//入库
+            //             var index3 = userid.indexOf(d.StockBill_Receiver)
+            //             if (index3 == '-1') {
+            //                 return ''
+            //             } else {
+            //                 return usernick[index3]
+            //             }
+            //         } else {
+            //             var index2 = departid.indexOf(d.StockBill_Receiver)
+            //             if (index2 == '-1') {
+            //                 return ''
+            //             } else {
+            //                 return departnick[index2]
+            //             }
+            //         }
+            //     }
+            // },
+            // {
+            //     field: 'StockBill_Sender', title: '发货方',align:'left' , templet: function (d) {
+            //         if (d.StockBill_Direction == 1) {//入库
+            //             if (d.StockBill_Type == '400200') {
+            //                 var index4 = cusid.indexOf(d.StockBill_Sender)
+            //                 if (index4 == '-1') {
+            //                     return ''
+            //                 } else {
+            //                     return cusnick[index4]
+            //                 }
+            //             } else if (d.StockBill_Type == "200200") {
+            //                 var index5 = supperid.indexOf(d.StockBill_Sender)
+            //                 if (index5 == '-1') {
+            //                     return ''
+            //                 } else {
+            //                     return suppernick[index5]
+            //                 }
+            //             } 
                         
-                    } else {
-                        var index1 = userid.indexOf(d.StockBill_Sender)
-                        if (index1 == '-1') {
-                            return ''
-                        } else {
-                            return usernick[index1]
-                        }
-                    }
-                }
-            },
+            //         } else {
+            //             var index1 = userid.indexOf(d.StockBill_Sender)
+            //             if (index1 == '-1') {
+            //                 return ''
+            //             } else {
+            //                 return usernick[index1]
+            //             }
+            //         }
+            //     }
+            // },
             {
-                field: 'StockBill_Type', title: '单据类型',align:'left' , templet: function (d) {
+                field: 'StockBill_Type', title: '单据类型',align:'center' , templet: function (d) {
                     if (d.StockBill_Type == '400200') {
-                        return "生产发料"
-                    } else if (d.StockBill_Type == "400100") {
                         return "生产领料"
+                    } else if (d.StockBill_Type == "400100") {
+                        return "生产发料"
                     } else if (d.StockBill_Type == "200200") {
-                        return "采购发料"
+                        return "采购领料"
+                    }else if (d.StockBill_Type == "300200") {
+                        return "其他领料"
+                    } else if (d.StockBill_Type == "300100") {
+                        return "其他发料"
+                    }  else if (d.StockBill_Type == "100100") {
+                        return "销售发料"
                     } else {
                         return ""
                     }

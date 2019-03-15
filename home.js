@@ -342,29 +342,55 @@ function newproducthb(){
 // 查看出入库
 function getstock(direc,id,type){
     if(direc=='-1'){
-        // 领料
-        var oldhref = $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').attr("href");
-        var href = oldhref
-        href = href + '?fid='+id
-        $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').attr("href", href)
-        $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').trigger('click');
-        $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').attr("href", oldhref)
+        if(type=='400100'){
+            // 生产发料
+            var oldhref = $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').attr("href");
+            var href = oldhref
+            href = href + '?fid='+id
+            $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').attr("href", href)
+            $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').trigger('click');
+            $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(13)').attr("href", oldhref)
+        }else if(type=='100100'){
+            // 销售发料
+            var oldhref = $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(12)').attr("href");
+            var href = oldhref
+            href = href + '?fid='+id
+            $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(12)').attr("href", href)
+            $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(12)').trigger('click');
+            $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(12)').attr("href", oldhref)
+        }else if(type=='300100'){
+            // 其他发料
+            var oldhref = $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(10)').attr("href");
+            var href = oldhref
+            href = href + '?fid='+id
+            $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(10)').attr("href", href)
+            $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(10)').trigger('click');
+            $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(10)').attr("href", oldhref)
+        }
+        
     }else{
-        if (type == "200200") {  //采购发料
+        if (type == "200200") {  //采购领料
             var oldhref = $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(6)').attr("href");
             var href = oldhref
             href = href + '?fid='+id
             $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(6)').attr("href", href)
             $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(6)').trigger('click');
             $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(6)').attr("href", oldhref)
-        }else if (type== '400200') {  //生产发料
+        }else if (type== '400200') {  //生产领料
             var oldhref = $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(14)').attr("href");
             var href = oldhref
             href = href + '?fid='+id
             $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(14)').attr("href", href)
             $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(14)').trigger('click');
             $('#Nav li.layui-nav-item:eq(5) > dl.layui-nav-child > dd > a:eq(14)').attr("href", oldhref)
-        } 
+        }else if (type== '300200') {  //其他领料
+            var oldhref = $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(8)').attr("href");
+            var href = oldhref
+            href = href + '?fid='+id
+            $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(8)').attr("href", href)
+            $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(8)').trigger('click');
+            $('#Nav li.layui-nav-item:eq(4) > dl.layui-nav-child > dd > a:eq(8)').attr("href", oldhref)
+        }  
         
     }
 }
