@@ -4,6 +4,8 @@ var currname = [];
 var currnick = [];
 var ratelist = [];
 var currnamshow = [];
+var stockid=[],stocknick=[]
+var meavalue=[],meanick=[]
 var first = new Date().valueOf();
 var getablelist;
 window.viewObj = {
@@ -41,14 +43,25 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             isInitValue: true,
             btns: ['now', 'confirm']
         });
-        // 仓库
+       
+        // 计量单位
         $.ajax({
-            type:'GET',
-            url: ajaxstocklist,
+            type:"GET",
+            url: ajaxMea,
             success: function (res) {
-                $.each(res.Data,function(i,v){
-                    stocklist.push(v)
-                })
+                var data = res.Data;
+                var isussecc = res.Succeed;
+                if (isussecc) {
+                    for (var i = 0; i < data.length; i++) {
+                        var datanow=data[i]
+                        meavalue.push(datanow.F_Id)  
+                        meanick.push(datanow.Measure_Nick)
+                      
+                    }
+                  
+                } else {
+                    alert(data.Message)
+                }
             }
         })
     //数据表格实例化		
@@ -239,7 +252,30 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             limit: tabledata.length
         });
     })
-
+    
+    // 仓库
+    $.ajax({
+        type:'GET',
+        url: ajaxstocklist,
+        success: function (res) {
+            $.each(res.Data,function(i,v){
+                stocklist.push(v)
+                stockid.push(v.F_Id)  
+                stocknick.push(v.Stock_Nick)
+            })
+            var oldData = table.cache[layTableId];
+            $.each(oldData,function(i,v){
+                var stockindex=stockid.indexOf(v.StockBillEntry_Stock)
+                if(stockindex!='-1'){
+                    v.stock=stocknick[stockindex]
+                }
+            })
+            tableIns.reload({
+                data: oldData,
+                limit: oldData.length
+            });
+        }
+    })
     var htmlterm = '';
     var arrlist = [];
     var arri = {};
@@ -372,7 +408,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                                 value.StockBillEntry_Specifications = specife || "";
                                                 value.StockBillEntry_Material = marid || "";
                                                 value.Unit = measure
-                                               
+                                                var meaindex=meanick.indexOf(measure)
+                                                if(meaindex!='-1'){
+                                                    value.StockBillEntry_Unit = meavalue[meaindex]
+                                                }else{
+                                                    value.StockBillEntry_Unit = ""
+                                                }
                                           
                                                 if (value.tempId == viewObj.last) {
                                                     activeByType("add");
@@ -465,7 +506,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                         value.StockBillEntry_Specifications = specife || "";
                                         value.StockBillEntry_Material = marid || "";
                                         value.Unit = measure;
-                                      
+                                        var meaindex=meanick.indexOf(measure)
+                                        if(meaindex!='-1'){
+                                            value.StockBillEntry_Unit = meavalue[meaindex]
+                                        }else{
+                                            value.StockBillEntry_Unit = ""
+                                        }
                                         if (value.tempId == viewObj.last) {
                                             activeByType("add");
                                         } else {
@@ -509,7 +555,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                     value.StockBillEntry_Specifications = specife || "";
                                     value.StockBillEntry_Material = marid || "";
                                     value.Unit= measure;
-                                
+                                    var meaindex=meanick.indexOf(measure)
+                                    if(meaindex!='-1'){
+                                        value.StockBillEntry_Unit = meavalue[meaindex]
+                                    }else{
+                                        value.StockBillEntry_Unit = ""
+                                    }
                                     if (value.tempId == viewObj.last) {
                                         activeByType("add");
                                     } else {
@@ -549,7 +600,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 }
             })
         }
-       console.log(data)
         tableIns.reload({
             data: data,
             limit: data.length
@@ -560,7 +610,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         var _this = $(this);
         var supper=$("#StockBill_Department option:selected").val()
         var custom=$("#StockBill_custom option:selected").val()
-        console.log
         if(!supper&&!custom){
             var date = _this.attr("data-type");
             if (date == 'daten') {
@@ -569,7 +618,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     type: "get",
                     url: ajaxdepart,
                     success: function (res) {
-                        console.log(res)
                         var isussecc = res.Succeed;
                         var data = res.Data;
                         if (isussecc) {
@@ -605,7 +653,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 type: "get",
                 url: ajaxsupplist,
                 success: function (res) {
-                    console.log(res)
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
@@ -682,7 +729,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -753,7 +799,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         })
         // data.StockBill_Sender=$("#department option:selected").val()
         data.Details=newdata
-        console.log(data)
         $.ajax({
             type:"POST",
             url:addbill,

@@ -6,11 +6,11 @@ var ratelist = [];
 var currnamshow = [];
 var meavalue = [],
     meanick = [],
-    stockid=[],
-    stocknick=[]
-var  materid=[],
-maternick=[],
-matername=[]
+    stockid = [],
+    stocknick = []
+var materid = [],
+    maternick = [],
+    matername = []
 var first = new Date().valueOf();
 var getablelist;
 window.viewObj = {
@@ -48,9 +48,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         isInitValue: true,
         btns: ['now', 'confirm']
     });
-   
-   
-  
+
+
+
     //数据表格实例化		
     layTableId = "layTable";
     tableIns = table.render({
@@ -87,14 +87,20 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     title: '批号',
                     width: 80
                 },
-                {field: 'StockBillEntry_Unit',title: '计量单位',width: 80,align: 'center',templet:function(d){
-                    var unitindex=meavalue.indexOf(d.StockBillEntry_Unit)
-                    if(unitindex!='-1'){
-                        return meanick[unitindex]
-                    }else{
-                        return ''
+                {
+                    field: 'StockBillEntry_Unit',
+                    title: '计量单位',
+                    width: 80,
+                    align: 'center',
+                    templet: function (d) {
+                        var unitindex = meavalue.indexOf(d.StockBillEntry_Unit)
+                        if (unitindex != '-1') {
+                            return meanick[unitindex]
+                        } else {
+                            return ''
+                        }
                     }
-                }},
+                },
                 {
                     field: 'StockBillEntry_Price',
                     title: '价格',
@@ -135,7 +141,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             ]
         ],
         done: function (res, curr, count) {
-            console.log(res.data)
             viewObj.tbData = res.data;
             prolist();
             tabledata = res.data;
@@ -145,10 +150,11 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 $.each(tabledata, function (index, value) {
                     if (value.LAY_TABLE_INDEX == dataindex) {
                         $cr.find('input').val(value.Material_Name);
-                        var stock=''
-                        var stockindex= stockid.indexOf(value.StockBillEntry_Stock)
-                        if(stockindex!='-1'){
-                            stock=stocknick[stockindex]
+                        var stock = ''
+                        var stockindex = stockid.indexOf(value.StockBillEntry_Stock)
+                        if (stockindex != '-1') {
+                            stock = stocknick[stockindex]
+                            
                         }
                         $cr.find('td[data-field="StockBillEntry_Stock"]').find("input").val(stock)
                     }
@@ -304,6 +310,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     var htmlterm = '';
     var arrlist = [];
     var arri = {};
+
     function prolist() {
         $(".productworktable td[data-field='Material_Name']").each(function () {
             var curnow = $(this);
@@ -615,6 +622,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
         })
     }
+
     function getbatno(data, cout) {
         for (var i = 0; i <= cout - 2; i++) {
             $.ajax({
@@ -630,81 +638,28 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 }
             })
         }
-        console.log(data)
         tableIns.reload({
             data: data,
             limit: data.length
         });
     }
-     // 仓库
-     $.ajax({
+    // 仓库
+    $.ajax({
         type: 'GET',
         url: ajaxstocklist,
         success: function (res) {
+            var oldData = table.cache[layTableId];
             $.each(res.Data, function (i, v) {
                 stocklist.push(v)
                 stockid.push(v.F_Id)
                 stocknick.push(v.Stock_Nick)
-                var oldData = table.cache[layTableId];
-                $.each(oldData,function(i,v){
-                   if(v.StockBillEntry_Material){
-                       var materindex=materid.indexOf(v.StockBillEntry_Material)
-                       if(materindex!='-1'){
-                           v.Material_Name=matername[materindex]
-                           v.Material_Nick=maternick[materindex]
-                       }else{
-                        v.Material_Name=""
-                        v.Material_Nick=""
-                       }
-                   }
-                })
-                tableIns.reload({
-                    data: oldData,
-                    limit: oldData.length
-                });
-
             })
+            tableIns.reload({
+                data: oldData,
+                limit: oldData.length
+            });
         }
     })
-     // 物料
-     $.ajax({
-        type: "get",
-        url: ajaxMater,
-        success: function (res) {
-            var isussecc = res.Succeed;
-            if (isussecc) {
-                var data = res.Data;
-                for (var i = 0; i < data.length; i++) {
-                    var nowD = data[i];
-                    materid.push(nowD.F_Id)
-                    maternick.push(nowD.Material_Nick)
-                    matername.push(nowD.Material_Name)
-                }
-                var oldData = table.cache[layTableId];
-                $.each(oldData,function(i,v){
-                   if(v.StockBillEntry_Material){
-                       var materindex=materid.indexOf(v.StockBillEntry_Material)
-                       if(materindex!='-1'){
-                           v.Material_Name=matername[materindex]
-                           v.Material_Nick=maternick[materindex]
-                       }else{
-                        v.Material_Name=""
-                        v.Material_Nick=""
-                       }
-                   }
-                })
-                tableIns.reload({
-                    data: oldData,
-                    limit: oldData.length
-                });
-
-            } else {
-                alert(res.Message)
-            }
-
-        }
-    })
-
     // 计量单位
     $.ajax({
         type: "GET",
@@ -717,20 +672,17 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     var datanow = data[i]
                     meavalue.push(datanow.F_Id)
                     meanick.push(datanow.Measure_Nick)
-
                 }
                 var oldData = table.cache[layTableId];
                 tableIns.reload({
                     data: oldData,
                     limit: oldData.length
                 });
-                
             } else {
                 alert(data.Message)
             }
         }
     })
-
     // 部门--
     $(".stockdepart").on("click", function () {
         var _this = $(this);
@@ -881,16 +833,51 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 }
                 $("#StockBill_DateTime").val(datetime)
                 $("#Rmark").val(data.Rmark)
-                tableIns.reload({
-                    data: data.Details,
-                    limit: data.Details.length
-                });
-
+                getmater(data.Details)
+                $("#F_Id").val(data.F_Id)
 
             }
         }
     })
 
+    function getmater(tabledata) {
+        // 物料
+        $.ajax({
+            type: "get",
+            url: ajaxMater,
+            success: function (res) {
+                var isussecc = res.Succeed;
+                if (isussecc) {
+                    var data = res.Data;
+                    for (var i = 0; i < data.length; i++) {
+                        var nowD = data[i];
+                        materid.push(nowD.F_Id)
+                        maternick.push(nowD.Material_Nick)
+                        matername.push(nowD.Material_Name)
+                    }
+                    $.each(tabledata, function (i, v) {
+                        if (v.StockBillEntry_Material) {
+                            var materindex = materid.indexOf(v.StockBillEntry_Material)
+                            if (materindex != '-1') {
+                                v.Material_Name = matername[materindex]
+                                v.Material_Nick = maternick[materindex]
+                            } else {
+                                v.Material_Name = ""
+                                v.Material_Nick = ""
+                            }
+                        }
+                    })
+                    tableIns.reload({
+                        data: tabledata,
+                        limit: tabledata.length
+                    });
+                } else {
+                    alert(res.Message)
+                }
+
+            }
+        })
+    }
 
     // 制单人
     function getbill(receive, bill) {
