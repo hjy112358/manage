@@ -54,8 +54,8 @@ $(function () {
                 $(".termask").removeClass("hidden");
                 $(".terform1").removeClass("hidden");
                 $(".terform").addClass("hidden");
-                $("#Family_Name").val(obj.data.Family_Name);
-                $("#Family_Nick").val(obj.data.Family_Nick);
+                $("#Family_Namec").val(obj.data.Family_Name);
+                $("#Family_Nickc").val(obj.data.Family_Nick);
                 var id = obj.data.F_Id;
                 $(".editsave").attr("data-id", id)
                 $.ajax({
