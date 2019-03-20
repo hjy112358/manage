@@ -18,12 +18,10 @@ function tablerender(str, data) {
             , limit: 1000
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
-                    //console.log(obj);
                     parent.getpurwork(obj.data.F_Id)
                 });
             }
         });
-
         reloadtable=function(){
             var oldData = table.cache[layTableId];
             tableIns.reload({
@@ -42,7 +40,6 @@ $(function () {
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            //console.log(res)
             var isussecc = res.Succeed;
             if (isussecc) {
                 istrue++;
@@ -82,7 +79,6 @@ $(function () {
         type: "get",
         url: ajaxsupplist,
         success: function (res) {
-            console.log(res)
             var isussecc = res.Succeed;
             if (isussecc) {
                 istrue++;
@@ -119,7 +115,6 @@ $(function () {
                     }
                 }
             },
-
             {
                 field: 'PurchaseOrder_Status', title: '单据状态', align: 'center', width: "100", templet: function (d) {
                     if (d.PurchaseOrder_Status == '10000') {
@@ -133,8 +128,6 @@ $(function () {
                     }
                 }
             },
-
-           
             {
                 field: 'PurchaseOrder_Currency', title: '币别', width: '150', align: 'center',templet:function(d){
                     if (d.PurchaseOrder_Currency) {
@@ -211,7 +204,6 @@ $(function () {
             url: ajaxchaseorderlist,
             success: function (res) {
                 var data = res.Data;
-                console.log(data)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(subindex)
@@ -243,7 +235,6 @@ function delscale(id) {
     var index = layer.confirm('确认删除？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
-        var token = $.cookie("token");
         $.ajax({
             type: "POST",
             async: false,

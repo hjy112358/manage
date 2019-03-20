@@ -91,7 +91,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                     } else {
                         return ''
                     }
-
                 }
             },
             { field: 'SalesInvoiceEntry_BatchNo', title: '批号' },
@@ -128,7 +127,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                     } else {
                         num = '0.00'
                     }
-
                     return num
                 }
             },
@@ -140,7 +138,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                     } else {
                         num = '0.00'
                     }
-
                     return num
                 }
             },
@@ -180,7 +177,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 });
             });
             $("#tablelist .layui-table-view .layui-table td[data-field='FMaterialName']").on("click", function () {
-                console.log(1);
                 var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
                 $('#tableRes .layui-table-body.layui-table-main').animate({ scrollTop: scrollHeight }, 600);
             })
@@ -192,7 +188,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         add: function () {	//添加一行
             viewObj.limit = viewObj.limit + 1;
             var oldData = table.cache[layTableId];
-            // console.log(oldData);
             var tid = new Date().valueOf();
             var newRow = { tempId: tid, term: "", FQty: "", date: "", FNote: "", state: 0, FMaterialName: '' };
             oldData.push(newRow);
@@ -204,15 +199,13 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         },
         updateRow: function (obj) {
             var oldData = table.cache[layTableId];
-            // console.log(oldData);
             tableIns.reload({
                 data: oldData,
                 limit: viewObj.limit
             });
         },
         removeEmptyTableCache: function () {
-            var oldData = table.cache[layTableId];
-            // console.log(oldData)
+            var oldData = table.cache[layTableId]
             for (var i = 0, row; i < oldData.length; i++) {
                 row = oldData[i];
                 if (!row || !row.tempId) {
@@ -243,8 +236,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     //监听工具条
     table.on('tool(dataTable)', function (obj) {
         var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
-        console.log('监听工具条');
-        console.log(data);
         switch (event) {
             case "state":
                 var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
@@ -268,22 +259,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     });
     table.on('edit(dataTable)', function (obj) {
         var oldData = table.cache[layTableId];
-        // console.log(oldData)
-        // if (!$.isNumeric(obj.value)) {
-        //     for (var i = 0; i < oldData.length; i++) {
-        //         var datenow = oldData[i];
-        //         if (datenow.tempId === obj.data.tempId) {
-        //             datenow.dates = "";
-        //             layer.alert("请输入数字");
-        //         }
-        //     }
-        // }
-        // if (obj.data.tempId == viewObj.last) {
-        //     activeByType("add");
-        // }
         tableIns.reload({
             data: oldData,
-            limit: viewObj.limit
+            limit: oldData.length
         });
     });
 
@@ -328,7 +306,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         type: "GET",
         url: ajaxMea,
         success: function (res) {
-            console.log(res)
             var data = res.Data;
             var isussecc = res.Succeed;
             if (isussecc) {
@@ -365,11 +342,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             }
         }
     })
-
-
     // 切换客户
     layui.form.on('select(seleccus)', function (data, e) {
-        console.log(data)
         var cusnick, curr, rate;
         if (data.elem.selectedOptions) {
             cusnick = data.elem.selectedOptions[0].innerHTML;
@@ -395,14 +369,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         $.ajax({
             url: ajaxstockbionelist +  cusnick ,
             success: function (res) {
-                console.log(res)
                 if (res.Succeed) {
                     if (res.Data.length >= 1) {
                         $("#SalesInvoice_ExRate").val(res.Data[0].StockBill_ExRate)
                         $.ajax({
                             url: ajaxstockbillone + res.Data[0].F_Id,
                             success: function (result) {
-                                console.log(result)
                                 if (result.Succeed) {
                                     var data = result.Data.Details
                                     var totalprice = $("#SalesInvoice_Total").val();
@@ -442,7 +414,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                             limit: 1
                         })
                     }
-
                 }
             }
         })
@@ -458,7 +429,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 type: "get",
                 url: ajaxCus,
                 success: function (res) {
-
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
@@ -476,7 +446,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                     } else {
                         alert(res.Message)
                     }
-
                 }
             })
         }
@@ -487,8 +456,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     var username = $.cookie("User_Nick")
     $("#SalesInvoice_Biller").val(mouser)
     $("#SalesInvoice_Billername").val(username)
-
-
 
     function renderForm() {
         layui.use('form', function () {
@@ -526,15 +493,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         for (var j = 0; j < formlist.length; j++) {
             data[formlist[j].name] = formlist[j].value
         }
-
         data.Details = oldData
-        console.log(data)
         $.ajax({
             type: "POST",
             url: ajaxaddinvo,
             data: data,
             success: function (res) {
-                console.log(res)
                 if (res.Succeed) {
                     layer.close(indexlay);
                     layer.msg("新增成功");
@@ -545,11 +509,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                     alert(res.Message)
                 }
             }
-
         })
         return false
     })
-
 
 });
 

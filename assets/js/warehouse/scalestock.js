@@ -28,7 +28,6 @@ $.ajax({
     success: function (res) {
         var data = res.Data;
         var isussecc = res.Succeed;
-        console.log(data)
         if (isussecc) {
             for (var i = 0; i < data.length; i++) {
                 materid.push(data[i].F_Id)
@@ -43,7 +42,6 @@ $.ajax({
     type: 'GET',
     url: ajaxstocklist,
     success: function (res) {
-        console.log(res)
         $.each(res.Data, function (i, v) {
             stocklist.push(v)
         })
@@ -56,7 +54,6 @@ $.ajax({
     success: function (res) {
         var data = res.Data;
         var isussecc = res.Succeed;
-        console.log(data)
         if (isussecc) {
             for (var i = 0; i < data.length; i++) {
                 measureid.push(data[i].Measure_Manufacture)  
@@ -65,7 +62,6 @@ $.ajax({
         }
     }
 })
-
 
 var renderForm1,maternolist=[];
 var measureid=[],measurnick=[],layer;
@@ -125,7 +121,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 }
             },
             { field: 'StockBillEntry_Specifications', title: '规格型号' },
-            // { field: 'term3', title: '辅助属性', edit: 'text' },
             { field: 'unit', title: '计量单位' },
             {
                 field: 'StockBillEntry_BatchNo', title: '批号'
@@ -136,28 +131,11 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             { field: 'StockBillEntry_Amount', title: '总额'},
             { field: 'StockBillEntry_Stock', title: '仓库', templet: '#selectstock' },
             { field: 'Rmark', title: '备注', edit: 'text' }
-            // {
-            //     field: 'F_Id', title: '操作', align: 'center', templet: function (d) {
-            //         return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.F_Id + '">删除</a>';
-            //     }
-            // }
         ]],
         done: function (res, curr, count) {
             viewObj.tbData = res.data;
             var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
             $('#tableRes .layui-table-body.layui-table-main').animate({ scrollTop: scrollHeight }, 400);
-            // $(".layui-input-date").each(function (i) {
-            //     layui.laydate.render({
-            //         elem: this,
-            //         format: "yyyy-MM-dd",
-            //         done: function (value, date) {
-            //             if (res && res.data[i]) {
-            //                 $.extend(res.data[i], { 'FFetchDate': value })
-            //             }
-            //         }
-            //     });
-            // });
-           
             tabledata = res.data;
             $('#tableRes tr').each(function (e) {
                 var $cr = $(this);
@@ -165,26 +143,15 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 $.each(tabledata, function (index, value) {
                     if (value.LAY_TABLE_INDEX == dataindex) {
                         $cr.find('input').val(value.stock);
-                        // $cr.find('input[name="FFetchDate"]').val(value.FFetchDate);
                     }
                 });
             });
-            console.log(res.data)
-            // $("#tablelist .layui-table-view .layui-table td[data-field='term']").on("click", function () {
-            //     console.log(1);
-            //     var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
-            //     $('#tableRes .layui-table-body.layui-table-main').animate({ scrollTop: scrollHeight }, 400);
-            // })
-
-
         }
     });
     //定义事件集合
     var active = {
-
         updateRow: function (obj) {
             var oldData = table.cache[layTableId];
-            // console.log(oldData);
             tableIns.reload({
                 data: oldData,
                 limit: viewObj.limit
@@ -192,7 +159,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         },
         removeEmptyTableCache: function () {
             var oldData = table.cache[layTableId];
-            // console.log(oldData)
             for (var i = 0, row; i < oldData.length; i++) {
                 row = oldData[i];
                 if (!row || !row.tempId) {
@@ -223,16 +189,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
      // 批号
     function getbatno() {
-      
         var oldData = table.cache[layTableId];
-        console.log(oldData)
-        
         $.each(maternolist,function(i,v){
             $.ajax({
                 url: ajaxstockno +v,
                 async: false,
                 success: function (res) {
-                    console.log(res)
                     if(res.Succeed){
                         oldData[i].StockBillEntry_BatchNo=res.Data[0].Inventory_BatchNo
                     }
@@ -249,8 +211,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     //监听工具条
     table.on('tool(dataTable)', function (obj) {
         var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
-        console.log('监听工具条');
-        console.log(data);
         switch (event) {
             case "state":
                 var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
@@ -273,11 +233,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         }
     });
     table.on('edit(dataTable)', function (obj) {
-        console.log(obj)
         var elem = obj.tr;
         var dataindex = elem.attr("data-index");
         $.each(tabledata, function (index, value) {
-            console.log(value)
             if (value.LAY_TABLE_INDEX == dataindex) {
                 if(obj.field=='StockBillEntry_Quantity'){
                     if (!$.isNumeric(obj.value)){
@@ -306,7 +264,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         var elem = data.othis.parents('tr');
         var dataindex = elem.attr("data-index");
         $.each(tabledata, function (index, value) {
-            console.log(value)
             if (value.LAY_TABLE_INDEX == dataindex) {
                 value.StockBillEntry_Stock = data.value;
                 if (data.elem.selectedOptions) {
@@ -350,7 +307,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            //console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -381,7 +337,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 type: "get",
                 url: ajaxdepart,
                 success: function (res) {
-                    console.log(res)
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
@@ -415,7 +370,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                 type: "get",
                 url: salelist,
                 success: function (res) {
-                    console.log(res)
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
@@ -440,18 +394,15 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
 
     // 切换订单号
     layui.form.on('select(changeorder)', function (data) {
-        console.log(data)
         if (data.value != '') {
             $.ajax({
                 type: "get",
                 url: saleEntry + data.value,
                 success: function (res) {
-                    console.log(res)
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
                         if (data.Details) {
-                            console.log(data.Details)
                             $.each(data.Details, function (index, value) {
                                 value.StockBillEntry_Specifications = value.SalesOrderEntry_Specifications
                                 value.F_Id=null
@@ -470,7 +421,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                                     url: ajaxstockno +value.SalesOrderEntry_Material,
                                     async: false,
                                     success: function (result) {
-                                        console.log(result)
                                         if(result.Succeed){
                                             if(result.Data.length>=1){
                                                 value.StockBillEntry_BatchNo=result.Data[0].Inventory_BatchNo
@@ -514,7 +464,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
         }
         data.StockBill_Receiver = $("#department option:selected").val()
         data.Details = oldData
-        console.log(data)
         $.ajax({
             type: "POST",
             url: addbill,

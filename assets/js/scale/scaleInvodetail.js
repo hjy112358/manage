@@ -4,7 +4,6 @@ $(function () {
     $.ajax({
         url: ajaxinvolistonedetail + fid,
         success: function (res) {
-            console.log(res)
             if (res.Succeed) {
                 var data = res.Data;
                 $("#SalesInvoice_Currency").val(data.Currency_Nick)
@@ -47,7 +46,6 @@ $(function () {
                     materid.push(data[i].F_Id)
                     maternick.push(data[i].Material_Nick)
                 }
-
             }
         }
     })
@@ -57,7 +55,6 @@ $(function () {
         type:"GET",
         url: ajaxMea,
         success: function (res) {
-            console.log(res)
             var data = res.Data;
             var isussecc = res.Succeed;
             if (isussecc) {
@@ -91,7 +88,6 @@ function tablerender( data) {
                         return maternick[index]
                     }
                 }},
-                // { field: 'StockBillEntry_Material', title: '客户料号', edit: 'text' },
                 { field: 'SalesInvoiceEntry_Specifications', title: '规格型号'},
                 { field: 'SalesInvoiceEntry_Unit', title: '单位' ,templet:function(d){
                     if(d.SalesInvoiceEntry_Unit){
@@ -104,7 +100,6 @@ function tablerender( data) {
                     }else{
                         return ''
                     }
-                    
                 }},
                 { field: 'SalesInvoiceEntry_BatchNo', title: '批号' },
                 { field: 'SalesInvoiceEntry_Quantity', title: '数量' },
@@ -135,7 +130,6 @@ function tablerender( data) {
                     } else {
                         num = ''
                     }
-    
                     return num
                 } },
                 { field: 'total', title: '价税合计' , templet: function (d) {
@@ -145,11 +139,9 @@ function tablerender( data) {
                     } else {
                         num = ''
                     }
-    
                     return num
                 } },
                 { field: 'SalesInvoiceEntry_Total', title: '开票金额' },
-                // { field: 'FFetchDate', title: '源单单号'},
                 { field: 'Remark', title: '备注', edit: 'text' }
                 
             ]]
@@ -201,7 +193,6 @@ function getcus(id){
             } else {
                 alert(res.Message)
             }
-
         }
     })
 }
@@ -221,11 +212,9 @@ function getbill(id){
                         $("#SalesInvoice_Billername").val(datanow.User_Nick)
                     }
                 }
-               
             } else {
                 alert(res.Message)
             }
-
         }
     })
 }

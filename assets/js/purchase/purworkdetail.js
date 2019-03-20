@@ -4,7 +4,6 @@ $(function () {
     $.ajax({
         url: ajaxpurchaseone + fid,
         success: function (res) {
-            console.log(res)
             if (res.Succeed) {
                 var data = res.Data;
                 $("#PurchaseOrder_ExRate").val(data.PurchaseOrder_ExRate)
@@ -121,21 +120,9 @@ function tablerender(data) {
             , limit: 1000
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
-                    //console.log(obj);
-                    // parent.getpurwork(obj.data.F_Id)
                 });
             }
         });
-
-        // reloadtable=function(){
-        //     var oldData = table.cache[layTableId];
-        //     tableIns.reload({
-        //         data: oldData,
-        //         limit: oldData.length
-        //     });
-        // }
-        
-
         return false;
     })
 }
@@ -146,7 +133,6 @@ function getbillEm(bill, em) {
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            //console.log(res)
             var isussecc = res.Succeed;
             if (isussecc) {
                 var data = res.Data;
@@ -234,14 +220,12 @@ function getmat(tabledata,currid) {
         success: function (res) {
             var data = res.Data;
             var isussecc = res.Succeed;
-            console.log(data)
             if (isussecc) {
                 for (var i = 0; i < data.length; i++) {
                     materid.push(data[i].F_Id)
                     maternick.push(data[i].Material_Nick)
                     matername.push(data[i].Material_Name)
                 }
-                
             } else {
                 alert(res.Message)
             }
@@ -255,14 +239,12 @@ function getmat(tabledata,currid) {
         success: function (res) {
             var data = res.Data;
             var isussecc = res.Succeed;
-            console.log(data)
             if (isussecc) {
                 for (var i = 0; i < data.length; i++) {
                     measureid.push(data[i].Measure_Manufacture) 
                     measurnick.push(data[i].Measure_Nick)
                     materfid.push(data[i].F_Id)
                 }
-                
             }else{
                 alert(res.Message)
             }

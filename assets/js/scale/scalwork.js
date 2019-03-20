@@ -1,5 +1,4 @@
 var dateslit = [];
-var token = $.cookie("token");
 var currname = [];
 var currnick = [];
 var ratelist = [];
@@ -25,7 +24,6 @@ for (var i = 0; i < 5; i++) {
         Material_Name: '', //物料代码
         Material_Nick: '', //物料名称
         SalesOrderEntry_Material: '', //物料--物料id
-        // SalesOrderEntry_Currency: "55C21484-9E61-4EB8-8496-3137C249130B",//币别
         SalesOrderEntry_Specifications: '', //销售规格
         SalesOrderEntry_Price: '', //价格
         SalesOrderEntry_Quantity: '', //数量
@@ -34,22 +32,16 @@ for (var i = 0; i < 5; i++) {
         SalesOrderEntry_TaxRate: '', //税率
         SalesOrderEntry_Tax: "", //税额
         SalesOrderEntry_Total: '', //合计
-        // SalesOrderEntry_ExRate: '1',//汇率
         SalesOrderEntry_Deadline: '', //交货日期
         Remark: '', //备注
-        // currchange: '0',
         SalesOrderEntry_SalesOrder: ''
     }
-
     tdata.push(data);
-
 }
 window.viewObj = {
     tbData: tdata,
     limit: 5,
     last: temip[4]
-    // currtype: "55C21484-9E61-4EB8-8496-3137C249130B",
-    // rate: '1'
 };
 var tableIns;
 var upload, table;
@@ -62,7 +54,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     var nowM = myDate.getMonth() + 1;
     var nowD = myDate.getDate();
     var tody = nowY + "-" + (nowM < 10 ? "0" + nowM : nowM) + "-" + (nowD < 10 ? "0" + nowD : nowD);
-
     var $ = layui.$;
     table = layui.table,
         form = layui.form,
@@ -77,12 +68,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         isInitValue: true,
         btns: ['now', 'confirm']
     });
-    // laydate.render({
-    //     elem: '#SalesOrder_Deadline',
-    //     // value: tody,
-    //     isInitValue: true,
-    //     btns: ['now', 'confirm']
-    // });
+  
     //数据表格实例化		
     layTableId = "layTable";
     tableIns = table.render({
@@ -259,10 +245,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             ]
         ],
         done: function (res, curr, count) {
-            console.log(res.data)
             viewObj.tbData = res.data;
             prolist();
-
             $(".layui-input-date").each(function (i) {
                 layui.laydate.render({
                     elem: this,
@@ -285,17 +269,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     if (value.LAY_TABLE_INDEX == dataindex) {
                         $cr.find('input').val(value.Material_Name);
                         $cr.find('input[id="SalesOrderEntry_Deadline"]').val(value.SalesOrderEntry_Deadline);
-
-                        // for (var i = 0; i < currname.length; i++) {
-                        //     var nownick = currname[i];
-                        //     var nowi = i;
-                        //     if (nownick == value.SalesOrderEntry_Currency) {
-                        //         $cr.find('td[data-field="SalesOrderEntry_Currency"] input').val(currnick[nowi]);
-                        //         return;
-                        //     } else {
-                        //         $cr.find('td[data-field="SalesOrderEntry_Currency"] input').val("");
-                        //     }
-                        // }
                     }
                 });
             });
@@ -307,8 +280,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         add: function () { //添加一行
             viewObj.limit = viewObj.limit + 1;
             var oldData = table.cache[layTableId];
-
-            // console.log(oldData);
             var tid = new Date().valueOf();
             var newRow = {
                 tempId: tid,
@@ -336,7 +307,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             viewObj.last = tid;
             tableIns.reload({
                 data: oldData,
-                limit: viewObj.limit
+                limit: oldData.length
             });
         },
         updateRow: function () {
@@ -344,12 +315,11 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             // console.log(oldData);
             tableIns.reload({
                 data: oldData,
-                limit: viewObj.limit
+                limit: oldData.length
             });
         },
         removeEmptyTableCache: function () {
             var oldData = table.cache[layTableId];
-            // console.log(oldData)
             for (var i = 0, row; i < oldData.length; i++) {
                 row = oldData[i];
                 if (!row || !row.tempId) {
@@ -358,10 +328,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 continue;
             }
             viewObj.last = oldData[oldData.length - 1].tempId;
-
             tableIns.reload({
                 data: oldData,
-                limit: viewObj.limit
+                limit: oldData.length
             });
         }
     }
@@ -383,7 +352,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         var data = obj.data,
             event = obj.event,
             tr = obj.tr; //获得当前行 tr 的DOM对象;
-
         switch (event) {
             case "state":
                 var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
@@ -408,11 +376,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     });
     // table 修改
     table.on('edit(dataTable)', function (obj) {
-        console.log(obj)
         var field = obj.field;
         var dataindex = $(obj.tr).attr("data-index");
         $.each(tabledata, function (index, value) {
-
             if (value.LAY_TABLE_INDEX == dataindex) {
                 if (value.Material_Name == '') {
                     layer.alert("请先选择物料");
@@ -496,18 +462,13 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         // 税额=未税金额*（税率/100）
                         value.SalesOrderEntry_Tax = parseFloat(value.SalesOrderEntry_Amount) * (parseFloat(value.SalesOrderEntry_TaxRate || '0') / 100)
                     }
-
-
-
                 }
             }
-
-
         });
         var oldData = table.cache[layTableId];
         tableIns.reload({
             data: oldData,
-            limit: viewObj.limit
+            limit: oldData.length
         });
     });
 
@@ -520,7 +481,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         $(".productworktable td[data-field='Material_Name']").each(function () {
             var curnow = $(this);
             curnow.on("click", function () {
-                // console.log(1);
                 var scrollHeight = $('#tableRes .layui-table-body.layui-table-main').prop("scrollHeight");
                 var height = $('#tableRes .layui-table-body.layui-table-main').height() + scrollHeight + 80;
                 $('#tableRes .layui-table-body.layui-table-main').css("height", height)
@@ -549,7 +509,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                             var data = res.Data;
                             var isussecc = res.Succeed;
                             if (isussecc) {
-                                // data[i].Material_Name data[i].Material_Nick  data[i].Material_Specification
                                 for (var i = 0; i < data.length; i++) {
                                     var datanow = data[i];
                                     htmlterm += '<li data-name="' + (datanow.Material_Name || '') + '" data-nick="' + (datanow.Material_Nick || '') + '" data-spe="' + (datanow.Material_Specifications || '') + '" data-materme="' + (datanow.Material_Measure || '') + '" data-materid="' + (datanow.F_Id || '') + '"><p>' + (datanow.Material_Name || '') + '</p><p>' + (datanow.Material_Nick || '') + '</p><p>' + (datanow.Material_Specifications || '') + '</p></li>'
@@ -572,9 +531,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                     $.each(arrlist, function (index, item) {
                                         if ((item.materame && item.materame.indexOf(searchVal) != -1) || (item.maternick && item.maternick.indexOf(searchVal) != -1) || (item.matersp && item.matersp.indexOf(searchVal) != -1)) {
                                             showList.push(item);
-                                        } else {
-
-                                        }
+                                        } 
                                     })
                                     for (var j = 0; j < showList.length; j++) {
                                         var shownow = showList[j]
@@ -621,7 +578,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                                         var oldData = table.cache[layTableId];
                                                         tableIns.reload({
                                                             data: oldData,
-                                                            limit: viewObj.limit
+                                                            limit: oldData.length
                                                         });
                                                     }
                                                 }
@@ -668,7 +625,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                                     var oldData = table.cache[layTableId];
                                                     tableIns.reload({
                                                         data: oldData,
-                                                        limit: viewObj.limit
+                                                        limit: oldData.length
                                                     });
                                                 }
                                             }
@@ -681,7 +638,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                             } else {
                                 alert(res.Message)
                             }
-
                         }
                     })
                 } else {
@@ -697,7 +653,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                             $(nowtr).find(".datelist").removeClass("hidden")
                         }
                     });
-
                     $(".materName").on("keyup", function () {
                         var searchVal = $(this).val();
                         var showList = [];
@@ -707,11 +662,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         $.each(arrlist, function (index, item) {
                             if ((item.materame && item.materame.indexOf(searchVal) != -1) || (item.maternick && item.maternick.indexOf(searchVal) != -1) || (item.matersp && item.matersp.indexOf(searchVal) != -1)) {
                                 showList.push(item);
-                            } else {
-
-                            }
+                            } 
                         })
-
                         for (var j = 0; j < showList.length; j++) {
                             var shownow = showList[j]
                             searchlist += '<li data-name="' + shownow.materame + '" data-nick="' + shownow.maternick + '" data-spe="' + shownow.matersp + '" data-maMaterial_Namee="' + shownow.matermea + '"><p>' + shownow.materame + '</p><p>' + shownow.maternick + '</p><p>' + shownow.matersp + '</p></li>'
@@ -735,7 +687,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                             });
                             _this1.on("click", function () {
                                 var oldData = table.cache[layTableId];
-                                // console.log(oldData)
                                 var name = $(this).attr("data-name");
                                 var nick = $(this).attr("data-nick");
                                 var specife = $(this).attr("data-spe");
@@ -745,7 +696,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                 var rate = $("#SalesOrder_TaxRate").val(); //税率
                                 var sendate = $("#recdate").val(); //交货日期
                                 $.each(tabledata, function (index, value) {
-                                    // console.log(value)
                                     if (value.LAY_TABLE_INDEX == dataindex) {
                                         value.Material_Name = name || "";
                                         value.Material_Nick = nick || "";
@@ -766,7 +716,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                             var oldData = table.cache[layTableId];
                                             tableIns.reload({
                                                 data: oldData,
-                                                limit: viewObj.limit
+                                                limit: oldData.length
                                             });
                                         }
                                     }
@@ -785,7 +735,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         });
                         _this1.on("click", function () {
                             var oldData = table.cache[layTableId];
-                            // console.log(oldData)
                             var name = $(this).attr("data-name");
                             var nick = $(this).attr("data-nick");
                             var specife = $(this).attr("data-spe");
@@ -795,7 +744,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                             var rate = $("#SalesOrder_TaxRate").val(); //税率
                             var sendate = $("#recdate").val(); //交货日期
                             $.each(tabledata, function (index, value) {
-                                // console.log(value)
                                 if (value.LAY_TABLE_INDEX == dataindex) {
                                     value.Material_Name = name || "";
                                     value.Material_Nick = nick || "";
@@ -816,7 +764,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                         var oldData = table.cache[layTableId];
                                         tableIns.reload({
                                             data: oldData,
-                                            limit: viewObj.limit
+                                            limit: oldData.length
                                         });
                                     }
                                 }
@@ -829,8 +777,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 }
                 return false;
             })
-
-
         })
     }
     // 币别--
@@ -846,8 +792,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 var html = '<option value="">请选择币别</option>';
                 var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">请选择币别</dd>'
                 for (var i = 0; i < data.length; i++) {
-                    // Currency_Name: "M0001"
-                    //Currency_Nick: "人民币"
                     dateslit.push(data[i])
                     var datanow = data[i];
                     if (datanow.Currency_Nick == '人民币') {
@@ -867,7 +811,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 var select = 'dd[lay-value="' + rmbid + '"]';
                 $('#currency').siblings("div.layui-form-select").find('dl').find(select).click();
                 $("#SalesOrder_ExRate").val(rate)
-                // _this.find("select").next().find('.layui-select-title input').click();
             } else {
                 alert(res.Message)
             }
@@ -884,7 +827,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 type: "get",
                 url: ajaxdepart,
                 success: function (res) {
-                    console.log(res)
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
@@ -899,11 +841,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
                         _this.find("select").next().find('.layui-select-title input').focus()
-                        // Customer_TaxRate 税率   
                     } else {
                         alert(res.Message)
                     }
-
                 }
             })
         }
@@ -920,7 +860,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -946,7 +885,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         type: "get",
         url: saletype,
         success: function (res) {
-            console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data.Details;
             if (isussecc) {
@@ -964,7 +902,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             } else {
                 alert(res.Message)
             }
-
         }
     })
 
@@ -974,7 +911,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         type: "get",
         url: ordernum,
         success: function (res) {
-            console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -998,7 +934,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 var oldData = table.cache[layTableId];
                 tableIns.reload({
                     data: oldData,
-                    limit: viewObj.limit
+                    limit: oldData.length
                 });
 
             });
@@ -1023,7 +959,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     var oldData = table.cache[layTableId];
                     tableIns.reload({
                         data: oldData,
-                        limit: viewObj.limit
+                        limit: oldData.length
                     });
                     return;
                 } else {
@@ -1031,7 +967,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     var oldData = table.cache[layTableId];
                     tableIns.reload({
                         data: oldData,
-                        limit: viewObj.limit
+                        limit: oldData.length
                     });
                 }
                 return
@@ -1084,20 +1020,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             var nowname = currname[k];
             var nowk = k;
             if (value == nowname) {
-                // viewObj.currtype = nowname;
-                // viewObj.rate = ratelist[nowk]
                 $("#SalesOrder_ExRate").val(ratelist[nowk])
-                // var oldData = table.cache[layTableId];
-                // $.each(tabledata, function (index, value) {
-                //     if (value.currchange == 0) {
-                //         value.SalesOrderEntry_Currency = viewObj.currtype
-                //         // value.SalesOrderEntry_ExRate = viewObj.rate
-                //     }
-                // });
-                // tableIns.reload({
-                //     data: oldData,
-                //     limit: viewObj.limit
-                // });
             }
         }
 
@@ -1133,7 +1056,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         }, 1000)
                     } else {
                         layer.close(index);
-                        alert(JSON.parse(res).Message)
+                        alert(res.Message)
                     }
                 }
             })
@@ -1142,7 +1065,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
     //保存
     var isSend = true;
-    // $("#SalesOrder_Id").val(id)
     $(".add").on("click", function () {
         var list = $("form").serializeArray();
         var data = {};
@@ -1151,12 +1073,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             data[list[j].name] = list[j].value
         }
         var oldData = table.cache[layTableId];
-        console.log(oldData)
         for (var j = 0; j < oldData.length; j++) {
             var nowdata = oldData[j]
-            console.log(newdata)
             if (nowdata.SalesOrderEntry_Material) {
-                // newdata.push(nowdata)
                 if (nowdata.SalesOrderEntry_Deadline == '') {
                     alert("请选择交货日期");
                     isSend = false;
@@ -1167,11 +1086,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     nowdata.SalesOrderEntry_Currency = curr
                     nowdata.SalesOrderEntry_ExRate = exrate
                     newdata.push(nowdata)
-                    // continue
                 }
             }
         }
-        console.log(newdata)
         if (!($("#Customer_Nick").val())) {
             alert("请选择客户")
             isSend = false;
@@ -1181,16 +1098,13 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         if (!($(this).hasClass("disclick"))) {
             if (isSend) {
                 var index = layer.load();
-
                 data.Details = newdata;
                 data.SalesOrder_Status = "10000"
-                console.log(list)
                 $.ajax({
                     type: "POST",
                     url: ajaxaddsale,
                     data: data,
                     success: function (res) {
-                        console.log(res)
                         var isussecc = res.Succeed;
                         var data = res.Data;
                         if (isussecc) {
@@ -1206,7 +1120,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     }
                 })
             }
-
         }
     })
 
@@ -1232,14 +1145,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         var _this = $(this)
         _this.bind("propertychange change  input paste", function () {
             var requestMsg = $(this).val()
-            console.log(isenter)
             if (isenter&&isBox) {
                 var changethis = $(this)
                 $.ajax({
                     type: "get",
                     url: ajaxCus + requestMsg,
                     success: function (res) {
-                        console.log(res)
                         var isussecc = res.Succeed;
                         if (isussecc) {
                             var data = res.Data;
@@ -1285,7 +1196,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         isBox = false;
     });
     $(".changeinput").blur(function () {
-        // if (isBox == true) return false;
         isBox=true
         $(this).siblings(".changeinputlist").addClass("hidden");
     });
@@ -1324,7 +1234,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             if ($(v).hasClass("active")) {
                 var $bigAutocompleteContent = $(event.target).siblings(".changeinputlist")
                 var $nextSiblingTr = $bigAutocompleteContent.find(".active");
-                console.log($nextSiblingTr)
                 var activeindex = $(v).index()
                 if (step == -1) {
                     var $previousSiblingTr = $bigAutocompleteContent.find(".active");
@@ -1351,14 +1260,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         $bigAutocompleteContent.scrollTop($nextSiblingTr[0].offsetTop - $bigAutocompleteContent.height()  +$nextSiblingTr.height()*2-15);
                     }
                 }
-                
-               
-               
                 return false
             } else {
                 if (++i == length) {
                     $(event.target).siblings(".changeinputlist").find("li").eq(0).addClass("active").siblings().removeClass("active");
-                    
                     return false;
                 }
             }
@@ -1383,7 +1288,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 return false
             } else {
                 if (++i == length) {
-                    console.log('隐藏')
                     var nowli=$(event.target).siblings(".changeinputlist").find("li").eq(0)
                     var text = nowli.text();
                     var area=nowli.attr("data-area")
@@ -1400,7 +1304,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     }
     // 弹窗数据
     getablelist = function (url, type, tableTitle, clickElem) {
-        console.log(tableTitle)
         $(".searchupdata").attr("data-elem", clickElem)
         $(".searchupdata").attr("data-type", type)
         $(".searchupdata").attr("data-url", url)
@@ -1413,7 +1316,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         $.ajax({
             url: url,
             success: function (res) {
-                console.log(res)
                 if (res.Succeed) {
                     if (type == 'custom') {
                         str = [{
@@ -1490,18 +1392,16 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     var oldData = table.cache["poplist"];
                     tablepop.reload({
                         data: oldData,
-                        limit: viewObj.limit
+                        limit: oldData.length
                     });
                 },
                 getCheckData: function () { //获取选中数据
                     var checkStatus = table.checkStatus('poplist'),
                         data = checkStatus.data;
-                    console.log(data)
                     if (type == 'custom') {
                         if (data.length >= 1) {
                             $("#" + clickElem).val(data[0].Customer_Nick)
                         }
-
                     }
                     closemark()
                 }
@@ -1547,26 +1447,21 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     });
                 });
             }
-
             $(".cancel").on("click", function () {
                 closemark()
             })
-
             closemark = function () {
                 $(".termask").addClass("hidden")
                 $(".terform")[0].reset();
             }
-
         });
     }
-
 });
 
 
 
 
 function datachange(data, e) {
-    console.log("down")
     var dataindex = $(e).parent().parent().parent().attr("data-index");
     var oldData = table.cache[layTableId];
     $.each(oldData, function (index, value) {
@@ -1577,6 +1472,6 @@ function datachange(data, e) {
     });
     tableIns.reload({
         data: oldData,
-        limit: viewObj.limit
+        limit: oldData.length
     });
 }

@@ -94,7 +94,6 @@ $(function () {
         {
             field: 'SalesOrderEntry_Deadline', title: '<span style="color:red">*  </span>交货日期',width:'100', templet: function (d) {
                 var deadline = (d.SalesOrderEntry_Deadline).split(" ")[0];
-                // console.log(deadline)
                 return deadline
             }
         },
@@ -107,14 +106,11 @@ $(function () {
         type: "get",
         url: ajaxURl + '/Api/PSISales/SalesOrder/GetEntry?keyValue=' + scaleid,
         success: function (res) {
-            // console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
-           
             if (isussecc) {
                 if (data) {
                     $("#SalesOrder_Name").val(data.SalesOrder_Name)
-                    // $("#Customer_Nick").val(data.Customer_Nick);
                     if (data.SalesOrder_DateTime) {
                         $("#SalesOrder_DateTime").val(data.SalesOrder_DateTime.split(" ")[0].replace(/\//g, "-"))
                     }
@@ -134,10 +130,9 @@ $(function () {
                     getem(data.SalesOrder_Employee)
                     getcustom(data.SalesOrder_Customer)
                     germater(str,res.Data)
-                     setInterval(function(){
+                    setInterval(function(){
                         layer.close(layerindex)
                     },1500) 
-                    
                 }
             } else {
                 alert(res.Message)
@@ -151,7 +146,6 @@ $(function () {
     })
 
     $(".hignckick").on("click", function () {
-        // data-type="daten"
         var _this = $(this)
         var type = _this.attr("data-type");
         if (type == 'daten') {
@@ -171,7 +165,6 @@ function germater(str,data){
     $.ajax({
         url: ajaxMater,
         success:function(res){
-            // console.log(res)
             var isussecc=res.Succeed;
             if(isussecc){
                 ischange++
@@ -216,7 +209,6 @@ function getem(id) {
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            // console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -256,12 +248,10 @@ function gettype(id) {
 
 // 单据状态--
 function getstatus(id) {
-    // console.log(id)
     $.ajax({
         type: "get",
         url: salestauts,
         success: function (res) {
-            console.log(res)
             var isussecc =res.Succeed;
             var data = res.Data.Details;
             if (isussecc) {
@@ -294,8 +284,6 @@ function getcurr(id) {
                     if (datanow.F_Id == id) {
                         $("#SalesOrder_Currency").val(datanow.Currency_Nick)
                     }
-
-
                 }
             } else {
                 alert(res.Message)
@@ -312,7 +300,6 @@ function getcustom(id){
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
-            
                 for (var i = 0; i < data.length; i++) {
                     var datanow = data[i]
                     customid.push(datanow.F_Id) 
@@ -337,7 +324,6 @@ function getbii(id) {
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            // console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -349,11 +335,9 @@ function getbii(id) {
                         $("#SalesOrder_Billername").val(datanow.User_Nick)
                     }
                 }
-
             } else {
                 alert(res.Message)
             }
-
         }
     })
 }
@@ -396,7 +380,6 @@ function editprintdata(data){
             } 
         })
     }
-    console.log(printdata)
 }
 
 $(".print").on("click",function(){

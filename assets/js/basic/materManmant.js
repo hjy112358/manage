@@ -107,7 +107,6 @@ function delmater(id) {
     var index = layer.confirm('确认删除？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
-        var token = $.cookie("token");
         var data = {
             F_Id: id
         }
@@ -124,7 +123,7 @@ function delmater(id) {
                     $(".checklist").trigger("click");
                 } else {
                     layer.close(index);
-                    alert(JSON.parse(res).Message)
+                    alert(res.Message)
                 }
 
             }
@@ -132,7 +131,6 @@ function delmater(id) {
     });
 }
 var renderForm1;
-var token = $.cookie("token");
 renderForm1 = function () {
     layui.use('form', function () {
         var form = layui.form;

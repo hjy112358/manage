@@ -874,72 +874,10 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         }
     })
 
-    // // 部门--
-    $(".checkdepart").on("click", function () {
-        var _this = $(this);
-        var date = _this.attr("data-type");
-        if (date == 'daten') {
-            $(".checkdepart").attr("data-type", "datey");
-            $.ajax({
-                type: "get",
-                url: ajaxdepart,
-                success: function (res) {
-                    console.log(res)
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        var html = '<option value="">全部</option>';
-                        var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                        for (var i = 0; i < data.length; i++) {
-                            html += '<option value="' + data[i].F_Id + '" >' + data[i].Department_Nick + '</option>';
-                            htmlsel += '<dd lay-value="' + data[i].F_Id + '" >' + data[i].Department_Nick + '</dd>'
-                        }
-                        $("#SalesOrder_Department").html(html);
-                        $(".checkdepart .layui-anim.layui-anim-upbit").html(htmlsel);
-                        renderForm();
-                        _this.find("select").next().find('.layui-select-title input').click();
-                        _this.find("select").next().find('.layui-select-title input').focus()
-                        // Customer_TaxRate 税率   
-                    } else {
-                        alert(res.Message)
-                    }
-
-                }
-            })
-        }
-    })
-    // 制单人
-    var mouser = $.cookie("Modify_User");
-    var username = $.cookie("User_Nick")
-    $("#SalesOrder_Biller").val(mouser)
-    $("#SalesOrder_Billername").val(username)
+  
 
 
-    // 业务员--
-    $.ajax({
-        type: "get",
-        url: ajaxUsr,
-        success: function (res) {
-            console.log(res)
-            var isussecc = res.Succeed;
-            var data = res.Data;
-            if (isussecc) {
-                var html = '<option value="">全部</option>';
-                var htmlsel = '<dd lay-value="" class="layui-select-tips layui-this">全部</dd>'
-                for (var i = 0; i < data.length; i++) {
-                    html += '<option value="' + data[i].F_Id + '">' + data[i].User_Nick + '</option>';
-                    htmlsel += '<dd lay-value="' + data[i].F_Id + '">' + data[i].User_Nick + '</dd>'
-                }
-                $("#SalesOrder_Employee").html(html);
-                $(".scalelists .layui-anim.layui-anim-upbit").html(htmlsel);
-                renderForm();
-                var select = 'dd[lay-value="' + mouser + '"]';
-                $('#SalesOrder_Employee').siblings("div.layui-form-select").find('dl').find(select).click();
-            } else {
-                alert(res.Message)
-            }
-        }
-    })
+   
 
     // 订单类型--
     $.ajax({
@@ -965,23 +903,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 alert(res.Message)
             }
 
-        }
-    })
-
-
-    // 订单编号
-    $.ajax({
-        type: "get",
-        url: ordernum,
-        success: function (res) {
-            console.log(res)
-            var isussecc = res.Succeed;
-            var data = res.Data;
-            if (isussecc) {
-                $("#SalesOrder_Name").val(data)
-            } else {
-                alert(res.Message)
-            }
         }
     })
 
@@ -1041,41 +962,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
 
 
-    //多文件列表示例
-    var tablehead = $('#tablehead');
-    var tablebody = $('#tablebody');
-    var imgcount = 0;
-    var headhtml = "<tr><th>文件名</th><th>大小</th><th>操作</th></tr>";
-    var uploadListIns = upload.render({
-        elem: '#testList',
-        accept: 'file',
-        multiple: true,
-        auto: false,
-        bindAction: '#testListAction',
-        choose: function (obj) {
-            var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
-            tablehead.html(headhtml)
-            //读取本地文件
-            obj.preview(function (index, file, result) {
-                imgcount++;
-                var tr = $(['<tr id="upload-' + index + '">', '<td>' + file.name + '</td>', '<td class="textc">' + (file.size / 1014).toFixed(1) + 'kb</td>', '<td class="textc">', '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>', '</td>', '</tr>'].join(''));
-                //删除
-                tr.find('.demo-delete').on('click', function () {
-                    delete files[index]; //删除对应的文件
-                    tr.remove();
-                    uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
-                    imgcount--;
-                    if (imgcount == 0) {
-                        tablehead.html("")
-                    }
-
-                });
-
-                tablebody.append(tr);
-            });
-        }
-
-    });
 
 
     form.on('select(currlist)', function (data) {
@@ -1110,120 +996,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         $('#tableRes .layui-table-body.layui-table-main').css("height", height)
     })
 
-    // 暂存
-    $(".addedit").on("click", function () {
-        var list = $("form").serializeArray();
-        var oldData = table.cache[layTableId];
-        list.Details = oldData;
-        if (!($(this).hasClass("disclick"))) {
-            var index = layer.load();
-            $.ajax({
-                type: "POST",
-                url: ajaxaddsale,
-                data: list,
-                success: function (res) {
-                    console.log(res)
-                    var isussecc = res.Succeed;
-                    var data = res.Data;
-                    if (isussecc) {
-                        layer.close(index);
-                        layer.msg("暂存成功");
-                        setInterval(function () {
-                            window.location.reload()
-                        }, 1000)
-                    } else {
-                        layer.close(index);
-                        alert(JSON.parse(res).Message)
-                    }
-                }
-            })
-        }
-    })
+   
 
-    //保存
-    var isSend = true;
-    // $("#SalesOrder_Id").val(id)
-    $(".add").on("click", function () {
-        var list = $("form").serializeArray();
-        var data = {};
-        var newdata = [];
-        for (var j = 0; j < list.length; j++) {
-            data[list[j].name] = list[j].value
-        }
-        var oldData = table.cache[layTableId];
-        console.log(oldData)
-        for (var j = 0; j < oldData.length; j++) {
-            var nowdata = oldData[j]
-            console.log(newdata)
-            if (nowdata.SalesOrderEntry_Material) {
-                // newdata.push(nowdata)
-                if (nowdata.SalesOrderEntry_Deadline == '') {
-                    alert("请选择交货日期");
-                    isSend = false;
-                    return;
-                } else {
-                    var exrate = $("#SalesOrder_ExRate").val()
-                    var curr = $("#currency option:selected").val()
-                    nowdata.SalesOrderEntry_Currency = curr
-                    nowdata.SalesOrderEntry_ExRate = exrate
-                    newdata.push(nowdata)
-                    // continue
-                }
-            }
-        }
-        console.log(newdata)
-        if (!($("#Customer_Nick").val())) {
-            alert("请选择客户")
-            isSend = false;
-        } else {
-            isSend = true;
-        }
-        if (!($(this).hasClass("disclick"))) {
-            if (isSend) {
-                var index = layer.load();
-
-                data.Details = newdata;
-                data.SalesOrder_Status = "10000"
-                console.log(list)
-                $.ajax({
-                    type: "POST",
-                    url: ajaxaddsale,
-                    data: data,
-                    success: function (res) {
-                        console.log(res)
-                        var isussecc = res.Succeed;
-                        var data = res.Data;
-                        if (isussecc) {
-                            layer.close(index);
-                            layer.msg("新增成功");
-                            setInterval(function () {
-                                window.location.reload()
-                            }, 1000)
-                        } else {
-                            layer.close(index);
-                            alert(res.Message)
-                        }
-                    }
-                })
-            }
-
-        }
-    })
-
-
-    $(".hignckick").on("click", function () {
-        var _this = $(this)
-        var type = _this.attr("data-type");
-        if (type == 'daten') {
-            _this.attr("data-type", "datey");
-            $(".hignrank").removeClass("hidden");
-            $(".hignckick").html("收起")
-        } else {
-            _this.attr("data-type", "daten");
-            $(".hignrank").addClass("hidden");
-            $(".hignckick").html("更多")
-        }
-    })
+ 
     var isBox = false;
     var isenter = true;
     // 客户

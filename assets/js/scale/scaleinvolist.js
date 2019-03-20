@@ -48,7 +48,6 @@ function tablerender(str, data) {
             , limit: 1000
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
-                    console.log(obj);
                     parent.getinvo(obj.data.F_Id)
                 });
             }
@@ -57,10 +56,7 @@ function tablerender(str, data) {
     })
 }
 
-
 $(function () {
-
-
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers' },
@@ -77,7 +73,6 @@ $(function () {
                     } else { 
                         return usernick[nowi]
                     }
-
                 }
             },
             {
@@ -108,12 +103,10 @@ $(function () {
         $.ajax({
             url: ajaxinvolist,
             success: function (res) {
-                console.log(data)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     var data = res.Data;
                     tablerender(str, data);
-                   
                 } else {
                     alert(res.Message)
                 }
@@ -121,17 +114,10 @@ $(function () {
         })
 
     })
-
- 
     $(".checklist").trigger("click")
-
     $(".add").on("click", function () {
         parent.newscaleinvo();
     })
-
-  
-
-
 })
 
 
@@ -147,7 +133,6 @@ function delscale(id) {
     var index = layer.confirm('确认删除？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
-        var token = $.cookie("token");
         $.ajax({
             type: "POST",
             url: ajaxremoveinvo,
@@ -156,7 +141,6 @@ function delscale(id) {
             },
             success: function (res) {
                 var data = res.Data;
-                console.log(data)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(index)

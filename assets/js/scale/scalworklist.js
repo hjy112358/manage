@@ -29,7 +29,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
     });
 });
 
-
 var layer
 // 渲染table
 function tablerender(str, data) {
@@ -47,7 +46,6 @@ function tablerender(str, data) {
             , limit: 1000
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
-                    console.log(obj);
                     parent.getscale(obj.data.SalesOrder_Name, obj.data.F_Id)
                 });
             }
@@ -71,7 +69,6 @@ $(function () {
         type: "get",
         url:ajaxCurrency,
         success: function (res) {
-            console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -81,7 +78,6 @@ $(function () {
                     html += '<option value="' + data[i].F_Id + '">' + data[i].Currency_Nick + '</option>';
                     htmlsel += '<dd lay-value="' + data[i].F_Id + '">' + data[i].Currency_Nick + '</dd>';
                     currid.push(data[i].Currency_F_Idd);
-                    // currname.push(data[i].Currency_Nick);
                     currname.push(data[i].F_Id)
                     currnick.push(data[i].Currency_Nick)
                     currnamshow.push(data[i].Currency_Name)
@@ -162,16 +158,6 @@ $(function () {
                     return ordernick[index2]
                 }
             } },
-            // {
-            //     field: 'SalesOrder_Deadline', title: '交货日期', width: "12%", align: 'center', templet: function (d) {
-            //         if (d.SalesOrder_Deadline) {
-            //             return (d.SalesOrder_Deadline).split(" ")[0]
-            //         } else {
-            //             return ''
-            //         }
-
-            //     }
-            // },
             {
                 field: 'SalesOrder_Currency', title: '币别', width: '5%',align:"left", templet: function (d) {
                     var index = currname.indexOf(d.SalesOrder_Currency)
@@ -204,7 +190,6 @@ $(function () {
 
                 }
             },
-            
             {
                 field: 'IsEnabled', title: '启用', align: 'center', width: "5%", templet: function (d) {
                     if (d.IsEnabled) {
@@ -226,22 +211,18 @@ $(function () {
             type: "GET",
             async: false,
             url: salelist,
-            // url: ajaxURl + "/Api/ApiService/Get/PSISalesOrder_Inf?token=" + token,
             success: function (res) {
                 var data = res.Data;
-                console.log(data)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     if (islist) {
                         tablerender(str, data);
                     }
-
                 } else {
                     alert(res.Message)
                 }
             }
         })
-
     })
 
     // 客户--
@@ -249,7 +230,6 @@ $(function () {
         type: "get",
         url: ajaxCus,
         success: function (res) {
-            console.log(res)
             var isussecc = res.Succeed;
             var data =res.Data;
             if (isussecc) {
@@ -312,7 +292,6 @@ $(function () {
         type: "get",
         url: saletype,
         success: function (res) {
-            console.log(res)
             var isussecc =res.Succeed;
             var data =res.Data.Details;
             if (isussecc) {
@@ -334,7 +313,6 @@ $(function () {
                 isclick()
                 alert(res.Message)
             }
-
         }
     })
 
@@ -350,7 +328,6 @@ $(function () {
                 type: "get",
                 url: ajaxdepart,
                 success: function (res) {
-                    console.log(res)
                     var isussecc =res.Succeed;
                     var data =res.Data;
                     if (isussecc) {
@@ -365,9 +342,8 @@ $(function () {
                         renderForm();
                         _this.find("select").next().find('.layui-select-title input').click();
                         _this.find("select").next().find('.layui-select-title input').focus()
-                        // Customer_TaxRate 税率   
                     } else {
-                        alert(JSON.parse(res).Message)
+                        alert(res.Message)
                     }
 
                 }
@@ -380,12 +356,10 @@ $(function () {
 
     // 切换客户
     form.on('select(customer)', function (data) {
-        console.log(data);
         var rate = ''
         if(data.value){
             if (data.elem.selectedOptions) {
                 rate = data.elem.selectedOptions[0].attributes[1].value;
-    
             } else {
                 var elems = data.elem;
                 for (var i = 0; i < elems.length; i++) {
@@ -394,7 +368,6 @@ $(function () {
                         rate = elemnow.attributes[1].value;
                     }
                 }
-    
             }
             $("#SalesOrder_TaxRate").val(rate)
         }
@@ -408,12 +381,9 @@ $(function () {
             var nowk = k;
             if (value == nowname) {
                 $("#SalesOrder_ExRate").val(ratelist[nowk])
-
             }
         }
-
     });
-
 
     function isclick() {
         if (islist == 5) {
@@ -421,10 +391,7 @@ $(function () {
             $(".checklist").trigger("click")
         }
     }
-
-
 })
-
 
 function renderForm() {
     layui.use('form', function () {
@@ -438,7 +405,6 @@ function delscale(id) {
     var index = layer.confirm('确认删除？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
-        var token = $.cookie("token");
         $.ajax({
             type: "POST",
             async: false,
@@ -448,7 +414,6 @@ function delscale(id) {
             },
             success: function (res) {
                 var data = res.Data;
-                console.log(data)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(index)

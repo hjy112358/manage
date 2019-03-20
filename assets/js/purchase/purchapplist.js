@@ -16,7 +16,6 @@ function tablerender(str, data) {
             , limit: 1000
             , done: function () {
                 table.on('rowDouble(dataTable)', function (obj) {
-                    //console.log(obj);
                     parent.getpurchapp(obj.data.F_Id)
                 });
             }
@@ -34,7 +33,6 @@ $(function () {
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            //console.log(res)
             var isussecc = res.Succeed;
             if (isussecc) {
                 istrue++;
@@ -101,8 +99,6 @@ $(function () {
                     }
                 }
             },
-            
-            
             {
                 field: 'PurchaseApply_Biller', title: '制单人', width: '150', align: 'left', templet: function (d) {
 
@@ -158,7 +154,6 @@ $(function () {
             url: purchaseapplylist,
             success: function (res) {
                 var data = res.Data;
-                console.log(data)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(subindex)
@@ -201,7 +196,6 @@ function delscale(id) {
     var index = layer.confirm('确认删除？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
-        var token = $.cookie("token");
         $.ajax({
             type: "POST",
             async: false,

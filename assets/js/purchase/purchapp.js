@@ -104,7 +104,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         ]],
         done: function (res, curr, count) {
             viewObj.tbData = res.data;
-            console.log(res.data)
             prolist();
             $(".layui-input-date").each(function (i) {
                 layui.laydate.render({
@@ -159,15 +158,13 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         },
         updateRow: function () {
             var oldData = table.cache[layTableId];
-            // console.log(oldData);
             tableIns.reload({
                 data: oldData,
-                limit: viewObj.limit
+                limit: oldData.length
             });
         },
         removeEmptyTableCache: function () {
             var oldData = table.cache[layTableId];
-            // console.log(oldData)
             for (var i = 0, row; i < oldData.length; i++) {
                 row = oldData[i];
                 if (!row || !row.tempId) {
@@ -176,10 +173,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 continue;
             }
             viewObj.last = oldData[oldData.length - 1].tempId;
-
             tableIns.reload({
                 data: oldData,
-                limit: viewObj.limit
+                limit: oldData.length
             });
         }
     }
@@ -272,9 +268,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                     $.each(arrlist, function (index, item) {
                                         if ((item.materame && item.materame.indexOf(searchVal) != -1) || (item.maternick && item.maternick.indexOf(searchVal) != -1) || (item.matersp && item.matersp.indexOf(searchVal) != -1)) {
                                             showList.push(item);
-                                        } else {
-
-                                        }
+                                        } 
                                     })
                                     for (var j = 0; j < showList.length; j++) {
                                         var shownow = showList[j]
@@ -355,8 +349,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         $.each(arrlist, function (index, item) {
                             if ((item.materame && item.materame.indexOf(searchVal) != -1) || (item.maternick && item.maternick.indexOf(searchVal) != -1) || (item.matersp && item.matersp.indexOf(searchVal) != -1)) {
                                 showList.push(item);
-                            } else {
-
                             }
                         })
 
@@ -376,7 +368,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                 $(nowtr).find("selectlist").addClass("hidden")
                             }
                         });
-
                     })
                     $('.selectlist ul').find('li').each(function () {
                         var _this1 = $(this);
@@ -385,17 +376,14 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         });
                         _this1.on("click", function () {
                             var oldData = table.cache[layTableId];
-                            // console.log(oldData)
                             var name = $(this).attr("data-name");
                             var nick = $(this).attr("data-nick");
                             var specife = $(this).attr("data-spe");
                             var measure = $(this).attr("data-materme");
                             var marid = $(this).attr("data-materid")
                             $(".materName").val(name || '');
-                            // var rate = $("#SalesOrder_TaxRate").val();//税率
                             var sendate = $("#PurchaseApply_Deadline").val();//交货日期
                             $.each(tabledata, function (index, value) {
-                                // console.log(value)
                                 if (value.LAY_TABLE_INDEX == dataindex) {
                                     value.Material_Name = name || "";
                                     value.Material_Nick = nick || "";
@@ -410,7 +398,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                                         var oldData = table.cache[layTableId];
                                         tableIns.reload({
                                             data: oldData,
-                                            limit: viewObj.limit
+                                            limit: oldData.lenth
                                         });
                                     }
                                 }
@@ -436,7 +424,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     var oldData = table.cache[layTableId];
                     tableIns.reload({
                         data: oldData,
-                        limit: viewObj.limit
+                        limit: oldData.length
                     });
                     return;
                 }
@@ -446,7 +434,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     var oldData = table.cache[layTableId];
                     tableIns.reload({
                         data: oldData,
-                        limit: viewObj.limit
+                        limit: oldData.length
                     });
                 }
                 return
@@ -474,7 +462,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 type: "get",
                 url: ajaxdepart,
                 success: function (res) {
-                    console.log(res)
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
@@ -503,7 +490,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            //console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -530,7 +516,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         type: "get",
         url: getnum,
         success: function (res) {
-            // console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -615,14 +600,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         for (var j = 0; j < oldData.length; j++) {
             var nowdata = oldData[j]
             if (nowdata.PurchaseApplyEntry_Deadline) {
-                // newdata.push(nowdata)
                 if (nowdata.PurchaseApplyEntry_Deadline == '') {
                     alert("请选择交货日期");
                     isSend = false;
                     return;
                 } else {
                     newdata.push(nowdata)
-                   
                 }
             }
         }
@@ -630,8 +613,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             if (isSend) {
                 var index = layer.load();
                 data.Details = newdata;
-                console.log(list)
-                console.log(data)
                 $.ajax({
                     type: "POST",
                     url: addPurchase,

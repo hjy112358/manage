@@ -59,8 +59,6 @@ function tablerender(str, data) {
 
 
 $(function () {
-
-
     $(".checklist").on("click", function () {
         var str = [
             { title: '序号', type: 'numbers' },
@@ -93,7 +91,6 @@ $(function () {
         $.ajax({
             url: purchaselist,
             success: function (res) {
-                console.log(data)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     var data = res.Data;
@@ -103,7 +100,6 @@ $(function () {
                 }
             }
         })
-
     })
 
  
@@ -112,9 +108,6 @@ $(function () {
     $(".add").on("click", function () {
         parent.newpurchaseinvo();
     })
-
-  
-
 
 })
 
@@ -131,7 +124,6 @@ function delscale(id) {
     var index = layer.confirm('确认删除？', {
         btn: ['确定', '取消'] //按钮
     }, function () {
-        var token = $.cookie("token");
         $.ajax({
             type: "POST",
             url: Delpurchase,
@@ -140,7 +132,6 @@ function delscale(id) {
             },
             success: function (res) {
                 var data = res.Data;
-                console.log(data)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     layer.close(index)

@@ -3,15 +3,11 @@ layui.use(['jquery', 'table', 'layer', "form"], function () {
     var table=layui.table,
     layer=layui.layer,
     form=layui.form;
-
-
     var url=window.location.search;
     var fid=url.split("?")[1].split("=")[1]
-    console.log(fid)
     $.ajax({
         url:purchaseDetails+fid,
         success:function(res){
-            console.log(res)
             if(res.Succeed){
                 loadlayer=layer.load()
                 var data=res.Data
@@ -23,7 +19,6 @@ layui.use(['jquery', 'table', 'layer', "form"], function () {
                 $("#PurchaseApply_Reason").val(data.PurchaseApply_Reason)
                 $("#PurchaseApply_Name").val(data.PurchaseApply_Name)
                 $("#Remark").val(data.Remark)
-               
             }
         }
     })
@@ -54,7 +49,6 @@ function getdepart(id){
                         $("#PurchaseApply_Department").val(data[i].Department_Nick)
                     }
                 }
-                
             } else {
                 alert(res.Message)
             }
@@ -68,7 +62,6 @@ function getbillemle(bill,em){
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            //console.log(res)
             var isussecc = res.Succeed;
             if (isussecc) {
                 var data = res.Data;
@@ -80,9 +73,7 @@ function getbillemle(bill,em){
                     if(em==datanow.F_Id){
                         $("#PurchaseApply_Employee").val(datanow.User_Nick)
                     }
-                   
                 }
-                
             } else {
                 alert(res.Message)
             }
@@ -96,7 +87,6 @@ function getmatelist(datalist){
         async:false,
         url: ajaxMater,
         success: function (res) {
-            console.log(res)
             var isussecc = res.Succeed;
             if (isussecc) {
                 var data = res.Data;
@@ -118,11 +108,9 @@ function getmatelist(datalist){
         if (index != '-1') {
             nowdata.Material_Name=matername[index]
             nowdata.Material_Nick=maternick[index]
-           
         } 
     }
     tablerender(newdata)
-
 }
 
 
@@ -133,7 +121,6 @@ function tablerender(data) {
             table = layui.table;
         table.render({
             elem: '#dataTable'
-            // , toolbar: true
             , cols: [[
                 { title: '序号', type: 'numbers', width: '50' },
                 { field: 'Material_Name', title: '<span style="color:red">*  </span>物料代码',  width: '120' },
@@ -158,7 +145,6 @@ function tablerender(data) {
             , limit: 1000
             , done: function (res) {
                 layer.close(loadlayer)
-                    console.log(res.data)
             }
         });
         return false;

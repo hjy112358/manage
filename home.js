@@ -429,7 +429,7 @@ function getpurwork(id){
     var oldhref = $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').attr("href");
     var href = oldhref
     href = href + '?fid='+id
-    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-3 > dd > a:eq(6)').attr("href", href)
+    $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').attr("href", href)
     $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').trigger('click');
     $('#Nav li.layui-nav-item:eq(2) > dl.layui-nav-child > dd > a:eq(6)').attr("href", oldhref)
 }

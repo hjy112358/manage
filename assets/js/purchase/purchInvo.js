@@ -521,7 +521,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
             url:purchaseAdd,
             data:data,
             success:function(res){
-                console.log(res)
                 if(res.Succeed){
                     layer.close(indexlay);
                     layer.msg("新增成功");
@@ -533,11 +532,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate"], function (
                     alert(res.Message)
                 }
             }
-
         })
         return false
     })
-
 
 });
 

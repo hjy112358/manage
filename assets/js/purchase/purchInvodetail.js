@@ -38,7 +38,6 @@ $(function () {
         url: ajaxMea,
         ansyc: false,
         success: function (res) {
-            console.log(res)
             var data = res.Data;
             var isussecc = res.Succeed;
             if (isussecc) {
@@ -56,7 +55,6 @@ $(function () {
         type: "GET",
         url: purchasedetail + fid,
         success: function (res) {
-            console.log(res)
             if (res.Succeed) {
                 var data = res.Data;
                 getcurrey(data.PurchaseInvoice_Currency, data.Details)
@@ -137,7 +135,6 @@ function getsupper(id) {
                         $("#PurchaseInvoice_Supplier").val(datanow.Supplier_Nick)
                     }
                 }
-
             } else {
                 alert(res.Message)
             }
@@ -216,7 +213,6 @@ function tablerender(data) {
                             } else {
                                 return ''
                             }
-
                         }
                     },
                     {
@@ -229,7 +225,6 @@ function tablerender(data) {
                             if (index == '-1') {
                                 return ''
                             } else {
-                                console.log(currnick)
                                 return currnick[index]
                             }
                         }
@@ -306,7 +301,6 @@ function tablerender(data) {
                             } else {
                                 num = ''
                             }
-
                             return num
                         }
                     },

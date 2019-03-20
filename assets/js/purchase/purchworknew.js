@@ -150,7 +150,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             }
         ]],
         done: function (res) {
-            console.log(res.data)
             viewObj.tbData = res.data;
             $(".layui-input-date").each(function (i) {
                 layui.laydate.render({
@@ -173,8 +172,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         $cr.find('td[data-field="Currency_Nick"]').find("input").val(value.Currency_Nick);
                     }
                 });
-            });
-        //    return false
+            })
         }
     });
     //定义事件集合
@@ -182,7 +180,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         // 更新每行数据
         updateRow: function () {
             var oldData = table.cache[layTableId];
-            // console.log(oldData);
             tableIns.reload({
                 data: oldData,
                 limit: viewObj.limit
@@ -226,7 +223,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         }
     });
     table.on('edit(dataTable)', function (obj) {
-        console.log(obj)
         var dataindex = $(obj.tr).attr("data-index");
         if (obj.field == 'PurchaseOrderEntry_Price') {
             $.each(tableData, function (index, value) {
@@ -275,7 +271,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                             value.Currency_Nick = elemnow.text;
                         }
                     }
-
                 }
             }
         });
@@ -325,7 +320,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         success: function (res) {
             var data = res.Data;
             var isussecc = res.Succeed;
-            console.log(data)
             if (isussecc) {
                 for (var i = 0; i < data.length; i++) {
                     materid.push(data[i].F_Id)
@@ -341,7 +335,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         success: function (res) {
             var data = res.Data;
             var isussecc = res.Succeed;
-            console.log(data)
             if (isussecc) {
                 for (var i = 0; i < data.length; i++) {
                     measureid.push(data[i].Measure_Manufacture)
@@ -373,7 +366,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         type: "get",
         url: ajaxUsr,
         success: function (res) {
-            //console.log(res)
             var isussecc = res.Succeed;
             var data = res.Data;
             if (isussecc) {
@@ -401,20 +393,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             var nowname = currname[k];
             var nowk = k;
             if (value == nowname) {
-                // viewObj.currtype = nowname;
-                // viewObj.rate = ratelist[nowk]
                 $("#PurchaseOrder_ExRate").val(ratelist[nowk])
-                // var oldData = table.cache[layTableId];
-                // $.each(tabledata, function (index, value) {
-                //     if (value.currchange == 0) {
-                //         value.SalesOrderEntry_Currency = viewObj.currtype
-                //         // value.SalesOrderEntry_ExRate = viewObj.rate
-                //     }
-                // });
-                // tableIns.reload({
-                //     data: oldData,
-                //     limit: viewObj.limit
-                // });
             }
         }
 
@@ -429,7 +408,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 type: "get",
                 url: ajaxchasetype,
                 success: function (res) {
-                    console.log(res)
                     var isussecc = res.Succeed;
                     var data = res.Data.Details;
                     if (isussecc) {
@@ -462,7 +440,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 type: "get",
                 url: ajaxsupplist,
                 success: function (res) {
-                    console.log(res)
                     var isussecc = res.Succeed;
                     var data = res.Data;
                     if (isussecc) {
@@ -487,7 +464,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     })
     // 切换供应商
     form.on('select(supper)', function (data) {
-        console.log(data);
         var rate = ''
         if (data.value) {
             if (data.elem.selectedOptions) {
@@ -500,7 +476,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                         rate = elemnow.attributes[1].value;
                     }
                 }
-
             }
             $("#PurchaseOrder_TaxRate").val(rate);
             $.each(tableData, function (index, value) {
@@ -510,7 +485,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             });
         }
         var oldData = table.cache[layTableId];
-        console.log(oldData)
         tableIns.reload({
             data: oldData,
             limit: oldData.length
@@ -525,20 +499,16 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         if (!($(this).hasClass("disclick"))) {
             if (isSend) {
                 var index = layer.load();
-
                 var list = $("form").serializeArray();
                 for (var j = 0; j < list.length; j++) {
-                    console.log(list[j])
                     data[list[j].name] = list[j].value
                 }
                 data.Details = oldData;
-                console.log(data)
                 $.ajax({
                     type: "POST",
                     url: purchaseOrderAdd,
                     data: data,
                     success: function (res) {
-                        console.log(res)
                         var isussecc = res.Succeed;
                         var data = res.Data;
                         if (isussecc) {
@@ -655,7 +625,7 @@ function dialogtable() {
                 var oldData = table.cache["poplist"];
                 tablepop.reload({
                     data: oldData,
-                    limit: viewObj.limit
+                    limit: oldData.length
                 });
             },
             getCheckData: function () { //获取选中数据
@@ -720,7 +690,6 @@ function dialogtable() {
                     type: "get",
                     url: purchaseapplylist,
                     success: function (res) {
-                        console.log(res)
                         var isussecc = res.Succeed;
                         var data = res.Data;
                         if (isussecc) {
@@ -740,7 +709,6 @@ function dialogtable() {
                         } else {
                             alert(res.Message)
                         }
-
                     }
                 })
             }
@@ -758,9 +726,7 @@ function dialogtable() {
                         var isussecc = res.Succeed;
                         if (isussecc) {
                             var data = res.Data;
-                            console.log(data)
                             if (data.Details) {
-                                // console.log(data.Children)
                                 // 数据对应
                                 $.each(data.Details, function (index, value) {
                                     value.PurchaseOrderEntry_Quantity = value.PurchaseApplyEntry_Quantity
@@ -780,7 +746,6 @@ function dialogtable() {
                                     } else {
                                         value.unit = value.PurchaseApplyEntry_Unit
                                     }
-
                                     var exrate = $("#PurchaseOrder_ExRate").val()
                                     var taxrate = $("#PurchaseOrder_TaxRate").val()
                                     var curr = $("#PurchaseOrder_Currency").val()
@@ -813,7 +778,6 @@ function dialogtable() {
                                     limit: data.Details.length
                                 });
                             }
-
                         } else {
                             alert(res.Message)
                         }
@@ -821,12 +785,10 @@ function dialogtable() {
                 })
             }
         })
-
         closemark = function () {
             $(".termask").addClass("hidden")
             $(".terform")[0].reset();
         }
-
     });
 }
 
@@ -871,7 +833,6 @@ var uploadListIns = upload.render({
                 if (imgcount == 0) {
                     tablehead.html("")
                 }
-
             });
             // 上传文件到列表
             tablebody.append(tr);

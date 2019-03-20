@@ -59,11 +59,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             { field: 'PurchaseApplyEntry_Quantity', title: '数量', width: '100', edit: 'text' },
             { field: 'PurchaseApplyEntry_Purchase', title: '已采购数量', width: '100'},
             { field: 'Remark', title: '备注', edit: 'text', width: '200' }
-            // {
-            //     field: 'tempId', title: '操作', align: 'center', width: '100', templet: function (d) {
-            //         return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="' + d.tempId + '">删除</a>';
-            //     }
-            // }
+           
         ]],
         done: function (res, curr, count) {
             layer.close(loadlayer)
@@ -89,7 +85,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                     if (value.LAY_TABLE_INDEX == dataindex) {
                         $cr.find('input').val(value.Material_Name);
                         $cr.find('input[id="PurchaseApplyEntry_Deadline"]').val(value.PurchaseApplyEntry_Deadline.split(" ")[0]);
-
                     }
                 });
             });
@@ -98,10 +93,8 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
 
     //定义事件集合
     var active = {
-
         updateRow: function () {
             var oldData = table.cache[layTableId];
-            // console.log(oldData);
             tableIns.reload({
                 data: oldData,
                 limit: viewObj.limit
@@ -109,7 +102,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         },
         removeEmptyTableCache: function () {
             var oldData = table.cache[layTableId];
-            // console.log(oldData)
             for (var i = 0, row; i < oldData.length; i++) {
                 row = oldData[i];
                 if (!row || !row.tempId) {
@@ -118,10 +110,9 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 continue;
             }
             viewObj.last = oldData[oldData.length - 1].tempId;
-
             tableIns.reload({
                 data: oldData,
-                limit: viewObj.limit
+                limit: oldData.length
             });
         }
     }
@@ -228,14 +219,12 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
         for (var j = 0; j < oldData.length; j++) {
             var nowdata = oldData[j]
             if (nowdata.PurchaseApplyEntry_Deadline) {
-                // newdata.push(nowdata)
                 if (nowdata.PurchaseApplyEntry_Deadline == '') {
                     alert("请选择交货日期");
                     isSend = false;
                     return;
                 } else {
                     newdata.push(nowdata)
-
                 }
             }
         }
@@ -243,13 +232,11 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             if (isSend) {
                 var index = layer.load();
                 data.Details = newdata;
-               
                 $.ajax({
                     type: "POST",
                     url: purchaseedit,
                     data: data,
                     success: function (res) {
-                        console.log(res)
                         var isussecc = res.Succeed;
                         var data = res.Data;
                         if (isussecc) {
@@ -275,7 +262,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
     $.ajax({
         url: purchaseDetails + fid,
         success: function (res) {
-            console.log(res)
             if (res.Succeed) {
                 loadlayer = layer.load()
                 var data = res.Data
@@ -288,7 +274,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 $("#F_Id").val(data.F_Id)
                 $("#PurchaseApply_Name").val(data.PurchaseApply_Name)
                 $("#Remark").val(data.Remark)
-
             }
         }
     })
@@ -330,7 +315,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             type: "get",
             url: ajaxUsr,
             success: function (res) {
-                //console.log(res)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     var data = res.Data;
@@ -349,10 +333,7 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                             $("#PurchaseApply_Biller").val(datanow.F_Id)
                             $("#PurchaseApply_Billername").val(datanow.User_Nick)
                         }
-                        
-
                     }
-
                 } else {
                     alert(res.Message)
                 }
@@ -366,7 +347,6 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
             async: false,
             url: ajaxMater,
             success: function (res) {
-                console.log(res)
                 var isussecc = res.Succeed;
                 if (isussecc) {
                     var data = res.Data;
@@ -390,14 +370,11 @@ layui.use(['jquery', 'table', 'layer', "form", "layedit", "laydate", "upload"], 
                 nowdata.Material_Nick = maternick[index]
             }
         }
-        console.log(newdata)
         tableIns.reload({
             data: newdata,
             limit: newdata.length
         });
     }
-
-
 
 });
 
